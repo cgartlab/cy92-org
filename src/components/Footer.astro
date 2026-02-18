@@ -2,87 +2,17 @@
 const today = new Date();
 ---
 
-<footer>
-	<div class="footer-content">
-		<div class="copyright">
-			<span class="copyright-symbol">&copy;</span>
-			<span class="copyright-year">{today.getFullYear()}</span>
-			<span class="copyright-name">ChenYang</span>
-			<span class="copyright-divider">·</span>
-			<span class="copyright-site">CG艺术实验室</span>
+<footer class="py-12 md:py-16 border-t border-border/40 bg-gradient-to-b from-transparent to-secondary/20">
+	<div class="container-custom text-center">
+		<div class="flex items-center justify-center flex-wrap gap-1 text-sm text-muted-foreground mb-3">
+			<span>&copy;</span>
+			<span>{today.getFullYear()}</span>
+			<span class="font-medium text-foreground">ChenYang</span>
+			<span class="text-muted-foreground/50">·</span>
+			<span class="text-primary">CG艺术实验室</span>
 		</div>
-		<p class="footer-tagline">工具是人类肢体的延伸，电脑是大脑的延伸，写作是思考本身。</p>
+		<p class="text-sm text-muted-foreground/80 italic">
+			工具是人类肢体的延伸，电脑是大脑的延伸，写作是思考本身。
+		</p>
 	</div>
 </footer>
-
-<style>
-	footer {
-		padding: 3rem 1rem 4rem;
-		background: linear-gradient(180deg, transparent 0%, var(--color-bg-secondary) 100%);
-		border-top: 1px solid var(--color-border-subtle);
-		text-align: center;
-		font-family: var(--font-serif);
-	}
-
-	.footer-content {
-		max-width: 600px;
-		margin: 0 auto;
-	}
-
-	.copyright {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		flex-wrap: wrap;
-		gap: 0.25rem;
-		font-size: 0.9375rem;
-		color: var(--color-text-secondary);
-		margin-bottom: 0.75rem;
-	}
-
-	.copyright-symbol {
-		margin-right: 0.25rem;
-	}
-
-	.copyright-name {
-		font-weight: 500;
-		color: var(--color-text-primary);
-	}
-
-	.copyright-divider {
-		color: var(--color-text-muted);
-		margin: 0 0.25rem;
-	}
-
-	.copyright-site {
-		color: var(--accent);
-	}
-
-	.footer-tagline {
-		font-size: 0.875rem;
-		color: var(--color-text-tertiary);
-		font-style: italic;
-		margin: 0;
-		line-height: 1.6;
-	}
-
-	@media (max-width: 480px) {
-		footer {
-			padding: 2rem 1rem 3rem;
-		}
-
-		.copyright {
-			font-size: 0.875rem;
-		}
-
-		.footer-tagline {
-			font-size: 0.8125rem;
-		}
-	}
-
-	@media print {
-		footer {
-			display: none !important;
-		}
-	}
-</style>

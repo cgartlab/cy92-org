@@ -2,16 +2,15 @@
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import SkillBar from '../components/SkillBar.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import { SITE_TITLE, SITE_DESCRIPTION, PERSONAL_INFO, SKILLS, EXPERIENCE, PROJECTS, STATS, SOCIAL_LINKS } from '../consts';
 
 const socialIcons: Record<string, string> = {
-	github: '<path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>',
+	github: '<path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.604-3.369-1.341-3.369-1.341-.454-1.155-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.48C21.137 20.163 24 16.418 24 12c0-5.523-4.477-10-10-10z"/>',
 	twitter: '<path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>',
 	bilibili: '<path d="M17.813 4.653h.064c.558.024 1.056.236 1.438.59.37.343.614.805.676 1.324l.008.078v5.912l-.008.078c-.062.52-.306.98-.676 1.324-.382.354-.88.566-1.438.59h-.064l-2.59.003v1.852l-.008.11c-.04.38-.22.716-.485.95-.265.233-.615.37-.992.37h-.078l-.11-.008c-.38-.04-.716-.22-.95-.485-.233-.265-.37-.615-.37-.992v-1.797H8.672v1.852l-.008.11c-.04.38-.22.716-.485.95-.265.233-.615.37-.992.37h-.078l-.11-.008c-.38-.04-.716-.22-.95-.485-.233-.265-.37-.615-.37-.992v-1.797l-2.59-.003h-.064c-.558-.024-1.056-.236-1.438-.59-.37-.343-.614-.805-.676-1.324l-.008-.078V6.645l.008-.078c.062-.52.306-.98.676-1.324.382-.354.88-.566 1.438-.59h.064l2.59-.003V2.798l.008-.11c.04-.38.22-.716.485-.95.265-.233.615-.37.992-.37h.078l.11.008c.38.04.716.22.95.485.233.265.37.615.37.992v1.8h4.655v-1.85l.008-.11c.04-.38.22-.716.485-.95.265-.233.615-.37.992-.37h.078l.11.008c.38.04.716.22.95.485.233.265.37.615.37.992v1.8l2.59.003zm.064 1.5H3.123l-.05.003c-.15.016-.28.086-.37.187-.09.1-.145.232-.145.377v5.56l.003.05c.016.15.086.28.187.37.1.09.232.145.377.145h14.76l.05-.003c.15-.016.28-.086.37-.187.09-.1.145-.232.145-.377V6.72l-.003-.05c-.016-.15-.086-.28-.187-.37-.1-.09-.232-.145-.377-.145zm-11.07 1.5c.414 0 .75.336.75.75v2.5c0 .414-.336.75-.75.75s-.75-.336-.75-.75v-2.5c0-.414.336-.75.75-.75zm7.5 0c.414 0 .75.336.75.75v2.5c0 .414-.336.75-.75.75s-.75-.336-.75-.75v-2.5c0-.414.336-.75.75-.75z"/>',
 	sspai: '<path d="M4 4h16v16H4V4zm2 2v12h12V6H6zm3 3h6v2H9V9zm0 4h6v2H9v-2z"/>',
-	rss: '<path d="M4 11a9 9 0 0 1 9 9M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/>'
+	rss: '<path d="M6.18 15.64a2.18 2.18 0 1 1-.01 4.36 2.18 2.18 0 0 1 0-4.36zm0-4.37A10.36 10.36 0 0 1 10.36 10.36h-2.83A7.54 7.54 0 0 0 8.72 8.11V11.28H6.18v-2.37zm0-4.37A14.73 14.73 0 0 1 20.9 15.64h2.83A11.91 11.91 0 0 0 11.91 6.9V3.9H6.18v2.37z"/><circle cx="6.18" cy="17.82" r="2.18"/>'
 };
 ---
 
@@ -20,36 +19,38 @@ const socialIcons: Record<string, string> = {
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
 	</head>
-	<body>
+	<body class="min-h-screen bg-background">
 		<Header />
-		<main>
-			<!-- Hero Section -->
-			<section class="hero">
-				<div class="hero-content">
-					<div class="avatar-wrapper">
-						<div class="avatar">
-							<span class="avatar-initial">{PERSONAL_INFO.name.charAt(0)}</span>
-						</div>
+		<main class="container-custom py-8 md:py-12">
+			<section class="relative py-12 md:py-20 text-center overflow-hidden">
+				<div class="absolute inset-0 -z-10">
+					<div class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-gradient-to-br from-primary/20 via-purple-500/10 to-pink-500/10 rounded-full blur-3xl opacity-60"></div>
+				</div>
+				
+				<div class="relative">
+					<div class="w-28 h-28 md:w-32 md:h-32 rounded-3xl bg-gradient-to-br from-primary via-purple-500 to-pink-500 flex items-center justify-center shadow-2xl shadow-primary/30 mx-auto mb-8 animate-float">
+						<span class="text-5xl md:text-6xl font-bold text-white tracking-tight">{PERSONAL_INFO.name.charAt(0)}</span>
 					</div>
 					
-					<div class="identity">
-						<h1 class="name">{PERSONAL_INFO.name}</h1>
-						<p class="title">{PERSONAL_INFO.title}</p>
-						<p class="site-name">{PERSONAL_INFO.siteName}</p>
+					<div class="mb-6">
+						<h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground tracking-tight mb-3">
+							{PERSONAL_INFO.name}
+						</h1>
+						<p class="text-xl md:text-2xl gradient-text font-semibold mb-2">{PERSONAL_INFO.title}</p>
 					</div>
 					
-					<p class="bio">{PERSONAL_INFO.bio}</p>
+					<p class="text-lg md:text-xl text-muted-foreground max-w-lg mx-auto mb-8 leading-relaxed">{PERSONAL_INFO.bio}</p>
 					
-					<div class="tags">
+					<div class="flex flex-wrap justify-center gap-3 mb-8">
 						<span class="tag">
-							<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<svg class="w-4 h-4" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
 								<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
 								<circle cx="12" cy="10" r="3"></circle>
 							</svg>
 							{PERSONAL_INFO.location}
 						</span>
 						<span class="tag">
-							<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<svg class="w-4 h-4" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
 								<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
 								<circle cx="12" cy="7" r="4"></circle>
 							</svg>
@@ -57,7 +58,7 @@ const socialIcons: Record<string, string> = {
 						</span>
 					</div>
 					
-					<div class="social-links">
+					<div class="flex justify-center gap-3">
 						{SOCIAL_LINKS.slice(0, 4).map(link => (
 							<a 
 								href={link.url} 
@@ -66,7 +67,7 @@ const socialIcons: Record<string, string> = {
 								class="social-link"
 								title={link.name}
 							>
-								<svg viewBox="0 0 16 16" aria-hidden="true" width="18" height="18" set:html={socialIcons[link.icon] || ''} />
+								<svg viewBox="0 0 16 16" aria-hidden="true" class="w-5 h-5" set:html={socialIcons[link.icon] || ''} />
 								<span class="sr-only">{link.name}</span>
 							</a>
 						))}
@@ -74,63 +75,35 @@ const socialIcons: Record<string, string> = {
 				</div>
 			</section>
 
-			<!-- Stats Section -->
-			<section class="stats">
-				{STATS.map(stat => (
-					<div class="stat-card">
-						<div class="stat-number">
-							<span class="stat-value">{stat.value}</span>
-							<span class="stat-unit">{stat.unit}</span>
+			<section class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-5 py-10 md:py-16">
+				{STATS.map((stat, index) => (
+					<div class={`card stat-card p-6 md:p-8 text-center animate-slide-up stagger-${index + 1}`}>
+						<div class="mb-3">
+							<span class="text-3xl md:text-4xl font-bold gradient-text">{stat.value}</span>
+							<span class="text-sm text-muted-foreground ml-1">{stat.unit}</span>
 						</div>
-						<p class="stat-label">{stat.label}</p>
+						<p class="text-sm text-muted-foreground font-medium">{stat.label}</p>
 					</div>
 				))}
 			</section>
 
-			<!-- About Section -->
-			<section class="about">
+			<section class="section">
 				<div class="section-header">
 					<div class="section-icon">
-						<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-							<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-							<circle cx="12" cy="7" r="4"></circle>
-						</svg>
-					</div>
-					<h2>关于我</h2>
-				</div>
-				
-				<div class="about-content">
-					<p class="description">{PERSONAL_INFO.description}</p>
-					
-					<div class="hobbies">
-						<h3>兴趣爱好</h3>
-						<div class="hobby-tags">
-							{PERSONAL_INFO.hobbies.map(hobby => (
-								<span class="hobby-tag">{hobby}</span>
-							))}
-						</div>
-					</div>
-				</div>
-			</section>
-
-			<!-- Skills Section -->
-			<section class="skills">
-				<div class="section-header">
-					<div class="section-icon">
-						<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
 							<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
 						</svg>
 					</div>
-					<h2>专业技能</h2>
+					<h2 class="section-title">专业技能</h2>
 				</div>
 				
-				<div class="skills-grid">
+				<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
 					{SKILLS.map(category => (
-						<div class="skill-category">
-							<h3>{category.category}</h3>
-							<div class="skill-items">
+						<div class="card p-6">
+							<h3 class="text-base font-semibold text-foreground mb-4">{category.category}</h3>
+							<div class="flex flex-wrap gap-2">
 								{category.items.map(skill => (
-									<SkillBar name={skill.name} level={skill.level} />
+									<span class="tag">{skill}</span>
 								))}
 							</div>
 						</div>
@@ -138,43 +111,43 @@ const socialIcons: Record<string, string> = {
 				</div>
 			</section>
 
-			<!-- Experience Section -->
-			<section class="experience">
+			<section class="section">
 				<div class="section-header">
 					<div class="section-icon">
-						<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
 							<circle cx="12" cy="12" r="10"></circle>
 							<polyline points="12 6 12 12 16 14"></polyline>
 						</svg>
 					</div>
-					<h2>经历</h2>
+					<h2 class="section-title">经历</h2>
 				</div>
 				
-				<div class="timeline">
-					{EXPERIENCE.map(exp => (
-						<div class="timeline-item">
-							<div class="timeline-period">{exp.period}</div>
-							<div class="timeline-content">
-								<h3>{exp.title}</h3>
-								<p>{exp.description}</p>
+				<div class="card p-6 md:p-8">
+					<div class="space-y-0">
+						{EXPERIENCE.map(exp => (
+							<div class="timeline-item pb-8 last:pb-0">
+								<div class="text-sm font-semibold gradient-text mb-2">{exp.period}</div>
+								<div class="pl-2">
+									<h3 class="text-lg font-semibold text-foreground mb-2">{exp.title}</h3>
+									<p class="text-muted-foreground leading-relaxed">{exp.description}</p>
+								</div>
 							</div>
-						</div>
-					))}
+						))}
+					</div>
 				</div>
 			</section>
 
-			<!-- Projects Section -->
-			<section class="projects">
+			<section class="section">
 				<div class="section-header">
 					<div class="section-icon">
-						<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
 							<path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
 						</svg>
 					</div>
-					<h2>项目作品</h2>
+					<h2 class="section-title">项目作品</h2>
 				</div>
 				
-				<div class="projects-grid">
+				<div class="grid md:grid-cols-2 gap-5 md:gap-6">
 					{PROJECTS.map(project => (
 						<ProjectCard 
 							title={project.title} 
@@ -186,13 +159,15 @@ const socialIcons: Record<string, string> = {
 				</div>
 			</section>
 
-			<!-- Contact Section -->
-			<section class="contact">
-				<div class="contact-content">
-					<h2>联系我</h2>
-					<p>如果您对我的作品感兴趣，或有合作意向，欢迎通过邮件联系我。</p>
-					<a href={`mailto:${PERSONAL_INFO.email}`} class="contact-btn">
-						<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+			<section class="relative py-16 md:py-20 px-6 md:px-10 overflow-hidden">
+				<div class="absolute inset-0 bg-gradient-to-br from-primary/5 via-purple-500/5 to-pink-500/5 rounded-3xl"></div>
+				<div class="absolute inset-0 bg-gradient-to-r from-primary/10 via-transparent to-primary/10 rounded-3xl blur-xl"></div>
+				
+				<div class="relative text-center">
+					<h2 class="text-2xl md:text-3xl font-bold text-foreground mb-4 tracking-tight">联系我</h2>
+					<p class="text-muted-foreground mb-8 max-w-md mx-auto text-base md:text-lg">如果您对我的作品感兴趣，或有合作意向，欢迎通过邮件联系我。</p>
+					<a href={`mailto:${PERSONAL_INFO.email}`} class="btn btn-primary gap-2 shadow-xl shadow-primary/30 hover:shadow-2xl hover:shadow-primary/40">
+						<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
 							<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
 							<polyline points="22,6 12,13 2,6"></polyline>
 						</svg>
@@ -204,567 +179,3 @@ const socialIcons: Record<string, string> = {
 		<Footer />
 	</body>
 </html>
-
-<style>
-	/* ============================================
-	   Hero Section
-	   ============================================ */
-	.hero {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		padding: 4rem 0 3rem;
-		min-height: 50vh;
-	}
-
-	.hero-content {
-		text-align: center;
-		max-width: 560px;
-	}
-
-	.avatar-wrapper {
-		margin-bottom: 1.75rem;
-	}
-
-	.avatar {
-		width: 96px;
-		height: 96px;
-		border-radius: var(--radius-xl);
-		background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		box-shadow: var(--shadow-lg);
-		transition: transform var(--transition-slow), box-shadow var(--transition-slow);
-	}
-
-	.avatar:hover {
-		transform: translateY(-4px);
-		box-shadow: var(--shadow-xl);
-	}
-
-	.avatar-initial {
-		font-size: 2.5rem;
-		font-weight: 600;
-		color: #ffffff;
-		letter-spacing: -0.02em;
-	}
-
-	.identity {
-		margin-bottom: 1.25rem;
-	}
-
-	.name {
-		font-size: var(--text-h1);
-		font-weight: 700;
-		color: var(--color-text-primary);
-		margin: 0 0 0.5rem 0;
-		letter-spacing: -0.03em;
-		line-height: 1.2;
-	}
-
-	.title {
-		font-size: 1.125rem;
-		font-weight: 400;
-		color: var(--accent);
-		margin: 0 0 0.25rem 0;
-	}
-
-	.site-name {
-		font-size: 1rem;
-		color: var(--color-text-tertiary);
-		margin: 0;
-	}
-
-	.bio {
-		font-size: 1.0625rem;
-		line-height: var(--leading-loose);
-		color: var(--color-text-secondary);
-		margin: 0 0 1.75rem 0;
-		max-width: 480px;
-		margin-left: auto;
-		margin-right: auto;
-	}
-
-	.tags {
-		display: flex;
-		justify-content: center;
-		gap: 0.75rem;
-		margin-bottom: 1.75rem;
-		flex-wrap: wrap;
-	}
-
-	.tag {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.375rem;
-		padding: 0.5rem 1rem;
-		background: var(--color-bg-secondary);
-		border: 1px solid var(--color-border);
-		border-radius: var(--radius-full);
-		font-size: 0.875rem;
-		color: var(--color-text-secondary);
-		transition: all var(--transition-fast);
-	}
-
-	.tag:hover {
-		background: var(--color-bg-tertiary);
-		border-color: var(--accent);
-		color: var(--accent);
-	}
-
-	.tag svg {
-		flex-shrink: 0;
-		color: var(--color-text-tertiary);
-	}
-
-	.social-links {
-		display: flex;
-		justify-content: center;
-		gap: 0.5rem;
-	}
-
-	.social-link {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: 40px;
-		height: 40px;
-		border-radius: var(--radius-md);
-		color: var(--color-text-tertiary);
-		background: transparent;
-		border: 1px solid transparent;
-		transition: all var(--transition-fast);
-	}
-
-	.social-link:hover {
-		color: var(--accent);
-		background: var(--accent-subtle);
-		border-color: var(--accent);
-	}
-
-	.social-link svg {
-		fill: currentColor;
-	}
-
-	/* ============================================
-	   Stats Section
-	   ============================================ */
-	.stats {
-		display: grid;
-		grid-template-columns: repeat(4, 1fr);
-		gap: 1.25rem;
-		padding: 2rem 0;
-		margin: 1rem 0 3rem;
-		border-top: 1px solid var(--color-border-subtle);
-		border-bottom: 1px solid var(--color-border-subtle);
-	}
-
-	.stat-card {
-		text-align: center;
-		padding: 1.25rem 1rem;
-		background: var(--color-bg-primary);
-		border: 1px solid var(--color-border);
-		border-radius: var(--radius-lg);
-		transition: all var(--transition-base);
-	}
-
-	.stat-card:hover {
-		border-color: var(--accent);
-		box-shadow: var(--shadow-md);
-		transform: translateY(-2px);
-	}
-
-	.stat-number {
-		margin-bottom: 0.5rem;
-	}
-
-	.stat-value {
-		font-size: 1.75rem;
-		font-weight: 600;
-		color: var(--color-text-primary);
-		letter-spacing: -0.02em;
-		line-height: 1;
-	}
-
-	.stat-unit {
-		font-size: 0.875rem;
-		font-weight: 400;
-		color: var(--color-text-tertiary);
-		margin-left: 0.25rem;
-	}
-
-	.stat-label {
-		font-size: 0.875rem;
-		color: var(--color-text-tertiary);
-		margin: 0;
-	}
-
-	/* ============================================
-	   Section Common Styles
-	   ============================================ */
-	section {
-		margin: 3rem 0;
-	}
-
-	.section-header {
-		display: flex;
-		align-items: center;
-		gap: 0.75rem;
-		margin-bottom: 1.75rem;
-	}
-
-	.section-icon {
-		width: 36px;
-		height: 36px;
-		background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
-		border-radius: var(--radius-md);
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		color: white;
-		box-shadow: var(--shadow-accent);
-	}
-
-	.section-header h2 {
-		font-size: var(--text-h2);
-		font-weight: 600;
-		color: var(--color-text-primary);
-		margin: 0;
-		letter-spacing: -0.02em;
-	}
-
-	/* ============================================
-	   About Section
-	   ============================================ */
-	.about-content {
-		background: var(--color-bg-secondary);
-		border-radius: var(--radius-xl);
-		padding: 2rem;
-		border: 1px solid var(--color-border-subtle);
-	}
-
-	.description {
-		font-size: var(--text-body);
-		line-height: var(--leading-loose);
-		color: var(--color-text-secondary);
-		margin: 0 0 1.5rem 0;
-	}
-
-	.hobbies h3 {
-		font-size: 1rem;
-		font-weight: 500;
-		color: var(--color-text-tertiary);
-		margin: 0 0 0.75rem 0;
-	}
-
-	.hobby-tags {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.5rem;
-	}
-
-	.hobby-tag {
-		background: var(--color-bg-primary);
-		padding: 0.4rem 1rem;
-		border-radius: var(--radius-full);
-		font-size: 0.875rem;
-		color: var(--color-text-secondary);
-		border: 1px solid var(--color-border);
-		transition: all var(--transition-fast);
-	}
-
-	.hobby-tag:hover {
-		background: var(--accent);
-		color: white;
-		border-color: var(--accent);
-	}
-
-	/* ============================================
-	   Skills Section
-	   ============================================ */
-	.skills-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-		gap: 2rem;
-	}
-
-	.skill-category {
-		background: var(--color-bg-primary);
-		border: 1px solid var(--color-border);
-		border-radius: var(--radius-xl);
-		padding: 1.5rem;
-		transition: all var(--transition-base);
-	}
-
-	.skill-category:hover {
-		border-color: var(--accent);
-		box-shadow: var(--shadow-md);
-	}
-
-	.skill-category h3 {
-		font-size: 1.1rem;
-		font-weight: 500;
-		color: var(--color-text-primary);
-		margin: 0 0 1rem 0;
-		padding-bottom: 0.75rem;
-		border-bottom: 1px solid var(--color-border-subtle);
-	}
-
-	.skill-items {
-		display: flex;
-		flex-direction: column;
-		gap: 1rem;
-	}
-
-	/* ============================================
-	   Experience Section
-	   ============================================ */
-	.timeline {
-		position: relative;
-		padding-left: 2rem;
-	}
-
-	.timeline::before {
-		content: '';
-		position: absolute;
-		left: 0;
-		top: 0;
-		bottom: 0;
-		width: 2px;
-		background: linear-gradient(180deg, var(--accent) 0%, var(--color-border) 100%);
-		border-radius: 1px;
-	}
-
-	.timeline-item {
-		position: relative;
-		padding-bottom: 2rem;
-	}
-
-	.timeline-item:last-child {
-		padding-bottom: 0;
-	}
-
-	.timeline-item::before {
-		content: '';
-		position: absolute;
-		left: -2rem;
-		top: 0.5rem;
-		width: 12px;
-		height: 12px;
-		border-radius: 50%;
-		background: var(--accent);
-		transform: translateX(-5px);
-		box-shadow: 0 0 0 4px var(--accent-subtle);
-		transition: all var(--transition-fast);
-	}
-
-	.timeline-item:hover::before {
-		transform: translateX(-5px) scale(1.2);
-		box-shadow: 0 0 0 6px var(--accent-subtle);
-	}
-
-	.timeline-period {
-		font-size: 0.875rem;
-		font-weight: 500;
-		color: var(--accent);
-		margin-bottom: 0.5rem;
-	}
-
-	.timeline-content h3 {
-		font-size: 1.1rem;
-		font-weight: 500;
-		color: var(--color-text-primary);
-		margin: 0 0 0.5rem 0;
-	}
-
-	.timeline-content p {
-		font-size: 0.9375rem;
-		color: var(--color-text-secondary);
-		line-height: 1.7;
-		margin: 0;
-	}
-
-	/* ============================================
-	   Projects Section
-	   ============================================ */
-	.projects-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-		gap: 1.5rem;
-	}
-
-	/* ============================================
-	   Contact Section
-	   ============================================ */
-	.contact {
-		text-align: center;
-		padding: 3rem 2rem;
-		background: linear-gradient(135deg, var(--color-bg-secondary) 0%, var(--color-bg-primary) 100%);
-		border-radius: var(--radius-2xl);
-		margin: 3rem 0;
-		border: 1px solid var(--color-border-subtle);
-	}
-
-	.contact h2 {
-		font-size: var(--text-h2);
-		font-weight: 600;
-		color: var(--color-text-primary);
-		margin: 0 0 1rem 0;
-		letter-spacing: -0.02em;
-	}
-
-	.contact p {
-		font-size: var(--text-body);
-		color: var(--color-text-secondary);
-		margin: 0 0 1.5rem 0;
-		max-width: 400px;
-		margin-left: auto;
-		margin-right: auto;
-	}
-
-	.contact-btn {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.5rem;
-		background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
-		color: white;
-		padding: 0.875rem 2rem;
-		border-radius: var(--radius-lg);
-		text-decoration: none;
-		font-weight: 500;
-		font-size: var(--text-body-sm);
-		transition: all var(--transition-base);
-		box-shadow: var(--shadow-accent);
-	}
-
-	.contact-btn:hover {
-		transform: translateY(-2px);
-		box-shadow: 0 12px 40px rgba(35, 55, 255, 0.35);
-		color: white;
-	}
-
-	.contact-btn svg {
-		flex-shrink: 0;
-	}
-
-	/* ============================================
-	   Responsive Design
-	   ============================================ */
-	@media (max-width: 720px) {
-		.hero {
-			padding: 3rem 0 2rem;
-			min-height: auto;
-		}
-
-		.name {
-			font-size: 2.25rem;
-		}
-
-		.stats {
-			grid-template-columns: repeat(2, 1fr);
-			gap: 1rem;
-		}
-
-		.stat-card {
-			padding: 1rem 0.75rem;
-		}
-
-		.stat-value {
-			font-size: 1.5rem;
-		}
-
-		.skills-grid {
-			grid-template-columns: 1fr;
-		}
-
-		.about-content {
-			padding: 1.5rem;
-		}
-
-		.contact {
-			padding: 2rem 1.5rem;
-		}
-
-		.section-header h2 {
-			font-size: 1.75rem;
-		}
-	}
-
-	@media (max-width: 480px) {
-		.hero {
-			padding: 2rem 0 1.5rem;
-		}
-
-		.avatar {
-			width: 80px;
-			height: 80px;
-		}
-
-		.avatar-initial {
-			font-size: 2rem;
-		}
-
-		.name {
-			font-size: 1.875rem;
-		}
-
-		.tags {
-			flex-direction: column;
-			align-items: center;
-		}
-
-		.stats {
-			grid-template-columns: repeat(2, 1fr);
-			gap: 0.75rem;
-		}
-
-		.stat-value {
-			font-size: 1.25rem;
-		}
-
-		.timeline {
-			padding-left: 1.5rem;
-		}
-
-		.timeline-item::before {
-			left: -1.5rem;
-		}
-	}
-
-	/* ============================================
-	   Print Styles
-	   ============================================ */
-	@media print {
-		.hero {
-			padding: 1rem 0;
-			min-height: auto;
-		}
-
-		.avatar {
-			width: 60px !important;
-			height: 60px !important;
-		}
-
-		.social-links,
-		.contact-btn {
-			display: none !important;
-		}
-
-		.stats {
-			border: 1px solid #ccc;
-		}
-
-		.stat-card {
-			border: none !important;
-			box-shadow: none !important;
-		}
-
-		.about-content,
-		.skill-category,
-		.contact {
-			background: transparent !important;
-			border: 1px solid #ccc !important;
-		}
-	}
-</style>

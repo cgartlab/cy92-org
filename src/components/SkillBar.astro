@@ -7,10 +7,10 @@ interface Props {
 const { name, level } = Astro.props;
 
 const getLevelColor = (level: number): string => {
-	if (level >= 90) return 'var(--accent)';
-	if (level >= 80) return '#10b981';
-	if (level >= 70) return '#f59e0b';
-	return '#6b7280';
+	if (level >= 90) return 'from-primary via-purple-500 to-pink-500';
+	if (level >= 80) return 'from-emerald-500 to-teal-500';
+	if (level >= 70) return 'from-amber-500 to-orange-500';
+	return 'from-gray-400 to-gray-500';
 };
 
 const getLevelLabel = (level: number): string => {
@@ -19,117 +19,61 @@ const getLevelLabel = (level: number): string => {
 	if (level >= 70) return '良好';
 	return '基础';
 };
+
+const getLevelBgColor = (level: number): string => {
+	if (level >= 90) return 'bg-primary/10 text-primary';
+	if (level >= 80) return 'bg-emerald-500/10 text-emerald-600';
+	if (level >= 70) return 'bg-amber-500/10 text-amber-600';
+	return 'bg-gray-400/10 text-gray-500';
+};
 ---
 
-<div class="skill-bar">
-	<div class="skill-info">
-		<span class="skill-name">{name}</span>
-		<div class="skill-meta">
-			<span class="skill-label" style={`color: ${getLevelColor(level)}`}>
+<div class="w-full skill-bar group" data-level={level}>
+	<div class="flex justify-between items-center mb-2.5">
+		<span class="text-sm font-medium text-foreground group-hover:text-primary transition-colors duration-300">{name}</span>
+		<div class="flex items-center gap-2">
+			<span class={`text-xs font-semibold px-2.5 py-1 rounded-full ${getLevelBgColor(level)}`}>
 				{getLevelLabel(level)}
 			</span>
-			<span class="skill-level">{level}%</span>
+			<span class="text-xs text-muted-foreground font-semibold min-w-[40px] text-right">
+				{level}%
+			</span>
 		</div>
 	</div>
-	<div class="skill-progress">
-		<div class="skill-progress-fill" style={`width: ${level}%; --fill-color: ${getLevelColor(level)}`}></div>
+	<div class="h-2 bg-secondary rounded-full overflow-hidden">
+		<div 
+			class="h-full rounded-full bg-gradient-to-r progress-bar"
+			style={`--progress: ${level}%; --gradient: linear-gradient(90deg, ${getLevelColor(level)})`}
+		/>
 	</div>
 </div>
 
 <style>
-	.skill-bar {
-		width: 100%;
+	.skill-bar:hover .progress-bar {
+		filter: brightness(1.1);
 	}
-
-	.skill-info {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		margin-bottom: 0.5rem;
+	
+	.progress-bar {
+		width: 0;
+		background: var(--gradient);
+		animation: progressFill 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+		animation-delay: 0.2s;
+		box-shadow: 0 0 10px rgba(124, 58, 237, 0.3);
 	}
-
-	.skill-name {
-		font-size: 0.9375rem;
-		color: var(--color-text-secondary);
-		font-weight: 400;
-	}
-
-	.skill-meta {
-		display: flex;
-		align-items: center;
-		gap: 0.5rem;
-	}
-
-	.skill-label {
-		font-size: 0.75rem;
-		font-weight: 500;
-		padding: 0.15rem 0.5rem;
-		border-radius: var(--radius-sm);
-		background: currentColor;
-		background-clip: padding-box;
-		position: relative;
-	}
-
-	.skill-label::before {
-		content: '';
-		position: absolute;
-		inset: 0;
-		background: currentColor;
-		opacity: 0.15;
-		border-radius: var(--radius-sm);
-	}
-
-	.skill-level {
-		font-size: 0.8125rem;
-		color: var(--color-text-tertiary);
-		font-weight: 500;
-		min-width: 36px;
-		text-align: right;
-	}
-
-	.skill-progress {
-		height: 6px;
-		background: var(--color-bg-tertiary);
-		border-radius: var(--radius-full);
-		overflow: hidden;
-	}
-
-	.skill-progress-fill {
-		height: 100%;
-		background: var(--fill-color);
-		border-radius: var(--radius-full);
-		transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-		position: relative;
-	}
-
-	.skill-progress-fill::after {
-		content: '';
-		position: absolute;
-		top: 0;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.3) 50%, transparent 100%);
-		animation: shimmer 2s infinite;
-	}
-
-	@keyframes shimmer {
-		0% { transform: translateX(-100%); }
-		100% { transform: translateX(100%); }
-	}
-
-	@media print {
-		.skill-progress {
-			height: 8px;
-			background: #e5e5e5 !important;
+	
+	@keyframes progressFill {
+		from {
+			width: 0%;
 		}
-
-		.skill-progress-fill {
-			background: #333 !important;
+		to {
+			width: var(--progress);
 		}
-
-		.skill-progress-fill::after {
-			display: none;
+	}
+	
+	@media (prefers-reduced-motion: reduce) {
+		.progress-bar {
+			animation: none;
+			width: var(--progress);
 		}
 	}
 </style>

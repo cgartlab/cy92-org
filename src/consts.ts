@@ -5,12 +5,12 @@ export const PERSONAL_INFO = {
 	name: "ChenYang",
 	nameEn: "ChenYang",
 	title: "Designer & Creator",
-	siteName: "CG艺术实验室",
+	siteName: "",
 	email: "hello@cgartlab.com",
 	location: "China",
 	personality: "INFJ",
 	hobbies: ["阅读", "写作", "养鱼", "画画", "电子产品"],
-	bio: "工具是人类肢体的延伸，电脑是大脑的延伸，写作是思考本身。",
+	bio: "画画是画画的酬劳，写作是写作的回报。",
 	description: "我是一名设计师，从事数字动态视觉设计、前端产品研发、写作与个人纯艺术创作。INFJ型，平时爱好看书写字，养鱼画画，还有各种电子产品。"
 };
 
@@ -26,28 +26,28 @@ export const SKILLS = [
 	{
 		category: "设计领域",
 		items: [
-			{ name: "数字动态视觉设计", level: 95 },
-			{ name: "CG艺术创作", level: 90 },
-			{ name: "UI/UX设计", level: 85 },
-			{ name: "品牌视觉设计", level: 88 }
+			"数字动态视觉设计",
+			"CG艺术创作",
+			"UI/UX设计",
+			"品牌视觉设计"
 		]
 	},
 	{
 		category: "技术能力",
 		items: [
-			{ name: "前端开发", level: 80 },
-			{ name: "网站搭建与维护", level: 85 },
-			{ name: "NAS/服务器管理", level: 75 },
-			{ name: "命令行工具", level: 70 }
+			"前端开发",
+			"网站搭建与维护",
+			"NAS/服务器管理",
+			"命令行工具"
 		]
 	},
 	{
 		category: "创作能力",
 		items: [
-			{ name: "写作与内容创作", level: 90 },
-			{ name: "知识管理系统", level: 85 },
-			{ name: "数字艺术", level: 88 },
-			{ name: "摄影后期", level: 75 }
+			"写作与内容创作",
+			"知识管理系统",
+			"数字艺术",
+			"摄影后期"
 		]
 	}
 ];
@@ -73,27 +73,27 @@ export const EXPERIENCE = [
 export const PROJECTS = [
 	{
 		title: "CG艺术实验室",
-		description: "个人博客网站，分享设计、技术、创作相关内容",
+		description: "分享设计、技术与创作思考的个人博客，累计超过13万字",
 		link: "https://cgartlab.com",
-		tags: ["Web", "写作", "设计"]
+		tags: ["写作", "设计", "技术"]
 	},
 	{
-		title: "LayerRenamer 1.0",
-		description: "Photoshop图层批量重命名脚本，提升设计工作效率",
+		title: "LayerRenamer",
+		description: "Photoshop图层批量重命名工具，让繁琐的命名工作变简单",
 		link: "#",
-		tags: ["工具", "设计", "效率"]
+		tags: ["工具", "效率", "设计"]
 	},
 	{
-		title: "SCP-华夏系列组画",
-		description: "个人纯艺术创作系列，融合东方美学元素",
+		title: "华夏系列",
+		description: "个人纯艺术创作，以东方美学为内核的视觉探索",
 		link: "#",
 		tags: ["艺术", "CG", "创作"]
 	},
 	{
-		title: "云端图书馆",
-		description: "个人数字化阅读与知识管理系统",
+		title: "知识管理系统",
+		description: "基于Obsidian的个人知识管理与阅读体系搭建",
 		link: "#",
-		tags: ["效率", "知识管理"]
+		tags: ["知识管理", "效率", "工具"]
 	}
 ];
 

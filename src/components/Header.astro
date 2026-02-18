@@ -11,19 +11,19 @@ const socialIcons: Record<string, string> = {
 };
 ---
 
-<header>
-	<div class="header-container">
-		<a href="/" class="logo" aria-label="返回首页">
-			<span class="logo-text">{SITE_TITLE.split(' | ')[0]}</span>
+<header id="site-header" class="sticky top-0 z-50 border-b border-border/40 bg-background/80 backdrop-blur-lg supports-[backdrop-filter]:bg-background/60 transition-shadow duration-300">
+	<div class="container-custom flex h-16 items-center justify-between">
+		<a href="/" class="text-lg font-semibold text-foreground hover:text-primary transition-colors duration-200" aria-label="返回首页">
+			{SITE_TITLE.split(' | ')[0]}
 		</a>
 
-		<nav class="main-nav" aria-label="主导航">
+		<nav class="hidden md:flex items-center gap-1" aria-label="主导航">
 			<HeaderLink href="/">首页</HeaderLink>
 			<HeaderLink href="/blog">博客</HeaderLink>
 			<HeaderLink href="/about">关于</HeaderLink>
 		</nav>
 
-		<div class="social-links">
+		<div class="hidden md:flex items-center gap-1">
 			{SOCIAL_LINKS.slice(0, 3).map(link => (
 				<a 
 					href={link.url} 
@@ -36,323 +36,162 @@ const socialIcons: Record<string, string> = {
 					<svg 
 						viewBox="0 0 16 16" 
 						aria-hidden="true" 
-						width="18" 
-						height="18" 
+						class="w-[18px] h-[18px]"
 						set:html={socialIcons[link.icon] || ''} 
 					/>
 				</a>
 			))}
+			
+			<button 
+				id="theme-toggle" 
+				class="social-link ml-2"
+				aria-label="切换主题"
+			>
+				<svg class="w-5 h-5 hidden dark:block" fill="currentColor" viewBox="0 0 16 16">
+					<path d="M8 12a4 4 0 0 0 0-8v8zM8 0a.75.75 0 0 1 .75.75v1.5a.75.75 0 0 1-1.5 0V.75A.75.75 0 0 1 8 0zm0 13a.75.75 0 0 1 .75.75v1.5a.75.75 0 0 1-1.5 0v-1.5A.75.75 0 0 1 8 13zM2.343 2.343a.75.75 0 0 1 1.061 0l1.06 1.061a.75.75 0 0 1-1.06 1.06l-1.06-1.06a.75.75 0 0 1 0-1.06zm9.193 9.193a.75.75 0 0 1 1.06 0l1.061 1.06a.75.75 0 0 1-1.06 1.061l-1.061-1.06a.75.75 0 0 1 0-1.061zM16 8a.75.75 0 0 1-.75.75h-1.5a.75.75 0 0 1 0-1.5h1.5A.75.75 0 0 1 16 8zM3 8a.75.75 0 0 1-.75.75H.75a.75.75 0 0 1 0-1.5h1.5A.75.75 0 0 1 3 8zm10.657-5.657a.75.75 0 0 1 0 1.061l-1.06 1.06a.75.75 0 0 1-1.061-1.06l1.06-1.061a.75.75 0 0 1 1.061 0zm-9.193 9.193a.75.75 0 0 1 0 1.06l-1.06 1.061a.75.75 0 0 1-1.061-1.06l1.06-1.061a.75.75 0 0 1 1.061 0z"/>
+				</svg>
+				<svg class="w-5 h-5 block dark:hidden" fill="currentColor" viewBox="0 0 16 16">
+					<path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/>
+				</svg>
+			</button>
 		</div>
 
-		<button class="mobile-menu-btn" aria-label="打开菜单" aria-expanded="false">
-			<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+		<button 
+			id="mobile-menu-btn" 
+			class="md:hidden flex items-center justify-center w-10 h-10 rounded-md hover:bg-accent/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 transition-colors"
+			aria-label="打开菜单" 
+			aria-expanded="false"
+			aria-controls="mobile-nav"
+		>
+			<svg class="w-5 h-5 menu-icon-open" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
 				<line x1="3" y1="6" x2="21" y2="6"></line>
 				<line x1="3" y1="12" x2="21" y2="12"></line>
 				<line x1="3" y1="18" x2="21" y2="18"></line>
 			</svg>
+			<svg class="w-5 h-5 menu-icon-close hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+				<line x1="18" y1="6" x2="6" y2="18"></line>
+				<line x1="6" y1="6" x2="18" y2="18"></line>
+			</svg>
 		</button>
 	</div>
 
-	<div class="mobile-nav">
-		<nav>
+	<div 
+		id="mobile-nav" 
+		class="md:hidden border-t border-border/40 bg-background/80 backdrop-blur-lg overflow-hidden transition-all duration-300 ease-in-out max-h-0 opacity-0"
+		role="navigation"
+		aria-label="移动端导航"
+	>
+		<nav class="container-custom py-4 flex flex-col gap-1">
 			<HeaderLink href="/">首页</HeaderLink>
 			<HeaderLink href="/blog">博客</HeaderLink>
 			<HeaderLink href="/about">关于</HeaderLink>
 		</nav>
-		<div class="mobile-social-links">
+		<div class="container-custom pb-4 flex gap-2 border-t border-border/40 pt-4">
 			{SOCIAL_LINKS.slice(0, 3).map(link => (
 				<a 
 					href={link.url} 
 					target="_blank" 
 					rel="noopener noreferrer" 
 					title={link.name}
+					class="social-link"
 				>
 					<span class="sr-only">{link.name}</span>
 					<svg 
 						viewBox="0 0 16 16" 
 						aria-hidden="true" 
-						width="20" 
-						height="20" 
+						class="w-5 h-5"
 						set:html={socialIcons[link.icon] || ''} 
 					/>
 				</a>
 			))}
+			<button 
+				id="theme-toggle-mobile" 
+				class="social-link"
+				aria-label="切换主题"
+			>
+				<svg class="w-5 h-5 hidden dark:block" fill="currentColor" viewBox="0 0 16 16">
+					<path d="M8 12a4 4 0 0 0 0-8v8zM8 0a.75.75 0 0 1 .75.75v1.5a.75.75 0 0 1-1.5 0V.75A.75.75 0 0 1 8 0zm0 13a.75.75 0 0 1 .75.75v1.5a.75.75 0 0 1-1.5 0v-1.5A.75.75 0 0 1 8 13zM2.343 2.343a.75.75 0 0 1 1.061 0l1.06 1.061a.75.75 0 0 1-1.06 1.06l-1.06-1.06a.75.75 0 0 1 0-1.06zm9.193 9.193a.75.75 0 0 1 1.06 0l1.061 1.06a.75.75 0 0 1-1.06 1.061l-1.061-1.06a.75.75 0 0 1 0-1.061zM16 8a.75.75 0 0 1-.75.75h-1.5a.75.75 0 0 1 0-1.5h1.5A.75.75 0 0 1 16 8zM3 8a.75.75 0 0 1-.75.75H.75a.75.75 0 0 1 0-1.5h1.5A.75.75 0 0 1 3 8zm10.657-5.657a.75.75 0 0 1 0 1.061l-1.06 1.06a.75.75 0 0 1-1.061-1.06l1.06-1.061a.75.75 0 0 1 1.061 0zm-9.193 9.193a.75.75 0 0 1 0 1.06l-1.06 1.061a.75.75 0 0 1-1.061-1.06l1.06-1.061a.75.75 0 0 1 1.061 0z"/>
+				</svg>
+				<svg class="w-5 h-5 block dark:hidden" fill="currentColor" viewBox="0 0 16 16">
+					<path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/>
+				</svg>
+			</button>
 		</div>
 	</div>
 </header>
 
-<style>
-	header {
-		position: sticky;
-		top: 0;
-		z-index: 1000;
-		background: rgba(255, 255, 255, 0.85);
-		backdrop-filter: blur(12px);
-		-webkit-backdrop-filter: blur(12px);
-		border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 12px rgba(0, 0, 0, 0.03);
-		font-family: var(--font-serif);
-	}
-
-	.header-container {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		max-width: 900px;
-		margin: 0 auto;
-		padding: 0.875rem 1.5rem;
-	}
-
-	.logo {
-		text-decoration: none;
-		color: var(--color-text-primary);
-		transition: opacity var(--transition-fast);
-	}
-
-	.logo:hover {
-		opacity: 0.75;
-	}
-
-	.logo-text {
-		font-size: 1.25rem;
-		font-weight: 500;
-		letter-spacing: -0.01em;
-	}
-
-	.main-nav {
-		display: flex;
-		align-items: center;
-		gap: 0.25rem;
-	}
-
-	.main-nav :global(a) {
-		position: relative;
-		padding: 0.5rem 1rem;
-		color: var(--color-text-tertiary);
-		text-decoration: none;
-		font-size: 0.9375rem;
-		font-weight: 400;
-		letter-spacing: 0.01em;
-		transition: color var(--transition-fast);
-		border-radius: var(--radius-md);
-	}
-
-	.main-nav :global(a:hover) {
-		color: var(--color-text-primary);
-		background: rgba(0, 0, 0, 0.03);
-	}
-
-	.main-nav :global(a.active) {
-		color: var(--color-text-primary);
-		font-weight: 500;
-	}
-
-	.main-nav :global(a.active)::after {
-		content: '';
-		position: absolute;
-		bottom: 0.25rem;
-		left: 50%;
-		transform: translateX(-50%);
-		width: 4px;
-		height: 4px;
-		background: var(--accent);
-		border-radius: 50%;
-	}
-
-	.social-links {
-		display: flex;
-		align-items: center;
-		gap: 0.125rem;
-	}
-
-	.social-link {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: 36px;
-		height: 36px;
-		color: var(--color-text-tertiary);
-		border-radius: var(--radius-md);
-		transition: all var(--transition-fast);
-	}
-
-	.social-link:hover {
-		color: var(--color-text-primary);
-		background: rgba(0, 0, 0, 0.04);
-	}
-
-	.social-link svg {
-		fill: currentColor;
-	}
-
-	.mobile-menu-btn {
-		display: none;
-		align-items: center;
-		justify-content: center;
-		width: 40px;
-		height: 40px;
-		padding: 0;
-		background: transparent;
-		border: none;
-		border-radius: var(--radius-md);
-		color: var(--color-text-primary);
-		cursor: pointer;
-		transition: background var(--transition-fast);
-	}
-
-	.mobile-menu-btn:hover {
-		background: rgba(0, 0, 0, 0.04);
-	}
-
-	.mobile-nav {
-		display: none;
-		padding: 0.75rem 1.5rem 1.25rem;
-		border-top: 1px solid rgba(0, 0, 0, 0.06);
-		background: rgba(255, 255, 255, 0.95);
-	}
-
-	.mobile-nav nav {
-		display: flex;
-		flex-direction: column;
-		gap: 0.25rem;
-	}
-
-	.mobile-nav :global(a) {
-		padding: 0.75rem 1rem;
-		color: var(--color-text-tertiary);
-		text-decoration: none;
-		font-size: 1rem;
-		border-radius: var(--radius-md);
-		transition: all var(--transition-fast);
-	}
-
-	.mobile-nav :global(a:hover),
-	.mobile-nav :global(a.active) {
-		color: var(--color-text-primary);
-		background: rgba(0, 0, 0, 0.03);
-	}
-
-	.mobile-nav :global(a.active) {
-		font-weight: 500;
-	}
-
-	.mobile-social-links {
-		display: flex;
-		gap: 0.5rem;
-		margin-top: 1rem;
-		padding-top: 1rem;
-		border-top: 1px solid rgba(0, 0, 0, 0.06);
-	}
-
-	.mobile-social-links a {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: 40px;
-		height: 40px;
-		color: var(--color-text-tertiary);
-		border-radius: var(--radius-md);
-		transition: all var(--transition-fast);
-	}
-
-	.mobile-social-links a:hover {
-		color: var(--color-text-primary);
-		background: rgba(0, 0, 0, 0.04);
-	}
-
-	.mobile-social-links svg {
-		fill: currentColor;
-	}
-
-	@media (max-width: 768px) {
-		.header-container {
-			padding: 0.75rem 1rem;
-		}
-
-		.main-nav,
-		.social-links {
-			display: none;
-		}
-
-		.mobile-menu-btn {
-			display: flex;
-		}
-
-		.mobile-nav.is-open {
-			display: block;
-		}
-	}
-
-	@media print {
-		header {
-			display: none !important;
-		}
-	}
-
-	@media (prefers-reduced-motion: reduce) {
-		* {
-			transition-duration: 0.01ms !important;
-		}
-	}
-</style>
-
 <script>
-	document.addEventListener('DOMContentLoaded', () => {
-		const menuBtn = document.querySelector('.mobile-menu-btn');
-		const mobileNav = document.querySelector('.mobile-nav');
-		const header = document.querySelector('header');
+	const header = document.getElementById('site-header');
+	const menuBtn = document.getElementById('mobile-menu-btn');
+	const mobileNav = document.getElementById('mobile-nav');
+	const iconOpen = menuBtn?.querySelector('.menu-icon-open');
+	const iconClose = menuBtn?.querySelector('.menu-icon-close');
+	let scrollPosition = 0;
 
-		if (menuBtn && mobileNav) {
-			const closeMenu = () => {
-				mobileNav.classList.remove('is-open');
-				menuBtn.setAttribute('aria-expanded', 'false');
-				menuBtn.setAttribute('aria-label', '打开菜单');
-			};
+	if (header) {
+		window.addEventListener('scroll', () => {
+			if (window.scrollY > 10) {
+				header.classList.add('shadow-md');
+			} else {
+				header.classList.remove('shadow-md');
+			}
+		});
+	}
 
-			const openMenu = () => {
-				mobileNav.classList.add('is-open');
-				menuBtn.setAttribute('aria-expanded', 'true');
-				menuBtn.setAttribute('aria-label', '关闭菜单');
-			};
+	if (menuBtn && mobileNav) {
+		const toggleMenu = (open: boolean) => {
+			if (open) {
+				scrollPosition = window.scrollY;
+				document.body.style.overflow = 'hidden';
+				document.body.style.position = 'fixed';
+				document.body.style.top = `-${scrollPosition}px`;
+				document.body.style.width = '100%';
+				
+				mobileNav.classList.remove('max-h-0', 'opacity-0');
+				mobileNav.classList.add('max-h-96', 'opacity-100');
+				iconOpen?.classList.add('hidden');
+				iconClose?.classList.remove('hidden');
+			} else {
+				document.body.style.overflow = '';
+				document.body.style.position = '';
+				document.body.style.top = '';
+				document.body.style.width = '';
+				window.scrollTo(0, scrollPosition);
+				
+				mobileNav.classList.add('max-h-0', 'opacity-0');
+				mobileNav.classList.remove('max-h-96', 'opacity-100');
+				iconOpen?.classList.remove('hidden');
+				iconClose?.classList.add('hidden');
+			}
+			
+			menuBtn.setAttribute('aria-expanded', String(open));
+			menuBtn.setAttribute('aria-label', open ? '关闭菜单' : '打开菜单');
+		};
 
-			const toggleMenu = () => {
-				if (mobileNav.classList.contains('is-open')) {
-					closeMenu();
-				} else {
-					openMenu();
-				}
-			};
+		menuBtn.addEventListener('click', () => {
+			const isOpen = !mobileNav.classList.contains('max-h-0');
+			toggleMenu(!isOpen);
+		});
 
-			menuBtn.addEventListener('click', toggleMenu);
+		document.addEventListener('keydown', (e) => {
+			if (e.key === 'Escape' && !mobileNav.classList.contains('max-h-0')) {
+				toggleMenu(false);
+			}
+		});
 
-			menuBtn.addEventListener('keydown', (e) => {
-				if (e.key === 'Enter' || e.key === ' ') {
-					e.preventDefault();
-					toggleMenu();
-				}
-			});
+		mobileNav.querySelectorAll('a').forEach(link => {
+			link.addEventListener('click', () => toggleMenu(false));
+		});
+	}
 
-			document.addEventListener('keydown', (e) => {
-				if (e.key === 'Escape' && mobileNav.classList.contains('is-open')) {
-					closeMenu();
-					menuBtn.focus();
-				}
-			});
+	const themeToggle = document.getElementById('theme-toggle');
+	const themeToggleMobile = document.getElementById('theme-toggle-mobile');
 
-			document.addEventListener('click', (e) => {
-				if (mobileNav.classList.contains('is-open')) {
-					const target = e.target as HTMLElement;
-					if (!header?.contains(target)) {
-						closeMenu();
-					}
-				}
-			});
+	const toggleTheme = () => {
+		const isDark = document.documentElement.classList.toggle('dark');
+		localStorage.setItem('theme', isDark ? 'dark' : 'light');
+	};
 
-			mobileNav.querySelectorAll('a').forEach(link => {
-				link.addEventListener('click', () => {
-					closeMenu();
-				});
-			});
-		}
-	});
+	themeToggle?.addEventListener('click', toggleTheme);
+	themeToggleMobile?.addEventListener('click', toggleTheme);
 </script>

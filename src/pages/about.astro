@@ -10,91 +10,118 @@ import { SITE_TITLE, PERSONAL_INFO, SOCIAL_LINKS } from '../consts';
 	<head>
 		<BaseHead title={`关于 | ${SITE_TITLE}`} description="关于 CG艺术实验室和作者 ChenYang" />
 	</head>
-	<body>
+	<body class="min-h-screen bg-background">
 		<Header />
-		<main>
-			<article class="about-page">
-				<h1>关于我</h1>
-				
-				<section class="intro">
-					<div class="avatar-large">
-						<span class="avatar-text">{PERSONAL_INFO.name.charAt(0)}</span>
+		<main class="container-custom py-8 md:py-12">
+			<article class="max-w-3xl mx-auto">
+				<header class="text-center mb-12">
+					<div class="w-32 h-32 rounded-full bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center mx-auto mb-6 shadow-lg">
+						<span class="text-5xl font-bold text-white">{PERSONAL_INFO.name.charAt(0)}</span>
 					</div>
-					<p class="tagline">{PERSONAL_INFO.bio}</p>
-				</section>
+					<p class="text-xl text-muted-foreground italic max-w-lg mx-auto">{PERSONAL_INFO.bio}</p>
+				</header>
 
-				<section class="content">
-					<h2>我是谁</h2>
-					<p>
-						我是一名设计师，能点开这个页面相信你看过我的作品了。INFJ 型，平时爱好看书写字，养鱼画画，还有各种电子产品。
-					</p>
-					<p>
-						目前我从事的领域主要有：
-					</p>
-					<ul>
-						<li><strong>数字动态视觉设计</strong></li>
-						<li><strong>前端产品研发</strong></li>
-						<li><strong>写作</strong></li>
-						<li><strong>个人纯艺术作品</strong></li>
-					</ul>
+				<div class="prose prose-lg dark:prose-invert max-w-none">
+					<section class="mb-10">
+						<h2 class="text-2xl font-semibold text-foreground mb-4 pb-2 border-b-2 border-primary inline-block">我是谁</h2>
+						<p class="text-muted-foreground leading-relaxed">
+							我是一名设计师，能点开这个页面相信你看过我的作品了。INFJ 型，平时爱好看书写字，养鱼画画，还有各种电子产品。
+						</p>
+						<p class="text-muted-foreground leading-relaxed">
+							目前我从事的领域主要有：
+						</p>
+						<ul class="list-none pl-0 space-y-2">
+							<li class="flex items-center gap-2 text-muted-foreground">
+								<span class="text-primary">→</span>
+								<strong>数字动态视觉设计</strong>
+							</li>
+							<li class="flex items-center gap-2 text-muted-foreground">
+								<span class="text-primary">→</span>
+								<strong>前端产品研发</strong>
+							</li>
+							<li class="flex items-center gap-2 text-muted-foreground">
+								<span class="text-primary">→</span>
+								<strong>写作</strong>
+							</li>
+							<li class="flex items-center gap-2 text-muted-foreground">
+								<span class="text-primary">→</span>
+								<strong>个人纯艺术作品</strong>
+							</li>
+						</ul>
+					</section>
 
-					<h2>商业与创作</h2>
-					<p>
-						商业部分，就是收钱办事，纯粹为了吃饭。做的东西十有八九我都不会放到自己的作品集里，虽然出自我手，但有客户和同事参与，一般我不认同那是我设计的。而且它们不是作品，是商品。
-					</p>
-					<p>
-						剩下会收录到作品集里的一二，是感觉相对不错的，值得多花些精力弄一弄。这些项目里，有的是因为涉及到自己感兴趣的领域，有的是和客户的审美气味相投，还有的是因为有对自己的能力有一定的挑战，能占一条就会引起我的注意。
-					</p>
-					<p>
-						讲句可能欠揍的话，大概从 2019 年之后，我几乎没怎么担心过会没有客户来找自己做生意，可能因为这一点，中间有段时间还是松懈了，做事总是有拖延的心态。还有个我觉得很重要的原因是，商业性质的设计产物，本质是谈判的产物，而谈判终究是一门妥协的艺术。这门艺术，我的修炼还差的很远。
-					</p>
+					<section class="mb-10">
+						<h2 class="text-2xl font-semibold text-foreground mb-4 pb-2 border-b-2 border-primary inline-block">商业与创作</h2>
+						<p class="text-muted-foreground leading-relaxed">
+							商业部分，就是收钱办事，纯粹为了吃饭。做的东西十有八九我都不会放到自己的作品集里，虽然出自我手，但有客户和同事参与，一般我不认同那是我设计的。而且它们不是作品，是商品。
+						</p>
+						<p class="text-muted-foreground leading-relaxed">
+							剩下会收录到作品集里的一二，是感觉相对不错的，值得多花些精力弄一弄。这些项目里，有的是因为涉及到自己感兴趣的领域，有的是和客户的审美气味相投，还有的是因为有对自己的能力有一定的挑战，能占一条就会引起我的注意。
+						</p>
+						<p class="text-muted-foreground leading-relaxed">
+							讲句可能欠揍的话，大概从 2019 年之后，我几乎没怎么担心过会没有客户来找自己做生意，可能因为这一点，中间有段时间还是松懈了，做事总是有拖延的心态。还有个我觉得很重要的原因是，商业性质的设计产物，本质是谈判的产物，而谈判终究是一门妥协的艺术。这门艺术，我的修炼还差的很远。
+						</p>
+					</section>
 
-					<h2>技术探索</h2>
-					<p>
-						工作，整天和电脑打交道，首先对电脑本身我就很感兴趣，经常暗暗开心自己可以活在有电脑用的伟大时代。自然就泡在和电脑相关的各种自觉有趣的事物上。
-					</p>
-					<p>
-						从搭建私人的服务器，DIY Nas，到建立第一个真正属于自己的网站，慢慢体验只使用键盘敲命令和各种快捷键来控制电脑的简洁和优雅（因为做设计一直都在用鼠标和手绘板，反而感到这样有些笨拙），这个过程有一种说不出的愉悦。
-					</p>
+					<section class="mb-10">
+						<h2 class="text-2xl font-semibold text-foreground mb-4 pb-2 border-b-2 border-primary inline-block">技术探索</h2>
+						<p class="text-muted-foreground leading-relaxed">
+							工作，整天和电脑打交道，首先对电脑本身我就很感兴趣，经常暗暗开心自己可以活在有电脑用的伟大时代。自然就泡在和电脑相关的各种自觉有趣的事物上。
+						</p>
+						<p class="text-muted-foreground leading-relaxed">
+							从搭建私人的服务器，DIY Nas，到建立第一个真正属于自己的网站，慢慢体验只使用键盘敲命令和各种快捷键来控制电脑的简洁和优雅（因为做设计一直都在用鼠标和手绘板，反而感到这样有些笨拙），这个过程有一种说不出的愉悦。
+						</p>
+					</section>
 
-					<h2>工具与思考</h2>
-					<p>
-						听说过这么一句，讲"工具是人类肢体的延伸"。比如扇子是手的延伸，轮子是腿脚的延伸，电话是口耳的延伸。以此类推，看来电脑是人脑的延伸。
-					</p>
-					<p>
-						我也写过很多篇文章来分享这个，里面粗略讲了我自己怎么看待数字笔记这个工具，实际上广义层面上看，做设计也好，写文章、敲代码也好，都是在说如何用电脑这个工具去更好的创作，去更好的认识，熟悉，打磨这个工具，让它更顺畅高效地解决实在的问题。
-					</p>
-					<p>
-						计算机是这颗星球上最聪明的一群人设计的，和我一样的大部分普通人很难让电脑去真正适应自己，经常无从下手。对此，我自己有一套底层逻辑是：找到准确的问题，提升自己的实力，以配得上自己想用的工具。
-					</p>
+					<section class="mb-10">
+						<h2 class="text-2xl font-semibold text-foreground mb-4 pb-2 border-b-2 border-primary inline-block">工具与思考</h2>
+						<p class="text-muted-foreground leading-relaxed">
+							听说过这么一句，讲"工具是人类肢体的延伸"。比如扇子是手的延伸，轮子是腿脚的延伸，电话是口耳的延伸。以此类推，看来电脑是人脑的延伸。
+						</p>
+						<p class="text-muted-foreground leading-relaxed">
+							我也写过很多篇文章来分享这个，里面粗略讲了我自己怎么看待数字笔记这个工具，实际上广义层面上看，做设计也好，写文章、敲代码也好，都是在说如何用电脑这个工具去更好的创作，去更好的认识，熟悉，打磨这个工具，让它更顺畅高效地解决实在的问题。
+						</p>
+						<p class="text-muted-foreground leading-relaxed">
+							计算机是这颗星球上最聪明的一群人设计的，和我一样的大部分普通人很难让电脑去真正适应自己，经常无从下手。对此，我自己有一套底层逻辑是：找到准确的问题，提升自己的实力，以配得上自己想用的工具。
+						</p>
+					</section>
 
-					<h2>写作的意义</h2>
-					<p>
-						搁以前，我遇到的每个问题，小到去搜一个快捷键，大到去攒一台黑苹果主机，都不会想把这些过程记录下来，第一觉得麻烦，第二是觉得技术更新这么快，这些方法甚至可能一段时间就过时了。
-					</p>
-					<p>
-						现在看来，大错特错。这些技巧和方法，虽都是"术"，但这种思想，不符合"道"。我决定还是老老实实记录这些过程，这终究是属于我自己的创作、技巧、经验、思考，路始终只有自己在慢慢走，公开发布出来更多是让这些内容先过得掉自己这关。
-					</p>
+					<section class="mb-10">
+						<h2 class="text-2xl font-semibold text-foreground mb-4 pb-2 border-b-2 border-primary inline-block">写作的意义</h2>
+						<p class="text-muted-foreground leading-relaxed">
+							搁以前，我遇到的每个问题，小到去搜一个快捷键，大到去攒一台黑苹果主机，都不会想把这些过程记录下来，第一觉得麻烦，第二是觉得技术更新这么快，这些方法甚至可能一段时间就过时了。
+						</p>
+						<p class="text-muted-foreground leading-relaxed">
+							现在看来，大错特错。这些技巧和方法，虽都是"术"，但这种思想，不符合"道"。我决定还是老老实实记录这些过程，这终究是属于我自己的创作、技巧、经验、思考，路始终只有自己在慢慢走，公开发布出来更多是让这些内容先过得掉自己这关。
+						</p>
+					</section>
 
-					<h2>关于本站</h2>
-					<p>
-						本站是我的个人创作之一，起心动念很久，一直想在网上有个属于自己的容器。容器里的内容，是我可以公开的精神世界。创造精神世界的主要手段是「CG艺术」整个创造过程也是一次精神实验，所以就叫【CG艺术实验室】吧。
-					</p>
-				</section>
+					<section class="mb-10">
+						<h2 class="text-2xl font-semibold text-foreground mb-4 pb-2 border-b-2 border-primary inline-block">关于本站</h2>
+						<p class="text-muted-foreground leading-relaxed">
+							本站是我的个人创作之一，起心动念很久，一直想在网上有个属于自己的容器。容器里的内容，是我可以公开的精神世界。创造精神世界的主要手段是「CG艺术」整个创造过程也是一次精神实验，所以就叫【CG艺术实验室】吧。
+						</p>
+					</section>
+				</div>
 
-				<section class="contact">
-					<h2>联系方式</h2>
-					<div class="contact-links">
-						<a href="mailto:hello@cgartlab.com" class="contact-item">
-							<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+				<section class="mt-12 pt-8 border-t border-border">
+					<h2 class="text-xl font-semibold text-foreground mb-6 text-center">联系方式</h2>
+					<div class="flex flex-wrap justify-center gap-3">
+						<a href="mailto:hello@cgartlab.com" class="tag hover:bg-primary hover:text-primary-foreground">
+							<svg class="w-4 h-4" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
 								<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
 								<polyline points="22,6 12,13 2,6"></polyline>
 							</svg>
-							<span>Email</span>
+							Email
 						</a>
 						{SOCIAL_LINKS.map(link => (
-							<a href={link.url} target="_blank" rel="noopener noreferrer" class="contact-item">
-								<span>{link.name}</span>
+							<a 
+								href={link.url} 
+								target="_blank" 
+								rel="noopener noreferrer" 
+								class="tag hover:bg-primary hover:text-primary-foreground"
+							>
+								{link.name}
 							</a>
 						))}
 					</div>
@@ -104,137 +131,3 @@ import { SITE_TITLE, PERSONAL_INFO, SOCIAL_LINKS } from '../consts';
 		<Footer />
 	</body>
 </html>
-
-<style>
-	.about-page {
-		max-width: 720px;
-		margin: 0 auto;
-		padding: 2rem 1rem;
-	}
-
-	h1 {
-		font-size: 2.5rem;
-		margin-bottom: 2rem;
-		text-align: center;
-	}
-
-	.intro {
-		text-align: center;
-		margin-bottom: 3rem;
-	}
-
-	.avatar-large {
-		width: 150px;
-		height: 150px;
-		border-radius: 50%;
-		background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		margin-bottom: 1.5rem;
-		box-shadow: 0 8px 32px rgba(var(--accent), 0.3);
-	}
-
-	.avatar-large .avatar-text {
-		font-size: 4rem;
-		font-weight: 700;
-		color: white;
-	}
-
-	.tagline {
-		font-size: 1.25rem;
-		color: rgb(var(--gray));
-		font-style: italic;
-		max-width: 500px;
-		margin: 0 auto;
-	}
-
-	.content {
-		line-height: 1.8;
-	}
-
-	.content h2 {
-		font-size: 1.5rem;
-		margin: 2rem 0 1rem;
-		color: rgb(var(--black));
-		padding-bottom: 0.5rem;
-		border-bottom: 2px solid var(--accent);
-		display: inline-block;
-	}
-
-	.content p {
-		margin-bottom: 1rem;
-		color: rgb(var(--gray-dark));
-	}
-
-	.content ul {
-		list-style: none;
-		padding-left: 0;
-		margin: 1rem 0;
-	}
-
-	.content li {
-		padding: 0.5rem 0;
-		padding-left: 1.5rem;
-		position: relative;
-		color: rgb(var(--gray-dark));
-	}
-
-	.content li::before {
-		content: '→';
-		position: absolute;
-		left: 0;
-		color: var(--accent);
-	}
-
-	.contact {
-		margin-top: 3rem;
-		padding-top: 2rem;
-		border-top: 1px solid rgb(var(--gray-light));
-	}
-
-	.contact h2 {
-		font-size: 1.5rem;
-		margin-bottom: 1.5rem;
-		text-align: center;
-	}
-
-	.contact-links {
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: center;
-		gap: 1rem;
-	}
-
-	.contact-item {
-		display: flex;
-		align-items: center;
-		gap: 0.5rem;
-		padding: 0.75rem 1.5rem;
-		background: rgb(var(--gray-light));
-		border-radius: 8px;
-		text-decoration: none;
-		color: rgb(var(--gray-dark));
-		transition: all 0.3s ease;
-	}
-
-	.contact-item:hover {
-		background: var(--accent);
-		color: white;
-	}
-
-	@media (max-width: 720px) {
-		h1 {
-			font-size: 2rem;
-		}
-
-		.avatar-large {
-			width: 120px;
-			height: 120px;
-		}
-
-		.avatar-large .avatar-text {
-			font-size: 3rem;
-		}
-	}
-</style>
