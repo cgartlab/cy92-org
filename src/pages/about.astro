@@ -1,62 +1,240 @@
 ---
-import Layout from '../layouts/BlogPost.astro';
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_TITLE, PERSONAL_INFO, SOCIAL_LINKS } from '../consts';
 ---
 
-<Layout
-	title="About Me"
-	description="Lorem ipsum dolor sit amet"
-	pubDate={new Date('August 08 2021')}
-	heroImage="/blog-placeholder-about.jpg"
->
-	<p>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-		labore et dolore magna aliqua. Vitae ultricies leo integer malesuada nunc vel risus commodo
-		viverra. Adipiscing enim eu turpis egestas pretium. Euismod elementum nisi quis eleifend quam
-		adipiscing. In hac habitasse platea dictumst vestibulum. Sagittis purus sit amet volutpat. Netus
-		et malesuada fames ac turpis egestas. Eget magna fermentum iaculis eu non diam phasellus
-		vestibulum lorem. Varius sit amet mattis vulputate enim. Habitasse platea dictumst quisque
-		sagittis. Integer quis auctor elit sed vulputate mi. Dictumst quisque sagittis purus sit amet.
-	</p>
+<!doctype html>
+<html lang="zh-CN">
+	<head>
+		<BaseHead title={`关于 | ${SITE_TITLE}`} description="关于 CG艺术实验室和作者 ChenYang" />
+	</head>
+	<body>
+		<Header />
+		<main>
+			<article class="about-page">
+				<h1>关于我</h1>
+				
+				<section class="intro">
+					<div class="avatar-large">
+						<span class="avatar-text">{PERSONAL_INFO.name.charAt(0)}</span>
+					</div>
+					<p class="tagline">{PERSONAL_INFO.bio}</p>
+				</section>
 
-	<p>
-		Morbi tristique senectus et netus. Id semper risus in hendrerit gravida rutrum quisque non
-		tellus. Habitasse platea dictumst quisque sagittis purus sit amet. Tellus molestie nunc non
-		blandit massa. Cursus vitae congue mauris rhoncus. Accumsan tortor posuere ac ut. Fringilla urna
-		porttitor rhoncus dolor. Elit ullamcorper dignissim cras tincidunt lobortis. In cursus turpis
-		massa tincidunt dui ut ornare lectus. Integer feugiat scelerisque varius morbi enim nunc.
-		Bibendum neque egestas congue quisque egestas diam. Cras ornare arcu dui vivamus arcu felis
-		bibendum. Dignissim suspendisse in est ante in nibh mauris. Sed tempus urna et pharetra pharetra
-		massa massa ultricies mi.
-	</p>
+				<section class="content">
+					<h2>我是谁</h2>
+					<p>
+						我是一名设计师，能点开这个页面相信你看过我的作品了。INFJ 型，平时爱好看书写字，养鱼画画，还有各种电子产品。
+					</p>
+					<p>
+						目前我从事的领域主要有：
+					</p>
+					<ul>
+						<li><strong>数字动态视觉设计</strong></li>
+						<li><strong>前端产品研发</strong></li>
+						<li><strong>写作</strong></li>
+						<li><strong>个人纯艺术作品</strong></li>
+					</ul>
 
-	<p>
-		Mollis nunc sed id semper risus in. Convallis a cras semper auctor neque. Diam sit amet nisl
-		suscipit. Lacus viverra vitae congue eu consequat ac felis donec. Egestas integer eget aliquet
-		nibh praesent tristique magna sit amet. Eget magna fermentum iaculis eu non diam. In vitae
-		turpis massa sed elementum. Tristique et egestas quis ipsum suspendisse ultrices. Eget lorem
-		dolor sed viverra ipsum. Vel turpis nunc eget lorem dolor sed viverra. Posuere ac ut consequat
-		semper viverra nam. Laoreet suspendisse interdum consectetur libero id faucibus. Diam phasellus
-		vestibulum lorem sed risus ultricies tristique. Rhoncus dolor purus non enim praesent elementum
-		facilisis. Ultrices tincidunt arcu non sodales neque. Tempus egestas sed sed risus pretium quam
-		vulputate. Viverra suspendisse potenti nullam ac tortor vitae purus faucibus ornare. Fringilla
-		urna porttitor rhoncus dolor purus non. Amet dictum sit amet justo donec enim.
-	</p>
+					<h2>商业与创作</h2>
+					<p>
+						商业部分，就是收钱办事，纯粹为了吃饭。做的东西十有八九我都不会放到自己的作品集里，虽然出自我手，但有客户和同事参与，一般我不认同那是我设计的。而且它们不是作品，是商品。
+					</p>
+					<p>
+						剩下会收录到作品集里的一二，是感觉相对不错的，值得多花些精力弄一弄。这些项目里，有的是因为涉及到自己感兴趣的领域，有的是和客户的审美气味相投，还有的是因为有对自己的能力有一定的挑战，能占一条就会引起我的注意。
+					</p>
+					<p>
+						讲句可能欠揍的话，大概从 2019 年之后，我几乎没怎么担心过会没有客户来找自己做生意，可能因为这一点，中间有段时间还是松懈了，做事总是有拖延的心态。还有个我觉得很重要的原因是，商业性质的设计产物，本质是谈判的产物，而谈判终究是一门妥协的艺术。这门艺术，我的修炼还差的很远。
+					</p>
 
-	<p>
-		Mattis ullamcorper velit sed ullamcorper morbi tincidunt. Tortor posuere ac ut consequat semper
-		viverra. Tellus mauris a diam maecenas sed enim ut sem viverra. Venenatis urna cursus eget nunc
-		scelerisque viverra mauris in. Arcu ac tortor dignissim convallis aenean et tortor at. Curabitur
-		gravida arcu ac tortor dignissim convallis aenean et tortor. Egestas tellus rutrum tellus
-		pellentesque eu. Fusce ut placerat orci nulla pellentesque dignissim enim sit amet. Ut enim
-		blandit volutpat maecenas volutpat blandit aliquam etiam. Id donec ultrices tincidunt arcu. Id
-		cursus metus aliquam eleifend mi.
-	</p>
+					<h2>技术探索</h2>
+					<p>
+						工作，整天和电脑打交道，首先对电脑本身我就很感兴趣，经常暗暗开心自己可以活在有电脑用的伟大时代。自然就泡在和电脑相关的各种自觉有趣的事物上。
+					</p>
+					<p>
+						从搭建私人的服务器，DIY Nas，到建立第一个真正属于自己的网站，慢慢体验只使用键盘敲命令和各种快捷键来控制电脑的简洁和优雅（因为做设计一直都在用鼠标和手绘板，反而感到这样有些笨拙），这个过程有一种说不出的愉悦。
+					</p>
 
-	<p>
-		Tempus quam pellentesque nec nam aliquam sem. Risus at ultrices mi tempus imperdiet. Id porta
-		nibh venenatis cras sed felis eget velit. Ipsum a arcu cursus vitae. Facilisis magna etiam
-		tempor orci eu lobortis elementum. Tincidunt dui ut ornare lectus sit. Quisque non tellus orci
-		ac. Blandit libero volutpat sed cras. Nec tincidunt praesent semper feugiat nibh sed pulvinar
-		proin gravida. Egestas integer eget aliquet nibh praesent tristique magna.
-	</p>
-</Layout>
+					<h2>工具与思考</h2>
+					<p>
+						听说过这么一句，讲"工具是人类肢体的延伸"。比如扇子是手的延伸，轮子是腿脚的延伸，电话是口耳的延伸。以此类推，看来电脑是人脑的延伸。
+					</p>
+					<p>
+						我也写过很多篇文章来分享这个，里面粗略讲了我自己怎么看待数字笔记这个工具，实际上广义层面上看，做设计也好，写文章、敲代码也好，都是在说如何用电脑这个工具去更好的创作，去更好的认识，熟悉，打磨这个工具，让它更顺畅高效地解决实在的问题。
+					</p>
+					<p>
+						计算机是这颗星球上最聪明的一群人设计的，和我一样的大部分普通人很难让电脑去真正适应自己，经常无从下手。对此，我自己有一套底层逻辑是：找到准确的问题，提升自己的实力，以配得上自己想用的工具。
+					</p>
+
+					<h2>写作的意义</h2>
+					<p>
+						搁以前，我遇到的每个问题，小到去搜一个快捷键，大到去攒一台黑苹果主机，都不会想把这些过程记录下来，第一觉得麻烦，第二是觉得技术更新这么快，这些方法甚至可能一段时间就过时了。
+					</p>
+					<p>
+						现在看来，大错特错。这些技巧和方法，虽都是"术"，但这种思想，不符合"道"。我决定还是老老实实记录这些过程，这终究是属于我自己的创作、技巧、经验、思考，路始终只有自己在慢慢走，公开发布出来更多是让这些内容先过得掉自己这关。
+					</p>
+
+					<h2>关于本站</h2>
+					<p>
+						本站是我的个人创作之一，起心动念很久，一直想在网上有个属于自己的容器。容器里的内容，是我可以公开的精神世界。创造精神世界的主要手段是「CG艺术」整个创造过程也是一次精神实验，所以就叫【CG艺术实验室】吧。
+					</p>
+				</section>
+
+				<section class="contact">
+					<h2>联系方式</h2>
+					<div class="contact-links">
+						<a href="mailto:hello@cgartlab.com" class="contact-item">
+							<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+								<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+								<polyline points="22,6 12,13 2,6"></polyline>
+							</svg>
+							<span>Email</span>
+						</a>
+						{SOCIAL_LINKS.map(link => (
+							<a href={link.url} target="_blank" rel="noopener noreferrer" class="contact-item">
+								<span>{link.name}</span>
+							</a>
+						))}
+					</div>
+				</section>
+			</article>
+		</main>
+		<Footer />
+	</body>
+</html>
+
+<style>
+	.about-page {
+		max-width: 720px;
+		margin: 0 auto;
+		padding: 2rem 1rem;
+	}
+
+	h1 {
+		font-size: 2.5rem;
+		margin-bottom: 2rem;
+		text-align: center;
+	}
+
+	.intro {
+		text-align: center;
+		margin-bottom: 3rem;
+	}
+
+	.avatar-large {
+		width: 150px;
+		height: 150px;
+		border-radius: 50%;
+		background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		margin-bottom: 1.5rem;
+		box-shadow: 0 8px 32px rgba(var(--accent), 0.3);
+	}
+
+	.avatar-large .avatar-text {
+		font-size: 4rem;
+		font-weight: 700;
+		color: white;
+	}
+
+	.tagline {
+		font-size: 1.25rem;
+		color: rgb(var(--gray));
+		font-style: italic;
+		max-width: 500px;
+		margin: 0 auto;
+	}
+
+	.content {
+		line-height: 1.8;
+	}
+
+	.content h2 {
+		font-size: 1.5rem;
+		margin: 2rem 0 1rem;
+		color: rgb(var(--black));
+		padding-bottom: 0.5rem;
+		border-bottom: 2px solid var(--accent);
+		display: inline-block;
+	}
+
+	.content p {
+		margin-bottom: 1rem;
+		color: rgb(var(--gray-dark));
+	}
+
+	.content ul {
+		list-style: none;
+		padding-left: 0;
+		margin: 1rem 0;
+	}
+
+	.content li {
+		padding: 0.5rem 0;
+		padding-left: 1.5rem;
+		position: relative;
+		color: rgb(var(--gray-dark));
+	}
+
+	.content li::before {
+		content: '→';
+		position: absolute;
+		left: 0;
+		color: var(--accent);
+	}
+
+	.contact {
+		margin-top: 3rem;
+		padding-top: 2rem;
+		border-top: 1px solid rgb(var(--gray-light));
+	}
+
+	.contact h2 {
+		font-size: 1.5rem;
+		margin-bottom: 1.5rem;
+		text-align: center;
+	}
+
+	.contact-links {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 1rem;
+	}
+
+	.contact-item {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		padding: 0.75rem 1.5rem;
+		background: rgb(var(--gray-light));
+		border-radius: 8px;
+		text-decoration: none;
+		color: rgb(var(--gray-dark));
+		transition: all 0.3s ease;
+	}
+
+	.contact-item:hover {
+		background: var(--accent);
+		color: white;
+	}
+
+	@media (max-width: 720px) {
+		h1 {
+			font-size: 2rem;
+		}
+
+		.avatar-large {
+			width: 120px;
+			height: 120px;
+		}
+
+		.avatar-large .avatar-text {
+			font-size: 3rem;
+		}
+	}
+</style>

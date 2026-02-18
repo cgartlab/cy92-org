@@ -1,0 +1,99 @@
+---
+interface Props {
+	title: string;
+	description: string;
+	link: string;
+	tags: string[];
+}
+
+const { title, description, link, tags } = Astro.props;
+---
+
+<div class="project-card">
+	<div class="project-content">
+		<h3 class="project-title">{title}</h3>
+		<p class="project-description">{description}</p>
+		<div class="project-tags">
+			{tags.map(tag => (
+				<span class="project-tag">{tag}</span>
+			))}
+		</div>
+	</div>
+	<a href={link} class="project-link" target={link.startsWith('http') ? '_blank' : undefined} rel={link.startsWith('http') ? 'noopener noreferrer' : undefined}>
+		<span class="sr-only">查看项目</span>
+		<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+			<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+			<polyline points="15 3 21 3 21 9"></polyline>
+			<line x1="10" y1="14" x2="21" y2="3"></line>
+		</svg>
+	</a>
+</div>
+
+<style>
+	.project-card {
+		background: white;
+		border: 1px solid rgb(var(--gray-light));
+		border-radius: 12px;
+		padding: 1.5rem;
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-start;
+		gap: 1rem;
+		transition: all 0.3s ease;
+	}
+
+	.project-card:hover {
+		border-color: var(--accent);
+		box-shadow: 0 4px 20px rgba(var(--gray), 15%);
+		transform: translateY(-2px);
+	}
+
+	.project-content {
+		flex: 1;
+	}
+
+	.project-title {
+		font-size: 1.1rem;
+		color: rgb(var(--black));
+		margin-bottom: 0.5rem;
+	}
+
+	.project-description {
+		font-size: 0.9rem;
+		color: rgb(var(--gray));
+		line-height: 1.6;
+		margin-bottom: 1rem;
+	}
+
+	.project-tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+	}
+
+	.project-tag {
+		font-size: 0.75rem;
+		padding: 0.25rem 0.75rem;
+		background: rgb(var(--gray-light));
+		color: rgb(var(--gray-dark));
+		border-radius: 12px;
+	}
+
+	.project-link {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 40px;
+		height: 40px;
+		border-radius: 50%;
+		background: rgb(var(--gray-light));
+		color: rgb(var(--gray));
+		transition: all 0.3s ease;
+		flex-shrink: 0;
+	}
+
+	.project-link:hover {
+		background: var(--accent);
+		color: white;
+	}
+</style>
