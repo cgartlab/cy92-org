@@ -5,15 +5,34 @@ interface Props {
 }
 
 const { name, level } = Astro.props;
+
+const getLevelColor = (level: number): string => {
+	if (level >= 90) return 'var(--accent)';
+	if (level >= 80) return '#10b981';
+	if (level >= 70) return '#f59e0b';
+	return '#6b7280';
+};
+
+const getLevelLabel = (level: number): string => {
+	if (level >= 90) return '精通';
+	if (level >= 80) return '熟练';
+	if (level >= 70) return '良好';
+	return '基础';
+};
 ---
 
 <div class="skill-bar">
 	<div class="skill-info">
 		<span class="skill-name">{name}</span>
-		<span class="skill-level">{level}%</span>
+		<div class="skill-meta">
+			<span class="skill-label" style={`color: ${getLevelColor(level)}`}>
+				{getLevelLabel(level)}
+			</span>
+			<span class="skill-level">{level}%</span>
+		</div>
 	</div>
 	<div class="skill-progress">
-		<div class="skill-progress-fill" style={`width: ${level}%`}></div>
+		<div class="skill-progress-fill" style={`width: ${level}%; --fill-color: ${getLevelColor(level)}`}></div>
 	</div>
 </div>
 
@@ -25,31 +44,92 @@ const { name, level } = Astro.props;
 	.skill-info {
 		display: flex;
 		justify-content: space-between;
+		align-items: center;
 		margin-bottom: 0.5rem;
 	}
 
 	.skill-name {
-		font-size: 0.9rem;
-		color: rgb(var(--gray-dark));
+		font-size: 0.9375rem;
+		color: var(--color-text-secondary);
+		font-weight: 400;
+	}
+
+	.skill-meta {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+	}
+
+	.skill-label {
+		font-size: 0.75rem;
 		font-weight: 500;
+		padding: 0.15rem 0.5rem;
+		border-radius: var(--radius-sm);
+		background: currentColor;
+		background-clip: padding-box;
+		position: relative;
+	}
+
+	.skill-label::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background: currentColor;
+		opacity: 0.15;
+		border-radius: var(--radius-sm);
 	}
 
 	.skill-level {
-		font-size: 0.85rem;
-		color: rgb(var(--gray));
+		font-size: 0.8125rem;
+		color: var(--color-text-tertiary);
+		font-weight: 500;
+		min-width: 36px;
+		text-align: right;
 	}
 
 	.skill-progress {
-		height: 8px;
-		background: rgb(var(--gray-light));
-		border-radius: 4px;
+		height: 6px;
+		background: var(--color-bg-tertiary);
+		border-radius: var(--radius-full);
 		overflow: hidden;
 	}
 
 	.skill-progress-fill {
 		height: 100%;
-		background: linear-gradient(90deg, var(--accent) 0%, var(--accent-dark) 100%);
-		border-radius: 4px;
-		transition: width 0.6s ease;
+		background: var(--fill-color);
+		border-radius: var(--radius-full);
+		transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+		position: relative;
+	}
+
+	.skill-progress-fill::after {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.3) 50%, transparent 100%);
+		animation: shimmer 2s infinite;
+	}
+
+	@keyframes shimmer {
+		0% { transform: translateX(-100%); }
+		100% { transform: translateX(100%); }
+	}
+
+	@media print {
+		.skill-progress {
+			height: 8px;
+			background: #e5e5e5 !important;
+		}
+
+		.skill-progress-fill {
+			background: #333 !important;
+		}
+
+		.skill-progress-fill::after {
+			display: none;
+		}
 	}
 </style>

@@ -9,91 +9,221 @@ interface Props {
 const { title, description, link, tags } = Astro.props;
 ---
 
-<div class="project-card">
-	<div class="project-content">
+<article class="project-card">
+	<div class="card-cover">
+		<div class="cover-gradient"></div>
+		<div class="cover-icon">
+			<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+				<path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+			</svg>
+		</div>
+	</div>
+	
+	<div class="card-content">
 		<h3 class="project-title">{title}</h3>
 		<p class="project-description">{description}</p>
+		
 		<div class="project-tags">
 			{tags.map(tag => (
 				<span class="project-tag">{tag}</span>
 			))}
 		</div>
+		
+		<a 
+			href={link} 
+			class="project-link"
+			target={link.startsWith('http') ? '_blank' : undefined}
+			rel={link.startsWith('http') ? 'noopener noreferrer' : undefined}
+		>
+			<span class="link-text">查看详情</span>
+			<span class="link-icon">
+				<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+					<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+					<polyline points="15 3 21 3 21 9"/>
+					<line x1="10" y1="14" x2="21" y2="3"/>
+				</svg>
+			</span>
+			<span class="link-arrow">
+				<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+					<line x1="5" y1="12" x2="19" y2="12"/>
+					<polyline points="12 5 19 12 12 19"/>
+				</svg>
+			</span>
+		</a>
 	</div>
-	<a href={link} class="project-link" target={link.startsWith('http') ? '_blank' : undefined} rel={link.startsWith('http') ? 'noopener noreferrer' : undefined}>
-		<span class="sr-only">查看项目</span>
-		<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-			<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-			<polyline points="15 3 21 3 21 9"></polyline>
-			<line x1="10" y1="14" x2="21" y2="3"></line>
-		</svg>
-	</a>
-</div>
+</article>
 
 <style>
 	.project-card {
-		background: white;
-		border: 1px solid rgb(var(--gray-light));
-		border-radius: 12px;
-		padding: 1.5rem;
+		position: relative;
+		background: var(--color-bg-primary);
+		border-radius: var(--radius-xl);
+		overflow: hidden;
+		height: 100%;
 		display: flex;
-		justify-content: space-between;
-		align-items: flex-start;
-		gap: 1rem;
-		transition: all 0.3s ease;
+		flex-direction: column;
+		transition: all var(--transition-base);
+		border: 1px solid var(--color-border);
 	}
 
 	.project-card:hover {
+		transform: translateY(-4px);
+		box-shadow: var(--shadow-lg);
 		border-color: var(--accent);
-		box-shadow: 0 4px 20px rgba(var(--gray), 15%);
-		transform: translateY(-2px);
 	}
 
-	.project-content {
+	.card-cover {
+		position: relative;
+		height: 100px;
+		background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+		overflow: hidden;
+	}
+
+	.cover-gradient {
+		position: absolute;
+		inset: 0;
+		background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.1) 100%);
+	}
+
+	.cover-icon {
+		position: absolute;
+		bottom: 12px;
+		right: 12px;
+		color: white;
+		opacity: 0.3;
+		transition: all var(--transition-fast);
+	}
+
+	.project-card:hover .cover-icon {
+		opacity: 0.5;
+		transform: scale(1.1);
+	}
+
+	.card-content {
+		padding: 1.25rem;
+		display: flex;
+		flex-direction: column;
 		flex: 1;
 	}
 
 	.project-title {
 		font-size: 1.1rem;
-		color: rgb(var(--black));
-		margin-bottom: 0.5rem;
+		font-weight: 500;
+		color: var(--color-text-primary);
+		margin: 0 0 0.5rem 0;
+		letter-spacing: -0.01em;
 	}
 
 	.project-description {
-		font-size: 0.9rem;
-		color: rgb(var(--gray));
-		line-height: 1.6;
-		margin-bottom: 1rem;
+		font-size: 0.875rem;
+		color: var(--color-text-secondary);
+		line-height: 1.7;
+		margin: 0 0 1rem 0;
+		flex: 1;
 	}
 
 	.project-tags {
 		display: flex;
 		flex-wrap: wrap;
-		gap: 0.5rem;
+		gap: 0.4rem;
+		margin-bottom: 1rem;
 	}
 
 	.project-tag {
 		font-size: 0.75rem;
-		padding: 0.25rem 0.75rem;
-		background: rgb(var(--gray-light));
-		color: rgb(var(--gray-dark));
-		border-radius: 12px;
+		padding: 0.3rem 0.7rem;
+		background: var(--color-bg-secondary);
+		color: var(--color-text-secondary);
+		border-radius: var(--radius-full);
+		transition: all var(--transition-fast);
+	}
+
+	.project-card:hover .project-tag {
+		background: var(--accent-subtle);
+		color: var(--accent);
 	}
 
 	.project-link {
 		display: flex;
 		align-items: center;
-		justify-content: center;
-		width: 40px;
-		height: 40px;
-		border-radius: 50%;
-		background: rgb(var(--gray-light));
-		color: rgb(var(--gray));
-		transition: all 0.3s ease;
-		flex-shrink: 0;
+		justify-content: space-between;
+		padding: 0.75rem 1rem;
+		background: var(--color-bg-secondary);
+		border-radius: var(--radius-md);
+		text-decoration: none;
+		color: var(--color-text-secondary);
+		font-weight: 500;
+		font-size: 0.875rem;
+		transition: all var(--transition-fast);
+		position: relative;
+		overflow: hidden;
+	}
+
+	.project-link::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+		opacity: 0;
+		transition: opacity var(--transition-fast);
+	}
+
+	.link-text {
+		position: relative;
+		z-index: 1;
+	}
+
+	.link-icon {
+		position: relative;
+		z-index: 1;
+		opacity: 0.7;
+		transition: all var(--transition-fast);
+	}
+
+	.link-arrow {
+		position: absolute;
+		right: 1rem;
+		opacity: 0;
+		transform: translateX(-10px);
+		transition: all var(--transition-fast);
+		color: white;
 	}
 
 	.project-link:hover {
-		background: var(--accent);
 		color: white;
+	}
+
+	.project-link:hover::before {
+		opacity: 1;
+	}
+
+	.project-link:hover .link-icon {
+		opacity: 0;
+		transform: translateX(10px);
+	}
+
+	.project-link:hover .link-arrow {
+		opacity: 1;
+		transform: translateX(0);
+	}
+
+	@media print {
+		.project-card {
+			border: 1px solid #ccc !important;
+			box-shadow: none !important;
+		}
+
+		.card-cover {
+			background: #f0f0f0 !important;
+		}
+
+		.project-link {
+			background: #f0f0f0 !important;
+			color: #333 !important;
+		}
+
+		.project-link::before {
+			display: none;
+		}
 	}
 </style>
