@@ -1,17 +1,17 @@
 export const SITE_TITLE = "ChenYang | Designer & Creator";
-export const SITE_DESCRIPTION = "CG艺术实验室 - 数字动态视觉设计师，前端产品研发，写作与纯艺术创作";
+export const SITE_DESCRIPTION = "CG艺术实验室 - 跨领域数字创作者，专注数字动态视觉设计、前端产品研发、写作与纯艺术创作。倡导数据主权，践行创作即认知。";
 
 export const PERSONAL_INFO = {
 	name: "ChenYang",
 	nameEn: "ChenYang",
-	title: "Designer & Creator",
-	siteName: "",
+	title: "跨领域数字创作者",
+	siteName: "CG艺术实验室",
 	email: "hello@cgartlab.com",
-	location: "China",
+	location: "云南昆明",
 	personality: "INFJ",
 	hobbies: ["阅读", "写作", "养鱼", "画画", "电子产品"],
 	bio: "画画是画画的酬劳，写作是写作的回报。",
-	description: "我是一名设计师，从事数字动态视觉设计、前端产品研发、写作与个人纯艺术创作。INFJ型，平时爱好看书写字，养鱼画画，还有各种电子产品。"
+	description: "跨领域数字创作者，横跨设计师、数字艺术家、前端开发者与写作者等多个专业领域。INFJ型人格，倡导数据主权，坚持创作即认知的理念。"
 };
 
 export const SOCIAL_LINKS = [
@@ -24,12 +24,21 @@ export const SOCIAL_LINKS = [
 
 export const SKILLS = [
 	{
-		category: "设计领域",
+		category: "核心创作领域",
 		items: [
 			"数字动态视觉设计",
-			"CG艺术创作",
+			"前端产品研发",
+			"写作与内容创作",
+			"个人纯艺术作品"
+		]
+	},
+	{
+		category: "设计能力",
+		items: [
 			"UI/UX设计",
-			"品牌视觉设计"
+			"品牌视觉系统设计",
+			"动态图形设计",
+			"交互设计"
 		]
 	},
 	{
@@ -38,70 +47,70 @@ export const SKILLS = [
 			"前端开发",
 			"网站搭建与维护",
 			"NAS/服务器管理",
-			"命令行工具"
+			"知识管理系统构建"
 		]
 	},
 	{
-		category: "创作能力",
+		category: "工具与方法",
 		items: [
-			"写作与内容创作",
-			"知识管理系统",
-			"数字艺术",
-			"摄影后期"
+			"Obsidian知识管理",
+			"RSS信息聚合",
+			"本地优先工具链",
+			"创作者工作流优化"
 		]
 	}
 ];
 
 export const EXPERIENCE = [
 	{
-		period: "2019 - 至今",
-		title: "独立设计师",
-		description: "从事商业设计项目，涉及数字动态视觉、品牌设计等领域。同时进行个人艺术创作与技术探索。"
+		period: "2021 - 至今",
+		title: "CG艺术实验室主理人",
+		description: "创建并运营个人网站「CG艺术实验室」，系统化输出设计心得、技术教程、工具评测与创作思考，累计产出超过13万字，构建完整的创作者工作流体系。"
 	},
 	{
 		period: "持续进行",
-		title: "内容创作者",
-		description: "运营个人博客「CG艺术实验室」，分享设计心得、技术教程、产品评测等内容，累计字数超过13万字。"
+		title: "跨领域创作实践",
+		description: "从事数字动态视觉设计、前端产品研发与个人纯艺术创作。将设计思维、技术方法与写作技巧有机融合，形成独特的跨领域创作方法论。"
 	},
 	{
 		period: "持续探索",
-		title: "技术实践者",
-		description: "搭建个人服务器、NAS系统，探索高效工作流程，构建个人知识管理系统。"
+		title: "数据主权践行者",
+		description: "搭建NAS私有云实现数据本地化存储，通过Syncthing实现点对点同步，自建Miniflux RSS服务掌控信息获取渠道，践行「数据主权」理念。"
 	}
 ];
 
 export const PROJECTS = [
 	{
 		title: "CG艺术实验室",
-		description: "分享设计、技术与创作思考的个人博客，累计超过13万字",
+		description: "个人创作博客，分享设计、技术与创作思考，累计超过13万字，涵盖技术教程、随笔感悟、周刊与知识管理等内容体系",
 		link: "https://cgartlab.com",
 		tags: ["写作", "设计", "技术"]
 	},
 	{
+		title: "玄光周刊",
+		description: "持续更新的周刊系列，涵盖阅读心得、工具发现、技术观察等多个维度，为读者提供周期性的知识补给",
+		link: "https://weekly.cgartlab.com",
+		tags: ["周刊", "知识分享"]
+	},
+	{
 		title: "LayerRenamer",
-		description: "Photoshop图层批量重命名工具，让繁琐的命名工作变简单",
+		description: "Photoshop图层批量重命名工具，让繁琐的命名工作变简单，体现对创作者效率痛点的理解",
 		link: "#",
 		tags: ["工具", "效率", "设计"]
 	},
 	{
-		title: "华夏系列",
-		description: "个人纯艺术创作，以东方美学为内核的视觉探索",
+		title: "个人知识管理系统",
+		description: "基于Obsidian构建的本地优先知识管理系统，配合Memos实现碎片化思考记录，践行「第二大脑」理念",
 		link: "#",
-		tags: ["艺术", "CG", "创作"]
-	},
-	{
-		title: "知识管理系统",
-		description: "基于Obsidian的个人知识管理与阅读体系搭建",
-		link: "#",
-		tags: ["知识管理", "效率", "工具"]
+		tags: ["知识管理", "Obsidian", "效率"]
 	}
 ];
 
 export const STATS = [
 	{ label: "累计字数", value: "130,863", unit: "字" },
-	{ label: "博客文章", value: "50+", unit: "篇" },
 	{ label: "创作年限", value: "10+", unit: "年" },
-	{ label: "作品系列", value: "5+", unit: "个" }
+	{ label: "内容系列", value: "5+", unit: "个" },
+	{ label: "核心领域", value: "4", unit: "个" }
 ];
 
 export const SOCIAL_ICONS: Record<string, string> = {

@@ -8,7 +8,7 @@ import { SITE_TITLE, PERSONAL_INFO, SOCIAL_LINKS } from '../consts';
 <!doctype html>
 <html lang="zh-CN">
 	<head>
-		<BaseHead title={`关于 | ${SITE_TITLE}`} description="关于 CG艺术实验室和作者 ChenYang" />
+		<BaseHead title={`关于 | ${SITE_TITLE}`} description="关于 CG艺术实验室和作者 ChenYang - 跨领域数字创作者的创作理念与实践" />
 	</head>
 	<body class="min-h-screen bg-background">
 		<Header />
@@ -18,6 +18,7 @@ import { SITE_TITLE, PERSONAL_INFO, SOCIAL_LINKS } from '../consts';
 					<div class="w-32 h-32 rounded-full bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center mx-auto mb-6 shadow-lg">
 						<span class="text-5xl font-bold text-white">{PERSONAL_INFO.name.charAt(0)}</span>
 					</div>
+					<h1 class="text-3xl font-bold text-foreground mb-3">关于我</h1>
 					<p class="text-xl text-muted-foreground italic max-w-lg mx-auto">{PERSONAL_INFO.bio}</p>
 				</header>
 
@@ -25,81 +26,114 @@ import { SITE_TITLE, PERSONAL_INFO, SOCIAL_LINKS } from '../consts';
 					<section class="mb-10">
 						<h2 class="text-2xl font-semibold text-foreground mb-4 pb-2 border-b-2 border-primary inline-block">我是谁</h2>
 						<p class="text-muted-foreground leading-relaxed">
-							我是一名设计师，能点开这个页面相信你看过我的作品了。INFJ 型，平时爱好看书写字，养鱼画画，还有各种电子产品。
+							我是一名跨领域数字创作者，身份横跨设计师、数字艺术家、前端开发者与写作者等多个专业领域。INFJ型人格，目前居住在云南昆明。平时爱好看书写字、养鱼画画，还有各种电子产品。
 						</p>
 						<p class="text-muted-foreground leading-relaxed">
-							目前我从事的领域主要有：
+							这种多元化的身份组合在中国创作者群体中具有相当的独特性，我并未将自己局限于某一固定标签之下，而是根据具体创作需求与项目特点灵活切换角色定位。这种自适应的能力体系构成了我核心竞争力的重要组成部分。
+						</p>
+						<p class="text-muted-foreground leading-relaxed">
+							目前我从事的核心领域主要有：
 						</p>
 						<ul class="list-none pl-0 space-y-2">
 							<li class="flex items-center gap-2 text-muted-foreground">
 								<span class="text-primary">→</span>
-								<strong>数字动态视觉设计</strong>
+								<strong>数字动态视觉设计</strong> — 涵盖UI/UX设计、品牌视觉系统设计、动态图形设计、交互设计等
 							</li>
 							<li class="flex items-center gap-2 text-muted-foreground">
 								<span class="text-primary">→</span>
-								<strong>前端产品研发</strong>
+								<strong>前端产品研发</strong> — 将创意概念转化为可交互数字产品的技术实现能力
 							</li>
 							<li class="flex items-center gap-2 text-muted-foreground">
 								<span class="text-primary">→</span>
-								<strong>写作</strong>
+								<strong>写作</strong> — 累计产出超过13万字，作为知识输出与思维外化的核心载体
 							</li>
 							<li class="flex items-center gap-2 text-muted-foreground">
 								<span class="text-primary">→</span>
-								<strong>个人纯艺术作品</strong>
+								<strong>个人纯艺术作品</strong> — 代表对艺术表达的自我追求，与商业性创作形成互补
 							</li>
 						</ul>
 					</section>
 
 					<section class="mb-10">
-						<h2 class="text-2xl font-semibold text-foreground mb-4 pb-2 border-b-2 border-primary inline-block">商业与创作</h2>
+						<h2 class="text-2xl font-semibold text-foreground mb-4 pb-2 border-b-2 border-primary inline-block">数据主权理念</h2>
 						<p class="text-muted-foreground leading-relaxed">
-							商业部分，就是收钱办事，纯粹为了吃饭。做的东西十有八九我都不会放到自己的作品集里，虽然出自我手，但有客户和同事参与，一般我不认同那是我设计的。而且它们不是作品，是商品。
+							「数据主权」是我价值体系中最具特色的核心理念之一。从本质上讲，这一理念的核心诉求在于：从依赖中心化平台转向掌控个人数据，确保个体在数字空间中的自主性与独立性。
 						</p>
 						<p class="text-muted-foreground leading-relaxed">
-							剩下会收录到作品集里的一二，是感觉相对不错的，值得多花些精力弄一弄。这些项目里，有的是因为涉及到自己感兴趣的领域，有的是和客户的审美气味相投，还有的是因为有对自己的能力有一定的挑战，能占一条就会引起我的注意。
+							在这一理念指导下，我进行了一系列具体实践：
+						</p>
+						<ul class="list-none pl-0 space-y-2">
+							<li class="flex items-center gap-2 text-muted-foreground">
+								<span class="text-primary">→</span>
+								<strong>NAS私有云</strong> — 实现数据的本地化存储，摆脱对云服务商的数据依赖
+							</li>
+							<li class="flex items-center gap-2 text-muted-foreground">
+								<span class="text-primary">→</span>
+								<strong>Syncthing点对点同步</strong> — 去中心化的文件同步方案，数据传输路径完全自主控制
+							</li>
+							<li class="flex items-center gap-2 text-muted-foreground">
+								<span class="text-primary">→</span>
+								<strong>Miniflux自建RSS服务</strong> — 掌控信息获取渠道，摆脱算法推荐与广告追踪
+							</li>
+							<li class="flex items-center gap-2 text-muted-foreground">
+								<span class="text-primary">→</span>
+								<strong>开源优先原则</strong> — 优先选择开源、支持数据导出、设计理念透明的产品
+							</li>
+						</ul>
+					</section>
+
+					<section class="mb-10">
+						<h2 class="text-2xl font-semibold text-foreground mb-4 pb-2 border-b-2 border-primary inline-block">创作即认知</h2>
+						<p class="text-muted-foreground leading-relaxed">
+							「创作即认知」是我价值体系的另一核心支柱。这一理念主张：写作和创作的根本目的不在于获取外部认可或经济回报，而在于梳理思维、认识自我、探索内在世界。
 						</p>
 						<p class="text-muted-foreground leading-relaxed">
-							讲句可能欠揍的话，大概从 2019 年之后，我几乎没怎么担心过会没有客户来找自己做生意，可能因为这一点，中间有段时间还是松懈了，做事总是有拖延的心态。还有个我觉得很重要的原因是，商业性质的设计产物，本质是谈判的产物，而谈判终究是一门妥协的艺术。这门艺术，我的修炼还差的很远。
+							别指望它吃饭，打磨的是思考本身而非爆款套路。在流量至上的内容创业浪潮中，我选择拒绝被算法绑架、拒绝为追求流量而牺牲内容质量、拒绝将创作简化为制造爆款的流水线操作。
+						</p>
+						<p class="text-muted-foreground leading-relaxed">
+							创作是内在探索过程——这一观点将创作的动机从外部转向内部，从「我要产出什么」转向「我要通过创作成为什么样的人」。这种内在导向的创作观使得创作活动本身成为自我认知与自我完善的工具。
 						</p>
 					</section>
 
 					<section class="mb-10">
-						<h2 class="text-2xl font-semibold text-foreground mb-4 pb-2 border-b-2 border-primary inline-block">技术探索</h2>
+						<h2 class="text-2xl font-semibold text-foreground mb-4 pb-2 border-b-2 border-primary inline-block">工具哲学</h2>
 						<p class="text-muted-foreground leading-relaxed">
-							工作，整天和电脑打交道，首先对电脑本身我就很感兴趣，经常暗暗开心自己可以活在有电脑用的伟大时代。自然就泡在和电脑相关的各种自觉有趣的事物上。
+							「工具是人类肢体的延伸」——这一基本认知深刻影响了我对工具的选择与使用。扇子是手的延伸，轮子是腿脚的延伸，电话是口耳的延伸。以此类推，电脑是人脑的延伸。
 						</p>
 						<p class="text-muted-foreground leading-relaxed">
-							从搭建私人的服务器，DIY Nas，到建立第一个真正属于自己的网站，慢慢体验只使用键盘敲命令和各种快捷键来控制电脑的简洁和优雅（因为做设计一直都在用鼠标和手绘板，反而感到这样有些笨拙），这个过程有一种说不出的愉悦。
-						</p>
-					</section>
-
-					<section class="mb-10">
-						<h2 class="text-2xl font-semibold text-foreground mb-4 pb-2 border-b-2 border-primary inline-block">工具与思考</h2>
-						<p class="text-muted-foreground leading-relaxed">
-							听说过这么一句，讲"工具是人类肢体的延伸"。比如扇子是手的延伸，轮子是腿脚的延伸，电话是口耳的延伸。以此类推，看来电脑是人脑的延伸。
+							各种软件工具进一步延伸了大脑在特定领域的能力：设计软件延伸了视觉表达能力，写作工具延伸了思维外化能力，知识管理软件延伸了记忆与关联能力。
 						</p>
 						<p class="text-muted-foreground leading-relaxed">
-							我也写过很多篇文章来分享这个，里面粗略讲了我自己怎么看待数字笔记这个工具，实际上广义层面上看，做设计也好，写文章、敲代码也好，都是在说如何用电脑这个工具去更好的创作，去更好的认识，熟悉，打磨这个工具，让它更顺畅高效地解决实在的问题。
-						</p>
-						<p class="text-muted-foreground leading-relaxed">
-							计算机是这颗星球上最聪明的一群人设计的，和我一样的大部分普通人很难让电脑去真正适应自己，经常无从下手。对此，我自己有一套底层逻辑是：找到准确的问题，提升自己的实力，以配得上自己想用的工具。
+							「写作是思考本身」这一观点将工具哲学延伸到了创作领域。写作不仅是记录思想的方式，更是思考过程本身的有机组成部分。因此，写作工具的选择直接影响思考的质量与效率，值得投入足够的关注与资源。
 						</p>
 					</section>
 
 					<section class="mb-10">
-						<h2 class="text-2xl font-semibold text-foreground mb-4 pb-2 border-b-2 border-primary inline-block">写作的意义</h2>
+						<h2 class="text-2xl font-semibold text-foreground mb-4 pb-2 border-b-2 border-primary inline-block">创作者工作流</h2>
 						<p class="text-muted-foreground leading-relaxed">
-							搁以前，我遇到的每个问题，小到去搜一个快捷键，大到去攒一台黑苹果主机，都不会想把这些过程记录下来，第一觉得麻烦，第二是觉得技术更新这么快，这些方法甚至可能一段时间就过时了。
+							我构建了一套完整的创作者工作流，涵盖从信息输入、知识管理到内容创作与输出的完整闭环。
 						</p>
 						<p class="text-muted-foreground leading-relaxed">
-							现在看来，大错特错。这些技巧和方法，虽都是"术"，但这种思想，不符合"道"。我决定还是老老实实记录这些过程，这终究是属于我自己的创作、技巧、经验、思考，路始终只有自己在慢慢走，公开发布出来更多是让这些内容先过得掉自己这关。
+							<strong>信息输入环节</strong>，主要依赖RSS聚合器实现信息的主动获取与筛选。通过自建Miniflux服务，得以摆脱算法推荐的被动控制，根据个人兴趣与需求主动订阅高质量信息源。
+						</p>
+						<p class="text-muted-foreground leading-relaxed">
+							<strong>知识管理环节</strong>，以Obsidian为核心工具构建本地优先知识管理系统。Obsidian的本地Markdown存储机制与双向链接功能，使其成为构建个人「第二大脑」的理想选择。Memos作为补充工具，为碎片化思考与即时记录提供了便捷的承载平台。
+						</p>
+						<p class="text-muted-foreground leading-relaxed">
+							<strong>内容创作到输出的完整闭环</strong>是工作流的最终呈现环节。通过将阅读输入转化为个人知识库储备，再通过写作将知识加工为可分享内容，最终通过多平台分发实现价值输出。这种闭环式工作流使得创作不再是灵感驱动的随机行为，而是可以持续迭代优化的系统化过程。
 						</p>
 					</section>
 
 					<section class="mb-10">
 						<h2 class="text-2xl font-semibold text-foreground mb-4 pb-2 border-b-2 border-primary inline-block">关于本站</h2>
 						<p class="text-muted-foreground leading-relaxed">
-							本站是我的个人创作之一，起心动念很久，一直想在网上有个属于自己的容器。容器里的内容，是我可以公开的精神世界。创造精神世界的主要手段是「CG艺术」整个创造过程也是一次精神实验，所以就叫【CG艺术实验室】吧。
+							本站是我的个人创作之一，起心动念很久，一直想在网上有个属于自己的容器。容器里的内容，是我可以公开的精神世界。创造精神世界的主要手段是「CG艺术」，整个创造过程也是一次精神实验，所以就叫【CG艺术实验室】。
+						</p>
+						<p class="text-muted-foreground leading-relaxed">
+							网站采用Astro框架构建，这一技术选择与其所代表的「现代静态站点」理念与我推崇的「数据主权」概念在深层逻辑上具有高度一致性——两者都强调对技术栈的掌控能力与对外部依赖的最小化原则。
+						</p>
+						<p class="text-muted-foreground leading-relaxed">
+							所有内容都基于亲身实践，我反复强调这一原则。这不仅是对内容质量的保障，更是一种认知态度的体现。我选择亲身验证每一个技术方案、每一个工具使用技巧，确保所分享知识的可靠性和可操作性。
 						</p>
 					</section>
 				</div>
