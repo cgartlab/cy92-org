@@ -2,7 +2,7 @@
 title: "解析设计师的第二大脑：从理念到实践"
 description: "知识管理不是简单的信息收集，而是构建一套让知识流动、生长、产生连接的系统。分享我用Obsidian构建个人知识管理体系的完整经验。"
 pubDate: "Feb 05 2026"
-heroImage: "/blog-placeholder-4.jpg"
+heroImage: "/11 玄光周刊-Obsidian史诗级更新-17684cover-article1629456.webp"
 tags: ["知识管理", "Obsidian", "第二大脑", "效率工具"]
 category: "知识管理"
 ---

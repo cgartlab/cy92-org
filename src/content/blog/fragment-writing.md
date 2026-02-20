@@ -2,7 +2,7 @@
 title: "碎片写作：建立一具思维标本"
 description: "碎片不是敌人，而是思维的原始材料。分享我如何通过碎片写作捕捉灵感、积累素材、构建完整的知识体系。"
 pubDate: "Feb 16 2026"
-heroImage: "/blog-placeholder-4.jpg"
+heroImage: "/cover-article2 玄光周刊-表上的数字很神奇-1754594890036.webp"
 tags: ["写作", "碎片化", "知识管理", "方法论"]
 category: "方法论"
 ---

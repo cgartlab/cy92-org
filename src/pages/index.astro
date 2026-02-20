@@ -3,15 +3,8 @@ import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import ProjectCard from '../components/ProjectCard.astro';
-import { SITE_TITLE, SITE_DESCRIPTION, PERSONAL_INFO, SKILLS, EXPERIENCE, PROJECTS, STATS, SOCIAL_LINKS, HONORS } from '../consts';
-
-const socialIcons: Record<string, string> = {
-	github: '<path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.604-3.369-1.341-3.369-1.341-.454-1.155-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.48C21.137 20.163 24 16.418 24 12c0-5.523-4.477-10-10-10z"/>',
-	twitter: '<path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>',
-	bilibili: '<path d="M17.813 4.653h.064c.558.024 1.056.236 1.438.59.37.343.614.805.676 1.324l.008.078v5.912l-.008.078c-.062.52-.306.98-.676 1.324-.382.354-.88.566-1.438.59h-.064l-2.59.003v1.852l-.008.11c-.04.38-.22.716-.485.95-.265.233-.615.37-.992.37h-.078l-.11-.008c-.38-.04-.716-.22-.95-.485-.233-.265-.37-.615-.37-.992v-1.797H8.672v1.852l-.008.11c-.04.38-.22.716-.485.95-.265.233-.615.37-.992.37h-.078l-.11-.008c-.38-.04-.716-.22-.95-.485-.233-.265-.37-.615-.37-.992v-1.797l-2.59-.003h-.064c-.558-.024-1.056-.236-1.438-.59-.37-.343-.614-.805-.676-1.324l-.008-.078V6.645l.008-.078c.062-.52.306-.98.676-1.324.382-.354.88-.566 1.438-.59h.064l2.59-.003V2.798l.008-.11c.04-.38.22-.716.485-.95.265-.233.615-.37.992-.37h.078l.11.008c.38.04.716.22.95.485.233.265.37.615.37.992v1.8h4.655v-1.85l.008-.11c.04-.38.22-.716.485-.95.265-.233.615-.37.992-.37h.078l.11.008c.38.04.716.22.95.485.233.265.37.615.37.992v1.8l2.59.003zm.064 1.5H3.123l-.05.003c-.15.016-.28.086-.37.187-.09.1-.145.232-.145.377v5.56l.003.05c.016.15.086.28.187.37.1.09.232.145.377.145h14.76l.05-.003c.15-.016.28-.086.37-.187.09-.1.145-.232.145-.377V6.72l-.003-.05c-.016-.15-.086-.28-.187-.37-.1-.09-.232-.145-.377-.145zm-11.07 1.5c.414 0 .75.336.75.75v2.5c0 .414-.336.75-.75.75s-.75-.336-.75-.75v-2.5c0-.414.336-.75.75-.75zm7.5 0c.414 0 .75.336.75.75v2.5c0 .414-.336.75-.75.75s-.75-.336-.75-.75v-2.5c0-.414.336-.75.75-.75z"/>',
-	sspai: '<path d="M4 4h16v16H4V4zm2 2v12h12V6H6zm3 3h6v2H9V9zm0 4h6v2H9v-2z"/>',
-	rss: '<path d="M6.18 15.64a2.18 2.18 0 1 1-.01 4.36 2.18 2.18 0 0 1 0-4.36zm0-4.37A10.36 10.36 0 0 1 10.36 10.36h-2.83A7.54 7.54 0 0 0 8.72 8.11V11.28H6.18v-2.37zm0-4.37A14.73 14.73 0 0 1 20.9 15.64h2.83A11.91 11.91 0 0 0 11.91 6.9V3.9H6.18v2.37z"/><circle cx="6.18" cy="17.82" r="2.18"/>'
-};
+import Icon from '../components/Icon.astro';
+import { SITE_TITLE, SITE_DESCRIPTION, PERSONAL_INFO, SKILLS, EXPERIENCE, PROJECTS, STATS, SOCIAL_LINKS, HONORS, WORK_EXPERIENCE, EDUCATION } from '../consts';
 ---
 
 <!doctype html>
@@ -43,17 +36,11 @@ const socialIcons: Record<string, string> = {
 					
 					<div class="flex flex-wrap justify-center gap-3 mb-8">
 						<span class="tag">
-							<svg class="w-4 h-4" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-								<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-								<circle cx="12" cy="10" r="3"></circle>
-							</svg>
+							<Icon name="place" size={16} class="w-4 h-4" />
 							{PERSONAL_INFO.location}
 						</span>
 						<span class="tag">
-							<svg class="w-4 h-4" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-								<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-								<circle cx="12" cy="7" r="4"></circle>
-							</svg>
+							<Icon name="person" size={16} class="w-4 h-4" />
 							{PERSONAL_INFO.personality}
 						</span>
 					</div>
@@ -67,7 +54,7 @@ const socialIcons: Record<string, string> = {
 								class="social-link"
 								title={link.name}
 							>
-								<svg viewBox="0 0 16 16" aria-hidden="true" class="w-5 h-5" set:html={socialIcons[link.icon] || ''} />
+								<Icon name={link.icon} size={20} class="w-5 h-5" fill />
 								<span class="sr-only">{link.name}</span>
 							</a>
 						))}
@@ -91,9 +78,7 @@ const socialIcons: Record<string, string> = {
 			<section class="section">
 				<div class="section-header">
 					<div class="section-icon">
-						<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-							<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-						</svg>
+						<Icon name="star" size={22} class="w-[22px] h-[22px]" fill />
 					</div>
 					<h2 class="section-title">专业技能</h2>
 				</div>
@@ -115,21 +100,45 @@ const socialIcons: Record<string, string> = {
 			<section class="section">
 				<div class="section-header">
 					<div class="section-icon">
-						<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-							<circle cx="12" cy="12" r="10"></circle>
-							<polyline points="12 6 12 12 16 14"></polyline>
-						</svg>
+						<Icon name="school" size={22} class="w-[22px] h-[22px]" />
 					</div>
-					<h2 class="section-title">经历</h2>
+					<h2 class="section-title">教育经历</h2>
 				</div>
 				
 				<div class="card p-6 md:p-8">
 					<div class="space-y-0">
-						{EXPERIENCE.map(exp => (
+						{EDUCATION.map(edu => (
+							<div class="timeline-item pb-8 last:pb-0">
+								<div class="text-sm font-semibold gradient-text mb-2">{edu.period}</div>
+								<div class="pl-2">
+									<h3 class="text-lg font-semibold text-foreground mb-1">{edu.school}</h3>
+									<p class="text-sm text-primary mb-2">{edu.major}</p>
+									<p class="text-muted-foreground">{edu.degree}</p>
+								</div>
+							</div>
+						))}
+					</div>
+				</div>
+			</section>
+
+			<section class="section">
+				<div class="section-header">
+					<div class="section-icon">
+						<Icon name="schedule" size={22} class="w-[22px] h-[22px]" />
+					</div>
+					<h2 class="section-title">工作经历</h2>
+				</div>
+				
+				<div class="card p-6 md:p-8">
+					<div class="space-y-0">
+						{WORK_EXPERIENCE.map(exp => (
 							<div class="timeline-item pb-8 last:pb-0">
 								<div class="text-sm font-semibold gradient-text mb-2">{exp.period}</div>
 								<div class="pl-2">
-									<h3 class="text-lg font-semibold text-foreground mb-2">{exp.title}</h3>
+									<h3 class="text-lg font-semibold text-foreground mb-1">{exp.title}</h3>
+									{exp.department && exp.position && (
+										<p class="text-sm text-primary mb-2">{exp.department} · {exp.position}</p>
+									)}
 									<p class="text-muted-foreground leading-relaxed">{exp.description}</p>
 								</div>
 							</div>
@@ -141,10 +150,7 @@ const socialIcons: Record<string, string> = {
 			<section class="section">
 				<div class="section-header">
 					<div class="section-icon">
-						<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-							<circle cx="12" cy="8" r="7"></circle>
-							<polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
-						</svg>
+						<Icon name="emoji_events" size={22} class="w-[22px] h-[22px]" />
 					</div>
 					<h2 class="section-title">荣誉与成就</h2>
 				</div>
@@ -169,9 +175,30 @@ const socialIcons: Record<string, string> = {
 			<section class="section">
 				<div class="section-header">
 					<div class="section-icon">
-						<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-							<path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
-						</svg>
+						<Icon name="layers" size={22} class="w-[22px] h-[22px]" />
+					</div>
+					<h2 class="section-title">创作实践</h2>
+				</div>
+				
+				<div class="card p-6 md:p-8">
+					<div class="space-y-0">
+						{EXPERIENCE.map(exp => (
+							<div class="timeline-item pb-8 last:pb-0">
+								<div class="text-sm font-semibold gradient-text mb-2">{exp.period}</div>
+								<div class="pl-2">
+									<h3 class="text-lg font-semibold text-foreground mb-2">{exp.title}</h3>
+									<p class="text-muted-foreground leading-relaxed">{exp.description}</p>
+								</div>
+							</div>
+						))}
+					</div>
+				</div>
+			</section>
+
+			<section class="section">
+				<div class="section-header">
+					<div class="section-icon">
+						<Icon name="folder" size={22} class="w-[22px] h-[22px]" />
 					</div>
 					<h2 class="section-title">项目作品</h2>
 				</div>
@@ -196,10 +223,7 @@ const socialIcons: Record<string, string> = {
 					<h2 class="text-2xl md:text-3xl font-bold text-foreground mb-4 tracking-tight">联系我</h2>
 					<p class="text-muted-foreground mb-8 max-w-md mx-auto text-base md:text-lg">如果您对我的作品感兴趣，或有合作意向，欢迎通过邮件联系我。</p>
 					<a href={`mailto:${PERSONAL_INFO.email}`} class="btn btn-primary gap-2 shadow-xl shadow-primary/30 hover:shadow-2xl hover:shadow-primary/40">
-						<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-							<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-							<polyline points="22,6 12,13 2,6"></polyline>
-						</svg>
+						<Icon name="mail" size={20} class="w-5 h-5" />
 						发送邮件
 					</a>
 				</div>

@@ -2,7 +2,7 @@
 title: "创作者的存储革命：从零开始搭建NAS私有云"
 description: "作为一名数字艺术创作者，文件管理曾经是我最头疼的问题。这篇文章分享我从零开始搭建NAS私有云的完整经历，包括硬件选择、系统配置到实际应用的方方面面。"
 pubDate: "Jan 24 2026"
-heroImage: "/blog-placeholder-1.jpg"
+heroImage: "/2cover-article24年，如何更优雅地使用 Mac-1754591124732.webp"
 tags: ["NAS", "存储", "效率工具", "创作者"]
 category: "技术实践"
 ---

@@ -8,6 +8,9 @@ import FormattedDate from '../components/FormattedDate.astro';
 type Props = CollectionEntry<'blog'>['data'];
 
 const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+
+const DEFAULT_COVER = '/default-cover.webp';
+const coverImage = heroImage || DEFAULT_COVER;
 ---
 
 <!doctype html>
@@ -19,18 +22,16 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 		<Header />
 		<main class="w-full max-w-4xl mx-auto px-4 py-8">
 			<article>
-				{heroImage && (
-					<div class="mb-8">
-						<img 
-							width={1020} 
-							height={510} 
-							src={heroImage} 
-							alt="" 
-							loading="lazy"
-							class="w-full rounded-xl shadow-lg mx-auto"
-						/>
-					</div>
-				)}
+				<div class="mb-8">
+					<img 
+						width={1020} 
+						height={510} 
+						src={coverImage} 
+						alt="" 
+						loading="lazy"
+						class="w-full rounded-xl shadow-lg mx-auto"
+					/>
+				</div>
 				<div class="prose prose-lg dark:prose-invert max-w-3xl mx-auto px-4">
 					<header class="text-center mb-8 pb-8 border-b border-border">
 						<div class="text-sm text-muted-foreground mb-3">
