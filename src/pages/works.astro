@@ -4,22 +4,21 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Icon from '../components/Icon.astro';
 import { SITE_TITLE, PERSONAL_INFO } from '../consts';
-import { Image } from 'astro:assets';
 
 const meditationImages = [
-	{ src: (await import('../content/images/冥想系列-1754664750528.webp')).default, title: '冥想系列 1' },
-	{ src: (await import('../content/images/冥想系列-1754664757458.webp')).default, title: '冥想系列 2' },
-	{ src: (await import('../content/images/冥想系列-1754664764581.webp')).default, title: '冥想系列 3' },
-	{ src: (await import('../content/images/冥想系列-1754664772045.webp')).default, title: '冥想系列 4' },
-	{ src: (await import('../content/images/冥想系列-1754664780351.webp')).default, title: '冥想系列 5' },
-	{ src: (await import('../content/images/冥想系列-1754664786331.webp')).default, title: '冥想系列 6' },
-	{ src: (await import('../content/images/冥想系列-1754664798635.webp')).default, title: '冥想系列 7' },
-	{ src: (await import('../content/images/冥想系列-1754664814920.webp')).default, title: '冥想系列 8' },
-	{ src: (await import('../content/images/冥想系列-1754664822895.webp')).default, title: '冥想系列 9' },
-	{ src: (await import('../content/images/冥想系列-1754664829706.webp')).default, title: '冥想系列 10' }
+	{ src: '../content/images/冥想系列-1754664750528.webp', title: '冥想系列 1' },
+	{ src: '../content/images/冥想系列-1754664757458.webp', title: '冥想系列 2' },
+	{ src: '../content/images/冥想系列-1754664764581.webp', title: '冥想系列 3' },
+	{ src: '../content/images/冥想系列-1754664772045.webp', title: '冥想系列 4' },
+	{ src: '../content/images/冥想系列-1754664780351.webp', title: '冥想系列 5' },
+	{ src: '../content/images/冥想系列-1754664786331.webp', title: '冥想系列 6' },
+	{ src: '../content/images/冥想系列-1754664798635.webp', title: '冥想系列 7' },
+	{ src: '../content/images/冥想系列-1754664814920.webp', title: '冥想系列 8' },
+	{ src: '../content/images/冥想系列-1754664822895.webp', title: '冥想系列 9' },
+	{ src: '../content/images/冥想系列-1754664829706.webp', title: '冥想系列 10' }
 ];
 
-const coverImage = (await import('../content/images/冥想系列-cover.webp')).default;
+const coverImage = '../content/images/冥想系列-cover.webp';
 
 const videoWorks = [
 	{
@@ -112,7 +111,7 @@ const meditationSeries = {
 				<div class="card p-6 md:p-8">
 					<div class="mb-8">
 						<div class="relative w-full aspect-[21/9] rounded-xl overflow-hidden mb-6">
-							<Image 
+							<img 
 								src={coverImage} 
 								alt="冥想系列封面" 
 								class="w-full h-full object-cover"
@@ -136,7 +135,7 @@ const meditationSeries = {
 								rel="noopener noreferrer"
 								class="group relative aspect-square rounded-xl overflow-hidden border border-border/50 hover:border-primary/30 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/10"
 							>
-								<Image 
+								<img 
 									src={artwork.src} 
 									alt={artwork.title}
 									class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
