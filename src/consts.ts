@@ -64,7 +64,7 @@ export const SKILLS = [
 export const WORK_EXPERIENCE = [
 	{
 		period: "2022 - 2025",
-		title: "云南 Polygon Animate 传媒有限公司",
+		title: "云南 Animpoly 传媒有限公司",
 		description: "从事数字动态视觉设计与动画制作工作"
 	},
 	{
@@ -147,7 +147,7 @@ export const PROJECTS = [
 ];
 
 export const STATS = [
-	{ label: "累计字数", value: "130,863", unit: "字" },
+	{ label: "累计字数", value: "170,903", unit: "字" },
 	{ label: "创作年限", value: "10+", unit: "年" },
 	{ label: "内容系列", value: "5+", unit: "个" },
 	{ label: "核心领域", value: "4", unit: "个" }

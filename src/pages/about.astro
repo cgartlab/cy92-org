@@ -11,147 +11,128 @@ import { SITE_TITLE, PERSONAL_INFO, SOCIAL_LINKS } from '../consts';
 	<head>
 		<BaseHead title={`关于 | ${SITE_TITLE}`} description="关于 CG艺术实验室和作者 ChenYang - 跨领域数字创作者的创作理念与实践" />
 	</head>
-	<body class="min-h-screen bg-background">
+	<body class="min-h-screen bg-canvas">
 		<Header />
 		<main class="container-custom py-8 md:py-12">
 			<article class="max-w-3xl mx-auto">
-				<header class="text-center mb-12">
-					<div class="w-32 h-32 rounded-full overflow-hidden flex items-center justify-center mx-auto mb-6 shadow-lg bg-primary/20">
+				<header class="mb-10">
+					<div class="w-24 h-24 rounded-xl overflow-hidden flex items-center justify-center mb-5 border bg-ivory" style="border-color: var(--border-subtle);">
 						<img src="/favicon.svg" alt="CG艺术实验室 Logo" class="w-full h-full object-cover" />
 					</div>
-					<h1 class="text-3xl font-bold text-foreground mb-3">关于我</h1>
-					<p class="text-xl text-muted-foreground italic max-w-lg mx-auto">{PERSONAL_INFO.bio}</p>
+					<h1 class="font-serif text-ink mb-3" style="font-size: 2rem; line-height: 1.15;">关于我</h1>
+					<div class="quote-block my-3">
+						<p class="text-base">{PERSONAL_INFO.bio}</p>
+					</div>
 				</header>
 
-				<div class="prose prose-lg dark:prose-invert max-w-none">
-					<section class="mb-10">
-						<h2 class="text-2xl font-semibold text-foreground mb-4 pb-2 border-b-2 border-primary inline-block">我是谁</h2>
-						<p class="text-muted-foreground leading-relaxed">
-							我是一名跨领域数字创作者，身份横跨设计师、数字艺术家、前端开发者与写作者等多个专业领域。INFJ型人格，目前居住在云南昆明。平时爱好看书写字、养鱼画画，还有各种电子产品。
-						</p>
-						<p class="text-muted-foreground leading-relaxed">
-							这种多元化的身份组合在中国创作者群体中具有相当的独特性，我并未将自己局限于某一固定标签之下，而是根据具体创作需求与项目特点灵活切换角色定位。这种自适应的能力体系构成了我核心竞争力的重要组成部分。
-						</p>
-						<p class="text-muted-foreground leading-relaxed">
-							目前我从事的核心领域主要有：
-						</p>
-						<ul class="list-none pl-0 space-y-2">
-							<li class="flex items-center gap-2 text-muted-foreground">
-								<span class="text-primary">→</span>
-								<strong>数字动态视觉设计</strong> — 涵盖UI/UX设计、品牌视觉系统设计、动态图形设计、交互设计等
-							</li>
-							<li class="flex items-center gap-2 text-muted-foreground">
-								<span class="text-primary">→</span>
-								<strong>前端产品研发</strong> — 将创意概念转化为可交互数字产品的技术实现能力
-							</li>
-							<li class="flex items-center gap-2 text-muted-foreground">
-								<span class="text-primary">→</span>
-								<strong>写作</strong> — 累计产出超过13万字，作为知识输出与思维外化的核心载体
-							</li>
-							<li class="flex items-center gap-2 text-muted-foreground">
-								<span class="text-primary">→</span>
-								<strong>个人纯艺术作品</strong> — 代表对艺术表达的自我追求，与商业性创作形成互补
-							</li>
-						</ul>
+				<div class="space-y-10">
+					<section>
+						<h2 class="section-title mb-4">我是谁</h2>
+						<div class="card p-5 md:p-6">
+							<p class="text-sm text-olive leading-relaxed mb-3">
+								我是一名跨领域数字创作者，身份横跨设计师、数字艺术家、前端开发者与写作者等多个专业领域。INFJ型人格，目前居住在云南昆明。平时爱好看书写字、养鱼画画，还有各种电子产品。
+							</p>
+							<p class="text-sm text-olive leading-relaxed mb-4">
+								这种多元化的身份组合在中国创作者群体中具有相当的独特性，我并未将自己局限于某一固定标签之下，而是根据具体创作需求与项目特点灵活切换角色定位。
+							</p>
+							<p class="text-sm text-foreground font-medium mb-2">目前从事的核心领域：</p>
+							<ul class="dash-list">
+								<li><strong class="text-foreground">数字动态视觉设计</strong> — 涵盖UI/UX设计、品牌视觉系统设计、动态图形设计、交互设计等</li>
+								<li><strong class="text-foreground">前端产品研发</strong> — 将创意概念转化为可交互数字产品的技术实现能力</li>
+								<li><strong class="text-foreground">写作</strong> — 累计产出超过13万字，作为知识输出与思维外化的核心载体</li>
+								<li><strong class="text-foreground">个人纯艺术作品</strong> — 代表对艺术表达的自我追求，与商业性创作形成互补</li>
+							</ul>
+						</div>
 					</section>
 
-					<section class="mb-10">
-						<h2 class="text-2xl font-semibold text-foreground mb-4 pb-2 border-b-2 border-primary inline-block">数据主权理念</h2>
-						<p class="text-muted-foreground leading-relaxed">
-							「数据主权」是我价值体系中最具特色的核心理念之一。从本质上讲，这一理念的核心诉求在于：从依赖中心化平台转向掌控个人数据，确保个体在数字空间中的自主性与独立性。
-						</p>
-						<p class="text-muted-foreground leading-relaxed">
-							在这一理念指导下，我进行了一系列具体实践：
-						</p>
-						<ul class="list-none pl-0 space-y-2">
-							<li class="flex items-center gap-2 text-muted-foreground">
-								<span class="text-primary">→</span>
-								<strong>NAS私有云</strong> — 实现数据的本地化存储，摆脱对云服务商的数据依赖
-							</li>
-							<li class="flex items-center gap-2 text-muted-foreground">
-								<span class="text-primary">→</span>
-								<strong>Syncthing点对点同步</strong> — 去中心化的文件同步方案，数据传输路径完全自主控制
-							</li>
-							<li class="flex items-center gap-2 text-muted-foreground">
-								<span class="text-primary">→</span>
-								<strong>Miniflux自建RSS服务</strong> — 掌控信息获取渠道，摆脱算法推荐与广告追踪
-							</li>
-							<li class="flex items-center gap-2 text-muted-foreground">
-								<span class="text-primary">→</span>
-								<strong>开源优先原则</strong> — 优先选择开源、支持数据导出、设计理念透明的产品
-							</li>
-						</ul>
+					<section>
+						<h2 class="section-title mb-4">数据主权理念</h2>
+						<div class="card p-5 md:p-6">
+							<p class="text-sm text-olive leading-relaxed mb-4">
+								「数据主权」是我价值体系中最具特色的核心理念之一。从本质上讲，这一理念的核心诉求在于：从依赖中心化平台转向掌控个人数据，确保个体在数字空间中的自主性与独立性。
+							</p>
+							<ul class="dash-list">
+								<li><strong class="text-foreground">NAS私有云</strong> — 实现数据的本地化存储，摆脱对云服务商的数据依赖</li>
+								<li><strong class="text-foreground">Syncthing点对点同步</strong> — 去中心化的文件同步方案，数据传输路径完全自主控制</li>
+								<li><strong class="text-foreground">Miniflux自建RSS服务</strong> — 掌控信息获取渠道，摆脱算法推荐与广告追踪</li>
+								<li><strong class="text-foreground">开源优先原则</strong> — 优先选择开源、支持数据导出、设计理念透明的产品</li>
+							</ul>
+						</div>
 					</section>
 
-					<section class="mb-10">
-						<h2 class="text-2xl font-semibold text-foreground mb-4 pb-2 border-b-2 border-primary inline-block">创作即认知</h2>
-						<p class="text-muted-foreground leading-relaxed">
-							「创作即认知」是我价值体系的另一核心支柱。这一理念主张：写作和创作的根本目的不在于获取外部认可或经济回报，而在于梳理思维、认识自我、探索内在世界。
-						</p>
-						<p class="text-muted-foreground leading-relaxed">
-							别指望它吃饭，打磨的是思考本身而非爆款套路。在流量至上的内容创业浪潮中，我选择拒绝被算法绑架、拒绝为追求流量而牺牲内容质量、拒绝将创作简化为制造爆款的流水线操作。
-						</p>
-						<p class="text-muted-foreground leading-relaxed">
-							创作是内在探索过程——这一观点将创作的动机从外部转向内部，从「我要产出什么」转向「我要通过创作成为什么样的人」。这种内在导向的创作观使得创作活动本身成为自我认知与自我完善的工具。
-						</p>
+					<section>
+						<h2 class="section-title mb-4">创作即认知</h2>
+						<div class="card p-5 md:p-6">
+							<div class="quote-block mb-4">
+								<p class="text-sm">「创作即认知」是我价值体系的另一核心支柱。这一理念主张：写作和创作的根本目的不在于获取外部认可或经济回报，而在于梳理思维、认识自我、探索内在世界。</p>
+							</div>
+							<p class="text-sm text-olive leading-relaxed">
+								别指望它吃饭，打磨的是思考本身而非爆款套路。在流量至上的内容创业浪潮中，我选择拒绝被算法绑架、拒绝为追求流量而牺牲内容质量、拒绝将创作简化为制造爆款的流水线操作。
+							</p>
+						</div>
 					</section>
 
-					<section class="mb-10">
-						<h2 class="text-2xl font-semibold text-foreground mb-4 pb-2 border-b-2 border-primary inline-block">工具哲学</h2>
-						<p class="text-muted-foreground leading-relaxed">
-							「工具是人类肢体的延伸」——这一基本认知深刻影响了我对工具的选择与使用。扇子是手的延伸，轮子是腿脚的延伸，电话是口耳的延伸。以此类推，电脑是人脑的延伸。
-						</p>
-						<p class="text-muted-foreground leading-relaxed">
-							各种软件工具进一步延伸了大脑在特定领域的能力：设计软件延伸了视觉表达能力，写作工具延伸了思维外化能力，知识管理软件延伸了记忆与关联能力。
-						</p>
-						<p class="text-muted-foreground leading-relaxed">
-							「写作是思考本身」这一观点将工具哲学延伸到了创作领域。写作不仅是记录思想的方式，更是思考过程本身的有机组成部分。因此，写作工具的选择直接影响思考的质量与效率，值得投入足够的关注与资源。
-						</p>
+					<section>
+						<h2 class="section-title mb-4">工具哲学</h2>
+						<div class="card p-5 md:p-6">
+							<div class="quote-block mb-4">
+								<p class="text-sm">「工具是人类肢体的延伸」——扇子是手的延伸，轮子是腿脚的延伸，电话是口耳的延伸。以此类推，电脑是人脑的延伸。</p>
+							</div>
+							<p class="text-sm text-olive leading-relaxed">
+								各种软件工具进一步延伸了大脑在特定领域的能力：设计软件延伸了视觉表达能力，写作工具延伸了思维外化能力，知识管理软件延伸了记忆与关联能力。「写作是思考本身」这一观点将工具哲学延伸到了创作领域。
+							</p>
+						</div>
 					</section>
 
-					<section class="mb-10">
-						<h2 class="text-2xl font-semibold text-foreground mb-4 pb-2 border-b-2 border-primary inline-block">创作者工作流</h2>
-						<p class="text-muted-foreground leading-relaxed">
-							我构建了一套完整的创作者工作流，涵盖从信息输入、知识管理到内容创作与输出的完整闭环。
-						</p>
-						<p class="text-muted-foreground leading-relaxed">
-							<strong>信息输入环节</strong>，主要依赖RSS聚合器实现信息的主动获取与筛选。通过自建Miniflux服务，得以摆脱算法推荐的被动控制，根据个人兴趣与需求主动订阅高质量信息源。
-						</p>
-						<p class="text-muted-foreground leading-relaxed">
-							<strong>知识管理环节</strong>，以Obsidian为核心工具构建本地优先知识管理系统。Obsidian的本地Markdown存储机制与双向链接功能，使其成为构建个人「第二大脑」的理想选择。Memos作为补充工具，为碎片化思考与即时记录提供了便捷的承载平台。
-						</p>
-						<p class="text-muted-foreground leading-relaxed">
-							<strong>内容创作到输出的完整闭环</strong>是工作流的最终呈现环节。通过将阅读输入转化为个人知识库储备，再通过写作将知识加工为可分享内容，最终通过多平台分发实现价值输出。这种闭环式工作流使得创作不再是灵感驱动的随机行为，而是可以持续迭代优化的系统化过程。
-						</p>
+					<section>
+						<h2 class="section-title mb-4">创作者工作流</h2>
+						<div class="card p-5 md:p-6">
+							<p class="text-sm text-olive leading-relaxed mb-4">
+								我构建了一套完整的创作者工作流，涵盖从信息输入、知识管理到内容创作与输出的完整闭环。
+							</p>
+							<div class="space-y-3">
+								<div class="p-3 rounded-lg bg-canvas">
+								<p class="text-sm font-medium text-foreground mb-1">信息输入环节</p>
+								<p class="text-xs text-olive">主要依赖RSS聚合器实现信息的主动获取与筛选。通过自建Miniflux服务，得以摆脱算法推荐的被动控制。</p>
+							</div>
+							<div class="p-3 rounded-lg bg-canvas">
+								<p class="text-sm font-medium text-foreground mb-1">知识管理环节</p>
+								<p class="text-xs text-olive">以Obsidian为核心工具构建本地优先知识管理系统。Obsidian的本地Markdown存储机制与双向链接功能，使其成为构建个人「第二大脑」的理想选择。</p>
+							</div>
+							<div class="p-3 rounded-lg bg-canvas">
+								<p class="text-sm font-medium text-foreground mb-1">内容创作到输出</p>
+								<p class="text-xs text-olive">通过将阅读输入转化为个人知识库储备，再通过写作将知识加工为可分享内容，最终通过多平台分发实现价值输出。</p>
+							</div>
+							</div>
+						</div>
 					</section>
 
-					<section class="mb-10">
-						<h2 class="text-2xl font-semibold text-foreground mb-4 pb-2 border-b-2 border-primary inline-block">关于本站</h2>
-						<p class="text-muted-foreground leading-relaxed">
-							本站是我的个人创作之一，起心动念很久，一直想在网上有个属于自己的容器。容器里的内容，是我可以公开的精神世界。创造精神世界的主要手段是「CG艺术」，整个创造过程也是一次精神实验，所以就叫【CG艺术实验室】。
-						</p>
-						<p class="text-muted-foreground leading-relaxed">
-							网站采用Astro框架构建，这一技术选择与其所代表的「现代静态站点」理念与我推崇的「数据主权」概念在深层逻辑上具有高度一致性——两者都强调对技术栈的掌控能力与对外部依赖的最小化原则。
-						</p>
-						<p class="text-muted-foreground leading-relaxed">
-							所有内容都基于亲身实践，我反复强调这一原则。这不仅是对内容质量的保障，更是一种认知态度的体现。我选择亲身验证每一个技术方案、每一个工具使用技巧，确保所分享知识的可靠性和可操作性。
-						</p>
+					<section>
+						<h2 class="section-title mb-4">关于本站</h2>
+						<div class="card p-5 md:p-6">
+							<p class="text-sm text-olive leading-relaxed mb-3">
+								本站是我的个人创作之一，起心动念很久，一直想在网上有个属于自己的容器。容器里的内容，是我可以公开的精神世界。创造精神世界的主要手段是「CG艺术」，整个创造过程也是一次精神实验，所以就叫【CG艺术实验室】。
+							</p>
+							<p class="text-sm text-olive leading-relaxed">
+								网站采用Astro框架构建，这一技术选择与其所代表的「现代静态站点」理念与我推崇的「数据主权」概念在深层逻辑上具有高度一致性——两者都强调对技术栈的掌控能力与对外部依赖的最小化原则。
+							</p>
+						</div>
 					</section>
 				</div>
 
-				<section class="mt-12 pt-8 border-t border-border">
-					<h2 class="text-xl font-semibold text-foreground mb-6 text-center">联系方式</h2>
-					<div class="flex flex-wrap justify-center gap-3">
-						<a href="mailto:hello@cgartlab.com" class="tag hover:bg-primary hover:text-primary-foreground">
-							<Icon name="mail" size={16} class="w-4 h-4" />
+				<section class="mt-10 pt-6" style="border-top: 1px solid var(--border-subtle);">
+					<h2 class="section-title mb-5">联系方式</h2>
+					<div class="flex flex-wrap gap-2">
+						<a href="mailto:hello@cgartlab.com" class="tag hover:bg-ink hover:text-white transition-colors">
+							<Icon name="mail" size={14} class="w-3.5 h-3.5" />
 							Email
 						</a>
 						{SOCIAL_LINKS.map(link => (
-							<a 
-								href={link.url} 
-								target="_blank" 
-								rel="noopener noreferrer" 
-								class="tag hover:bg-primary hover:text-primary-foreground"
+							<a
+								href={link.url}
+								target="_blank"
+								rel="noopener noreferrer"
+								class="tag hover:bg-ink hover:text-white transition-colors"
 							>
 								{link.name}
 							</a>

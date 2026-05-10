@@ -1,0 +1,19 @@
+- [x] 暗色根变量（.dark）已重写，使用暖炭灰基底而非纯黑
+- [x] 暗色语义变量（--dark-ink, --dark-olive, --dark-stone 等）已定义并在组件中使用
+- [x] 暗色 tag tint 变量（--dark-tag-08 ~ --dark-tag-30）已定义
+- [x] body 在暗色下背景为 #1C1917，文字为暖白色阶
+- [x] ::selection 在暗色下使用 ink-blue 25% 透明度高亮
+- [x] :focus-visible 在暗色下使用适配后的 ink-blue
+- [x] .card 在暗色下背景为 #30302E，边框为 rgba(255,255,255,0.08)，hover 有可见的 lift 阴影
+- [x] .tag 在暗色下背景为暗色 tint，文字为浅 ink-blue，hover 状态可见
+- [x] .timeline-item 在暗色下圆点为适配 ink-blue，连接线为 #3D3835，glow 可见
+- [x] .quote-block 在暗色下左边框为适配 ink-blue，文字为 #A8A29E，背景与周围有微妙区分
+- [x] .social-link 在暗色下背景、边框、hover 状态均正确
+- [x] .btn-primary / .btn-secondary 在暗色下颜色、hover 状态正确
+- [x] .section-line 在暗色下使用暗色 warm-sand 渐变
+- [x] .dash-list 在暗色下短横线与文字色正确
+- [x] 各页面（index, works, about, blog）中无硬编码颜色导致暗色下失效
+- [x] 博客文章布局（BlogPost.astro）在暗色下 prose 样式正确
+- [x] npm run build 无错误
+- [x] 浏览器中手动切换暗色模式后，所有页面视觉正常、层级清晰
+- [x] 移动端菜单在暗色下背景与文字对比度足够

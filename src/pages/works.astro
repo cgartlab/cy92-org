@@ -49,30 +49,29 @@ const meditationSeries = {
 	<head>
 		<BaseHead title={`作品展示 | ${SITE_TITLE}`} description="ChenYang的作品集展示 - 包含CG艺术作品集视频、冥想系列数字绘画等创作成果" />
 	</head>
-	<body class="min-h-screen bg-background">
+	<body class="min-h-screen bg-canvas">
 		<Header />
 		<main class="container-custom py-8 md:py-12">
-			<header class="text-center mb-12 md:mb-16">
-				<h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4 tracking-tight">作品展示</h1>
-				<p class="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+			<header class="mb-10 md:mb-12">
+				<h1 class="font-serif text-ink mb-3" style="font-size: 2rem; line-height: 1.15;">作品展示</h1>
+				<p class="text-olive text-base leading-relaxed max-w-2xl">
 					创作是内在探索的过程，每一件作品都是与自我对话的记录
 				</p>
 			</header>
 
+			<!-- CG Art Portfolio -->
 			<section class="section">
 				<div class="section-header">
-					<div class="section-icon">
-						<Icon name="videocam" size={22} class="w-[22px] h-[22px]" />
-					</div>
 					<h2 class="section-title">CG艺术作品集</h2>
+					<div class="section-line"></div>
 				</div>
 
-				<div class="grid gap-8 md:gap-10">
+				<div class="space-y-6">
 					{videoWorks.map((work, index) => (
 						<article class="card overflow-hidden">
 							<div class="grid md:grid-cols-2 gap-0">
 								<div class="relative aspect-video bg-black">
-									<iframe 
+									<iframe
 										src={`//player.bilibili.com/player.html?isOutside=true&aid=&bvid=${work.bilibiliId}&cid=&p=1&highQuality=1&danmaku=0&muted=1&controls=0&autoplay=1`}
 										title={work.title}
 										class="absolute inset-0 w-full h-full"
@@ -80,19 +79,17 @@ const meditationSeries = {
 										allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
 									></iframe>
 								</div>
-								<div class="p-6 md:p-8 flex flex-col justify-center">
-									<div class="flex items-center gap-3 mb-4">
-										<span class="text-sm font-semibold gradient-text">{work.year}</span>
+								<div class="p-5 md:p-6 flex flex-col justify-center">
+									<div class="flex items-center gap-3 mb-3">
+										<span class="text-sm font-medium text-ink" style="font-family: var(--font-serif);">{work.year}</span>
 										<div class="flex flex-wrap gap-2">
 											{work.tags.map(tag => (
-												<span class="text-xs font-medium px-2.5 py-1 bg-secondary/80 text-secondary-foreground rounded-full">
-													{tag}
-												</span>
+												<span class="tag text-xs">{tag}</span>
 											))}
 										</div>
 									</div>
-									<h3 class="text-xl md:text-2xl font-semibold text-foreground mb-4 tracking-tight">{work.title}</h3>
-									<p class="text-muted-foreground leading-relaxed">{work.description}</p>
+									<h3 class="text-lg font-medium text-foreground mb-3" style="font-family: var(--font-serif);">{work.title}</h3>
+									<p class="text-sm text-olive leading-relaxed">{work.description}</p>
 								</div>
 							</div>
 						</article>
@@ -100,109 +97,108 @@ const meditationSeries = {
 				</div>
 			</section>
 
+			<!-- Meditation Series -->
 			<section class="section">
 				<div class="section-header">
-					<div class="section-icon">
-						<Icon name="info" size={22} class="w-[22px] h-[22px]" />
-					</div>
 					<h2 class="section-title">冥想系列 · 数字绘画</h2>
+					<div class="section-line"></div>
 				</div>
 
-				<div class="card p-6 md:p-8">
-					<div class="mb-8">
-						<div class="relative w-full aspect-[21/9] rounded-xl overflow-hidden mb-6">
-							<img 
-								src={coverImage} 
-								alt="冥想系列封面" 
+				<div class="card p-5 md:p-6">
+					<div class="mb-6">
+						<div class="relative w-full aspect-[21/9] rounded-lg overflow-hidden mb-5">
+							<img
+								src={coverImage}
+								alt="冥想系列封面"
 								class="w-full h-full object-cover"
 							/>
 							<div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
 							<div class="absolute bottom-4 left-4 right-4">
-								<h3 class="text-xl md:text-2xl font-bold text-white mb-2">{meditationSeries.title}</h3>
+								<h3 class="text-lg md:text-xl font-medium text-white mb-1" style="font-family: var(--font-serif);">{meditationSeries.title}</h3>
 								<p class="text-sm text-white/80">数字绘画系列 · 2013-2016</p>
 							</div>
 						</div>
-						<p class="text-muted-foreground leading-relaxed text-base md:text-lg">
+						<p class="text-sm text-olive leading-relaxed">
 							{meditationSeries.description}
 						</p>
 					</div>
 
-					<div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-6">
+					<div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-4">
 						{meditationImages.map((artwork, index) => (
-							<a 
+							<a
 								href={meditationSeries.link}
 								target="_blank"
 								rel="noopener noreferrer"
-								class="group relative aspect-square rounded-xl overflow-hidden border border-border/50 hover:border-primary/30 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/10"
+								class="group relative aspect-square rounded-lg overflow-hidden border hover:border-ink/30 transition-all duration-300 hover:-translate-y-1"
+							style="border-color: var(--border-subtle);"
 							>
-								<img 
-									src={artwork.src} 
+								<img
+									src={artwork.src}
 									alt={artwork.title}
 									class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
 								/>
 								<div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-									<div class="absolute bottom-3 left-3 right-3">
-										<span class="text-sm font-medium text-white">{artwork.title}</span>
+									<div class="absolute bottom-2 left-2 right-2">
+										<span class="text-xs font-medium text-white">{artwork.title}</span>
 									</div>
 								</div>
 							</a>
 						))}
 					</div>
 
-					<div class="mt-8 pt-6 border-t border-border">
-						<a 
+					<div class="mt-6 pt-4" style="border-top: 1px solid var(--border-subtle);">
+						<a
 							href={meditationSeries.link}
 							target="_blank"
 							rel="noopener noreferrer"
-							class="inline-flex items-center gap-2 text-primary hover:text-primary-dark transition-colors font-medium"
+							class="inline-flex items-center gap-2 text-sm text-ink hover:text-ink-light transition-colors font-medium"
 						>
 							<span>查看完整冥想系列作品</span>
-							<Icon name="open_in_new" size={16} class="w-4 h-4" />
+							<Icon name="open_in_new" size={14} class="w-3.5 h-3.5" />
 						</a>
 					</div>
 				</div>
 			</section>
 
+			<!-- More Works -->
 			<section class="section">
 				<div class="section-header">
-					<div class="section-icon">
-						<Icon name="emoji_events" size={22} class="w-[22px] h-[22px]" />
-					</div>
 					<h2 class="section-title">更多作品</h2>
+					<div class="section-line"></div>
 				</div>
 
-				<div class="card p-6 md:p-8">
-					<div class="grid md:grid-cols-2 gap-6">
-						<a 
+				<div class="card p-5 md:p-6">
+					<div class="grid md:grid-cols-2 gap-4">
+						<a
 							href="https://space.bilibili.com/cgartlab"
 							target="_blank"
 							rel="noopener noreferrer"
-							class="group flex items-start gap-4 p-4 rounded-xl bg-background/50 hover:bg-primary/5 transition-colors"
+							class="group flex items-start gap-4 p-4 rounded-lg transition-colors bg-canvas"
 						>
-							<div class="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-pink-500 to-rose-600 flex items-center justify-center text-white">
-								<Icon name="bilibili" size={24} class="w-6 h-6" fill />
+							<div class="flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center text-white" style="background: var(--ink-blue);">
+								<Icon name="bilibili" size={20} class="w-5 h-5" fill />
 							</div>
 							<div class="flex-1">
-								<h3 class="text-base font-semibold text-foreground mb-1 group-hover:text-primary transition-colors">Bilibili 主页</h3>
-								<p class="text-sm text-muted-foreground">查看更多动画、CG艺术相关视频作品</p>
+								<h3 class="text-sm font-medium text-foreground mb-1 group-hover:text-ink transition-colors">Bilibili 主页</h3>
+								<p class="text-xs text-olive">查看更多动画、CG艺术相关视频作品</p>
 							</div>
-							<Icon name="arrow_forward" size={20} class="flex-shrink-0 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all" />
+							<Icon name="arrow_forward" size={18} class="flex-shrink-0 text-stone group-hover:text-ink group-hover:translate-x-1 transition-all" />
 						</a>
 
-						<a 
+						<a
 							href="https://cgartlab.com"
 							target="_blank"
 							rel="noopener noreferrer"
-							class="group flex items-start gap-4 p-4 rounded-xl bg-background/50 hover:bg-primary/5 transition-colors"
+							class="group flex items-start gap-4 p-4 rounded-lg transition-colors bg-canvas"
 						>
-							<div class="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-amber-600 flex items-center justify-center text-white">
-								<Icon name="brush" size={24} class="w-6 h-6" />
+							<div class="flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center text-white" style="background: var(--ink-blue);">
+								<Icon name="brush" size={20} class="w-5 h-5" />
 							</div>
 							<div class="flex-1">
-								<h3 class="text-base font-semibold text-foreground mb-1 group-hover:text-primary transition-colors">CG艺术实验室</h3>
-								<p class="text-sm text-muted-foreground">访问个人博客，了解更多创作与思考</p>
+								<h3 class="text-sm font-medium text-foreground mb-1 group-hover:text-ink transition-colors">CG艺术实验室</h3>
+								<p class="text-xs text-olive">访问个人博客，了解更多创作与思考</p>
 							</div>
-							<Icon name="arrow_forward" size={20} class="flex-shrink-0 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all" />
+							<Icon name="arrow_forward" size={18} class="flex-shrink-0 text-stone group-hover:text-ink group-hover:translate-x-1 transition-all" />
 						</a>
 					</div>
 				</div>

@@ -2,7 +2,6 @@
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import ProjectCard from '../components/ProjectCard.astro';
 import Icon from '../components/Icon.astro';
 import { SITE_TITLE, SITE_DESCRIPTION, PERSONAL_INFO, SKILLS, EXPERIENCE, PROJECTS, STATS, SOCIAL_LINKS, HONORS, WORK_EXPERIENCE, EDUCATION } from '../consts';
 ---
@@ -12,81 +11,96 @@ import { SITE_TITLE, SITE_DESCRIPTION, PERSONAL_INFO, SKILLS, EXPERIENCE, PROJEC
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
 	</head>
-	<body class="min-h-screen bg-background">
+	<body class="min-h-screen bg-canvas">
 		<Header />
 		<main class="container-custom py-8 md:py-12">
-			<section class="relative py-12 md:py-20 text-center overflow-hidden">
-				<div class="absolute inset-0 -z-10">
-					<div class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-gradient-to-br from-primary/20 via-purple-500/10 to-pink-500/10 rounded-full blur-3xl opacity-60"></div>
+			<!-- Hero Section -->
+			<section class="section pb-6 md:pb-8">
+				<div class="flex flex-col md:flex-row md:items-start md:justify-between gap-6 md:gap-8">
+					<div class="flex-1">
+						<div class="mb-6">
+							<h1 class="font-serif text-ink mb-2" style="font-size: 2.5rem; line-height: 1.1;">
+								{PERSONAL_INFO.name}
+							</h1>
+							<p class="text-olive text-base md:text-lg font-medium" style="font-family: var(--font-serif);">
+								{PERSONAL_INFO.title}
+							</p>
+						</div>
+
+						<div class="quote-block my-4">
+							<p class="text-sm md:text-base leading-relaxed">
+								{PERSONAL_INFO.bio}
+							</p>
+						</div>
+
+						<div class="flex flex-wrap gap-2 mt-4">
+							<span class="tag">
+								<Icon name="place" size={14} class="w-3.5 h-3.5" />
+								{PERSONAL_INFO.location}
+							</span>
+							<span class="tag">
+								<Icon name="person" size={14} class="w-3.5 h-3.5" />
+								{PERSONAL_INFO.personality}
+							</span>
+						</div>
+					</div>
+
+					<div class="flex-shrink-0">
+						<div class="w-24 h-24 md:w-28 md:h-28 rounded-xl overflow-hidden border bg-ivory" style="border-color: var(--border-subtle);">
+							<img src="/favicon.svg" alt="Logo" class="w-full h-full object-cover" />
+						</div>
+					</div>
 				</div>
-				
-				<div class="relative">
-					<div class="w-28 h-28 md:w-32 md:h-32 rounded-3xl bg-white/10 dark:bg-white/5 backdrop-blur-xl border border-white/20 dark:border-white/10 flex items-center justify-center shadow-2xl shadow-primary/20 mx-auto mb-8 animate-float overflow-hidden">
-						<img src="/favicon.svg" alt="Logo" class="w-full h-full object-cover" />
-					</div>
-					
-					<div class="mb-6">
-						<h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground tracking-tight mb-3">
-							{PERSONAL_INFO.name}
-						</h1>
-						<p class="text-xl md:text-2xl gradient-text font-semibold mb-2">{PERSONAL_INFO.title}</p>
-					</div>
-					
-					<p class="text-lg md:text-xl text-muted-foreground max-w-lg mx-auto mb-8 leading-relaxed">{PERSONAL_INFO.bio}</p>
-					
-					<div class="flex flex-wrap justify-center gap-3 mb-8">
-						<span class="tag">
-							<Icon name="place" size={16} class="w-4 h-4" />
-							{PERSONAL_INFO.location}
-						</span>
-						<span class="tag">
-							<Icon name="person" size={16} class="w-4 h-4" />
-							{PERSONAL_INFO.personality}
-						</span>
-					</div>
-					
-					<div class="flex justify-center gap-3">
+
+				<!-- Contact & Social -->
+				<div class="mt-6 pt-6" style="border-top: 1px solid var(--border-subtle);">
+					<div class="flex flex-wrap items-center gap-3">
+						<a href={`mailto:${PERSONAL_INFO.email}`} class="btn btn-primary text-sm gap-2">
+							<Icon name="mail" size={16} class="w-4 h-4" />
+							{PERSONAL_INFO.email}
+						</a>
 						{SOCIAL_LINKS.slice(0, 4).map(link => (
-							<a 
-								href={link.url} 
-								target="_blank" 
-								rel="noopener noreferrer" 
+							<a
+								href={link.url}
+								target="_blank"
+								rel="noopener noreferrer"
 								class="social-link"
 								title={link.name}
 							>
-								<Icon name={link.icon} size={20} class="w-5 h-5" fill />
 								<span class="sr-only">{link.name}</span>
+								<Icon name={link.icon} size={18} class="w-[18px] h-[18px]" fill />
 							</a>
 						))}
 					</div>
 				</div>
 			</section>
 
-			<section class="grid grid-cols-2 md:grid-cols-4 gap-5 md:gap-6 py-10 md:py-16">
-				{STATS.map((stat, index) => (
-					<div class={`card stat-card p-6 md:p-7 text-center animate-slide-up stagger-${index + 1}`}>
-						<div class="flex items-baseline justify-center gap-1 mb-2">
-							<span class="text-3xl md:text-4xl font-bold gradient-text">{stat.value}</span>
-							<span class="text-base text-muted-foreground">{stat.unit}</span>
+			<!-- Stats -->
+			<section class="py-4 md:py-6">
+				<div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+					{STATS.map((stat, index) => (
+						<div class="card p-4 md:p-5 text-center animate-slide-up" style={`animation-delay: ${index * 100}ms`}>
+							<div class="flex items-baseline justify-center gap-1 mb-1">
+								<span class="text-2xl md:text-3xl font-medium text-ink" style="font-family: var(--font-serif);">{stat.value}</span>
+								<span class="text-sm text-stone">{stat.unit}</span>
+							</div>
+							<p class="text-xs text-olive">{stat.label}</p>
 						</div>
-						<div class="w-12 h-0.5 bg-gradient-to-r from-transparent via-primary/50 to-transparent mx-auto mb-3"></div>
-						<p class="text-sm font-medium text-muted-foreground">{stat.label}</p>
-					</div>
-				))}
+					))}
+				</div>
 			</section>
 
+			<!-- Skills -->
 			<section class="section">
 				<div class="section-header">
-					<div class="section-icon">
-						<Icon name="star" size={22} class="w-[22px] h-[22px]" fill />
-					</div>
 					<h2 class="section-title">专业技能</h2>
+					<div class="section-line"></div>
 				</div>
-				
-				<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
+
+				<div class="grid md:grid-cols-2 gap-4 md:gap-5">
 					{SKILLS.map(category => (
-						<div class="card p-6">
-							<h3 class="text-base font-semibold text-foreground mb-4">{category.category}</h3>
+						<div class="card p-5">
+							<h3 class="text-sm font-medium text-ink mb-3" style="font-family: var(--font-serif);">{category.category}</h3>
 							<div class="flex flex-wrap gap-2">
 								{category.items.map(skill => (
 									<span class="tag">{skill}</span>
@@ -97,23 +111,22 @@ import { SITE_TITLE, SITE_DESCRIPTION, PERSONAL_INFO, SKILLS, EXPERIENCE, PROJEC
 				</div>
 			</section>
 
+			<!-- Education -->
 			<section class="section">
 				<div class="section-header">
-					<div class="section-icon">
-						<Icon name="school" size={22} class="w-[22px] h-[22px]" />
-					</div>
 					<h2 class="section-title">教育经历</h2>
+					<div class="section-line"></div>
 				</div>
-				
-				<div class="card p-6 md:p-8">
+
+				<div class="card p-5 md:p-6">
 					<div class="space-y-0">
 						{EDUCATION.map(edu => (
-							<div class="timeline-item pb-8 last:pb-0">
-								<div class="text-sm font-semibold gradient-text mb-2">{edu.period}</div>
-								<div class="pl-2">
-									<h3 class="text-lg font-semibold text-foreground mb-1">{edu.school}</h3>
-									<p class="text-sm text-primary mb-2">{edu.major}</p>
-									<p class="text-muted-foreground">{edu.degree}</p>
+							<div class="timeline-item pb-6 last:pb-0">
+								<div class="text-sm font-medium text-ink mb-1" style="font-family: var(--font-serif);">{edu.period}</div>
+								<div>
+									<h3 class="text-base font-medium text-foreground mb-0.5">{edu.school}</h3>
+									<p class="text-sm text-ink mb-0.5">{edu.major}</p>
+									<p class="text-sm text-olive">{edu.degree}</p>
 								</div>
 							</div>
 						))}
@@ -121,25 +134,24 @@ import { SITE_TITLE, SITE_DESCRIPTION, PERSONAL_INFO, SKILLS, EXPERIENCE, PROJEC
 				</div>
 			</section>
 
+			<!-- Work Experience -->
 			<section class="section">
 				<div class="section-header">
-					<div class="section-icon">
-						<Icon name="schedule" size={22} class="w-[22px] h-[22px]" />
-					</div>
 					<h2 class="section-title">工作经历</h2>
+					<div class="section-line"></div>
 				</div>
-				
-				<div class="card p-6 md:p-8">
+
+				<div class="card p-5 md:p-6">
 					<div class="space-y-0">
 						{WORK_EXPERIENCE.map(exp => (
-							<div class="timeline-item pb-8 last:pb-0">
-								<div class="text-sm font-semibold gradient-text mb-2">{exp.period}</div>
-								<div class="pl-2">
-									<h3 class="text-lg font-semibold text-foreground mb-1">{exp.title}</h3>
+							<div class="timeline-item pb-6 last:pb-0">
+								<div class="text-sm font-medium text-ink mb-1" style="font-family: var(--font-serif);">{exp.period}</div>
+								<div>
+									<h3 class="text-base font-medium text-foreground mb-0.5">{exp.title}</h3>
 									{exp.department && exp.position && (
-										<p class="text-sm text-primary mb-2">{exp.department} · {exp.position}</p>
+										<p class="text-sm text-ink mb-1">{exp.department} · {exp.position}</p>
 									)}
-									<p class="text-muted-foreground leading-relaxed">{exp.description}</p>
+									<p class="text-sm text-olive leading-relaxed">{exp.description}</p>
 								</div>
 							</div>
 						))}
@@ -147,24 +159,23 @@ import { SITE_TITLE, SITE_DESCRIPTION, PERSONAL_INFO, SKILLS, EXPERIENCE, PROJEC
 				</div>
 			</section>
 
+			<!-- Honors -->
 			<section class="section">
 				<div class="section-header">
-					<div class="section-icon">
-						<Icon name="emoji_events" size={22} class="w-[22px] h-[22px]" />
-					</div>
 					<h2 class="section-title">荣誉与成就</h2>
+					<div class="section-line"></div>
 				</div>
-				
-				<div class="card p-6 md:p-8">
-					<div class="grid gap-4">
+
+				<div class="card p-5 md:p-6">
+					<div class="space-y-4">
 						{HONORS.map(honor => (
-							<div class="flex gap-4 p-4 rounded-xl bg-background/50 hover:bg-background/80 transition-colors">
-								<div class="flex-shrink-0 w-16 text-center">
-									<span class="text-lg font-bold gradient-text">{honor.year}</span>
+							<div class="flex gap-4 p-3 rounded-lg bg-canvas">
+								<div class="flex-shrink-0 w-14 text-right">
+									<span class="text-sm font-medium text-ink" style="font-family: var(--font-serif);">{honor.year}</span>
 								</div>
 								<div class="flex-1">
-									<h3 class="text-base font-semibold text-foreground mb-1">{honor.title}</h3>
-									<p class="text-sm text-muted-foreground">{honor.description}</p>
+									<h3 class="text-sm font-medium text-foreground mb-0.5">{honor.title}</h3>
+									<p class="text-xs text-olive leading-relaxed">{honor.description}</p>
 								</div>
 							</div>
 						))}
@@ -172,22 +183,21 @@ import { SITE_TITLE, SITE_DESCRIPTION, PERSONAL_INFO, SKILLS, EXPERIENCE, PROJEC
 				</div>
 			</section>
 
+			<!-- Creative Practice -->
 			<section class="section">
 				<div class="section-header">
-					<div class="section-icon">
-						<Icon name="layers" size={22} class="w-[22px] h-[22px]" />
-					</div>
 					<h2 class="section-title">创作实践</h2>
+					<div class="section-line"></div>
 				</div>
-				
-				<div class="card p-6 md:p-8">
+
+				<div class="card p-5 md:p-6">
 					<div class="space-y-0">
 						{EXPERIENCE.map(exp => (
-							<div class="timeline-item pb-8 last:pb-0">
-								<div class="text-sm font-semibold gradient-text mb-2">{exp.period}</div>
-								<div class="pl-2">
-									<h3 class="text-lg font-semibold text-foreground mb-2">{exp.title}</h3>
-									<p class="text-muted-foreground leading-relaxed">{exp.description}</p>
+							<div class="timeline-item pb-6 last:pb-0">
+								<div class="text-sm font-medium text-ink mb-1" style="font-family: var(--font-serif);">{exp.period}</div>
+								<div>
+									<h3 class="text-base font-medium text-foreground mb-1">{exp.title}</h3>
+									<p class="text-sm text-olive leading-relaxed">{exp.description}</p>
 								</div>
 							</div>
 						))}
@@ -195,37 +205,39 @@ import { SITE_TITLE, SITE_DESCRIPTION, PERSONAL_INFO, SKILLS, EXPERIENCE, PROJEC
 				</div>
 			</section>
 
+			<!-- Projects -->
 			<section class="section">
 				<div class="section-header">
-					<div class="section-icon">
-						<Icon name="folder" size={22} class="w-[22px] h-[22px]" />
-					</div>
 					<h2 class="section-title">项目作品</h2>
+					<div class="section-line"></div>
 				</div>
-				
-				<div class="grid md:grid-cols-2 gap-5 md:gap-6">
-					{PROJECTS.map(project => (
-						<ProjectCard 
-							title={project.title} 
-							description={project.description} 
-							link={project.link}
-							tags={project.tags}
-						/>
-					))}
-				</div>
-			</section>
 
-			<section class="relative py-16 md:py-20 px-6 md:px-10 overflow-hidden">
-				<div class="absolute inset-0 bg-gradient-to-br from-primary/5 via-purple-500/5 to-pink-500/5 rounded-3xl"></div>
-				<div class="absolute inset-0 bg-gradient-to-r from-primary/10 via-transparent to-primary/10 rounded-3xl blur-xl"></div>
-				
-				<div class="relative text-center">
-					<h2 class="text-2xl md:text-3xl font-bold text-foreground mb-4 tracking-tight">联系我</h2>
-					<p class="text-muted-foreground mb-8 max-w-md mx-auto text-base md:text-lg">如果您对我的作品感兴趣，或有合作意向，欢迎通过邮件联系我。</p>
-					<a href={`mailto:${PERSONAL_INFO.email}`} class="btn btn-primary gap-2 shadow-xl shadow-primary/30 hover:shadow-2xl hover:shadow-primary/40">
-						<Icon name="mail" size={20} class="w-5 h-5" />
-						发送邮件
-					</a>
+				<div class="grid md:grid-cols-2 gap-4 md:gap-5">
+					{PROJECTS.map(project => (
+						<article class="card p-5 group">
+							<div class="flex items-start justify-between gap-3 mb-3">
+								<h3 class="text-base font-medium text-foreground group-hover:text-ink transition-colors" style="font-family: var(--font-serif);">
+									{project.title}
+								</h3>
+								<a
+									href={project.link}
+									target="_blank"
+									rel="noopener noreferrer"
+									class="flex-shrink-0 text-stone hover:text-ink transition-colors"
+								>
+									<Icon name="open_in_new" size={16} class="w-4 h-4" />
+								</a>
+							</div>
+
+							<p class="text-sm text-olive leading-relaxed mb-4">{project.description}</p>
+
+							<div class="flex flex-wrap gap-2">
+								{project.tags.map(tag => (
+									<span class="tag text-xs">{tag}</span>
+								))}
+							</div>
+						</article>
+					))}
 				</div>
 			</section>
 		</main>

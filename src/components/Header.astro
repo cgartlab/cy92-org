@@ -4,87 +4,88 @@ import Icon from './Icon.astro';
 import { SITE_TITLE, SOCIAL_LINKS } from '../consts';
 ---
 
-<header id="site-header" class="sticky top-0 z-50 border-b border-border/40 bg-background/80 backdrop-blur-lg supports-[backdrop-filter]:bg-background/60 transition-shadow duration-300">
-	<div class="container-custom flex h-16 items-center justify-between">
-		<a href="/" class="text-lg font-semibold text-foreground hover:text-primary transition-colors duration-200" aria-label="返回首页">
+<header id="site-header" class="sticky top-0 z-50 border-b bg-canvas/90 backdrop-blur-md supports-[backdrop-filter]:bg-canvas/80 transition-shadow duration-300" style="border-color: var(--border-subtle);">
+	<div class="container-custom flex h-14 items-center justify-between">
+		<a href="/" class="text-base font-medium text-foreground hover:text-ink transition-colors duration-200" aria-label="返回首页" style="font-family: var(--font-serif);">
 			{SITE_TITLE.split(' | ')[0]}
 		</a>
 
 		<nav class="hidden md:flex items-center gap-1" aria-label="主导航">
 			<HeaderLink href="/">首页</HeaderLink>
 			<HeaderLink href="/works">作品</HeaderLink>
-			<a href="https://cgartlab.com" target="_blank" rel="noopener noreferrer" class="text-sm text-muted-foreground/80 hover:text-primary transition-colors duration-200 px-3 py-1.5 rounded-md hover:bg-accent/10">博客</a>
+			<a href="https://cgartlab.com" target="_blank" rel="noopener noreferrer" class="text-sm text-muted-foreground/80 hover:text-ink transition-colors duration-200 px-3 py-1.5 rounded-md hover:bg-secondary/50">博客</a>
 			<HeaderLink href="/about">关于</HeaderLink>
 		</nav>
 
 		<div class="hidden md:flex items-center gap-1">
 			{SOCIAL_LINKS.slice(0, 3).map(link => (
-				<a 
-					href={link.url} 
-					target="_blank" 
-					rel="noopener noreferrer" 
+				<a
+					href={link.url}
+					target="_blank"
+					rel="noopener noreferrer"
 					title={link.name}
-					class="social-link"
+					class="social-link w-8 h-8"
 				>
 					<span class="sr-only">{link.name}</span>
-					<Icon name={link.icon} size={18} class="w-[18px] h-[18px]" fill />
+					<Icon name={link.icon} size={16} class="w-4 h-4" fill />
 				</a>
 			))}
-			
-			<button 
-				id="theme-toggle" 
-				class="social-link ml-2"
+
+			<button
+				id="theme-toggle"
+				class="social-link w-8 h-8 ml-1"
 				aria-label="切换主题"
 			>
-				<Icon name="dark_mode" size={20} class="w-5 h-5 hidden dark:block" fill />
-				<Icon name="light_mode" size={20} class="w-5 h-5 block dark:hidden" fill />
+				<Icon name="dark_mode" size={16} class="w-4 h-4 hidden dark:block" fill />
+				<Icon name="light_mode" size={16} class="w-4 h-4 block dark:hidden" fill />
 			</button>
 		</div>
 
-		<button 
-			id="mobile-menu-btn" 
-			class="md:hidden flex items-center justify-center w-10 h-10 rounded-md hover:bg-accent/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 transition-colors"
-			aria-label="打开菜单" 
+		<button
+			id="mobile-menu-btn"
+			class="md:hidden flex items-center justify-center w-9 h-9 rounded-md hover:bg-secondary/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 transition-colors"
+			aria-label="打开菜单"
 			aria-expanded="false"
 			aria-controls="mobile-nav"
 		>
-			<Icon name="menu" size={20} class="w-5 h-5 menu-icon-open" fill />
-			<Icon name="close" size={20} class="w-5 h-5 menu-icon-close hidden" fill />
+			<Icon name="menu" size={18} class="w-[18px] h-[18px] menu-icon-open" fill />
+			<Icon name="close" size={18} class="w-[18px] h-[18px] menu-icon-close hidden" fill />
 		</button>
 	</div>
 
-	<div 
-		id="mobile-nav" 
-		class="md:hidden border-t border-border/40 bg-background/80 backdrop-blur-lg overflow-hidden transition-all duration-300 ease-in-out max-h-0 opacity-0"
+	<div
+		id="mobile-nav"
+		class="md:hidden border-t overflow-hidden transition-all duration-300 ease-in-out max-h-0 opacity-0 bg-canvas"
+		style="border-color: var(--border-subtle);"
 		role="navigation"
 		aria-label="移动端导航"
 	>
-		<nav class="container-custom py-4 flex flex-col gap-1">
+		<nav class="container-custom py-3 flex flex-col gap-1">
 			<HeaderLink href="/">首页</HeaderLink>
 			<HeaderLink href="/works">作品</HeaderLink>
-			<a href="https://cgartlab.com" target="_blank" rel="noopener noreferrer" class="text-sm text-muted-foreground/80 hover:text-primary transition-colors duration-200 px-3 py-1.5 rounded-md hover:bg-accent/10">博客</a>
+			<a href="https://cgartlab.com" target="_blank" rel="noopener noreferrer" class="text-sm text-muted-foreground/80 hover:text-ink transition-colors duration-200 px-3 py-1.5 rounded-md hover:bg-secondary/50">博客</a>
 			<HeaderLink href="/about">关于</HeaderLink>
 		</nav>
-		<div class="container-custom pb-4 flex gap-2 border-t border-border/40 pt-4">
+		<div class="container-custom pb-3 flex gap-2 border-t pt-3" style="border-color: var(--border-subtle);">
 			{SOCIAL_LINKS.slice(0, 3).map(link => (
-				<a 
-					href={link.url} 
-					target="_blank" 
-					rel="noopener noreferrer" 
+				<a
+					href={link.url}
+					target="_blank"
+					rel="noopener noreferrer"
 					title={link.name}
-					class="social-link"
+					class="social-link w-8 h-8"
 				>
 					<span class="sr-only">{link.name}</span>
-					<Icon name={link.icon} size={20} class="w-5 h-5" fill />
+					<Icon name={link.icon} size={16} class="w-4 h-4" fill />
 				</a>
 			))}
-			<button 
-				id="theme-toggle-mobile" 
-				class="social-link"
+			<button
+				id="theme-toggle-mobile"
+				class="social-link w-8 h-8"
 				aria-label="切换主题"
 			>
-				<Icon name="dark_mode" size={20} class="w-5 h-5 hidden dark:block" fill />
-				<Icon name="light_mode" size={20} class="w-5 h-5 block dark:hidden" fill />
+				<Icon name="dark_mode" size={16} class="w-4 h-4 hidden dark:block" fill />
+				<Icon name="light_mode" size={16} class="w-4 h-4 block dark:hidden" fill />
 			</button>
 		</div>
 	</div>
@@ -101,9 +102,9 @@ import { SITE_TITLE, SOCIAL_LINKS } from '../consts';
 	if (header) {
 		window.addEventListener('scroll', () => {
 			if (window.scrollY > 10) {
-				header.classList.add('shadow-md');
+				header.classList.add('shadow-sm');
 			} else {
-				header.classList.remove('shadow-md');
+				header.classList.remove('shadow-sm');
 			}
 		});
 	}
@@ -116,7 +117,7 @@ import { SITE_TITLE, SOCIAL_LINKS } from '../consts';
 				document.body.style.position = 'fixed';
 				document.body.style.top = `-${scrollPosition}px`;
 				document.body.style.width = '100%';
-				
+
 				mobileNav.classList.remove('max-h-0', 'opacity-0');
 				mobileNav.classList.add('max-h-96', 'opacity-100');
 				iconOpen?.classList.add('hidden');
@@ -127,13 +128,13 @@ import { SITE_TITLE, SOCIAL_LINKS } from '../consts';
 				document.body.style.top = '';
 				document.body.style.width = '';
 				window.scrollTo(0, scrollPosition);
-				
+
 				mobileNav.classList.add('max-h-0', 'opacity-0');
 				mobileNav.classList.remove('max-h-96', 'opacity-100');
 				iconOpen?.classList.remove('hidden');
 				iconClose?.classList.add('hidden');
 			}
-			
+
 			menuBtn.setAttribute('aria-expanded', String(open));
 			menuBtn.setAttribute('aria-label', open ? '关闭菜单' : '打开菜单');
 		};
