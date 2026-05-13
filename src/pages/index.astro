@@ -15,25 +15,25 @@ import { SITE_TITLE, SITE_DESCRIPTION, PERSONAL_INFO, SKILLS, EXPERIENCE, PROJEC
 		<Header />
 		<main class="container-custom py-8 md:py-12">
 			<!-- Hero Section -->
-			<section class="section pb-6 md:pb-8">
-				<div class="flex flex-col md:flex-row md:items-start md:justify-between gap-6 md:gap-8">
-					<div class="flex-1">
+			<section class="section pb-8 md:pb-10">
+				<div class="flex flex-col md:flex-row md:items-start md:justify-between gap-8 md:gap-10">
+					<div class="flex-1 min-w-0">
 						<div class="mb-6">
-							<h1 class="font-serif text-ink mb-2" style="font-size: 2.5rem; line-height: 1.1;">
+							<span class="inline-block text-xs font-medium uppercase tracking-widest text-stone mb-3">
+								跨领域数字创作者
+							</span>
+							<h1 class="font-serif text-ink" style="font-size: clamp(2.25rem, 5vw, 3.25rem); line-height: 1.08; letter-spacing: -0.03em;">
 								{PERSONAL_INFO.name}
 							</h1>
-							<p class="text-olive text-base md:text-lg font-medium" style="font-family: var(--font-serif);">
-								{PERSONAL_INFO.title}
-							</p>
 						</div>
 
-						<div class="quote-block my-4">
-							<p class="text-sm md:text-base leading-relaxed">
+						<div class="quote-block my-5">
+							<p class="text-sm md:text-base leading-relaxed" style="font-size: clamp(0.9375rem, 1.5vw, 1.0625rem);">
 								{PERSONAL_INFO.bio}
 							</p>
 						</div>
 
-						<div class="flex flex-wrap gap-2 mt-4">
+						<div class="flex flex-wrap gap-2 mt-5">
 							<span class="tag">
 								<Icon name="place" size={14} class="w-3.5 h-3.5" />
 								{PERSONAL_INFO.location}
@@ -45,15 +45,15 @@ import { SITE_TITLE, SITE_DESCRIPTION, PERSONAL_INFO, SKILLS, EXPERIENCE, PROJEC
 						</div>
 					</div>
 
-					<div class="flex-shrink-0">
-						<div class="w-24 h-24 md:w-28 md:h-28 rounded-xl overflow-hidden border bg-ivory" style="border-color: var(--border-subtle);">
-							<img src="/favicon.svg" alt="Logo" class="w-full h-full object-cover" />
+					<div class="flex-shrink-0 flex md:block justify-center">
+						<div class="logo-mark w-28 h-28 md:w-32 md:h-32">
+							<img src="/favicon.svg" alt="CG艺术实验室" class="w-full h-full object-cover" />
 						</div>
 					</div>
 				</div>
 
 				<!-- Contact & Social -->
-				<div class="mt-6 pt-6" style="border-top: 1px solid var(--border-subtle);">
+				<div class="mt-8 pt-6" style="border-top: 1px solid var(--border-subtle);">
 					<div class="flex flex-wrap items-center gap-3">
 						<a href={`mailto:${PERSONAL_INFO.email}`} class="btn btn-primary text-sm gap-2">
 							<Icon name="mail" size={16} class="w-4 h-4" />
@@ -76,15 +76,15 @@ import { SITE_TITLE, SITE_DESCRIPTION, PERSONAL_INFO, SKILLS, EXPERIENCE, PROJEC
 			</section>
 
 			<!-- Stats -->
-			<section class="py-4 md:py-6">
-				<div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+			<section class="section">
+				<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
 					{STATS.map((stat, index) => (
-						<div class="card p-4 md:p-5 text-center animate-slide-up" style={`animation-delay: ${index * 100}ms`}>
+						<div class="stat-card animate-slide-up" style={`animation-delay: ${index * 100}ms`}>
 							<div class="flex items-baseline justify-center gap-1 mb-1">
-								<span class="text-2xl md:text-3xl font-medium text-ink" style="font-family: var(--font-serif);">{stat.value}</span>
-								<span class="text-sm text-stone">{stat.unit}</span>
+								<span class="stat-value">{stat.value}</span>
+								<span class="stat-unit">{stat.unit}</span>
 							</div>
-							<p class="text-xs text-olive">{stat.label}</p>
+							<p class="stat-label">{stat.label}</p>
 						</div>
 					))}
 				</div>

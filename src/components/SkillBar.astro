@@ -7,10 +7,10 @@ interface Props {
 const { name, level } = Astro.props;
 
 const getLevelColor = (level: number): string => {
-	if (level >= 90) return 'from-primary via-purple-500 to-pink-500';
-	if (level >= 80) return 'from-emerald-500 to-teal-500';
-	if (level >= 70) return 'from-amber-500 to-orange-500';
-	return 'from-gray-400 to-gray-500';
+	if (level >= 90) return 'from-primary via-primary-light to-primary-dark';
+	if (level >= 80) return 'from-primary to-primary-light';
+	if (level >= 70) return 'from-primary/60 to-primary';
+	return 'from-muted-foreground/30 to-muted-foreground/50';
 };
 
 const getLevelLabel = (level: number): string => {
@@ -22,9 +22,9 @@ const getLevelLabel = (level: number): string => {
 
 const getLevelBgColor = (level: number): string => {
 	if (level >= 90) return 'bg-primary/10 text-primary';
-	if (level >= 80) return 'bg-emerald-500/10 text-emerald-600';
-	if (level >= 70) return 'bg-amber-500/10 text-amber-600';
-	return 'bg-gray-400/10 text-gray-500';
+	if (level >= 80) return 'bg-primary/8 text-primary';
+	if (level >= 70) return 'bg-primary/6 text-primary';
+	return 'bg-muted-foreground/10 text-muted-foreground';
 };
 ---
 
@@ -58,7 +58,7 @@ const getLevelBgColor = (level: number): string => {
 		background: var(--gradient);
 		animation: progressFill 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 		animation-delay: 0.2s;
-		box-shadow: 0 0 10px rgba(124, 58, 237, 0.3);
+		box-shadow: 0 0 10px rgba(27, 54, 93, 0.15);
 	}
 	
 	@keyframes progressFill {

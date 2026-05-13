@@ -55,8 +55,8 @@ import { SITE_TITLE, SOCIAL_LINKS } from '../consts';
 
 	<div
 		id="mobile-nav"
-		class="md:hidden border-t overflow-hidden transition-all duration-300 ease-in-out max-h-0 opacity-0 bg-canvas"
-		style="border-color: var(--border-subtle);"
+		class="md:hidden border-t overflow-hidden transition-all duration-350 bg-canvas"
+		style="border-color: var(--border-subtle); max-height: 0; opacity: 0; transform: translateY(-8px); transition-property: max-height, opacity, transform; transition-timing-function: cubic-bezier(0.25, 1, 0.5, 1); transition-duration: 350ms; will-change: max-height, opacity, transform;"
 		role="navigation"
 		aria-label="移动端导航"
 	>
@@ -118,8 +118,10 @@ import { SITE_TITLE, SOCIAL_LINKS } from '../consts';
 				document.body.style.top = `-${scrollPosition}px`;
 				document.body.style.width = '100%';
 
-				mobileNav.classList.remove('max-h-0', 'opacity-0');
-				mobileNav.classList.add('max-h-96', 'opacity-100');
+				const height = mobileNav.scrollHeight;
+				mobileNav.style.maxHeight = `${height}px`;
+				mobileNav.style.opacity = '1';
+				mobileNav.style.transform = 'translateY(0)';
 				iconOpen?.classList.add('hidden');
 				iconClose?.classList.remove('hidden');
 			} else {
@@ -129,8 +131,9 @@ import { SITE_TITLE, SOCIAL_LINKS } from '../consts';
 				document.body.style.width = '';
 				window.scrollTo(0, scrollPosition);
 
-				mobileNav.classList.add('max-h-0', 'opacity-0');
-				mobileNav.classList.remove('max-h-96', 'opacity-100');
+				mobileNav.style.maxHeight = '0';
+				mobileNav.style.opacity = '0';
+				mobileNav.style.transform = 'translateY(-8px)';
 				iconOpen?.classList.remove('hidden');
 				iconClose?.classList.add('hidden');
 			}
@@ -140,13 +143,14 @@ import { SITE_TITLE, SOCIAL_LINKS } from '../consts';
 		};
 
 		menuBtn.addEventListener('click', () => {
-			const isOpen = !mobileNav.classList.contains('max-h-0');
+			const isOpen = mobileNav.style.maxHeight !== '0px' && mobileNav.style.maxHeight !== '';
 			toggleMenu(!isOpen);
 		});
 
 		document.addEventListener('keydown', (e) => {
-			if (e.key === 'Escape' && !mobileNav.classList.contains('max-h-0')) {
-				toggleMenu(false);
+			if (e.key === 'Escape') {
+				const isOpen = mobileNav.style.maxHeight !== '0px' && mobileNav.style.maxHeight !== '';
+				if (isOpen) toggleMenu(false);
 			}
 		});
 
