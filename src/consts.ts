@@ -18,8 +18,8 @@ export const SOCIAL_LINKS = [
 	{ name: "GitHub", url: "https://github.com/cgartlab", icon: "github" },
 	{ name: "Twitter/X", url: "https://x.com/cgartlab", icon: "twitter" },
 	{ name: "Bilibili", url: "https://space.bilibili.com/38043072", icon: "bilibili" },
-	{ name: "少数派", url: "https://sspai.com/u/cgartlab", icon: "sspai" },
-	{ name: "RSS", url: "/rss.xml", icon: "rss" }
+	{ name: "少数派", url: "https://sspai.com/u/cgartlab", icon: "open_in_new" },
+	{ name: "RSS", url: "/rss.xml", icon: "rss_feed" }
 ];
 
 export const SKILLS = [
