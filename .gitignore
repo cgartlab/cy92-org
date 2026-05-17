@@ -1,3 +1,6 @@
+# Prevent pnpm workspace auto-generation from breaking Cloudflare CI
+pnpm-workspace.yaml
+
 # Dependencies
 node_modules/
 
