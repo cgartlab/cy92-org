@@ -41,7 +41,7 @@ src/
 
 ## CROSS-PROJECT DEPENDENCIES
 
-- **cgartlab.github.io (强依赖)** — `src/scripts/sync-word-count.ts` 从 `D:\github-repos\cgartlab.github.io\src\content\posts\` 读取文章内容，计算总字数后更新到 `src/consts.ts`。运行方式: `npx tsx src/scripts/sync-word-count.ts`。
+- **cgartlab.github.io (强依赖)** — `src/scripts/sync-word-count.ts` 从 `../cgartlab.github.io/src/content/posts/`（相对于 workspace 根目录）读取文章内容，计算总字数后更新到 `src/consts.ts`。运行方式: `npx tsx src/scripts/sync-word-count.ts`。
 - **外部链接** — `src/consts.ts` 和页面组件引用 cgartlab.com、weekly.cgartlab.com。
 
 ## COMMANDS
