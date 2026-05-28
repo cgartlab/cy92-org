@@ -47,4 +47,5 @@ const { title, description, image = '/default-cover.webp' } = Astro.props;
 	};
 	const isDark = getThemePreference() === 'dark';
 	document.documentElement.classList.toggle('dark', isDark);
+	document.documentElement.setAttribute('data-theme', isDark ? 'dark' : '');
 </script>

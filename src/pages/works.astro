@@ -49,12 +49,12 @@ const meditationSeries = {
 	<head>
 		<BaseHead title={`作品展示 | ${SITE_TITLE}`} description="ChenYang的作品集展示 - 包含CG艺术作品集视频、冥想系列数字绘画等创作成果" />
 	</head>
-	<body class="min-h-screen bg-canvas">
+	<body class="min-h-screen" style="background: var(--ds-color-bg); color: var(--ds-color-fg);">
 		<Header />
 		<main class="container-custom py-8 md:py-12">
 			<header class="mb-10 md:mb-12">
-				<h1 class="font-serif text-ink mb-3" style="font-size: 2rem; line-height: 1.15;">作品展示</h1>
-				<p class="text-olive text-base leading-relaxed max-w-2xl">
+				<h1 class="mb-3" style="font-family: var(--ds-font-display); color: var(--ds-color-fg-strong); font-size: 2rem; line-height: 1.15;">作品展示</h1>
+				<p class="text-base leading-relaxed max-w-2xl" style="color: var(--ds-color-fg-subtle);">
 					创作是内在探索的过程，每一件作品都是与自我对话的记录
 				</p>
 			</header>
@@ -81,15 +81,15 @@ const meditationSeries = {
 								</div>
 								<div class="p-5 md:p-6 flex flex-col justify-center">
 									<div class="flex items-center gap-3 mb-3">
-										<span class="text-sm font-medium text-ink" style="font-family: var(--font-serif);">{work.year}</span>
+										<span class="text-sm font-medium" style="font-family: var(--ds-font-display); color: var(--ds-accent);">{work.year}</span>
 										<div class="flex flex-wrap gap-2">
 											{work.tags.map(tag => (
 												<span class="tag text-xs">{tag}</span>
 											))}
 										</div>
 									</div>
-									<h3 class="text-lg font-medium text-foreground mb-3" style="font-family: var(--font-serif);">{work.title}</h3>
-									<p class="text-sm text-olive leading-relaxed">{work.description}</p>
+									<h3 class="text-lg font-medium mb-3" style="font-family: var(--ds-font-display); color: var(--ds-color-fg);">{work.title}</h3>
+									<p class="text-sm leading-relaxed" style="color: var(--ds-color-fg-subtle);">{work.description}</p>
 								</div>
 							</div>
 						</article>
@@ -106,7 +106,7 @@ const meditationSeries = {
 
 				<div class="card p-5 md:p-6">
 					<div class="mb-6">
-						<div class="relative w-full aspect-[21/9] rounded-lg overflow-hidden mb-5">
+						<div class="relative w-full aspect-[21/9] overflow-hidden mb-5" style="border-radius: var(--ds-radius-xl);">
 							<img
 								src={coverImage}
 								alt="冥想系列封面"
@@ -114,11 +114,11 @@ const meditationSeries = {
 							/>
 							<div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
 							<div class="absolute bottom-4 left-4 right-4">
-								<h3 class="text-lg md:text-xl font-medium text-white mb-1" style="font-family: var(--font-serif);">{meditationSeries.title}</h3>
+								<h3 class="text-lg md:text-xl font-medium text-white mb-1" style="font-family: var(--ds-font-display);">{meditationSeries.title}</h3>
 								<p class="text-sm text-white/80">数字绘画系列 · 2013-2016</p>
 							</div>
 						</div>
-						<p class="text-sm text-olive leading-relaxed">
+						<p class="text-sm leading-relaxed" style="color: var(--ds-color-fg-subtle);">
 							{meditationSeries.description}
 						</p>
 					</div>
@@ -129,8 +129,8 @@ const meditationSeries = {
 								href={meditationSeries.link}
 								target="_blank"
 								rel="noopener noreferrer"
-								class="group relative aspect-square rounded-lg overflow-hidden border hover:border-ink/30 transition-all duration-300 hover:-translate-y-1"
-							style="border-color: var(--border-subtle);"
+								class="group relative aspect-square overflow-hidden border transition-all duration-300 hover:-translate-y-1"
+							style="border-color: var(--ds-color-border-subtle); border-radius: var(--ds-radius-xl);"
 							>
 								<img
 									src={artwork.src}
@@ -146,12 +146,13 @@ const meditationSeries = {
 						))}
 					</div>
 
-					<div class="mt-6 pt-4" style="border-top: 1px solid var(--border-subtle);">
+					<div class="mt-6 pt-4" style="border-top: 1px solid var(--ds-color-border-subtle);">
 						<a
 							href={meditationSeries.link}
 							target="_blank"
 							rel="noopener noreferrer"
-							class="inline-flex items-center gap-2 text-sm text-ink hover:text-ink-light transition-colors font-medium"
+							class="inline-flex items-center gap-2 text-sm font-medium transition-colors"
+							style="color: var(--ds-accent);"
 						>
 							<span>查看完整冥想系列作品</span>
 							<Icon name="open_in_new" size={14} class="w-3.5 h-3.5" />
@@ -173,32 +174,34 @@ const meditationSeries = {
 							href="https://space.bilibili.com/cgartlab"
 							target="_blank"
 							rel="noopener noreferrer"
-							class="group flex items-start gap-4 p-4 rounded-lg transition-colors bg-canvas"
+							class="group flex items-start gap-4 p-4 rounded-lg transition-colors"
+							style="background: var(--ds-color-surface-overlay);"
 						>
-							<div class="flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center text-white" style="background: var(--ink-blue);">
+							<div class="flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center text-white" style="background: var(--ds-accent);">
 								<Icon name="bilibili" size={20} class="w-5 h-5" fill />
 							</div>
 							<div class="flex-1">
-								<h3 class="text-sm font-medium text-foreground mb-1 group-hover:text-ink transition-colors">Bilibili 主页</h3>
-								<p class="text-xs text-olive">查看更多动画、CG艺术相关视频作品</p>
+								<h3 class="text-sm font-medium mb-1 transition-colors" style="color: var(--ds-color-fg);">Bilibili 主页</h3>
+								<p class="text-xs" style="color: var(--ds-color-fg-subtle);">查看更多动画、CG艺术相关视频作品</p>
 							</div>
-							<Icon name="arrow_forward" size={18} class="flex-shrink-0 text-stone group-hover:text-ink group-hover:translate-x-1 transition-all" />
+							<Icon name="arrow_forward" size={18} class="flex-shrink-0 transition-all" style="color: var(--ds-color-muted);" />
 						</a>
 
 						<a
 							href="https://cgartlab.com"
 							target="_blank"
 							rel="noopener noreferrer"
-							class="group flex items-start gap-4 p-4 rounded-lg transition-colors bg-canvas"
+							class="group flex items-start gap-4 p-4 rounded-lg transition-colors"
+							style="background: var(--ds-color-surface-overlay);"
 						>
-							<div class="flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center text-white" style="background: var(--ink-blue);">
+							<div class="flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center text-white" style="background: var(--ds-accent);">
 								<Icon name="brush" size={20} class="w-5 h-5" />
 							</div>
 							<div class="flex-1">
-								<h3 class="text-sm font-medium text-foreground mb-1 group-hover:text-ink transition-colors">CG艺术实验室</h3>
-								<p class="text-xs text-olive">访问个人博客，了解更多创作与思考</p>
+								<h3 class="text-sm font-medium mb-1 transition-colors" style="color: var(--ds-color-fg);">CG艺术实验室</h3>
+								<p class="text-xs" style="color: var(--ds-color-fg-subtle);">访问个人博客，了解更多创作与思考</p>
 							</div>
-							<Icon name="arrow_forward" size={18} class="flex-shrink-0 text-stone group-hover:text-ink group-hover:translate-x-1 transition-all" />
+							<Icon name="arrow_forward" size={18} class="flex-shrink-0 transition-all" style="color: var(--ds-color-muted);" />
 						</a>
 					</div>
 				</div>
