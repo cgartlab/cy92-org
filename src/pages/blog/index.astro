@@ -18,17 +18,17 @@ const DEFAULT_COVER = '/default-cover.webp';
 	<head>
 		<BaseHead title={`博客 | ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
 	</head>
-	<body class="min-h-screen bg-canvas">
+	<body class="min-h-screen" style="background: var(--ds-color-bg); color: var(--ds-color-fg);">
 		<Header />
 		<main class="container-custom py-8 md:py-12">
 			<header class="mb-10">
-				<h1 class="font-serif text-ink mb-3" style="font-size: 2rem; line-height: 1.15;">博客文章</h1>
-				<p class="text-olive text-base">思考、创作与探索的记录</p>
+				<h1 class="mb-3" style="font-family: var(--ds-font-display); color: var(--ds-color-fg-strong); font-size: 2rem; line-height: 1.15;">博客文章</h1>
+				<p class="text-base" style="color: var(--ds-color-fg-subtle);">思考、创作与探索的记录</p>
 			</header>
 
 			{posts.length === 0 ? (
 				<div class="card p-8 text-center">
-					<p class="text-olive">暂无博客文章</p>
+					<p style="color: var(--ds-color-muted);">暂无博客文章</p>
 				</div>
 			) : (
 				<div class="grid gap-6 md:grid-cols-2">
@@ -36,7 +36,7 @@ const DEFAULT_COVER = '/default-cover.webp';
 						<article class={`group ${index === 0 ? 'md:col-span-2' : ''}`}>
 							<a
 								href={`/blog/${post.id}/`}
-								class="block card overflow-hidden hover:border-ink/30 transition-all duration-300 hover:-translate-y-1"
+								class="block card overflow-hidden transition-all duration-300 hover:-translate-y-1"
 							>
 								<div class={`relative overflow-hidden ${index === 0 ? 'aspect-[21/9]' : 'aspect-video'}`}>
 									<img
@@ -49,10 +49,10 @@ const DEFAULT_COVER = '/default-cover.webp';
 									/>
 								</div>
 								<div class="p-5">
-									<h2 class={`font-medium text-foreground group-hover:text-ink transition-colors mb-2 ${index === 0 ? 'text-xl md:text-2xl' : 'text-base'}`} style="font-family: var(--font-serif);">
+									<h2 class={`font-medium transition-colors mb-2 ${index === 0 ? 'text-xl md:text-2xl' : 'text-base'}`} style="font-family: var(--ds-font-display); color: var(--ds-color-fg);">
 										{post.data.title}
 									</h2>
-									<p class="text-sm text-olive">
+									<p class="text-sm" style="color: var(--ds-color-muted);">
 										<FormattedDate date={post.data.pubDate} />
 									</p>
 								</div>

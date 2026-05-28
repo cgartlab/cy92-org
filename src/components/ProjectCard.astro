@@ -13,20 +13,21 @@ const { title, description, link, tags } = Astro.props;
 
 <article class="card p-5 group">
 	<div class="flex items-start justify-between gap-3 mb-3">
-		<h3 class="text-base font-medium text-foreground group-hover:text-ink transition-colors" style="font-family: var(--font-serif);">
+		<h3 class="text-base font-medium transition-colors" style="font-family: var(--ds-font-display); color: var(--ds-color-fg);">
 			{title}
 		</h3>
 		<a
 			href={link}
 			target="_blank"
 			rel="noopener noreferrer"
-			class="flex-shrink-0 text-stone hover:text-ink transition-colors"
+			class="flex-shrink-0 transition-colors"
+			style="color: var(--ds-color-muted);"
 		>
 			<Icon name="open_in_new" size={16} class="w-4 h-4" />
 		</a>
 	</div>
 
-	<p class="text-sm text-olive leading-relaxed mb-4">{description}</p>
+	<p class="text-sm leading-relaxed mb-4" style="color: var(--ds-color-fg-subtle);">{description}</p>
 
 	<div class="flex flex-wrap gap-2">
 		{tags.map(tag => (

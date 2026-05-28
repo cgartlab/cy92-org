@@ -11,15 +11,15 @@ import { SITE_TITLE, PERSONAL_INFO, SOCIAL_LINKS } from '../consts';
 	<head>
 		<BaseHead title={`关于 | ${SITE_TITLE}`} description="关于 CG艺术实验室和作者 ChenYang - 跨领域数字创作者的创作理念与实践" />
 	</head>
-	<body class="min-h-screen bg-canvas">
+	<body class="min-h-screen" style="background: var(--ds-color-bg); color: var(--ds-color-fg);">
 		<Header />
 		<main class="container-custom py-8 md:py-12">
 			<article class="max-w-3xl mx-auto">
 				<header class="mb-10">
-					<div class="w-24 h-24 rounded-xl overflow-hidden flex items-center justify-center mb-5 border bg-ivory" style="border-color: var(--border-subtle);">
+					<div class="w-24 h-24 overflow-hidden flex items-center justify-center mb-5 border" style="border-radius: var(--ds-radius-xl); border-color: var(--ds-color-border-subtle); background: var(--ds-color-surface);">
 						<img src="/favicon.svg" alt="CG艺术实验室 Logo" class="w-full h-full object-cover" />
 					</div>
-					<h1 class="font-serif text-ink mb-3" style="font-size: 2rem; line-height: 1.15;">关于我</h1>
+					<h1 class="mb-3" style="font-family: var(--ds-font-display); color: var(--ds-color-fg-strong); font-size: 2rem; line-height: 1.15;">关于我</h1>
 					<div class="quote-block my-3">
 						<p class="text-base">{PERSONAL_INFO.bio}</p>
 					</div>
@@ -120,7 +120,7 @@ import { SITE_TITLE, PERSONAL_INFO, SOCIAL_LINKS } from '../consts';
 					</section>
 				</div>
 
-				<section class="mt-12 pt-8" style="border-top: 1px solid var(--border-subtle);">
+				<section class="mt-12 pt-8" style="border-top: 1px solid var(--ds-color-border-subtle);">
 					<h2 class="section-title mb-5">联系方式</h2>
 					<div class="flex flex-wrap gap-2">
 						<a href="mailto:hello@cgartlab.com" class="tag">

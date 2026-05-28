@@ -4,18 +4,18 @@ import { SOCIAL_LINKS } from '../consts';
 const today = new Date();
 ---
 
-<footer class="py-10 md:py-12 border-t" style="border-color: var(--border-subtle);">
+<footer class="py-10 md:py-12 border-t" style="border-color: var(--ds-color-border-subtle);">
 	<div class="container-custom">
 		<div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
 			<div class="flex flex-col gap-3">
-				<div class="flex items-center gap-1 text-sm text-olive">
+				<div class="flex items-center gap-1 text-sm" style="color: var(--ds-color-fg-subtle);">
 					<span>&copy;</span>
 					<span>{today.getFullYear()}</span>
-					<span class="font-medium text-foreground" style="font-family: var(--font-serif);">ChenYang</span>
-					<span class="text-stone">·</span>
-					<span class="text-ink">CG艺术实验室</span>
+					<span class="font-medium" style="font-family: var(--ds-font-display); color: var(--ds-color-fg);">ChenYang</span>
+					<span style="color: var(--ds-color-muted);">·</span>
+					<span style="color: var(--ds-accent);">CG艺术实验室</span>
 				</div>
-				<p class="text-sm text-stone italic max-w-md">
+				<p class="text-sm italic max-w-md" style="color: var(--ds-color-muted); font-family: var(--ds-font-display);">
 					工具是人类肢体的延伸，电脑是大脑的延伸，写作是思考本身。
 				</p>
 			</div>

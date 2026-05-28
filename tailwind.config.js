@@ -23,9 +23,6 @@ const config = {
 				foreground: 'hsl(var(--foreground) / <alpha-value>)',
 				primary: {
 					DEFAULT: 'hsl(var(--primary) / <alpha-value>)',
-					dark: 'hsl(var(--primary-dark) / <alpha-value>)',
-					light: 'hsl(var(--primary-light) / <alpha-value>)',
-					subtle: 'hsl(var(--primary-subtle) / 0.08)',
 					foreground: 'hsl(var(--primary-foreground) / <alpha-value>)'
 				},
 				secondary: {
@@ -46,26 +43,23 @@ const config = {
 				}
 			},
 			borderRadius: {
-				lg: 'var(--radius)',
-				md: 'calc(var(--radius) - 2px)',
-				sm: 'calc(var(--radius) - 4px)',
-				xl: 'calc(var(--radius) + 4px)',
-				'2xl': 'calc(var(--radius) + 8px)',
-				'3xl': '1.5rem'
+				lg: 'var(--ds-radius-lg)',
+				md: 'var(--ds-radius-md)',
+				sm: 'var(--ds-radius-sm)',
+				xl: 'var(--ds-radius-xl)',
+				'2xl': 'var(--ds-radius-2xl)',
 			},
 			fontFamily: {
-				sans: ['Inter', 'Noto Sans SC', ...fontFamily.sans],
-				display: ['Inter', 'Noto Sans SC', ...fontFamily.sans],
-				serif: ['Source Serif 4', 'Noto Serif SC', 'Georgia', 'Times New Roman', 'serif'],
-				mono: ['JetBrains Mono', 'Fira Code', 'SF Mono', 'Consolas', 'monospace']
+				sans: ['Noto Sans SC', 'Source Han Sans SC', ...fontFamily.sans],
+				display: ['Iowan Old Style', 'Charter', 'Georgia', 'Noto Serif SC', 'serif'],
+				serif: ['Iowan Old Style', 'Charter', 'Georgia', 'Noto Serif SC', 'serif'],
+				mono: ['JetBrains Mono', 'IBM Plex Mono', ...fontFamily.mono]
 			},
 			animation: {
-				'fade-in': 'fadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
+				'fade-in': 'fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
 				'slide-up': 'slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
-				'scale-in': 'scaleIn 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+				'scale-in': 'scaleIn 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
 				'float': 'float 6s ease-in-out infinite',
-				'fade-in-up': 'fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
-				'reveal': 'reveal 0.8s cubic-bezier(0.16, 1, 0.3, 1)',
 			},
 			keyframes: {
 				fadeIn: {
@@ -73,69 +67,57 @@ const config = {
 					to: { opacity: '1' }
 				},
 				slideUp: {
-					from: { opacity: '0', transform: 'translateY(30px)' },
+					from: { opacity: '0', transform: 'translateY(20px)' },
 					to: { opacity: '1', transform: 'translateY(0)' }
 				},
 				scaleIn: {
-					from: { opacity: '0', transform: 'scale(0.9)' },
+					from: { opacity: '0', transform: 'scale(0.95)' },
 					to: { opacity: '1', transform: 'scale(1)' }
 				},
 				float: {
 					'0%, 100%': { transform: 'translateY(0)' },
 					'50%': { transform: 'translateY(-10px)' }
 				},
-				fadeInUp: {
-					from: { opacity: '0', transform: 'translateY(20px)' },
-					to: { opacity: '1', transform: 'translateY(0)' }
-				},
-				reveal: {
-					from: { opacity: '0', transform: 'translateY(30px)' },
-					to: { opacity: '1', transform: 'translateY(0)' }
-				}
-			},
-			boxShadow: {
-				'glow': '0 0 40px rgba(212, 165, 116, 0.15)',
-				'glow-lg': '0 0 60px rgba(212, 165, 116, 0.2)',
 			},
 			transitionTimingFunction: {
 				'out-expo': 'cubic-bezier(0.16, 1, 0.3, 1)',
-				'out-quart': 'cubic-bezier(0.25, 1, 0.5, 1)',
+				'spring': 'cubic-bezier(0.34, 1.56, 0.64, 1)',
 			},
 			typography: (theme) => ({
 				DEFAULT: {
 					css: {
-						'--tw-prose-body': theme('colors.stone.700'),
-						'--tw-prose-headings': theme('colors.stone.900'),
-						'--tw-prose-lead': theme('colors.stone.600'),
-						'--tw-prose-links': theme('colors.amber.700'),
-						'--tw-prose-bold': theme('colors.stone.900'),
-						'--tw-prose-counters': theme('colors.stone.500'),
-						'--tw-prose-bullets': theme('colors.stone.300'),
-						'--tw-prose-hr': theme('colors.stone.200'),
-						'--tw-prose-quotes': theme('colors.stone.900'),
-						'--tw-prose-quote-borders': theme('colors.amber.600'),
-						'--tw-prose-captions': theme('colors.stone.500'),
-						'--tw-prose-code': theme('colors.stone.900'),
-						'--tw-prose-pre-code': theme('colors.stone.200'),
-						'--tw-prose-pre-bg': 'rgb(var(--gray-dark) / 1)',
-						'--tw-prose-th-borders': theme('colors.stone.300'),
-						'--tw-prose-td-borders': theme('colors.stone.200'),
-						'--tw-prose-invert-body': theme('colors.stone.300'),
-						'--tw-prose-invert-headings': theme('colors.white'),
-						'--tw-prose-invert-lead': theme('colors.stone.400'),
-						'--tw-prose-invert-links': theme('colors.amber.400'),
-						'--tw-prose-invert-bold': theme('colors.white'),
-						'--tw-prose-invert-counters': theme('colors.stone.400'),
-						'--tw-prose-invert-bullets': theme('colors.stone.600'),
-						'--tw-prose-invert-hr': theme('colors.stone.700'),
-						'--tw-prose-invert-quotes': theme('colors.stone.100'),
-						'--tw-prose-invert-quote-borders': theme('colors.amber.500'),
-						'--tw-prose-invert-captions': theme('colors.stone.400'),
-						'--tw-prose-invert-code': theme('colors.white'),
-						'--tw-prose-invert-pre-code': theme('colors.stone.300'),
-						'--tw-prose-invert-pre-bg': 'rgb(var(--gray-dark) / 1)',
-						'--tw-prose-invert-th-borders': theme('colors.stone.600'),
-						'--tw-prose-invert-td-borders': theme('colors.stone.700'),
+						'--tw-prose-body': 'oklch(35% 0.018 60)',
+						'--tw-prose-headings': 'oklch(14% 0.025 60)',
+						'--tw-prose-lead': 'oklch(48% 0.015 60)',
+						'--tw-prose-links': 'oklch(52% 0.08 115)',
+						'--tw-prose-bold': 'oklch(14% 0.025 60)',
+						'--tw-prose-counters': 'oklch(48% 0.015 60)',
+						'--tw-prose-bullets': 'oklch(82% 0.015 75)',
+						'--tw-prose-hr': 'oklch(89% 0.012 80)',
+						'--tw-prose-quotes': 'oklch(20% 0.02 60)',
+						'--tw-prose-quote-borders': 'oklch(52% 0.08 115)',
+						'--tw-prose-captions': 'oklch(48% 0.015 60)',
+						'--tw-prose-code': 'oklch(14% 0.025 60)',
+						'--tw-prose-pre-code': 'oklch(84% 0.008 72)',
+						'--tw-prose-pre-bg': 'oklch(15% 0.008 75)',
+						'--tw-prose-th-borders': 'oklch(82% 0.015 75)',
+						'--tw-prose-td-borders': 'oklch(89% 0.012 80)',
+						'--tw-prose-invert-body': 'oklch(70% 0.01 70)',
+						'--tw-prose-invert-headings': 'oklch(92% 0.005 75)',
+						'--tw-prose-invert-lead': 'oklch(60% 0.012 70)',
+						'--tw-prose-invert-links': 'oklch(57% 0.065 115)',
+						'--tw-prose-invert-bold': 'oklch(92% 0.005 75)',
+						'--tw-prose-invert-counters': 'oklch(60% 0.012 70)',
+						'--tw-prose-invert-bullets': 'oklch(38% 0.015 72)',
+						'--tw-prose-invert-hr': 'oklch(31% 0.012 72)',
+						'--tw-prose-invert-quotes': 'oklch(84% 0.008 72)',
+						'--tw-prose-invert-quote-borders': 'oklch(57% 0.065 115)',
+						'--tw-prose-invert-captions': 'oklch(60% 0.012 70)',
+						'--tw-prose-invert-code': 'oklch(92% 0.005 75)',
+						'--tw-prose-invert-pre-code': 'oklch(70% 0.01 70)',
+						'--tw-prose-invert-pre-bg': 'oklch(19% 0.008 75)',
+						'--tw-prose-invert-th-borders': 'oklch(38% 0.015 72)',
+						'--tw-prose-invert-td-borders': 'oklch(31% 0.012 72)',
 					},
 				},
 			}),

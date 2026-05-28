@@ -11,7 +11,7 @@ import { SITE_TITLE, SITE_DESCRIPTION, PERSONAL_INFO, SKILLS, EXPERIENCE, PROJEC
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
 	</head>
-	<body class="min-h-screen bg-canvas">
+	<body class="min-h-screen" style="background: var(--ds-color-bg); color: var(--ds-color-fg);">
 		<Header />
 		<main class="container-custom py-8 md:py-12">
 			<!-- Hero Section -->
@@ -19,16 +19,16 @@ import { SITE_TITLE, SITE_DESCRIPTION, PERSONAL_INFO, SKILLS, EXPERIENCE, PROJEC
 				<div class="flex flex-col md:flex-row md:items-start md:justify-between gap-8 md:gap-10">
 					<div class="flex-1 min-w-0">
 						<div class="mb-6">
-							<span class="inline-block text-xs font-medium uppercase tracking-widest text-stone mb-3">
+							<span class="inline-block text-xs font-medium uppercase tracking-widest mb-3" style="color: var(--ds-color-muted); letter-spacing: var(--ds-tracking-widest);">
 								跨领域数字创作者
 							</span>
-							<h1 class="font-serif text-ink" style="font-size: clamp(2.25rem, 5vw, 3.25rem); line-height: 1.08; letter-spacing: -0.03em;">
+							<h1 style="font-family: var(--ds-font-display); color: var(--ds-color-fg-strong); font-size: clamp(2.25rem, 5vw, 3.25rem); line-height: 1.08; letter-spacing: var(--ds-tracking-tight);">
 								{PERSONAL_INFO.name}
 							</h1>
 						</div>
 
 						<div class="quote-block my-5">
-							<p class="text-sm md:text-base leading-relaxed" style="font-size: clamp(0.9375rem, 1.5vw, 1.0625rem);">
+							<p class="leading-relaxed" style="font-size: clamp(0.9375rem, 1.5vw, 1.0625rem);">
 								{PERSONAL_INFO.bio}
 							</p>
 						</div>
@@ -53,7 +53,7 @@ import { SITE_TITLE, SITE_DESCRIPTION, PERSONAL_INFO, SKILLS, EXPERIENCE, PROJEC
 				</div>
 
 				<!-- Contact & Social -->
-				<div class="mt-8 pt-6" style="border-top: 1px solid var(--border-subtle);">
+				<div class="mt-8 pt-6" style="border-top: 1px solid var(--ds-color-border-subtle);">
 					<div class="flex flex-wrap items-center gap-3">
 						<a href={`mailto:${PERSONAL_INFO.email}`} class="btn btn-primary text-sm gap-2">
 							<Icon name="mail" size={16} class="w-4 h-4" />
@@ -100,7 +100,7 @@ import { SITE_TITLE, SITE_DESCRIPTION, PERSONAL_INFO, SKILLS, EXPERIENCE, PROJEC
 				<div class="grid md:grid-cols-2 gap-4 md:gap-5">
 					{SKILLS.map(category => (
 						<div class="card p-5">
-							<h3 class="text-sm font-medium text-ink mb-3" style="font-family: var(--font-serif);">{category.category}</h3>
+							<h3 class="text-sm font-medium mb-3" style="font-family: var(--ds-font-display); color: var(--ds-accent);">{category.category}</h3>
 							<div class="flex flex-wrap gap-2">
 								{category.items.map(skill => (
 									<span class="tag">{skill}</span>
@@ -122,11 +122,11 @@ import { SITE_TITLE, SITE_DESCRIPTION, PERSONAL_INFO, SKILLS, EXPERIENCE, PROJEC
 					<div class="space-y-0">
 						{EDUCATION.map(edu => (
 							<div class="timeline-item pb-6 last:pb-0">
-								<div class="text-sm font-medium text-ink mb-1" style="font-family: var(--font-serif);">{edu.period}</div>
+								<div class="text-sm font-medium mb-1" style="font-family: var(--ds-font-display); color: var(--ds-accent);">{edu.period}</div>
 								<div>
-									<h3 class="text-base font-medium text-foreground mb-0.5">{edu.school}</h3>
-									<p class="text-sm text-ink mb-0.5">{edu.major}</p>
-									<p class="text-sm text-olive">{edu.degree}</p>
+									<h3 class="text-base font-medium mb-0.5" style="color: var(--ds-color-fg);">{edu.school}</h3>
+									<p class="text-sm mb-0.5" style="color: var(--ds-accent);">{edu.major}</p>
+									<p class="text-sm" style="color: var(--ds-color-fg-subtle);">{edu.degree}</p>
 								</div>
 							</div>
 						))}
@@ -145,13 +145,13 @@ import { SITE_TITLE, SITE_DESCRIPTION, PERSONAL_INFO, SKILLS, EXPERIENCE, PROJEC
 					<div class="space-y-0">
 						{WORK_EXPERIENCE.map(exp => (
 							<div class="timeline-item pb-6 last:pb-0">
-								<div class="text-sm font-medium text-ink mb-1" style="font-family: var(--font-serif);">{exp.period}</div>
+								<div class="text-sm font-medium mb-1" style="font-family: var(--ds-font-display); color: var(--ds-accent);">{exp.period}</div>
 								<div>
-									<h3 class="text-base font-medium text-foreground mb-0.5">{exp.title}</h3>
+									<h3 class="text-base font-medium mb-0.5" style="color: var(--ds-color-fg);">{exp.title}</h3>
 									{exp.department && exp.position && (
-										<p class="text-sm text-ink mb-1">{exp.department} · {exp.position}</p>
+										<p class="text-sm mb-1" style="color: var(--ds-accent);">{exp.department} · {exp.position}</p>
 									)}
-									<p class="text-sm text-olive leading-relaxed">{exp.description}</p>
+									<p class="text-sm leading-relaxed" style="color: var(--ds-color-fg-subtle);">{exp.description}</p>
 								</div>
 							</div>
 						))}
@@ -169,13 +169,13 @@ import { SITE_TITLE, SITE_DESCRIPTION, PERSONAL_INFO, SKILLS, EXPERIENCE, PROJEC
 				<div class="card p-5 md:p-6">
 					<div class="space-y-4">
 						{HONORS.map(honor => (
-							<div class="flex gap-4 p-3 rounded-lg bg-canvas">
+							<div class="flex gap-4 p-3 rounded-lg" style="background: var(--ds-color-surface-overlay);">
 								<div class="flex-shrink-0 w-14 text-right">
-									<span class="text-sm font-medium text-ink" style="font-family: var(--font-serif);">{honor.year}</span>
+									<span class="text-sm font-medium" style="font-family: var(--ds-font-display); color: var(--ds-accent);">{honor.year}</span>
 								</div>
 								<div class="flex-1">
-									<h3 class="text-sm font-medium text-foreground mb-0.5">{honor.title}</h3>
-									<p class="text-xs text-olive leading-relaxed">{honor.description}</p>
+									<h3 class="text-sm font-medium mb-0.5" style="color: var(--ds-color-fg);">{honor.title}</h3>
+									<p class="text-xs leading-relaxed" style="color: var(--ds-color-fg-subtle);">{honor.description}</p>
 								</div>
 							</div>
 						))}
@@ -194,10 +194,10 @@ import { SITE_TITLE, SITE_DESCRIPTION, PERSONAL_INFO, SKILLS, EXPERIENCE, PROJEC
 					<div class="space-y-0">
 						{EXPERIENCE.map(exp => (
 							<div class="timeline-item pb-6 last:pb-0">
-								<div class="text-sm font-medium text-ink mb-1" style="font-family: var(--font-serif);">{exp.period}</div>
+								<div class="text-sm font-medium mb-1" style="font-family: var(--ds-font-display); color: var(--ds-accent);">{exp.period}</div>
 								<div>
-									<h3 class="text-base font-medium text-foreground mb-1">{exp.title}</h3>
-									<p class="text-sm text-olive leading-relaxed">{exp.description}</p>
+									<h3 class="text-base font-medium mb-1" style="color: var(--ds-color-fg);">{exp.title}</h3>
+									<p class="text-sm leading-relaxed" style="color: var(--ds-color-fg-subtle);">{exp.description}</p>
 								</div>
 							</div>
 						))}
@@ -216,20 +216,21 @@ import { SITE_TITLE, SITE_DESCRIPTION, PERSONAL_INFO, SKILLS, EXPERIENCE, PROJEC
 					{PROJECTS.map(project => (
 						<article class="card p-5 group">
 							<div class="flex items-start justify-between gap-3 mb-3">
-								<h3 class="text-base font-medium text-foreground group-hover:text-ink transition-colors" style="font-family: var(--font-serif);">
+								<h3 class="text-base font-medium transition-colors" style="font-family: var(--ds-font-display); color: var(--ds-color-fg);">
 									{project.title}
 								</h3>
 								<a
 									href={project.link}
 									target="_blank"
 									rel="noopener noreferrer"
-									class="flex-shrink-0 text-stone hover:text-ink transition-colors"
+									class="flex-shrink-0 transition-colors"
+									style="color: var(--ds-color-muted);"
 								>
 									<Icon name="open_in_new" size={16} class="w-4 h-4" />
 								</a>
 							</div>
 
-							<p class="text-sm text-olive leading-relaxed mb-4">{project.description}</p>
+							<p class="text-sm leading-relaxed mb-4" style="color: var(--ds-color-fg-subtle);">{project.description}</p>
 
 							<div class="flex flex-wrap gap-2">
 								{project.tags.map(tag => (

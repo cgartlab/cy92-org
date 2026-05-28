@@ -4,16 +4,16 @@ import Icon from './Icon.astro';
 import { SITE_TITLE, SOCIAL_LINKS } from '../consts';
 ---
 
-<header id="site-header" class="sticky top-0 z-50 border-b bg-canvas/90 backdrop-blur-md supports-[backdrop-filter]:bg-canvas/80 transition-shadow duration-300" style="border-color: var(--border-subtle);">
+<header id="site-header" class="sticky top-0 z-50 border-b transition-shadow duration-300" style="border-color: var(--ds-glass-border); background: var(--ds-glass-bg); backdrop-filter: blur(var(--ds-blur-lg)); -webkit-backdrop-filter: blur(var(--ds-blur-lg));">
 	<div class="container-custom flex h-14 items-center justify-between">
-		<a href="/" class="text-base font-medium text-foreground hover:text-ink transition-colors duration-200" aria-label="返回首页" style="font-family: var(--font-serif);">
+		<a href="/" class="text-base font-medium transition-colors duration-200" style="font-family: var(--ds-font-display); color: var(--ds-color-fg-strong);" aria-label="返回首页">
 			{SITE_TITLE.split(' | ')[0]}
 		</a>
 
 		<nav class="hidden md:flex items-center gap-1" aria-label="主导航">
 			<HeaderLink href="/">首页</HeaderLink>
 			<HeaderLink href="/works">作品</HeaderLink>
-			<a href="https://cgartlab.com" target="_blank" rel="noopener noreferrer" class="text-sm text-muted-foreground/80 hover:text-ink transition-colors duration-200 px-3 py-1.5 rounded-md hover:bg-secondary/50">博客</a>
+			<a href="https://cgartlab.com" target="_blank" rel="noopener noreferrer" class="text-sm px-3 py-1.5 rounded-md transition-colors duration-200" style="color: var(--ds-color-muted);" onmouseover="this.style.color='var(--ds-color-fg)';this.style.background='var(--ds-accent-muted)'" onmouseout="this.style.color='var(--ds-color-muted)';this.style.background='transparent'">博客</a>
 			<HeaderLink href="/about">关于</HeaderLink>
 		</nav>
 
@@ -55,18 +55,18 @@ import { SITE_TITLE, SOCIAL_LINKS } from '../consts';
 
 	<div
 		id="mobile-nav"
-		class="md:hidden border-t overflow-hidden transition-all duration-350 bg-canvas"
-		style="border-color: var(--border-subtle); max-height: 0; opacity: 0; transform: translateY(-8px); transition-property: max-height, opacity, transform; transition-timing-function: cubic-bezier(0.25, 1, 0.5, 1); transition-duration: 350ms; will-change: max-height, opacity, transform;"
+		class="md:hidden border-t overflow-hidden transition-all duration-350"
+		style="border-color: var(--ds-color-border-subtle); background: var(--ds-color-bg); max-height: 0; opacity: 0; transform: translateY(-8px); transition-property: max-height, opacity, transform; transition-timing-function: cubic-bezier(0.25, 1, 0.5, 1); transition-duration: 350ms; will-change: max-height, opacity, transform;"
 		role="navigation"
 		aria-label="移动端导航"
 	>
 		<nav class="container-custom py-3 flex flex-col gap-1">
 			<HeaderLink href="/">首页</HeaderLink>
 			<HeaderLink href="/works">作品</HeaderLink>
-			<a href="https://cgartlab.com" target="_blank" rel="noopener noreferrer" class="text-sm text-muted-foreground/80 hover:text-ink transition-colors duration-200 px-3 py-1.5 rounded-md hover:bg-secondary/50">博客</a>
+			<a href="https://cgartlab.com" target="_blank" rel="noopener noreferrer" class="text-sm px-3 py-1.5 rounded-md transition-colors duration-200" style="color: var(--ds-color-muted);">博客</a>
 			<HeaderLink href="/about">关于</HeaderLink>
 		</nav>
-		<div class="container-custom pb-3 flex gap-2 border-t pt-3" style="border-color: var(--border-subtle);">
+		<div class="container-custom pb-3 flex gap-2 border-t pt-3" style="border-color: var(--ds-color-border-subtle);">
 			{SOCIAL_LINKS.slice(0, 3).map(link => (
 				<a
 					href={link.url}
@@ -164,6 +164,7 @@ import { SITE_TITLE, SOCIAL_LINKS } from '../consts';
 
 	const toggleTheme = () => {
 		const isDark = document.documentElement.classList.toggle('dark');
+		document.documentElement.setAttribute('data-theme', isDark ? 'dark' : '');
 		localStorage.setItem('theme', isDark ? 'dark' : 'light');
 	};
 
