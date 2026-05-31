@@ -48,4 +48,6 @@ const { title, description, image = '/default-cover.webp' } = Astro.props;
 	const isDark = getThemePreference() === 'dark';
 	document.documentElement.classList.toggle('dark', isDark);
 	document.documentElement.setAttribute('data-theme', isDark ? 'dark' : '');
+	// Mark JS-enabled so scroll-reveal only hides content when JS can reveal it
+	document.documentElement.classList.add('ds-js');
 </script>

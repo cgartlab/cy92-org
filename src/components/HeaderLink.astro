@@ -10,12 +10,11 @@ const subpath = pathname.match(/[^\/]+/g);
 const isActive = href === pathname || href === '/' + subpath?.[0];
 ---
 
-<a href={href} class:list={[
-	'text-sm transition-colors duration-200 px-3 py-1.5 rounded-md',
-	isActive
-		? 'font-medium'
-		: '',
-	className
-]} style={isActive ? 'color: var(--ds-accent); font-weight: 600;' : 'color: var(--ds-color-muted);'} {...props}>
+<a
+	href={href}
+	class:list={['ds-navbar-link', { 'ds-navbar-link--active': isActive }, className]}
+	aria-current={isActive ? 'page' : undefined}
+	{...props}
+>
 	<slot />
 </a>

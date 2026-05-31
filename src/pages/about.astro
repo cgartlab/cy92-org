@@ -16,9 +16,10 @@ import { SITE_TITLE, PERSONAL_INFO, SOCIAL_LINKS } from '../consts';
 		<main class="container-custom py-8 md:py-12">
 			<article class="max-w-3xl mx-auto">
 				<header class="mb-10">
-					<div class="w-24 h-24 overflow-hidden flex items-center justify-center mb-5 border" style="border-radius: var(--ds-radius-xl); border-color: var(--ds-color-border-subtle); background: var(--ds-color-surface);">
+					<div class="logo-mark w-24 h-24 flex items-center justify-center mb-5" style="border-radius: var(--ds-radius-xl);">
 						<img src="/favicon.svg" alt="CG艺术实验室 Logo" class="w-full h-full object-cover" />
 					</div>
+					<span class="ds-eyebrow mb-3">About</span>
 					<h1 class="mb-3" style="font-family: var(--ds-font-display); color: var(--ds-color-fg-strong); font-size: 2rem; line-height: 1.15;">关于我</h1>
 					<div class="quote-block my-3">
 						<p class="text-base">{PERSONAL_INFO.bio}</p>
@@ -26,7 +27,7 @@ import { SITE_TITLE, PERSONAL_INFO, SOCIAL_LINKS } from '../consts';
 				</header>
 
 				<div class="space-y-10">
-					<section>
+					<section class="ds-reveal">
 						<h2 class="section-title mb-4">我是谁</h2>
 						<div class="card p-5 md:p-6">
 							<p class="text-sm text-olive leading-relaxed mb-3">
@@ -45,7 +46,7 @@ import { SITE_TITLE, PERSONAL_INFO, SOCIAL_LINKS } from '../consts';
 						</div>
 					</section>
 
-					<section>
+					<section class="ds-reveal">
 						<h2 class="section-title mb-4">数据主权理念</h2>
 						<div class="card p-5 md:p-6">
 							<p class="text-sm text-olive leading-relaxed mb-4">
@@ -60,7 +61,7 @@ import { SITE_TITLE, PERSONAL_INFO, SOCIAL_LINKS } from '../consts';
 						</div>
 					</section>
 
-					<section>
+					<section class="ds-reveal">
 						<h2 class="section-title mb-4">创作即认知</h2>
 						<div class="card p-5 md:p-6">
 							<div class="quote-block mb-4">
@@ -72,7 +73,7 @@ import { SITE_TITLE, PERSONAL_INFO, SOCIAL_LINKS } from '../consts';
 						</div>
 					</section>
 
-					<section>
+					<section class="ds-reveal">
 						<h2 class="section-title mb-4">工具哲学</h2>
 						<div class="card p-5 md:p-6">
 							<div class="quote-block mb-4">
@@ -84,7 +85,7 @@ import { SITE_TITLE, PERSONAL_INFO, SOCIAL_LINKS } from '../consts';
 						</div>
 					</section>
 
-					<section>
+					<section class="ds-reveal">
 						<h2 class="section-title mb-4">创作者工作流</h2>
 						<div class="card p-5 md:p-6">
 							<p class="text-sm text-olive leading-relaxed mb-4">
@@ -107,7 +108,7 @@ import { SITE_TITLE, PERSONAL_INFO, SOCIAL_LINKS } from '../consts';
 						</div>
 					</section>
 
-					<section>
+					<section class="ds-reveal">
 						<h2 class="section-title mb-4">关于本站</h2>
 						<div class="card p-5 md:p-6">
 							<p class="text-sm text-olive leading-relaxed mb-3">
