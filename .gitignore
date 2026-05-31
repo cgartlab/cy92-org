@@ -84,3 +84,6 @@ __pycache__/
 .svelte-kit/
 .vercel/
 .netlify/
+
+# OpenCode
+.opencode/
