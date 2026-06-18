@@ -1,4 +1,6 @@
-# Astro Starter Kit: Blog
+# cy92.org
+
+[![Argus-Flash Review](https://github.com/cgartlab/cy92-org/actions/workflows/argus-review.yml/badge.svg)](https://github.com/cgartlab/cy92-org/actions/workflows/argus-review.yml)
 
 [![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/templates/tree/main/astro-blog-starter-template)
 
