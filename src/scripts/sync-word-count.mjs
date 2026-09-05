@@ -8,12 +8,36 @@
  */
 
 import { readFileSync, writeFileSync, readdirSync, statSync } from 'fs';
-import { join, relative, extname } from 'path';
+import { join, relative, extname, dirname, resolve } from 'path';
+import { fileURLToPath } from 'url';
 
-// 配置
-const CGARTLAB_REPO = 'D:\\github-repos\\cgartlab.github.io';
-const CY92_CONSTS_FILE = 'D:\\github-repos\\cy92-org\\src\\consts.ts';
-const POSTS_DIR = join(CGARTLAB_REPO, 'src', 'content', 'posts');
+// 路径解析：优先级 env var > 脚本自身位置推导
+// 与 AGENTS.md 描述的 workspace 布局一致（../cgartlab.github.io 作为 cy92-org 的同级 sibling）
+function resolvePaths() {
+  const scriptDir = dirname(fileURLToPath(import.meta.url));
+  const cy92Default = resolve(scriptDir, '..', '..');
+  const cy92 = process.env.CY92_REPO_DIR ?? cy92Default;
+  const cgartlab = process.env.CGARTLAB_REPO_DIR ?? join(cy92, '..', 'cgartlab.github.io');
+  return {
+    cgartlab: resolve(cgartlab),
+    cy92: resolve(cy92),
+    posts: join(resolve(cgartlab), 'src', 'content', 'posts'),
+    consts: join(resolve(cy92), 'src', 'consts.ts'),
+  };
+}
+const { posts: POSTS_DIR, consts: CY92_CONSTS_FILE } = resolvePaths();
+
+if (process.argv.includes('--help') || process.argv.includes('-h')) {
+  console.log(`Usage: npx tsx ${process.argv[1]} [options]
+
+Env vars (override defaults):
+  CGARTLAB_REPO_DIR   cgartlab.github.io repo root (default: ../cgartlab.github.io relative to cy92-org repo)
+  CY92_REPO_DIR       cy92-org repo root (default: two levels up from this script)
+
+Defaults match the workspace layout described in AGENTS.md.
+`);
+  process.exit(0);
+}
 
 /**
  * 计算文本字数
