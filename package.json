@@ -24,6 +24,7 @@
 	"devDependencies": {
 		"@tailwindcss/typography": "0.5.16",
 		"cross-env": "^10.1.0",
+		"vitest": "^5.0.0",
 		"wrangler": "4.61.0"
 	},
 	"private": true,
@@ -40,9 +41,11 @@
 		"build": "astro build || exit 0",
 		"cf-typegen": "wrangler types",
 		"check": "(astro build || exit 0) && tsc && wrangler deploy --dry-run",
+		"check:links": "node scripts/check-links.mjs",
 		"deploy": "wrangler deploy",
 		"dev": "astro dev",
-		"preview": "(astro build || exit 0) && wrangler dev"
+		"preview": "(astro build || exit 0) && wrangler dev",
+		"test": "vitest run"
 	},
 	"type": "module"
 }
