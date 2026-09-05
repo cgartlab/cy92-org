@@ -5,3 +5,10 @@ updates:
     schedule:
       interval: weekly
     versioning-strategy: increase
+    # 把同生态的全部更新合成 1 个 PR，避免每周刷出 5+ 个 PR
+    groups:
+      npm-deps:
+        patterns:
+          - "*"
+    open-pull-requests-limit: 5
+    rebase-strategy: auto
