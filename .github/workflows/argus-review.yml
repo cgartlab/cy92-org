@@ -5,6 +5,9 @@ on:
 jobs:
   review:
     runs-on: ubuntu-latest
+    # GitHub 安全策略：Dependabot 等第三方 GitHub App（user.type == Bot）触发的 PR 不接收 secrets，
+    # 导致下方 create-github-app-token 缺 app-id 而必然失败；Argus 是设计审查，对纯依赖更新也无意义。
+    if: github.event.pull_request.user.type != 'Bot'
     permissions:
       contents: read
       pull-requests: write
