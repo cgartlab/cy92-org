@@ -10,5 +10,11 @@ updates:
       npm-deps:
         patterns:
           - "*"
+        # 只允许 patch/minor 升级；major 属于 breaking change（Astro 5→7 API 全变、
+        # TailwindCSS 3→4 完全重写、TypeScript 5→7 工具链变），需要人工迁移，
+        # 与 AGENTS.md 明确规定的版本约定（Astro 5.x、TailwindCSS 3.4）保持一致。
+        update-types:
+          - patch
+          - minor
     open-pull-requests-limit: 5
     rebase-strategy: auto
