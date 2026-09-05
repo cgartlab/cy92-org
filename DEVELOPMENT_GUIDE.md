@@ -114,7 +114,6 @@ cy92-org/
 │   │   │   └── [...slug].astro# 博客动态路由
 │   │   └── rss.xml.js         # RSS端点
 │   ├── scripts/               # 工具脚本
-│   │   ├── sync-word-count.mjs
 │   │   └── sync-word-count.ts
 │   ├── styles/
 │   │   ├── app.css            # ★ 主样式文件（设计系统核心）
