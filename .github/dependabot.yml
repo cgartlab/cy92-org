@@ -16,5 +16,10 @@ updates:
         update-types:
           - patch
           - minor
+    # 双保险：ignore 层排除所有包的 major 升级，避免组外单独生成 major PR
+    ignore:
+      - dependency-name: "*"
+        update-types:
+          - "version-update:semver-major"
     open-pull-requests-limit: 5
     rebase-strategy: auto
