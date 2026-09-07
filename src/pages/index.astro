@@ -50,9 +50,12 @@ const meditationImages = [
 				<canvas id="seaweed" class="canvas-full"></canvas>
 				<div class="slide-content center">
 					<div class="hero">
-						<h1 class="hero-name anim scale" data-d="0">CHEN<br>YANG</h1>
-						<p class="hero-role anim up" data-d="1">A <span class="rwd" style="--ri:0"><span class="inner">Designer</span></span>, <span class="rwd" style="--ri:1"><span class="inner">Writer</span></span>, <span class="rwd" style="--ri:2"><span class="inner">Engineer</span></span>.</p>
-						<p class="hero-tags anim blur" data-d="2">动态视觉设计师 · 内容创作者 · 产品工程师</p>
+						<h1 class="hero-name anim" data-d="0">CHEN<br>YANG</h1>
+						<div class="hero-subline anim up" data-d="1">
+							<p class="hero-role">A <span class="rwd" style="--ri:0"><span class="inner">Designer</span></span>, <span class="rwd" style="--ri:1"><span class="inner">Writer</span></span>, <span class="rwd" style="--ri:2"><span class="inner">Engineer</span></span>.</p>
+						</div>
+						<div class="hero-divider"></div>
+						<p class="hero-tags anim" data-d="2">动态视觉设计师<span class="sep"> · </span>内容创作者<span class="sep"> · </span>产品工程师</p>
 						<a href="#work" class="btn anim" data-d="3">探索作品 <Icon name="arrow_downward" size={16} class="w-4 h-4" /></a>
 					</div>
 				</div>
@@ -328,11 +331,12 @@ a, button { cursor: none; }
 	position: fixed; width: 32px; height: 32px;
 	border: 1.5px solid rgba(255,255,255,0.5);
 	border-radius: 50%; pointer-events: none; z-index: 9999;
-	transition: transform 0.2s var(--spring), border-color 0.3s, width 0.3s var(--spring), height 0.3s var(--spring);
-	transform: translate(-50%, -50%);
+	transition: transform 0.25s var(--spring), border-color 0.3s;
+	transform: translate(-50%, -50%) scale(1);
 	mix-blend-mode: difference;
+	will-change: transform;
 }
-.ring-cursor.hover { width: 56px; height: 56px; border-color: var(--accent); }
+.ring-cursor.hover { transform: translate(-50%, -50%) scale(1.75); border-color: var(--accent); }
 
 /* ═══ Typography ═══ */
 .heading-display { font-size: clamp(3rem, 10vw, 7rem); line-height: 0.9; letter-spacing: -0.05em; font-weight: 700; }
@@ -381,20 +385,34 @@ a, button { cursor: none; }
 .center { text-align: center; }
 
 /* ═══ Hero ═══ */
-.hero { max-width: 1000px; }
+/* ═══ Hero — poster left-aligned ═══ */
+[data-slide="0"] .slide-content {
+	justify-content: flex-end;
+	align-items: flex-start;
+	text-align: left;
+	padding-bottom: 10vh;
+}
+.hero { max-width: 860px; width: 100%; }
 .hero-name {
-	font-size: clamp(5rem, 18vw, 16rem);
-	line-height: 0.92;
-	letter-spacing: -0.05em;
+	font-size: clamp(4.5rem, 16vw, 14rem);
+	line-height: 0.88;
+	letter-spacing: -0.06em;
 	font-weight: 700;
-	margin-bottom: 1.5rem;
+	margin-bottom: 1.25rem;
+	color: var(--text);
+}
+.hero-subline {
+	display: flex;
+	align-items: baseline;
+	gap: 0.6em;
+	flex-wrap: wrap;
+	margin-bottom: 1.25rem;
 }
 .hero-role {
-	font-size: clamp(1.5rem, 4vw, 2.75rem);
-	color: var(--text-2);
-	letter-spacing: -0.03em;
+	font-size: clamp(1.25rem, 3.2vw, 2.2rem);
+	color: var(--text-3);
+	letter-spacing: -0.02em;
 	font-weight: 300;
-	margin-bottom: 1.5rem;
 }
 .hero-role .rwd {
 	display: inline-block;
@@ -410,17 +428,29 @@ a, button { cursor: none; }
 	transform: translateY(0);
 	transition-delay: calc(0.4s + var(--ri, 0) * 0.08s);
 }
-.hero-tags {
-	display: inline-flex;
-	flex-wrap: wrap;
-	justify-content: center;
-	gap: 0.75rem 1.5rem;
-	font-size: 0.9375rem;
-	color: var(--text-3);
-	letter-spacing: 0.04em;
-	margin-bottom: 2.5rem;
+.hero-divider {
+	width: 48px;
+	height: 1px;
+	background: var(--accent);
+	margin-bottom: 1.25rem;
+	opacity: 0;
+	transform: scaleX(0);
+	transform-origin: left;
+	transition: opacity 0.6s var(--spring) 0.3s, transform 0.6s var(--spring) 0.3s;
 }
-.hero-tags .sep { color: var(--accent); }
+.slide.is-active .hero-divider { opacity: 1; transform: scaleX(1); }
+.hero-tags {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+	gap: 0.5rem 1.25rem;
+	font-size: 0.8125rem;
+	color: var(--text-4);
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	margin-bottom: 2rem;
+}
+.hero-tags .sep { display: none; }
 
 /* ═══ Stats ═══ */
 .stats { width: 100%; max-width: 800px; display: flex; flex-direction: column; gap: 0; }
@@ -452,7 +482,7 @@ a, button { cursor: none; }
 .work .body-lg { color: var(--text-2); margin-bottom: 1rem; }
 .work .body { margin-bottom: 1.5rem; }
 .tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-.tag { padding: 4px 12px; font-size: 0.7rem; background: rgba(255,255,255,0.06); color: var(--text-3); border: 1px solid var(--border); transition: all 0.3s var(--spring); }
+.tag { padding: 4px 12px; font-size: 0.7rem; background: rgba(255,255,255,0.06); color: var(--text-3); border: 1px solid var(--border); transition: transform 0.3s var(--spring), color 0.3s, background 0.3s; }
 .tag:hover { background: rgba(255,255,255,0.1); color: var(--text); border-color: rgba(255,255,255,0.15); }
 
 /* ═══ Meditation ═══ */
@@ -508,7 +538,7 @@ a, button { cursor: none; }
 @media (min-width: 1024px) { .profile { grid-template-columns: 4fr 8fr; gap: 3rem; } }
 .profile-contact { margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
 .contact-row { display: flex; gap: 0.5rem; }
-.icon-link { display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; border: 1px solid var(--border); color: var(--text-4); text-decoration: none; transition: all 0.3s var(--spring); }
+.icon-link { display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; border: 1px solid var(--border); color: var(--text-4); text-decoration: none; transition: transform 0.3s var(--spring), color 0.3s; }
 .icon-link:hover { border-color: var(--text); color: var(--text); }
 
 .psection { margin-bottom: 2rem; }
@@ -535,7 +565,7 @@ a, button { cursor: none; }
 .contact .heading-xl { margin: 0.5rem 0 1rem; }
 .contact .body { margin-bottom: 2rem; }
 .contact-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0.75rem; }
-.icon-link-lg { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border: 1px solid var(--border); color: var(--text-4); text-decoration: none; transition: all 0.3s var(--spring); }
+.icon-link-lg { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border: 1px solid var(--border); color: var(--text-4); text-decoration: none; transition: transform 0.3s var(--spring), color 0.3s; }
 .icon-link-lg:hover { border-color: var(--text); color: var(--text); transform: scale(1.1); }
 
 /* ═══ Button ═══ */
@@ -627,116 +657,175 @@ a, button { cursor: none; }
 </style>
 
 <script>
-// ═══ Seaweed particles (Hero) ═══
+// ═══ Seaweed — large kelp, depth layers, mouse illumination spread ═══
 (() => {
 	const c = document.getElementById('seaweed');
 	if (!c) return;
 	const ctx = c.getContext('2d');
 	if (!ctx) return;
 	let w, h;
-	const lines = [];
-	let mx = -999, my = -999;
-	const maxGlow = 300;
+	const layers = [[], [], []]; // 0=far, 1=mid, 2=near
+	let mx = -9999, my = -9999;
+	const GLOW_R = 240, PUSH_R = 300, PUSH_K = 40, SPREAD = 0.86;
 
-	const resize = () => {
-		w = c.width = innerWidth;
-		h = c.height = innerHeight;
-		// Denser: ~40 lines, adaptive to width
-		const target = Math.max(28, Math.floor(w / 32));
-		while (lines.length < target) {
-			const i = lines.length;
-			lines.push({
-				x: (i / target) * w + Math.random() * 30,
-				points: Array.from({ length: 26 }, (_, j) => ({
-					y: (j / 26) * h,
-					offset: Math.random() * Math.PI * 2
+	const build = () => {
+		layers[0].length = 0; layers[1].length = 0; layers[2].length = 0;
+		const n = Math.max(40, Math.floor(w / 26));
+		for (let i = 0; i < n; i++) {
+			const t = i / n;
+			const li = t < 0.33 ? 0 : t < 0.66 ? 1 : 2;
+			const numPts = li === 0 ? 8 + Math.floor(Math.random() * 3) : 10 + Math.floor(Math.random() * 5);
+			layers[li].push({
+				baseX: t * w + (Math.random() - 0.5) * 50,
+				hue: 65 + Math.random() * 35,
+				alpha: [0.025, 0.065, 0.13][li] + Math.random() * 0.03,
+				w: [0.4, 1.0, 2.0][li] + Math.random() * 0.7,
+				blur: [3, 0.6, 0][li],
+				speed: 0.2 + Math.random() * 0.3,
+				phase: Math.random() * 6.28,
+				amp: 25 + Math.random() * 40,
+				pts: Array.from({ length: numPts }, (_, j) => ({
+					y: (j / (numPts - 1)) * h,
+					off: Math.random() * 6.28
 				})),
-				hue: 75 + Math.random() * 25,
-				speed: 0.4 + Math.random() * 0.4,
-				phase: Math.random() * Math.PI * 2,
-				amp: 16 + Math.random() * 18  // varied amplitude for organic feel
+				ilum: new Float32Array(numPts),
+				pushX: new Float32Array(numPts),
+				pushY: new Float32Array(numPts)
 			});
 		}
 	};
+	const resize = () => { w = c.width = innerWidth; h = c.height = innerHeight; build(); };
 	resize();
 	addEventListener('resize', resize);
 	addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+	addEventListener('mouseleave', () => { mx = -9999; my = -9999; });
 
-	let time = 0;
-	const draw = () => {
-		ctx.clearRect(0, 0, w, h);
-		time += 0.012;
-
-		// Mouse ambient glow (soft radial)
-		if (mx > 0) {
-			const mg = ctx.createRadialGradient(mx, my, 0, mx, my, maxGlow);
-			mg.addColorStop(0, 'rgba(138,140,110,0.06)');
-			mg.addColorStop(1, 'rgba(138,140,110,0)');
-			ctx.fillStyle = mg;
-			ctx.fillRect(0, 0, w, h);
+	let t = 0;
+	const trace = (c2, pts) => {
+		if (pts.length < 2) return;
+		c2.moveTo(pts[0].x, pts[0].y);
+		for (let i = 1; i < pts.length - 1; i++) {
+			const xc = (pts[i].x + pts[i + 1].x) / 2;
+			const yc = (pts[i].y + pts[i + 1].y) / 2;
+			c2.quadraticCurveTo(pts[i].x, pts[i].y, xc, yc);
 		}
+		c2.lineTo(pts[pts.length - 1].x, pts[pts.length - 1].y);
+	};
 
-		// Draw a smooth spline through points (midpoint quadratic bezier)
-		const traceSmooth = (c, pts) => {
-			if (pts.length < 2) return;
-			c.moveTo(pts[0].x, pts[0].y);
-			for (let i = 1; i < pts.length - 1; i++) {
-				const xc = (pts[i].x + pts[i + 1].x) / 2;
-				const yc = (pts[i].y + pts[i + 1].y) / 2;
-				c.quadraticCurveTo(pts[i].x, pts[i].y, xc, yc);
+	const drawLayer = (ki) => {
+		const arr = layers[ki];
+		if (!arr.length) return;
+		if (arr[0].blur > 0) ctx.filter = 'blur(' + arr[0].blur + 'px)';
+
+		arr.forEach(k => {
+			// ── Compute sway positions ──
+			const pos = k.pts.map((p, j) => {
+				const frac = j / (k.pts.length - 1);
+				const s1 = Math.sin(t * k.speed + p.off + k.phase) * k.amp;
+				const s2 = Math.sin(t * k.speed * 0.6 + p.off * 1.4 + k.phase * 0.5) * k.amp * 0.35;
+				const s3 = Math.sin(t * k.speed * 1.7 + p.off * 0.6) * k.amp * 0.12;
+				// Bottom anchored: top sways more
+				const sway = (s1 + s2 + s3) * Math.pow(frac, 0.65);
+				return { x: k.baseX + sway, y: p.y };
+			});
+
+			// ── Mouse illumination spread along path (skip for far layer) ──
+			if (ki === 0) { k.illum.fill(0); } else if (mx > -1000) {
+				pos.forEach((p, i) => {
+					const dx = mx - p.x, dy = my - p.y;
+					const d = Math.sqrt(dx * dx + dy * dy);
+					k.illum[i] = d < GLOW_R ? Math.pow(1 - d / GLOW_R, 1.5) : 0;
+				});
+				for (let i = 1; i < k.illum.length; i++)
+					k.illum[i] = Math.max(k.illum[i], k.illum[i - 1] * SPREAD);
+				for (let i = k.illum.length - 2; i >= 0; i--)
+					k.illum[i] = Math.max(k.illum[i], k.illum[i + 1] * SPREAD);
+			} else {
+				k.illum.fill(0);
 			}
-			c.lineTo(pts[pts.length - 1].x, pts[pts.length - 1].y);
-		};
 
-		lines.forEach((line, li) => {
-			// Draw glow halo behind line body (smooth spline)
-			ctx.beginPath();
-			traceSmooth(ctx, line.points.map((p, j) => {
-				const sway = Math.sin(time * line.speed + p.offset + line.phase) * (line.amp + j * 2.5);
-				return { x: line.x + sway, y: p.y };
+			// ── Mouse repel (skip for far layer) ──
+			if (ki === 0) { k.pushX.fill(0); k.pushY.fill(0); } else if (mx > -1000) {
+				pos.forEach((p, i) => {
+					const dx = p.x - mx, dy = p.y - my;
+					const d = Math.sqrt(dx * dx + dy * dy);
+					if (d < PUSH_R && d > 1) {
+						const f = Math.pow(1 - d / PUSH_R, 2) * PUSH_K;
+						k.pushX[i] += (dx / d * f - k.pushX[i]) * 0.06;
+						k.pushY[i] += (dy / d * f * 0.3 - k.pushY[i]) * 0.06;
+					} else {
+						k.pushX[i] *= 0.93;
+						k.pushY[i] *= 0.93;
+					}
+				});
+			} else {
+				k.pushX.fill(0); k.pushY.fill(0);
+			}
+
+			// Final points
+			const fp = pos.map((p, i) => ({
+				x: p.x + k.pushX[i],
+				y: p.y + k.pushY[i]
 			}));
-			ctx.strokeStyle = `hsla(${line.hue}, 30%, 45%, 0.06)`;
-			ctx.lineWidth = 6;
+
+			// ── Draw glow halo (wide, soft) ──
+			ctx.beginPath();
+			trace(ctx, fp);
+			ctx.strokeStyle = 'hsla(' + k.hue + ',25%,42%,' + (k.alpha * 0.35) + ')';
+			ctx.lineWidth = k.w + 6;
 			ctx.stroke();
 
-			// Draw main line (smooth spline, mouse illumination)
+			// ── Draw main line ──
 			ctx.beginPath();
-			traceSmooth(ctx, line.points.map((p, j) => {
-				const sway = Math.sin(time * line.speed + p.offset + line.phase) * (line.amp + j * 2.5);
-				const dx = mx - line.x;
-				const dy = my - p.y;
-				const dist = Math.sqrt(dx * dx + dy * dy);
-				// Mouse illumination pushes the line toward cursor
-				const glow = dist < maxGlow ? (1 - dist / maxGlow) * 40 : 0;
-				return { x: line.x + sway + glow * (dx / (dist || 1)), y: p.y };
-			}));
-
-			const grad = ctx.createLinearGradient(line.x - line.amp, 0, line.x + line.amp, h);
-			grad.addColorStop(0, `hsla(${line.hue}, 32%, 42%, 0.02)`);
-			grad.addColorStop(0.35, `hsla(${line.hue}, 32%, 48%, 0.22)`);
-			grad.addColorStop(0.65, `hsla(${line.hue}, 32%, 48%, 0.22)`);
-			grad.addColorStop(1, `hsla(${line.hue}, 32%, 42%, 0.02)`);
-			ctx.strokeStyle = grad;
-			ctx.lineWidth = 1.5;
+			trace(ctx, fp);
+			const g = ctx.createLinearGradient(k.baseX - k.amp, 0, k.baseX + k.amp, h);
+			g.addColorStop(0, 'hsla(' + k.hue + ',28%,40%,' + (k.alpha * 0.1) + ')');
+			g.addColorStop(0.35, 'hsla(' + k.hue + ',28%,46%,' + k.alpha + ')');
+			g.addColorStop(0.65, 'hsla(' + k.hue + ',28%,46%,' + k.alpha + ')');
+			g.addColorStop(1, 'hsla(' + k.hue + ',28%,40%,' + (k.alpha * 0.1) + ')');
+			ctx.strokeStyle = g;
+			ctx.lineWidth = k.w;
 			ctx.stroke();
 
-			// Bright nodes when illuminated by mouse
-			if (mx > 0 && li % 3 === 0) {
-				line.points.forEach(p => {
-					const dx = mx - line.x;
-					const dy = my - p.y;
-					const dist = Math.sqrt(dx * dx + dy * dy);
-					if (dist < 160) {
-						const alpha = (1 - dist / 160) * 0.5;
-						const bx = line.x + Math.sin(time * line.speed + p.offset + line.phase) * (line.amp + p.y * 0.01);
+			// ── Illumination overlay ──
+			let maxI = 0;
+			for (let i = 0; i < k.illum.length; i++) if (k.illum[i] > maxI) maxI = k.illum[i];
+			if (maxI > 0.02) {
+				ctx.beginPath();
+				trace(ctx, fp);
+				ctx.strokeStyle = 'hsla(' + (k.hue + 8) + ',38%,64%,' + (maxI * 0.4) + ')';
+				ctx.lineWidth = k.w + 1.5;
+				ctx.stroke();
+				// Bright nodes where illumination is strong
+				fp.forEach((p, i) => {
+					if (k.illum[i] > 0.2) {
 						ctx.beginPath();
-						ctx.arc(bx, p.y, 2.5 + (1 - dist / 160) * 2, 0, Math.PI * 2);
-						ctx.fillStyle = `hsla(${line.hue}, 40%, 60%, ${alpha})`;
+						ctx.arc(p.x, p.y, 1.5 + k.illum[i] * 3, 0, 6.28);
+						ctx.fillStyle = 'hsla(' + (k.hue + 5) + ',42%,68%,' + (k.illum[i] * 0.55) + ')';
 						ctx.fill();
 					}
 				});
 			}
 		});
+		ctx.filter = 'none';
+	};
+
+	const draw = () => {
+		ctx.clearRect(0, 0, w, h);
+		t += 0.008;
+
+		// Soft ambient mouse glow
+		if (mx > -1000) {
+			const mg = ctx.createRadialGradient(mx, my, 0, mx, my, 380);
+			mg.addColorStop(0, 'rgba(138,140,110,0.035)');
+			mg.addColorStop(1, 'rgba(138,140,110,0)');
+			ctx.fillStyle = mg;
+			ctx.fillRect(0, 0, w, h);
+		}
+
+		drawLayer(0);
+		drawLayer(1);
+		drawLayer(2);
 
 		requestAnimationFrame(draw);
 	};
