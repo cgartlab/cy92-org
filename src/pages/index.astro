@@ -50,9 +50,9 @@ const meditationImages = [
 				<canvas id="seaweed" class="canvas-full"></canvas>
 				<div class="slide-content center">
 					<div class="hero">
-						<h1 class="hero-name anim" data-d="0">CHEN<br>YANG</h1>
-						<p class="hero-role anim" data-d="1">A Designer, Writer, Engineer.</p>
-						<p class="hero-tags anim" data-d="2">动态视觉设计师 · 内容创作者 · 产品工程师</p>
+						<h1 class="hero-name anim scale" data-d="0">CHEN<br>YANG</h1>
+						<p class="hero-role anim up" data-d="1">A Designer, Writer, Engineer.</p>
+						<p class="hero-tags anim blur" data-d="2">动态视觉设计师 · 内容创作者 · 产品工程师</p>
 						<a href="#work" class="btn anim" data-d="3">探索作品 <Icon name="arrow_downward" size={16} class="w-4 h-4" /></a>
 					</div>
 				</div>
@@ -62,22 +62,22 @@ const meditationImages = [
 			<section class="slide dark" data-slide="1">
 				<div class="slide-content center">
 					<div class="stats">
-						<div class="stat anim" data-d="0">
+						<div class="stat anim right" data-d="0">
 							<span class="stat-label">累计发表字数</span>
 							<span class="stat-value">187,979</span>
 							<span class="stat-unit">字</span>
 						</div>
-						<div class="stat anim" data-d="1">
+						<div class="stat anim right" data-d="1">
 							<span class="stat-label">过去一年提交代码</span>
 							<span class="stat-value">5,565</span>
 							<span class="stat-unit">次</span>
 						</div>
-						<div class="stat anim" data-d="2">
+						<div class="stat anim right" data-d="2">
 							<span class="stat-label">致力于数字创作领域</span>
 							<span class="stat-value">{yearsActive}</span>
 							<span class="stat-unit">年</span>
 						</div>
-						<div class="stat anim" data-d="3">
+						<div class="stat anim right" data-d="3">
 							<span class="stat-label">跨领域专业项目</span>
 							<span class="stat-value">50+</span>
 							<span class="stat-unit">个</span>
@@ -94,8 +94,8 @@ const meditationImages = [
 				<div class="slide-content">
 					<div class="split">
 						<div class="split-left">
-							<p class="label anim" data-d="0">What I do</p>
-							<h2 class="heading-xl anim" data-d="1">跨领域<br>数字创作者</h2>
+							<p class="label anim left" data-d="0">What I do</p>
+							<h2 class="heading-xl anim left" data-d="1">跨领域<br>数字创作者</h2>
 							<p class="body anim" data-d="2">
 								我创建数字产品、塑造品牌视觉、分享创作背后的思考过程。倡导数据主权，坚持创作即认知的理念。
 							</p>
@@ -103,7 +103,7 @@ const meditationImages = [
 						<div class="split-right">
 							<div class="skills">
 								{SKILLS.map((category, i) => (
-									<div class="skill anim" data-d={i + 2}>
+									<div class="skill anim right" data-d={i + 2}>
 										<h3 class="skill-cat">{category.category}</h3>
 										<ul class="skill-list">
 											{category.items.map(s => <li>{s}</li>)}
@@ -121,8 +121,8 @@ const meditationImages = [
 				<div class="video-overlay" style="filter:brightness(0.7)"></div>
 				<div class="slide-content">
 					<div class="work">
-						<p class="label anim" data-d="0">Featured Work</p>
-						<h2 class="heading-xl anim" data-d="1">本科动画毕业十年后的作品集</h2>
+						<p class="label anim left" data-d="0">Featured Work</p>
+						<h2 class="heading-xl anim left" data-d="1">本科动画毕业十年后的作品集</h2>
 						<p class="body-lg anim" data-d="2">
 							四年一度的作品集更新，涵盖三维动画、CG艺术、手绘等多种创作形式。展示了从2016年毕业至今的创作历程与艺术探索，记录了从学生到职业创作者的完整转变。
 						</p>
@@ -139,29 +139,24 @@ const meditationImages = [
 				</div>
 			</section>
 
-			<!-- ═══ Slide 4 — Meditation (cover infinite, light text) ═══ -->
+			<!-- ═══ Slide 4 — Meditation (cover Ken Burns infinite, light text) ═══ -->
 			<section class="slide" data-slide="4">
-				<img src={coverImage} alt="冥想系列" class="img-bg" style="filter:brightness(0.45)" />
+				<!-- Infinite Ken Burns loop background -->
+				<div class="kb-stage">
+					<img src={coverImage} alt="冥想系列" class="kb-img" />
+					<div class="kb-overlay"></div>
+				</div>
 				<div class="slide-content">
-					<div class="meditation">
-						<div class="med-text">
-							<p class="label anim" data-d="0">Meditation Series</p>
-							<h2 class="heading-display anim" data-d="1">冥想系列</h2>
-							<p class="body anim" data-d="2">
-								冥想是一种改变意识的形式，是解剖自己内心的过程。在接下来的几年里我用自己的业余时间创作了这个系列，每一幅作品都聊到了我经历的不同阶段。
-							</p>
-							<a href="https://cgartlab.com/posts/meditation-series/" target="_blank" rel="noopener noreferrer" class="btn anim" data-d="3">
+					<div class="med-text-center">
+						<p class="label anim" data-d="0">Meditation Series</p>
+						<h2 class="heading-display anim" data-d="1">冥想系列</h2>
+						<p class="body anim" data-d="2">
+							冥想是一种改变意识的形式，是解剖自己内心的过程。在接下来的几年里我用自己的业余时间创作了这个系列，每一幅作品都聊到了我经历的不同阶段，每个阶段我选择不同的主题与自己的内心交谈。
+						</p>
+						<div class="med-cta anim" data-d="3">
+							<a href="https://cgartlab.com/posts/meditation-series/" target="_blank" rel="noopener noreferrer" class="btn">
 								查看全部作品 <Icon name="arrow_forward" size={16} class="w-4 h-4" />
 							</a>
-						</div>
-						<div class="med-strip anim" data-d="2">
-							<div class="strip-track">
-								{[...meditationImages, ...meditationImages, ...meditationImages].map(img => (
-									<div class="strip-item">
-										<img src={img.src} alt={img.title} class="strip-img" />
-									</div>
-								))}
-							</div>
 						</div>
 					</div>
 				</div>
@@ -192,8 +187,8 @@ const meditationImages = [
 				<div class="slide-content scroll-y">
 					<div class="profile">
 						<div class="profile-left">
-							<p class="label anim" data-d="0">About</p>
-							<h2 class="heading-lg anim" data-d="1">画画是画画的酬劳，写作是写作的回报。</h2>
+							<p class="label anim left" data-d="0">About</p>
+							<h2 class="heading-lg anim left" data-d="1">画画是画画的酬劳，写作是写作的回报。</h2>
 							<p class="body anim" data-d="2">INFJ型人格，目前居住在云南昆明。倡导数据主权，坚持创作即认知的理念。</p>
 							<p class="body anim" data-d="3">「数据主权」是我价值体系的核心。「创作即认知」——写作的根本目的在于梳理思维、认识自我。</p>
 							<div class="profile-contact anim" data-d="4">
@@ -208,7 +203,7 @@ const meditationImages = [
 							</div>
 						</div>
 						<div class="profile-right">
-							<section class="psection anim" data-d="1">
+							<section class="psection anim right" data-d="1">
 								<h3 class="label-sm">工作经历</h3>
 								{WORK_EXPERIENCE.map(exp => (
 									<div class="exp">
@@ -220,7 +215,7 @@ const meditationImages = [
 									</div>
 								))}
 							</section>
-							<section class="psection anim" data-d="2">
+							<section class="psection anim right" data-d="2">
 								<h3 class="label-sm">教育经历</h3>
 								{EDUCATION.map(edu => (
 									<div class="exp">
@@ -232,7 +227,7 @@ const meditationImages = [
 									</div>
 								))}
 							</section>
-							<section class="psection anim" data-d="3">
+							<section class="psection anim right" data-d="3">
 								<h3 class="label-sm">Honors</h3>
 								<div class="honors">
 									{HONORS.slice(0, 4).map(h => (
@@ -243,7 +238,7 @@ const meditationImages = [
 									))}
 								</div>
 							</section>
-							<section class="psection anim" data-d="4">
+							<section class="psection anim right" data-d="4">
 								<h3 class="label-sm">Creative Practice</h3>
 								<div class="practice">
 									{EXPERIENCE.map(exp => (
@@ -266,7 +261,7 @@ const meditationImages = [
 				<div class="slide-content center">
 					<div class="contact">
 						<p class="label anim" data-d="0">Get in Touch</p>
-						<h2 class="heading-xl anim" data-d="1">Let's work together</h2>
+						<h2 class="heading-xl anim scale" data-d="1">Let's work together</h2>
 						<p class="body anim" data-d="2">如果你对我的作品感兴趣，或者有任何合作想法，欢迎随时联系我。</p>
 						<div class="contact-actions anim" data-d="3">
 							<a href={`mailto:${PERSONAL_INFO.email}`} class="btn"><Icon name="mail" size={16} class="w-4 h-4" />{PERSONAL_INFO.email}</a>
@@ -431,16 +426,39 @@ a, button { cursor: none; }
 .tag:hover { background: rgba(255,255,255,0.1); color: var(--text); border-color: rgba(255,255,255,0.15); }
 
 /* ═══ Meditation ═══ */
-.meditation { display: grid; grid-template-columns: 1fr; gap: 2.5rem; width: 100%; align-items: center; }
-@media (min-width: 768px) { .meditation { grid-template-columns: 1fr 1fr; } }
-.med-text { max-width: 420px; }
-.med-strip { overflow: hidden; width: 100%; }
-.strip-track { display: flex; gap: 0.25rem; animation: scroll 30s linear infinite; }
-.strip-item { flex-shrink: 0; width: 140px; height: 140px; overflow: hidden; }
-@media (min-width: 768px) { .strip-item { width: 180px; height: 180px; } }
-.strip-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s var(--spring); }
-.strip-item:hover .strip-img { transform: scale(1.1); }
-@keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-33.333%); } }
+/* Meditation: Ken Burns infinite background */
+.kb-stage { position: absolute; inset: 0; overflow: hidden; z-index: 0; }
+.kb-img {
+	position: absolute; inset: -12%;
+	width: 124%; height: 124%;
+	object-fit: cover;
+	filter: brightness(0.45);
+	animation: kenburns 24s ease-in-out infinite alternate;
+	will-change: transform;
+}
+.kb-overlay {
+	position: absolute; inset: 0;
+	background: linear-gradient(180deg, rgba(10,10,10,0.3) 0%, rgba(10,10,10,0.15) 40%, rgba(10,10,10,0.7) 100%);
+}
+@keyframes kenburns {
+	0% { transform: scale(1) translate(0, 0); }
+	25% { transform: scale(1.08) translate(-2%, 1%); }
+	50% { transform: scale(1.12) translate(1.5%, -1%); }
+	75% { transform: scale(1.06) translate(-1%, -2%); }
+	100% { transform: scale(1.1) translate(2%, 1.5%); }
+}
+.med-text-center {
+	max-width: 560px;
+	margin-left: auto;
+	text-align: center;
+	padding: 2rem 1.5rem;
+	background: rgba(10,10,10,0.55);
+	backdrop-filter: blur(6px);
+	border: 1px solid var(--border);
+}
+.med-text-center .heading-display { margin: 0.5rem 0 1rem; }
+.med-text-center .body { margin-bottom: 1.5rem; }
+.med-cta { display: flex; justify-content: center; }
 
 /* ═══ Gallery 3D ═══ */
 .gallery-wrap { width: 100%; }
@@ -510,27 +528,67 @@ a, button { cursor: none; }
 .indicator-bar { width: 100%; height: 0%; background: var(--accent); border-radius: 1px; transition: height 0.4s var(--spring); }
 
 /* ═══ Animations ═══ */
-.anim { opacity: 0; transform: translateY(24px); }
-.slide.is-active .anim { animation: fadeUp 0.6s var(--spring) forwards; }
+/* Base state: hidden with directional transform */
+.anim { opacity: 0; }
+.anim.up { transform: translateY(32px); }
+.anim.left { transform: translateX(-40px); }
+.anim.right { transform: translateX(40px); }
+.anim.scale { transform: scale(0.92); }
+.anim.blur { filter: blur(8px); transform: translateY(16px); }
+.anim.mask { clip-path: inset(0 0 100% 0); }
+
+/* Animate when slide becomes active */
+.slide.is-active .anim.up { animation: fadeUp 0.7s var(--spring) forwards; }
+.slide.is-active .anim.left { animation: fadeLeft 0.7s var(--spring) forwards; }
+.slide.is-active .anim.right { animation: fadeRight 0.7s var(--spring) forwards; }
+.slide.is-active .anim.scale { animation: fadeScale 0.8s var(--spring) forwards; }
+.slide.is-active .anim.blur { animation: fadeBlur 0.9s var(--ease-out, cubic-bezier(0.16,1,0.3,1)) forwards; }
+.slide.is-active .anim.mask { animation: fadeMask 0.8s var(--spring) forwards; }
+
+/* Stagger delays */
 .slide.is-active .anim[data-d="0"] { animation-delay: 0.05s; }
-.slide.is-active .anim[data-d="1"] { animation-delay: 0.12s; }
-.slide.is-active .anim[data-d="2"] { animation-delay: 0.2s; }
-.slide.is-active .anim[data-d="3"] { animation-delay: 0.28s; }
-.slide.is-active .anim[data-d="4"] { animation-delay: 0.36s; }
-.slide.is-active .anim[data-d="5"] { animation-delay: 0.44s; }
-.slide.is-active .anim[data-d="6"] { animation-delay: 0.52s; }
-.slide.is-active .anim[data-d="7"] { animation-delay: 0.6s; }
-.slide.is-active .anim[data-d="8"] { animation-delay: 0.68s; }
+.slide.is-active .anim[data-d="1"] { animation-delay: 0.13s; }
+.slide.is-active .anim[data-d="2"] { animation-delay: 0.22s; }
+.slide.is-active .anim[data-d="3"] { animation-delay: 0.31s; }
+.slide.is-active .anim[data-d="4"] { animation-delay: 0.4s; }
+.slide.is-active .anim[data-d="5"] { animation-delay: 0.5s; }
+.slide.is-active .anim[data-d="6"] { animation-delay: 0.6s; }
+.slide.is-active .anim[data-d="7"] { animation-delay: 0.7s; }
+.slide.is-active .anim[data-d="8"] { animation-delay: 0.8s; }
+.slide.is-active .anim[data-d="9"] { animation-delay: 0.9s; }
 
 @keyframes fadeUp {
-	from { opacity: 0; transform: translateY(24px); }
+	from { opacity: 0; transform: translateY(32px); }
 	to { opacity: 1; transform: translateY(0); }
 }
+@keyframes fadeLeft {
+	from { opacity: 0; transform: translateX(-40px); }
+	to { opacity: 1; transform: translateX(0); }
+}
+@keyframes fadeRight {
+	from { opacity: 0; transform: translateX(40px); }
+	to { opacity: 1; transform: translateX(0); }
+}
+@keyframes fadeScale {
+	from { opacity: 0; transform: scale(0.92); }
+	to { opacity: 1; transform: scale(1); }
+}
+@keyframes fadeBlur {
+	from { opacity: 0; filter: blur(8px); transform: translateY(16px); }
+	to { opacity: 1; filter: blur(0); transform: translateY(0); }
+}
+@keyframes fadeMask {
+	from { opacity: 0; clip-path: inset(0 0 100% 0); }
+	to { opacity: 1; clip-path: inset(0 0 0 0); }
+}
+
+/* Gallery cards: 3D rotate-in */
+.slide.is-active .gcard.anim { animation: fadeScale 0.8s var(--spring) forwards; animation-delay: calc(var(--i) * 0.05s); }
 
 @media (prefers-reduced-motion: reduce) {
 	.slideshow { scroll-behavior: auto; scroll-snap-type: none; }
 	.slide.is-active .anim { opacity: 1; transform: none; animation: none; }
-	.strip-track { animation: none; }
+	.kb-img { animation: none; }
 	.ring-cursor { display: none; }
 	body { cursor: auto; }
 	a, button { cursor: pointer; }
@@ -546,66 +604,103 @@ a, button { cursor: none; }
 	if (!ctx) return;
 	let w, h;
 	const lines = [];
-	const LINE_COUNT = 24;
 	let mx = -999, my = -999;
+	const maxGlow = 300;
 
-	const resize = () => { w = c.width = innerWidth; h = c.height = innerHeight; };
+	const resize = () => {
+		w = c.width = innerWidth;
+		h = c.height = innerHeight;
+		// Denser: ~40 lines, adaptive to width
+		const target = Math.max(28, Math.floor(w / 32));
+		while (lines.length < target) {
+			const i = lines.length;
+			lines.push({
+				x: (i / target) * w + Math.random() * 30,
+				points: Array.from({ length: 26 }, (_, j) => ({
+					y: (j / 26) * h,
+					offset: Math.random() * Math.PI * 2
+				})),
+				hue: 75 + Math.random() * 25,
+				speed: 0.4 + Math.random() * 0.4,
+				phase: Math.random() * Math.PI * 2,
+				amp: 16 + Math.random() * 18  // varied amplitude for organic feel
+			});
+		}
+	};
 	resize();
 	addEventListener('resize', resize);
 	addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
 
-	for (let i = 0; i < LINE_COUNT; i++) {
-		lines.push({
-			x: (i / LINE_COUNT) * w + Math.random() * 40,
-			points: Array.from({ length: 20 }, (_, j) => ({
-				y: (j / 20) * h,
-				offset: Math.random() * Math.PI * 2
-			})),
-			hue: 80 + Math.random() * 20,
-			speed: 0.3 + Math.random() * 0.3,
-			phase: Math.random() * Math.PI * 2
-		});
-	}
-
 	let time = 0;
 	const draw = () => {
 		ctx.clearRect(0, 0, w, h);
-		time += 0.01;
+		time += 0.012;
 
-		lines.forEach(line => {
+		// Mouse ambient glow (soft radial)
+		if (mx > 0) {
+			const mg = ctx.createRadialGradient(mx, my, 0, mx, my, maxGlow);
+			mg.addColorStop(0, 'rgba(138,140,110,0.06)');
+			mg.addColorStop(1, 'rgba(138,140,110,0)');
+			ctx.fillStyle = mg;
+			ctx.fillRect(0, 0, w, h);
+		}
+
+		// Draw a smooth spline through points (midpoint quadratic bezier)
+		const traceSmooth = (c, pts) => {
+			if (pts.length < 2) return;
+			c.moveTo(pts[0].x, pts[0].y);
+			for (let i = 1; i < pts.length - 1; i++) {
+				const xc = (pts[i].x + pts[i + 1].x) / 2;
+				const yc = (pts[i].y + pts[i + 1].y) / 2;
+				c.quadraticCurveTo(pts[i].x, pts[i].y, xc, yc);
+			}
+			c.lineTo(pts[pts.length - 1].x, pts[pts.length - 1].y);
+		};
+
+		lines.forEach((line, li) => {
+			// Draw glow halo behind line body (smooth spline)
 			ctx.beginPath();
-			line.points.forEach((p, j) => {
-				const sway = Math.sin(time * line.speed + p.offset + line.phase) * (20 + j * 2);
+			traceSmooth(ctx, line.points.map((p, j) => {
+				const sway = Math.sin(time * line.speed + p.offset + line.phase) * (line.amp + j * 2.5);
+				return { x: line.x + sway, y: p.y };
+			}));
+			ctx.strokeStyle = `hsla(${line.hue}, 30%, 45%, 0.06)`;
+			ctx.lineWidth = 6;
+			ctx.stroke();
+
+			// Draw main line (smooth spline, mouse illumination)
+			ctx.beginPath();
+			traceSmooth(ctx, line.points.map((p, j) => {
+				const sway = Math.sin(time * line.speed + p.offset + line.phase) * (line.amp + j * 2.5);
 				const dx = mx - line.x;
 				const dy = my - p.y;
 				const dist = Math.sqrt(dx * dx + dy * dy);
-				const glow = dist < 200 ? (1 - dist / 200) * 30 : 0;
-				const x = line.x + sway + glow * (dx / dist || 0);
-				const y = p.y;
-				if (j === 0) ctx.moveTo(x, y);
-				else ctx.lineTo(x, y);
-			});
+				// Mouse illumination pushes the line toward cursor
+				const glow = dist < maxGlow ? (1 - dist / maxGlow) * 40 : 0;
+				return { x: line.x + sway + glow * (dx / (dist || 1)), y: p.y };
+			}));
 
-			const grad = ctx.createLinearGradient(line.x, 0, line.x, h);
-			grad.addColorStop(0, `hsla(${line.hue}, 30%, 45%, 0.02)`);
-			grad.addColorStop(0.3, `hsla(${line.hue}, 30%, 45%, 0.15)`);
-			grad.addColorStop(0.7, `hsla(${line.hue}, 30%, 45%, 0.15)`);
-			grad.addColorStop(1, `hsla(${line.hue}, 30%, 45%, 0.02)`);
+			const grad = ctx.createLinearGradient(line.x - line.amp, 0, line.x + line.amp, h);
+			grad.addColorStop(0, `hsla(${line.hue}, 32%, 42%, 0.02)`);
+			grad.addColorStop(0.35, `hsla(${line.hue}, 32%, 48%, 0.22)`);
+			grad.addColorStop(0.65, `hsla(${line.hue}, 32%, 48%, 0.22)`);
+			grad.addColorStop(1, `hsla(${line.hue}, 32%, 42%, 0.02)`);
 			ctx.strokeStyle = grad;
-			ctx.lineWidth = 2;
+			ctx.lineWidth = 1.5;
 			ctx.stroke();
 
-			// Mouse glow
-			if (mx > 0) {
+			// Bright nodes when illuminated by mouse
+			if (mx > 0 && li % 3 === 0) {
 				line.points.forEach(p => {
 					const dx = mx - line.x;
 					const dy = my - p.y;
 					const dist = Math.sqrt(dx * dx + dy * dy);
-					if (dist < 150) {
-						const alpha = (1 - dist / 150) * 0.4;
+					if (dist < 160) {
+						const alpha = (1 - dist / 160) * 0.5;
+						const bx = line.x + Math.sin(time * line.speed + p.offset + line.phase) * (line.amp + p.y * 0.01);
 						ctx.beginPath();
-						ctx.arc(line.x + Math.sin(time * line.speed + p.offset) * 10, p.y, 3, 0, Math.PI * 2);
-						ctx.fillStyle = `rgba(138,140,110,${alpha})`;
+						ctx.arc(bx, p.y, 2.5 + (1 - dist / 160) * 2, 0, Math.PI * 2);
+						ctx.fillStyle = `hsla(${line.hue}, 40%, 60%, ${alpha})`;
 						ctx.fill();
 					}
 				});
@@ -625,61 +720,92 @@ a, button { cursor: none; }
 	if (!ctx) return;
 	let w, h;
 	const particles = [];
-	const N = 120;
+	const N = 180;
+	let cx, cy;
+	let mx = -999, my = -999;
 
-	const resize = () => { w = c.width = innerWidth; h = c.height = innerHeight; };
+	const resize = () => {
+		w = c.width = innerWidth;
+		h = c.height = innerHeight;
+		cx = w / 2; cy = h / 2;
+	};
 	resize();
 	addEventListener('resize', resize);
+	addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
 
 	for (let i = 0; i < N; i++) {
 		const angle = (i / N) * Math.PI * 2;
-		const r = 50 + Math.random() * 200;
+		const r = 60 + Math.random() * 220;
 		particles.push({
 			baseAngle: angle,
 			baseR: r,
-			x: w / 2 + Math.cos(angle) * r,
-			y: h / 2 + Math.sin(angle) * r,
-			speed: 0.002 + Math.random() * 0.003,
-			r: 1 + Math.random() * 2,
-			alpha: 0.1 + Math.random() * 0.3
+			x: cx + Math.cos(angle) * r,
+			y: cy + Math.sin(angle) * r,
+			speed: 0.002 + Math.random() * 0.004,
+			r: 0.8 + Math.random() * 2.2,
+			alpha: 0.08 + Math.random() * 0.35,
+			twinkle: Math.random() * Math.PI * 2
 		});
 	}
 
 	let time = 0;
 	const draw = () => {
 		ctx.clearRect(0, 0, w, h);
-		time += 0.015;
+		time += 0.016;
 
-		// Center glow
-		const grad = ctx.createRadialGradient(w / 2, h / 2, 0, w / 2, h / 2, 300);
-		grad.addColorStop(0, 'rgba(138,140,110,0.05)');
+		// Center glow (pulsing)
+		const pulse = 1 + Math.sin(time) * 0.08;
+		const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, 320 * pulse);
+		grad.addColorStop(0, 'rgba(138,140,110,0.07)');
 		grad.addColorStop(1, 'rgba(138,140,110,0)');
 		ctx.fillStyle = grad;
 		ctx.fillRect(0, 0, w, h);
 
-		// Wave rings
-		for (let ring = 0; ring < 5; ring++) {
-			const ringR = ((time * 40 + ring * 60) % 300);
-			const ringAlpha = (1 - ringR / 300) * 0.08;
+		// Expandable wave rings
+		for (let ring = 0; ring < 6; ring++) {
+			const ringR = ((time * 45 + ring * 70) % 360) * pulse;
+			const ringAlpha = (1 - ringR / 360) * 0.09;
 			ctx.beginPath();
-			ctx.arc(w / 2, h / 2, ringR, 0, Math.PI * 2);
+			ctx.arc(cx, cy, ringR, 0, Math.PI * 2);
 			ctx.strokeStyle = `rgba(138,140,110,${ringAlpha})`;
-			ctx.lineWidth = 1;
+			ctx.lineWidth = 1.2;
 			ctx.stroke();
 		}
 
-		// Particles
+		// Update + draw particles
 		particles.forEach(p => {
 			const angle = p.baseAngle + time * p.speed;
-			const r = p.baseR + Math.sin(time * 2 + p.baseAngle) * 15;
-			p.x = w / 2 + Math.cos(angle) * r;
-			p.y = h / 2 + Math.sin(angle) * r;
+			const r = p.baseR + Math.sin(time * 2 + p.baseAngle) * 18;
+			p.x = cx + Math.cos(angle) * r;
+			p.y = cy + Math.sin(angle) * r;
+
+			// Twinkle
+			const tw = 0.5 + Math.sin(time * 3 + p.twinkle) * 0.5;
+			const alpha = p.alpha * (0.4 + tw * 0.6);
 
 			ctx.beginPath();
 			ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-			ctx.fillStyle = `rgba(138,140,110,${p.alpha})`;
+			ctx.fillStyle = `rgba(138,140,110,${alpha})`;
 			ctx.fill();
 		});
+
+		// Connection lines between close particles
+		for (let i = 0; i < particles.length; i++) {
+			for (let j = i + 1; j < particles.length; j++) {
+				const dx = particles[i].x - particles[j].x;
+				const dy = particles[i].y - particles[j].y;
+				const dist = Math.sqrt(dx * dx + dy * dy);
+				if (dist < 70) {
+					const a = (1 - dist / 70) * 0.12;
+					ctx.beginPath();
+					ctx.moveTo(particles[i].x, particles[i].y);
+					ctx.lineTo(particles[j].x, particles[j].y);
+					ctx.strokeStyle = `rgba(138,140,110,${a})`;
+					ctx.lineWidth = 0.5;
+					ctx.stroke();
+				}
+			}
+		}
 
 		requestAnimationFrame(draw);
 	};
