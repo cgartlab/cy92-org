@@ -659,7 +659,7 @@ a, button { cursor: none; }
 
 <script>
 // ═══ Seaweed — large kelp, depth layers, mouse illumination spread ═══
-(() => {
+try { (() => {
 	const c = document.getElementById('seaweed');
 	if (!c) return;
 	const ctx = c.getContext('2d');
@@ -832,6 +832,7 @@ a, button { cursor: none; }
 	};
 	draw();
 })();
+} catch(e) { console.warn('[seaweed]', e.message); }
 
 // ═══ Wave particles (Contact) ═══
 (() => {
