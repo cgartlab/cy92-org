@@ -56,7 +56,7 @@ const meditationImages = [
 						</div>
 						<div class="hero-divider"></div>
 						<p class="hero-tags anim blur" data-d="2">动态视觉设计师<span class="sep"> · </span>内容创作者<span class="sep"> · </span>产品工程师</p>
-						<a href="#work" class="btn anim" data-d="3">探索作品 <Icon name="arrow_downward" size={16} class="w-4 h-4" /></a>
+						<a href="#work" class="btn anim up" data-d="3">探索作品 <Icon name="arrow_downward" size={16} class="w-4 h-4" /></a>
 					</div>
 				</div>
 			</section>
@@ -99,7 +99,7 @@ const meditationImages = [
 						<div class="split-left">
 							<p class="label anim left" data-d="0">What I do</p>
 							<h2 class="heading-xl anim left" data-d="1">跨领域<br>数字创作者</h2>
-							<p class="body anim" data-d="2">
+							<p class="body anim up" data-d="2">
 								我创建数字产品、塑造品牌视觉、分享创作背后的思考过程。倡导数据主权，坚持创作即认知的理念。
 							</p>
 						</div>
@@ -126,13 +126,13 @@ const meditationImages = [
 					<div class="work">
 						<p class="label anim left" data-d="0">Featured Work</p>
 						<h2 class="heading-xl anim left" data-d="1">本科动画毕业十年后的作品集</h2>
-						<p class="body-lg anim" data-d="2">
+						<p class="body-lg anim up" data-d="2">
 							四年一度的作品集更新，涵盖三维动画、CG艺术、手绘等多种创作形式。展示了从2016年毕业至今的创作历程与艺术探索，记录了从学生到职业创作者的完整转变。
 						</p>
-						<p class="body anim" data-d="3">
+						<p class="body anim up" data-d="3">
 							从早期的实验性VR数字艺术作品《Hello World 2.0》，到为央视《2025 CCTV品牌强国工程发布会》制作的开场片动效，再到入选CCG EXPO的《COVID-19》——每一件作品都是对创作边界的探索与突破。
 						</p>
-						<div class="tags anim" data-d="4">
+						<div class="tags anim up" data-d="4">
 							<span class="tag">2024</span>
 							<span class="tag">三维动画</span>
 							<span class="tag">CG艺术</span>
@@ -151,12 +151,12 @@ const meditationImages = [
 				</div>
 				<div class="slide-content">
 					<div class="med-text-center">
-						<p class="label anim" data-d="0">Meditation Series</p>
-						<h2 class="heading-display anim" data-d="1">冥想系列</h2>
-						<p class="body anim" data-d="2">
+						<p class="label anim up" data-d="0">Meditation Series</p>
+						<h2 class="heading-display anim up" data-d="1">冥想系列</h2>
+						<p class="body anim up" data-d="2">
 							冥想是一种改变意识的形式，是解剖自己内心的过程。在接下来的几年里我用自己的业余时间创作了这个系列，每一幅作品都聊到了我经历的不同阶段，每个阶段我选择不同的主题与自己的内心交谈。
 						</p>
-						<div class="med-cta anim" data-d="3">
+						<div class="med-cta anim up" data-d="3">
 							<a href="https://cgartlab.com/posts/meditation-series/" target="_blank" rel="noopener noreferrer" class="btn">
 								查看全部作品 <Icon name="arrow_forward" size={16} class="w-4 h-4" />
 							</a>
@@ -169,10 +169,10 @@ const meditationImages = [
 			<section class="slide dark" data-slide="5">
 				<div class="slide-content center">
 					<div class="gallery-wrap">
-						<p class="label anim" data-d="0" style="text-align:center">Gallery</p>
+						<p class="label anim up" data-d="0" style="text-align:center">Gallery</p>
 						<div class="gallery-3d">
 							{meditationImages.map((img, i) => (
-								<div class="gcard anim" data-d={i % 5} style={`--i:${i}`}>
+								<div class="gcard anim up" data-d={i % 5} style={`--i:${i}`}>
 									<img src={img.src} alt={img.title} class="gcard-img" />
 									<div class="gcard-info">
 										<h3 class="gcard-title">{img.title}</h3>
@@ -192,9 +192,9 @@ const meditationImages = [
 						<div class="profile-left">
 							<p class="label anim left" data-d="0">About</p>
 							<h2 class="heading-lg anim left" data-d="1">画画是画画的酬劳，写作是写作的回报。</h2>
-							<p class="body anim" data-d="2">INFJ型人格，目前居住在云南昆明。倡导数据主权，坚持创作即认知的理念。</p>
-							<p class="body anim" data-d="3">「数据主权」是我价值体系的核心。「创作即认知」——写作的根本目的在于梳理思维、认识自我。</p>
-							<div class="profile-contact anim" data-d="4">
+							<p class="body anim up" data-d="2">INFJ型人格，目前居住在云南昆明。倡导数据主权，坚持创作即认知的理念。</p>
+							<p class="body anim up" data-d="3">「数据主权」是我价值体系的核心。「创作即认知」——写作的根本目的在于梳理思维、认识自我。</p>
+							<div class="profile-contact anim up" data-d="4">
 								<p class="label-sm">Contact</p>
 								<div class="contact-row">
 									{SOCIAL_LINKS.slice(0, 4).map(link => (
@@ -263,10 +263,10 @@ const meditationImages = [
 				<canvas id="waves" class="canvas-full"></canvas>
 				<div class="slide-content center">
 					<div class="contact">
-						<p class="label anim" data-d="0">Get in Touch</p>
+						<p class="label anim up" data-d="0">Get in Touch</p>
 						<h2 class="heading-xl anim scale" data-d="1">Let's work together</h2>
-						<p class="body anim" data-d="2">如果你对我的作品感兴趣，或者有任何合作想法，欢迎随时联系我。</p>
-						<div class="contact-actions anim" data-d="3">
+						<p class="body anim up" data-d="2">如果你对我的作品感兴趣，或者有任何合作想法，欢迎随时联系我。</p>
+						<div class="contact-actions anim up" data-d="3">
 							<a href={`mailto:${PERSONAL_INFO.email}`} class="btn"><Icon name="mail" size={16} class="w-4 h-4" />{PERSONAL_INFO.email}</a>
 							{SOCIAL_LINKS.slice(0, 4).map(link => (
 								<a href={link.url} target="_blank" rel="noopener noreferrer" class="icon-link-lg" title={link.name}>
@@ -599,7 +599,6 @@ a, button { cursor: none; }
 .anim.mask { clip-path: inset(0 0 100% 0); }
 
 /* Animate when slide becomes active */
-.slide.is-active .anim { animation: fadeUp 0.7s var(--spring) forwards; }
 .slide.is-active .anim.up { animation: fadeUp 0.7s var(--spring) forwards; }
 .slide.is-active .anim.left { animation: fadeLeft 0.7s var(--spring) forwards; }
 .slide.is-active .anim.right { animation: fadeRight 0.7s var(--spring) forwards; }
