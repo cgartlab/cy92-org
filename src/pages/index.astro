@@ -932,7 +932,7 @@ try { (() => {
 		requestAnimationFrame(draw);
 	};
 	draw();
-})(); catch(e) { console.warn("[1]", e.message); }
+})(); } catch(e) { console.warn("[1]", e.message); }
 
 // ═══ Slide observer ═══
 try { (() => {
@@ -957,7 +957,7 @@ try { (() => {
 		});
 	}, { threshold: 0.5 });
 	ss.forEach(s => o.observe(s));
-})(); catch(e) { console.warn("[2]", e.message); }
+})(); } catch(e) { console.warn("[2]", e.message); }
 
 // ═══ Number counter animation ═══
 try { (() => {
@@ -990,7 +990,7 @@ try { (() => {
 		});
 	}, { threshold: 0.4 });
 	els.forEach(el => obs.observe(el));
-})(); catch(e) { console.warn("[3]", e.message); }
+})(); } catch(e) { console.warn("[3]", e.message); }
 
 // ═══ Gallery 3D tilt ═══
 try { (() => {
@@ -1009,7 +1009,7 @@ try { (() => {
 			card.classList.remove('tilting');
 		});
 	});
-})(); catch(e) { console.warn("[4]", e.message); }
+})(); } catch(e) { console.warn("[4]", e.message); }
 
 // ═══ Smooth anchor ═══
 document.querySelectorAll('a[href^="#"]').forEach(a => {
