@@ -835,7 +835,7 @@ try { (() => {
 } catch(e) { console.warn('[seaweed]', e.message); }
 
 // ═══ Wave particles (Contact) ═══
-(() => {
+try { (() => {
 	const c = document.getElementById('waves');
 	if (!c) return;
 	const ctx = c.getContext('2d');
@@ -1035,4 +1035,5 @@ try { (() => {
 	};
 	tick();
 })();
+} catch(e) { console.warn('[ring]', e.message); }
 </script>
