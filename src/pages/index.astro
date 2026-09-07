@@ -4,6 +4,36 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Icon from '../components/Icon.astro';
 import { SITE_TITLE, SITE_DESCRIPTION, PERSONAL_INFO, SKILLS, EXPERIENCE, PROJECTS, STATS, SOCIAL_LINKS, HONORS, WORK_EXPERIENCE, EDUCATION } from '../consts';
+
+const meditationImages = [
+	{ src: '/images/冥想系列-1754664750528.webp', title: '冥想系列 1' },
+	{ src: '/images/冥想系列-1754664757458.webp', title: '冥想系列 2' },
+	{ src: '/images/冥想系列-1754664764581.webp', title: '冥想系列 3' },
+	{ src: '/images/冥想系列-1754664772045.webp', title: '冥想系列 4' },
+	{ src: '/images/冥想系列-1754664780351.webp', title: '冥想系列 5' },
+	{ src: '/images/冥想系列-1754664786331.webp', title: '冥想系列 6' },
+	{ src: '/images/冥想系列-1754664798635.webp', title: '冥想系列 7' },
+	{ src: '/images/冥想系列-1754664814920.webp', title: '冥想系列 8' },
+	{ src: '/images/冥想系列-1754664822895.webp', title: '冥想系列 9' },
+	{ src: '/images/冥想系列-1754664829706.webp', title: '冥想系列 10' }
+];
+const coverImage = '/images/冥想系列-cover.webp';
+
+/*
+ * ═══════════════════════════════════════════════
+ *  Typography System (matthewencina.com inspired)
+ * ═══════════════════════════════════════════════
+ *  Display:  clamp(4rem, 16vw, 13rem)  -0.06em  0.85
+ *  H1:       clamp(3rem, 8vw, 6rem)    -0.05em  0.9
+ *  H2:       clamp(2rem, 5vw, 3.5rem)  -0.04em  1.1
+ *  H3:       clamp(1.25rem, 3vw, 1.75rem) -0.03em 1.2
+ *  Body:     1rem                        0        1.7
+ *  Small:    0.875rem                    0        1.6
+ *  Caption:  0.75rem                     0.08em   1.5
+ *
+ *  Colors: #FAF9F6 (primary) / #999 (secondary) / #666 (muted) / #444 (faint)
+ *  Spacing: 4px base (1=4, 2=8, 3=12, 4=16, 5=20, 6=24, 8=32, 10=40, 12=48, 16=64)
+ */
 ---
 
 <!doctype html>
@@ -11,235 +41,717 @@ import { SITE_TITLE, SITE_DESCRIPTION, PERSONAL_INFO, SKILLS, EXPERIENCE, PROJEC
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
 	</head>
-	<body class="min-h-screen" style="background: var(--ds-color-bg); color: var(--ds-color-fg);">
-		<Header />
-		<main class="container-custom py-8 md:py-12">
-			<!-- Hero Section -->
-			<section class="section pb-8 md:pb-10">
-				<div class="flex flex-col md:flex-row md:items-start md:justify-between gap-8 md:gap-10">
-					<div class="flex-1 min-w-0">
-						<div class="mb-6">
-							<span class="ds-eyebrow mb-3">跨领域数字创作者</span>
-							<h1 class="ds-gradient-text" style="font-family: var(--ds-font-display); font-size: clamp(2.25rem, 5vw, 3.25rem); line-height: 1.08; letter-spacing: var(--ds-tracking-tight);">
+	<body>
+		<!-- Fixed corner elements -->
+		<header class="fixed-nav">
+			<a href="/" class="fixed-logo">{SITE_TITLE.split(' | ')[0]}</a>
+			<nav class="fixed-nav-links">
+				<a href="#work" class="fixed-nav-link">Work</a>
+				<a href="#profile" class="fixed-nav-link">Profile</a>
+				<a href="#contact" class="fixed-nav-link">Contact</a>
+			</nav>
+		</header>
+		<div class="fixed-corner-tl"></div>
+		<div class="fixed-corner-br">
+			<a href={`mailto:${PERSONAL_INFO.email}`} class="fixed-email">hello@cgartlab.com</a>
+		</div>
+		<div class="cursor-dot" id="cursor-dot"></div>
+
+		<!-- Mouse-interactive dot grid -->
+		<canvas id="dot-grid" class="dot-grid-canvas"></canvas>
+
+		<!-- ═══ Slideshow ═══ -->
+		<main id="slideshow" class="slideshow">
+
+			<!-- ═══ Slide 0 — Hero ═══ -->
+			<section class="slide" data-slide="0">
+				<div class="slide-inner">
+					<div class="container-custom relative z-10 w-full">
+						<div class="max-w-5xl mx-auto text-center">
+							<p class="eyebrow mb-6 anim-item" data-delay="0">Hello, I'm</p>
+							<h1 class="font-bold mb-4 anim-item" data-delay="1">
 								{PERSONAL_INFO.name}
 							</h1>
+							<div class="flex items-center justify-center gap-3 mb-12 anim-item" data-delay="2">
+								<span class="text-secondary text-h3 font-light">I'm a</span>
+								<div class="relative h-8 md:h-12 overflow-hidden">
+									<div class="absolute inset-0 flex flex-col anim-role-scroll">
+										{['Designer', 'Creator', 'Artist', 'Writer', 'Designer'].map(r => (
+											<span class="h-8 md:h-12 flex items-center text-h3 font-semibold text-accent">{r}</span>
+										))}
+									</div>
+								</div>
+							</div>
+							<div class="flex flex-wrap items-center justify-center gap-4 anim-item" data-delay="3">
+								<a href="#work" class="btn-primary">查看作品<Icon name="arrow_downward" size={16} class="w-4 h-4" /></a>
+							</div>
 						</div>
+					</div>
+					<div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 anim-item" data-delay="4">
+						<div class="scroll-indicator">
+							<div class="scroll-indicator-dot"></div>
+						</div>
+					</div>
+				</div>
+			</section>
 
-						<div class="quote-block my-5">
-							<p class="leading-relaxed" style="font-size: clamp(0.9375rem, 1.5vw, 1.0625rem);">
-								{PERSONAL_INFO.bio}
+			<!-- ═══ Slide 1 — Stats ═══ -->
+			<section class="slide" data-slide="1">
+				<div class="slide-inner">
+					<div class="container-custom w-full">
+						<div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-16">
+							{STATS.map((stat, i) => (
+								<div class="anim-slide-right" data-delay={i}>
+									<div class="flex items-baseline gap-1 mb-2">
+										<span class="stat-number font-bold" data-target={stat.value.replace(/,/g, '')}>{stat.value}</span>
+										<span class="text-secondary text-body">{stat.unit}</span>
+									</div>
+									<p class="text-caption text-muted uppercase tracking-wider">{stat.label}</p>
+								</div>
+							))}
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- ═══ Slide 2 — What I do ═══ -->
+			<section class="slide" data-slide="2">
+				<div class="slide-inner">
+					<div class="container-custom w-full">
+						<div class="grid lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+							<div class="lg:col-span-5">
+								<p class="eyebrow mb-4 anim-item" data-delay="0">What I do</p>
+								<h2 class="text-h2 font-semibold mb-4 anim-item" data-delay="1">
+									跨领域数字创作者
+								</h2>
+								<p class="text-body text-secondary anim-item" data-delay="2">
+									我创建数字产品、塑造品牌视觉、分享创作背后的思考过程。倡导数据主权，坚持创作即认知的理念。
+								</p>
+							</div>
+							<div class="lg:col-span-7">
+								<div class="grid grid-cols-2 gap-x-8 gap-y-5">
+									{SKILLS.map((category, i) => (
+										<div class="anim-item" data-delay={i + 2}>
+											<h3 class="text-caption text-accent uppercase tracking-wider mb-3">{category.category}</h3>
+											<ul class="space-y-1">
+												{category.items.map(skill => (
+													<li class="text-small text-primary">{skill}</li>
+												))}
+											</ul>
+										</div>
+									))}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- ═══ Slide 3 — Featured Work ═══ -->
+			<section class="slide" data-slide="3" id="work">
+				<div class="absolute inset-0">
+					<video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover video-bg">
+						<source src="/video/demo.mp4" type="video/mp4" />
+					</video>
+				</div>
+				<div class="slide-inner relative z-10">
+					<div class="container-custom w-full">
+						<div class="max-w-2xl">
+							<p class="eyebrow mb-4 anim-item" data-delay="0">Featured Work</p>
+							<h2 class="text-h1 font-bold mb-5 anim-item" data-delay="1">
+								本科动画毕业十年后的作品集
+							</h2>
+							<p class="text-body-lg text-primary mb-3 anim-item" data-delay="2">
+								四年一度的作品集更新，涵盖三维动画、CG艺术、手绘等多种创作形式。展示了从2016年毕业至今的创作历程与艺术探索。
 							</p>
-						</div>
-
-						<div class="flex flex-wrap gap-2 mt-5">
-							<span class="tag">
-								<Icon name="place" size={14} class="w-3.5 h-3.5" />
-								{PERSONAL_INFO.location}
-							</span>
-							<span class="tag">
-								<Icon name="person" size={14} class="w-3.5 h-3.5" />
-								{PERSONAL_INFO.personality}
-							</span>
-						</div>
-					</div>
-
-					<div class="flex-shrink-0 flex md:block justify-center">
-						<div class="logo-mark ds-anim-float w-28 h-28 md:w-32 md:h-32">
-							<img src="/favicon.svg" alt="CG艺术实验室" class="w-full h-full object-cover" />
-						</div>
-					</div>
-				</div>
-
-				<!-- Contact & Social -->
-				<div class="mt-8 pt-6" style="border-top: 1px solid var(--ds-color-border-subtle);">
-					<div class="flex flex-wrap items-center gap-3">
-						<a href={`mailto:${PERSONAL_INFO.email}`} class="btn btn-primary text-sm gap-2">
-							<Icon name="mail" size={16} class="w-4 h-4" />
-							{PERSONAL_INFO.email}
-						</a>
-						{SOCIAL_LINKS.slice(0, 4).map(link => (
-							<a
-								href={link.url}
-								target="_blank"
-								rel="noopener noreferrer"
-								class="social-link"
-								title={link.name}
-							>
-								<span class="sr-only">{link.name}</span>
-								<Icon name={link.icon} size={18} class="w-[18px] h-[18px]" fill />
-							</a>
-						))}
-					</div>
-				</div>
-			</section>
-
-			<!-- Stats -->
-			<section class="section">
-				<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-					{STATS.map((stat, index) => (
-						<div class="stat-card ds-reveal" style={`--d: ${index * 80}ms`}>
-							<div class="flex items-baseline justify-center gap-1 mb-1">
-								<span class="stat-value">{stat.value}</span>
-								<span class="stat-unit">{stat.unit}</span>
-							</div>
-							<p class="stat-label">{stat.label}</p>
-						</div>
-					))}
-				</div>
-			</section>
-
-			<!-- Skills -->
-			<section class="section ds-reveal">
-				<div class="section-header">
-					<h2 class="section-title">专业技能</h2>
-					<div class="section-line"></div>
-				</div>
-
-				<div class="grid md:grid-cols-2 gap-4 md:gap-5">
-					{SKILLS.map(category => (
-						<div class="card p-5">
-							<h3 class="text-sm font-medium mb-3" style="font-family: var(--ds-font-display); color: var(--ds-accent);">{category.category}</h3>
-							<div class="flex flex-wrap gap-2">
-								{category.items.map(skill => (
-									<span class="tag">{skill}</span>
-								))}
+							<p class="text-body text-secondary mb-6 anim-item" data-delay="3">
+								从早期的实验性VR数字艺术作品《Hello World 2.0》，到为央视《2025 CCTV品牌强国工程发布会》制作的开场片动效，再到入选CCG EXPO的《COVID-19》——每一件作品都是对创作边界的探索与突破。
+							</p>
+							<div class="flex flex-wrap items-center gap-2 anim-item" data-delay="4">
+								<span class="tag">2024</span>
+								<span class="tag">三维动画</span>
+								<span class="tag">CG艺术</span>
+								<span class="tag">作品集</span>
 							</div>
 						</div>
-					))}
-				</div>
-			</section>
-
-			<!-- Education -->
-			<section class="section ds-reveal">
-				<div class="section-header">
-					<h2 class="section-title">教育经历</h2>
-					<div class="section-line"></div>
-				</div>
-
-				<div class="card p-5 md:p-6">
-					<div class="space-y-0">
-						{EDUCATION.map(edu => (
-							<div class="timeline-item pb-6 last:pb-0">
-								<div class="text-sm font-medium mb-1" style="font-family: var(--ds-font-display); color: var(--ds-accent);">{edu.period}</div>
-								<div>
-									<h3 class="text-base font-medium mb-0.5" style="color: var(--ds-color-fg);">{edu.school}</h3>
-									<p class="text-sm mb-0.5" style="color: var(--ds-accent);">{edu.major}</p>
-									<p class="text-sm" style="color: var(--ds-color-fg-subtle);">{edu.degree}</p>
-								</div>
-							</div>
-						))}
 					</div>
 				</div>
 			</section>
 
-			<!-- Work Experience -->
-			<section class="section ds-reveal">
-				<div class="section-header">
-					<h2 class="section-title">工作经历</h2>
-					<div class="section-line"></div>
+			<!-- ═══ Slide 4 — Meditation ═══ -->
+			<section class="slide" data-slide="4">
+				<div class="absolute inset-0">
+					<img src={coverImage} alt="冥想系列" class="w-full h-full object-cover" style="filter: brightness(0.6);" />
+					<div class="absolute inset-0 bg-gradient-overlay"></div>
 				</div>
-
-				<div class="card p-5 md:p-6">
-					<div class="space-y-0">
-						{WORK_EXPERIENCE.map(exp => (
-							<div class="timeline-item pb-6 last:pb-0">
-								<div class="text-sm font-medium mb-1" style="font-family: var(--ds-font-display); color: var(--ds-accent);">{exp.period}</div>
-								<div>
-									<h3 class="text-base font-medium mb-0.5" style="color: var(--ds-color-fg);">{exp.title}</h3>
-									{exp.department && exp.position && (
-										<p class="text-sm mb-1" style="color: var(--ds-accent);">{exp.department} · {exp.position}</p>
-									)}
-									<p class="text-sm leading-relaxed" style="color: var(--ds-color-fg-subtle);">{exp.description}</p>
-								</div>
-							</div>
-						))}
-					</div>
-				</div>
-			</section>
-
-			<!-- Honors -->
-			<section class="section ds-reveal">
-				<div class="section-header">
-					<h2 class="section-title">荣誉与成就</h2>
-					<div class="section-line"></div>
-				</div>
-
-				<div class="card p-5 md:p-6">
-					<div class="space-y-4">
-						{HONORS.map(honor => (
-							<div class="flex gap-4 p-3 rounded-lg" style="background: var(--ds-color-surface-overlay);">
-								<div class="flex-shrink-0 w-14 text-right">
-									<span class="text-sm font-medium" style="font-family: var(--ds-font-display); color: var(--ds-accent);">{honor.year}</span>
-								</div>
-								<div class="flex-1">
-									<h3 class="text-sm font-medium mb-0.5" style="color: var(--ds-color-fg);">{honor.title}</h3>
-									<p class="text-xs leading-relaxed" style="color: var(--ds-color-fg-subtle);">{honor.description}</p>
-								</div>
-							</div>
-						))}
-					</div>
-				</div>
-			</section>
-
-			<!-- Creative Practice -->
-			<section class="section ds-reveal">
-				<div class="section-header">
-					<h2 class="section-title">创作实践</h2>
-					<div class="section-line"></div>
-				</div>
-
-				<div class="card p-5 md:p-6">
-					<div class="space-y-0">
-						{EXPERIENCE.map(exp => (
-							<div class="timeline-item pb-6 last:pb-0">
-								<div class="text-sm font-medium mb-1" style="font-family: var(--ds-font-display); color: var(--ds-accent);">{exp.period}</div>
-								<div>
-									<h3 class="text-base font-medium mb-1" style="color: var(--ds-color-fg);">{exp.title}</h3>
-									<p class="text-sm leading-relaxed" style="color: var(--ds-color-fg-subtle);">{exp.description}</p>
-								</div>
-							</div>
-						))}
-					</div>
-				</div>
-			</section>
-
-			<!-- Projects -->
-			<section class="section ds-reveal">
-				<div class="section-header">
-					<h2 class="section-title">项目作品</h2>
-					<div class="section-line"></div>
-				</div>
-
-				<div class="grid md:grid-cols-2 gap-4 md:gap-5">
-					{PROJECTS.map(project => (
-						<article class="card p-5 group">
-							<div class="flex items-start justify-between gap-3 mb-3">
-								<h3 class="text-base font-medium transition-colors" style="font-family: var(--ds-font-display); color: var(--ds-color-fg);">
-									{project.title}
-								</h3>
-								<a
-									href={project.link}
-									target="_blank"
-									rel="noopener noreferrer"
-									class="flex-shrink-0 transition-colors"
-									style="color: var(--ds-color-muted);"
-								>
-									<Icon name="open_in_new" size={16} class="w-4 h-4" />
+				<div class="slide-inner relative z-10">
+					<div class="container-custom w-full">
+						<div class="grid md:grid-cols-2 gap-8 items-center">
+							<div>
+								<p class="eyebrow mb-3 anim-item" data-delay="0">Meditation Series</p>
+								<h2 class="text-display font-bold mb-5 anim-item" data-delay="1">冥想系列</h2>
+								<p class="text-body text-primary mb-6 anim-item" data-delay="2" style="max-width: 420px;">
+									冥想是一种改变意识的形式，是解剖自己内心的过程。在接下来的几年里我用自己的业余时间创作了这个系列，每一幅作品都聊到了我经历的不同阶段。
+								</p>
+								<a href="https://cgartlab.com/posts/meditation-series/" target="_blank" rel="noopener noreferrer" class="btn-primary anim-item" data-delay="3">
+									查看全部作品<Icon name="arrow_forward" size={16} class="w-4 h-4" />
 								</a>
 							</div>
-
-							<p class="text-sm leading-relaxed mb-4" style="color: var(--ds-color-fg-subtle);">{project.description}</p>
-
-							<div class="flex flex-wrap gap-2">
-								{project.tags.map(tag => (
-									<span class="tag text-xs">{tag}</span>
+							<div class="relative h-[350px] md:h-[450px] anim-item" data-delay="2">
+								{meditationImages.slice(0, 5).map((img, i) => (
+									<div
+										class="absolute w-44 md:w-52 overflow-hidden shadow-2xl transition-transform duration-700 hover:z-10 hover:scale-105"
+										style={`top: ${i * 15}%; left: ${i * 8}%; transform: rotate(${(i - 2) * 3}deg); z-index: ${5 - i};`}
+									>
+										<img src={img.src} alt={img.title} class="w-full h-36 md:h-44 object-cover" />
+									</div>
 								))}
 							</div>
-						</article>
-					))}
+						</div>
+					</div>
 				</div>
 			</section>
+
+			<!-- ═══ Slide 5 — Gallery ═══ -->
+			<section class="slide" data-slide="5">
+				<div class="slide-inner">
+					<div class="container-custom mb-6">
+						<p class="eyebrow anim-item" data-delay="0">Gallery</p>
+					</div>
+					<div class="overflow-hidden mb-1">
+						<div class="flex gap-1 anim-marquee-right">
+							{[...meditationImages, ...meditationImages].map((img) => (
+								<a href="https://cgartlab.com/posts/meditation-series/" target="_blank" rel="noopener noreferrer" class="gallery-item">
+									<img src={img.src} alt={img.title} class="gallery-img" />
+									<div class="gallery-overlay">
+										<span class="text-caption text-white">{img.title}</span>
+									</div>
+								</a>
+							))}
+						</div>
+					</div>
+					<div class="overflow-hidden">
+						<div class="flex gap-1 anim-marquee-left">
+							{[...meditationImages.reverse(), ...meditationImages].map((img) => (
+								<a href="https://cgartlab.com/posts/meditation-series/" target="_blank" rel="noopener noreferrer" class="gallery-item">
+									<img src={img.src} alt={img.title} class="gallery-img" />
+									<div class="gallery-overlay">
+										<span class="text-caption text-white">{img.title}</span>
+									</div>
+								</a>
+							))}
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- ═══ Slide 6 — Profile (merged) ═══ -->
+			<section class="slide" data-slide="6" id="profile">
+				<div class="slide-inner">
+					<div class="container-custom w-full">
+						<div class="grid lg:grid-cols-12 gap-8 lg:gap-12">
+							<!-- Left: About -->
+							<div class="lg:col-span-4">
+								<p class="eyebrow mb-4 anim-item" data-delay="0">About</p>
+								<h2 class="text-h2 font-semibold mb-5 anim-item" data-delay="1">
+									画画是画画的酬劳，写作是写作的回报。
+								</h2>
+								<p class="text-body text-secondary mb-3 anim-item" data-delay="2">
+									INFJ型人格，目前居住在云南昆明。倡导数据主权，坚持创作即认知的理念。
+								</p>
+								<p class="text-body text-secondary mb-6 anim-item" data-delay="3">
+									「数据主权」是我价值体系的核心。「创作即认知」——写作的根本目的在于梳理思维、认识自我。
+								</p>
+								<div class="pt-5 border-t border-subtle">
+									<p class="text-caption text-accent uppercase tracking-wider mb-3">Contact</p>
+									<div class="flex flex-wrap gap-2">
+										{SOCIAL_LINKS.slice(0, 4).map(link => (
+											<a href={link.url} target="_blank" rel="noopener noreferrer" class="social-link-sm" title={link.name}>
+												<Icon name={link.icon} size={14} class="w-3.5 h-3.5" fill />
+											</a>
+										))}
+									</div>
+								</div>
+							</div>
+							<!-- Right: Experience + Education + Honors + Creative -->
+							<div class="lg:col-span-8 space-y-8">
+								<!-- Work Experience -->
+								<section>
+									<h3 class="text-caption text-accent uppercase tracking-wider mb-4 anim-item" data-delay="1">工作经历</h3>
+									<div class="divide-y divide-subtle">
+										{WORK_EXPERIENCE.map((exp, i) => (
+											<div class="flex gap-4 py-3 anim-item" data-delay={i + 2}>
+												<span class="text-caption text-muted w-20 flex-shrink-0 pt-0.5">{exp.period}</span>
+												<div>
+													<h4 class="text-body font-medium text-primary">{exp.title}</h4>
+													<p class="text-small text-secondary mt-0.5">{exp.description}</p>
+												</div>
+											</div>
+										))}
+									</div>
+								</section>
+								<!-- Education -->
+								<section>
+									<h3 class="text-caption text-accent uppercase tracking-wider mb-4 anim-item" data-delay="1">教育经历</h3>
+									<div class="divide-y divide-subtle">
+										{EDUCATION.map((edu, i) => (
+											<div class="flex gap-4 py-3 anim-item" data-delay={i + 2}>
+												<span class="text-caption text-muted w-20 flex-shrink-0 pt-0.5">{edu.period}</span>
+												<div>
+													<h4 class="text-body font-medium text-primary">{edu.school}</h4>
+													<p class="text-small text-accent mt-0.5">{edu.major}</p>
+												</div>
+											</div>
+										))}
+									</div>
+								</section>
+								<!-- Honors -->
+								<section>
+									<h3 class="text-caption text-accent uppercase tracking-wider mb-4 anim-item" data-delay="1">Honors</h3>
+									<div class="grid md:grid-cols-2 gap-3">
+										{HONORS.slice(0, 4).map((honor, i) => (
+											<div class="p-4 bg-elevated anim-item" data-delay={i + 2}>
+												<span class="text-caption text-accent">{honor.year}</span>
+												<h4 class="text-small font-medium text-primary mt-1">{honor.title}</h4>
+											</div>
+										))}
+									</div>
+								</section>
+								<!-- Creative Practice -->
+								<section>
+									<h3 class="text-caption text-accent uppercase tracking-wider mb-4 anim-item" data-delay="1">Creative Practice</h3>
+									<div class="grid md:grid-cols-3 gap-px bg-border-subtle">
+										{EXPERIENCE.map((exp, i) => (
+											<div class="p-5 bg-base anim-item" data-delay={i + 2}>
+												<span class="text-caption text-accent">{exp.period}</span>
+												<h4 class="text-small font-medium text-primary mt-1 mb-2">{exp.title}</h4>
+												<p class="text-caption text-secondary">{exp.description}</p>
+											</div>
+										))}
+									</div>
+								</section>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- ═══ Slide 7 — Contact ═══ -->
+			<section class="slide" data-slide="7" id="contact">
+				<div class="slide-inner">
+					<div class="container-custom w-full text-center">
+						<p class="eyebrow mb-4 anim-item" data-delay="0">Get in Touch</p>
+						<h2 class="text-h1 font-semibold mb-5 anim-item" data-delay="1">
+							Let's work together
+						</h2>
+						<p class="text-body text-secondary mb-8 max-w-md mx-auto anim-item" data-delay="2">
+							如果你对我的作品感兴趣，或者有任何合作想法，欢迎随时联系我。
+						</p>
+						<div class="flex flex-wrap items-center justify-center gap-3 anim-item" data-delay="3">
+							<a href={`mailto:${PERSONAL_INFO.email}`} class="btn-primary"><Icon name="mail" size={16} class="w-4 h-4" />{PERSONAL_INFO.email}</a>
+							{SOCIAL_LINKS.slice(0, 4).map(link => (
+								<a href={link.url} target="_blank" rel="noopener noreferrer" class="social-link" title={link.name}>
+									<Icon name={link.icon} size={16} class="w-4 h-4" fill />
+								</a>
+							))}
+						</div>
+					</div>
+				</div>
+			</section>
+
 		</main>
+
+		<div id="slide-indicator" class="slide-indicator">
+			<div class="slide-indicator-bar" id="indicator-bar"></div>
+		</div>
+
 		<Footer />
 	</body>
 </html>
+
+<style>
+	/* ══════════════════════════════════════════════
+	   Design Tokens
+	   ══════════════════════════════════════════════ */
+	:root {
+		/* Colors */
+		--c-bg: #111;
+		--c-surface: #1a1a1a;
+		--c-elevated: #222;
+		--c-border: #222;
+		--c-border-subtle: #1e1e1e;
+		--c-text: #FAF9F6;
+		--c-text-secondary: #999;
+		--c-text-muted: #666;
+		--c-text-faint: #444;
+		--c-accent: var(--ds-accent, #8A8C6E);
+
+		/* Type scale */
+		--t-display: clamp(4rem, 16vw, 13rem);
+		--t-h1: clamp(2.5rem, 6vw, 4rem);
+		--t-h2: clamp(1.5rem, 3.5vw, 2.5rem);
+		--t-h3: clamp(1.125rem, 2vw, 1.375rem);
+		--t-body: 1rem;
+		--t-body-lg: 1.125rem;
+		--t-small: 0.875rem;
+		--t-caption: 0.75rem;
+
+		/* Spacing (4px base) */
+		--s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px;
+		--s-5: 20px; --s-6: 24px; --s-8: 32px; --s-10: 40px;
+		--s-12: 48px; --s-16: 64px;
+
+		/* Easing */
+		--ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+	}
+
+	/* ═══ Typography utility classes ═══ */
+	.text-display { font-size: var(--t-display); line-height: 0.85; letter-spacing: -0.06em; }
+	.text-h1 { font-size: var(--t-h1); line-height: 1.05; letter-spacing: -0.04em; }
+	.text-h2 { font-size: var(--t-h2); line-height: 1.15; letter-spacing: -0.03em; }
+	.text-h3 { font-size: var(--t-h3); line-height: 1.25; letter-spacing: -0.02em; }
+	.text-body { font-size: var(--t-body); line-height: 1.7; letter-spacing: 0; }
+	.text-body-lg { font-size: var(--t-body-lg); line-height: 1.7; letter-spacing: 0; }
+	.text-small { font-size: var(--t-small); line-height: 1.6; letter-spacing: 0; }
+	.text-caption { font-size: var(--t-caption); line-height: 1.5; letter-spacing: 0.08em; }
+
+	/* ═══ Color utility classes ═══ */
+	.text-primary { color: var(--c-text); }
+	.text-secondary { color: var(--c-text-secondary); }
+	.text-muted { color: var(--c-text-muted); }
+	.text-faint { color: var(--c-text-faint); }
+	.text-accent { color: var(--c-accent); }
+	.text-white { color: #fff; }
+
+	.bg-base { background: var(--c-bg); }
+	.bg-surface { background: var(--c-surface); }
+	.bg-elevated { background: var(--c-elevated); }
+	.bg-border-subtle { background: var(--c-border-subtle); }
+
+	.border-subtle { border-color: var(--c-border-subtle); }
+	.border-default { border-color: var(--c-border); }
+
+	/* ═══ Fixed elements ═══ */
+	.fixed-nav {
+		position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+		display: flex; align-items: center; justify-content: space-between;
+		padding: var(--s-5) var(--s-6); pointer-events: none;
+	}
+	.fixed-nav > * { pointer-events: auto; }
+	.fixed-logo {
+		font-family: var(--ds-font-display); font-size: var(--t-small); font-weight: 700;
+		color: var(--c-text); letter-spacing: -0.02em; text-decoration: none;
+	}
+	.fixed-nav-links { display: flex; gap: var(--s-5); }
+	.fixed-nav-link {
+		font-size: var(--t-caption); color: var(--c-text-muted); text-decoration: none;
+		text-transform: uppercase; letter-spacing: 0.12em; transition: color 0.3s;
+	}
+	.fixed-nav-link:hover { color: var(--c-text); }
+	.fixed-corner-tl { position: fixed; top: 0; left: 0; width: 60px; height: 60px; border-left: 1px solid var(--c-border); border-top: 1px solid var(--c-border); z-index: 150; pointer-events: none; }
+	.fixed-corner-br { position: fixed; bottom: 0; right: 0; z-index: 150; padding: var(--s-5) var(--s-6); }
+	.fixed-email { font-size: var(--t-caption); color: var(--c-text-muted); text-decoration: none; letter-spacing: 0.05em; transition: color 0.3s; }
+	.fixed-email:hover { color: var(--c-text); }
+
+	.dot-grid-canvas { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+
+	body { background: var(--c-bg); color: var(--c-text); }
+
+	/* ═══ Slideshow ═══ */
+	.slideshow {
+		height: 100vh; overflow-y: auto;
+		scroll-snap-type: y mandatory; scroll-behavior: smooth;
+		scrollbar-width: none;
+	}
+	.slideshow::-webkit-scrollbar { display: none; }
+	.slide {
+		position: relative; width: 100%; min-height: 100vh;
+		scroll-snap-align: start; scroll-snap-stop: always; overflow: hidden;
+	}
+	.slide-inner {
+		position: relative; z-index: 1;
+		display: flex; align-items: center;
+		width: 100%; min-height: 100vh; padding: var(--s-16) 0 var(--s-10);
+	}
+
+	/* ═══ Video ═══ */
+	.video-bg { pointer-events: none; filter: brightness(0.5); }
+	.bg-gradient-overlay { background: linear-gradient(135deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.7) 100%); }
+
+	/* ═══ Indicator ═══ */
+	.slide-indicator {
+		position: fixed; right: var(--s-5); top: 50%; transform: translateY(-50%);
+		width: 2px; height: 100px; background: rgba(255,255,255,0.06);
+		border-radius: 1px; z-index: 100; overflow: hidden;
+	}
+	.slide-indicator-bar {
+		width: 100%; height: 0%; background: var(--c-accent);
+		border-radius: 1px; transition: height 0.4s var(--ease-spring);
+	}
+
+	/* ═══ Scroll indicator ═══ */
+	.scroll-indicator { width: 20px; height: 32px; border: 1px solid var(--c-border); border-radius: 10px; display: flex; justify-content: center; padding-top: 6px; }
+	.scroll-indicator-dot { width: 4px; height: 8px; background: var(--c-text-muted); border-radius: 2px; animation: bounce 1.5s ease-in-out infinite; }
+
+	/* ═══ Eyebrow ═══ */
+	.eyebrow {
+		display: inline-block; font-family: var(--ds-font-mono);
+		font-size: var(--t-caption); text-transform: uppercase;
+		letter-spacing: 0.15em; font-weight: 500; color: var(--c-accent);
+	}
+
+	/* ═══ Buttons ═══ */
+	.btn-primary {
+		display: inline-flex; align-items: center; gap: var(--s-2);
+		padding: var(--s-3) var(--s-5); font-size: var(--t-small); font-weight: 500;
+		background: var(--c-text); color: var(--c-bg);
+		transition: transform 0.4s var(--ease-spring), background 0.3s;
+	}
+	.btn-primary:hover { background: #fff; transform: scale(1.05); }
+
+	.social-link {
+		display: flex; align-items: center; justify-content: center;
+		width: 40px; height: 40px; border: 1px solid var(--c-border); color: var(--c-text-secondary);
+		transition: all 0.3s var(--ease-spring);
+	}
+	.social-link:hover { border-color: var(--c-text); color: var(--c-text); transform: scale(1.1); }
+
+	.social-link-sm {
+		display: flex; align-items: center; justify-content: center;
+		width: 32px; height: 32px; border: 1px solid var(--c-border); color: var(--c-text-muted);
+		transition: all 0.3s var(--ease-spring);
+	}
+	.social-link-sm:hover { border-color: var(--c-text); color: var(--c-text); }
+
+	.tag {
+		display: inline-block; padding: 3px 10px; font-size: var(--t-caption);
+		background: rgba(255,255,255,0.06); color: var(--c-text-secondary); border: 1px solid var(--c-border);
+		transition: all 0.3s var(--ease-spring);
+	}
+	.tag:hover { background: rgba(255,255,255,0.1); color: var(--c-text); border-color: var(--c-text-muted); }
+
+	/* ═══ Stat numbers ═══ */
+	.stat-number {
+		font-size: clamp(4rem, 10vw, 7rem);
+		line-height: 0.85;
+		letter-spacing: -0.04em;
+		color: var(--c-text);
+	}
+
+	/* ═══ Gallery ═══ */
+	.gallery-item {
+		flex-shrink: 0; width: 192px; height: 192px; overflow: hidden; position: relative;
+	}
+	@media (min-width: 768px) { .gallery-item { width: 256px; height: 256px; } }
+	.gallery-img {
+		width: 100%; height: 100%; object-fit: cover;
+		transition: all 0.7s var(--ease-spring);
+	}
+	.gallery-item:hover .gallery-img { transform: scale(1.1); filter: brightness(1.1); }
+	.gallery-overlay {
+		position: absolute; inset: 0;
+		background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
+		opacity: 0; transition: opacity 0.5s; display: flex; align-items: flex-end; padding: var(--s-4);
+	}
+	.gallery-item:hover .gallery-overlay { opacity: 1; }
+
+	/* ═══ Animations ═══ */
+	.anim-item { opacity: 0; transform: translateY(32px); }
+	.slide.is-active .anim-item { animation: fadeUp 0.7s var(--ease-spring) forwards; }
+	.slide.is-active .anim-item[data-delay="0"] { animation-delay: 0.05s; }
+	.slide.is-active .anim-item[data-delay="1"] { animation-delay: 0.12s; }
+	.slide.is-active .anim-item[data-delay="2"] { animation-delay: 0.2s; }
+	.slide.is-active .anim-item[data-delay="3"] { animation-delay: 0.28s; }
+	.slide.is-active .anim-item[data-delay="4"] { animation-delay: 0.36s; }
+	.slide.is-active .anim-item[data-delay="5"] { animation-delay: 0.44s; }
+	.slide.is-active .anim-item[data-delay="6"] { animation-delay: 0.52s; }
+	.slide.is-active .anim-item[data-delay="7"] { animation-delay: 0.6s; }
+	.slide.is-active .anim-item[data-delay="8"] { animation-delay: 0.68s; }
+
+	@keyframes fadeUp {
+		from { opacity: 0; transform: translateY(32px); }
+		to { opacity: 1; transform: translateY(0); }
+	}
+
+	.anim-slide-right { opacity: 0; transform: translateX(60px); }
+	.slide.is-active .anim-slide-right { animation: slideFromRight 0.8s var(--ease-spring) forwards; }
+	.slide.is-active .anim-slide-right[data-delay="0"] { animation-delay: 0.1s; }
+	.slide.is-active .anim-slide-right[data-delay="1"] { animation-delay: 0.18s; }
+	.slide.is-active .anim-slide-right[data-delay="2"] { animation-delay: 0.26s; }
+	.slide.is-active .anim-slide-right[data-delay="3"] { animation-delay: 0.34s; }
+
+	@keyframes slideFromRight {
+		from { opacity: 0; transform: translateX(60px); }
+		to { opacity: 1; transform: translateX(0); }
+	}
+
+	@keyframes role-scroll {
+		0%, 18% { transform: translateY(0); }
+		22%, 43% { transform: translateY(-2rem); }
+		47%, 68% { transform: translateY(-4rem); }
+		72%, 93% { transform: translateY(-6rem); }
+		97%, 100% { transform: translateY(0); }
+	}
+	@media (min-width: 768px) {
+		@keyframes role-scroll {
+			0%, 18% { transform: translateY(0); }
+			22%, 43% { transform: translateY(-3rem); }
+			47%, 68% { transform: translateY(-6rem); }
+			72%, 93% { transform: translateY(-9rem); }
+			97%, 100% { transform: translateY(0); }
+		}
+	}
+	.anim-role-scroll { animation: role-scroll 12s ease-in-out infinite; }
+
+	@keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(4px); } }
+
+	@keyframes marquee-right { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+	@keyframes marquee-left { 0% { transform: translateX(-50%); } 100% { transform: translateX(0); } }
+	.anim-marquee-right { animation: marquee-right 50s linear infinite; }
+	.anim-marquee-left { animation: marquee-left 50s linear infinite; }
+
+	.cursor-dot {
+		position: fixed; width: 8px; height: 8px;
+		background: var(--ds-terracotta, #E05D4E);
+		border-radius: 50%; pointer-events: none; z-index: 9999;
+		mix-blend-mode: difference;
+		transition: transform 0.15s var(--ease-spring);
+		transform: translate(-50%, -50%);
+	}
+	.cursor-dot.is-hovering { transform: translate(-50%, -50%) scale(3); background: var(--c-accent); }
+
+	@media (prefers-reduced-motion: reduce) {
+		.slideshow { scroll-behavior: auto; scroll-snap-type: none; }
+		.slide.is-active .anim-item, .slide.is-active .anim-slide-right { opacity: 1; transform: none; animation: none; }
+		.anim-role-scroll, .anim-marquee-right, .anim-marquee-left { animation: none; }
+		.cursor-dot { display: none; }
+	}
+</style>
+
+<script>
+	// ═══ Dot grid ═══
+	(() => {
+		const canvas = document.getElementById('dot-grid');
+		if (!canvas || window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return;
+		const ctx = canvas.getContext('2d');
+		if (!ctx) return;
+		let w, h, cols, rows;
+		const spacing = 40;
+		let mouseX = -1000, mouseY = -1000;
+		const radius = 120;
+		const resize = () => { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; cols = Math.ceil(w / spacing) + 1; rows = Math.ceil(h / spacing) + 1; };
+		resize();
+		window.addEventListener('resize', resize);
+		document.addEventListener('mousemove', (e) => { mouseX = e.clientX; mouseY = e.clientY; });
+		const draw = () => {
+			ctx.clearRect(0, 0, w, h);
+			for (let i = 0; i < cols; i++) {
+				for (let j = 0; j < rows; j++) {
+					const x = i * spacing, y = j * spacing;
+					const dx = x - mouseX, dy = y - mouseY;
+					const dist = Math.sqrt(dx * dx + dy * dy);
+					if (dist < radius) {
+						const force = (1 - dist / radius) * 8;
+						const angle = Math.atan2(dy, dx);
+						const ox = Math.cos(angle) * force;
+						const oy = Math.sin(angle) * force;
+						const alpha = 0.08 + (1 - dist / radius) * 0.15;
+						const size = 1 + (1 - dist / radius) * 1.5;
+						ctx.beginPath(); ctx.arc(x + ox, y + oy, size, 0, Math.PI * 2);
+						ctx.fillStyle = `rgba(138, 140, 110, ${alpha})`; ctx.fill();
+					} else {
+						ctx.beginPath(); ctx.arc(x, y, 1, 0, Math.PI * 2);
+						ctx.fillStyle = 'rgba(255,255,255,0.04)'; ctx.fill();
+					}
+				}
+			}
+			requestAnimationFrame(draw);
+		};
+		draw();
+	})();
+
+	// ═══ Slide observer ═══
+	(() => {
+		const slideshow = document.getElementById('slideshow');
+		const slides = document.querySelectorAll('.slide');
+		const indicator = document.getElementById('indicator-bar');
+		if (!slideshow || !slides.length) return;
+		const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+		slides[0]?.classList.add('is-active');
+		if (reduce) { slides.forEach(s => s.classList.add('is-active')); return; }
+		const obs = new IntersectionObserver((entries) => {
+			entries.forEach(entry => {
+				if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
+					slides.forEach(s => { if (s !== entry.target) s.classList.remove('is-active'); });
+					entry.target.classList.add('is-active');
+					const idx = Array.from(slides).indexOf(entry.target);
+					const pct = ((idx + 1) / slides.length) * 100;
+					if (indicator) indicator.style.height = pct + '%';
+				}
+			});
+		}, { threshold: 0.5 });
+		slides.forEach(s => obs.observe(s));
+	})();
+
+	// ═══ Number counter ═══
+	(() => {
+		const nums = document.querySelectorAll('.stat-number');
+		if (!nums.length) return;
+		const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+		if (reduce) return;
+		const format = (n) => n.toLocaleString();
+		const observed = new Set();
+		const obs = new IntersectionObserver((entries) => {
+			entries.forEach(entry => {
+				if (entry.isIntersecting && !observed.has(entry.target)) {
+					observed.add(entry.target);
+					const el = entry.target;
+					const target = parseInt(el.dataset.target || '0');
+					const duration = 1500;
+					const start = performance.now();
+					const animate = (now) => {
+						const progress = Math.min((now - start) / duration, 1);
+						const eased = 1 - Math.pow(1 - progress, 3);
+						el.textContent = format(Math.floor(target * eased));
+						if (progress < 1) requestAnimationFrame(animate);
+						else el.textContent = format(target);
+					};
+					requestAnimationFrame(animate);
+				}
+			});
+		}, { threshold: 0.5 });
+		nums.forEach(n => obs.observe(n));
+	})();
+
+	// ═══ Smooth anchor ═══
+	document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+		anchor.addEventListener('click', (e) => {
+			e.preventDefault();
+			const id = anchor.getAttribute('href');
+			if (!id) return;
+			const target = document.querySelector(id);
+			if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+		});
+	});
+
+	// ═══ Cursor ═══
+	(() => {
+		const dot = document.getElementById('cursor-dot');
+		if (!dot || window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return;
+		let mx = 0, my = 0, dx = 0, dy = 0;
+		document.addEventListener('mousemove', (e) => { mx = e.clientX; my = e.clientY; });
+		const hoverEls = document.querySelectorAll('a, button, .group, [data-hover]');
+		hoverEls.forEach(el => {
+			el.addEventListener('mouseenter', () => dot.classList.add('is-hovering'));
+			el.addEventListener('mouseleave', () => dot.classList.remove('is-hovering'));
+		});
+		const tick = () => {
+			dx += (mx - dx) * 0.12;
+			dy += (my - dy) * 0.12;
+			dot.style.left = dx + 'px';
+			dot.style.top = dy + 'px';
+			requestAnimationFrame(tick);
+		};
+		tick();
+	})();
+</script>
