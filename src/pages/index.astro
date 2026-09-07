@@ -51,7 +51,7 @@ const meditationImages = [
 				<div class="slide-content center">
 					<div class="hero">
 						<h1 class="hero-name anim scale" data-d="0">CHEN<br>YANG</h1>
-						<p class="hero-role anim up" data-d="1">A Designer, Writer, Engineer.</p>
+						<p class="hero-role anim up" data-d="1">A <span class="rwd" style="--ri:0"><span class="inner">Designer</span></span>, <span class="rwd" style="--ri:1"><span class="inner">Writer</span></span>, <span class="rwd" style="--ri:2"><span class="inner">Engineer</span></span>.</p>
 						<p class="hero-tags anim blur" data-d="2">动态视觉设计师 · 内容创作者 · 产品工程师</p>
 						<a href="#work" class="btn anim" data-d="3">探索作品 <Icon name="arrow_downward" size={16} class="w-4 h-4" /></a>
 					</div>
@@ -381,16 +381,46 @@ a, button { cursor: none; }
 .center { text-align: center; }
 
 /* ═══ Hero ═══ */
-.hero { max-width: 900px; }
+.hero { max-width: 1000px; }
 .hero-name {
 	font-size: clamp(5rem, 18vw, 16rem);
 	line-height: 0.92;
-	letter-spacing: -0.06em;
+	letter-spacing: -0.05em;
 	font-weight: 700;
-	margin-bottom: 1rem;
+	margin-bottom: 1.5rem;
 }
-.hero-role { font-size: clamp(1.125rem, 2.5vw, 1.75rem); color: var(--text-3); letter-spacing: -0.02em; margin-bottom: 0.75rem; }
-.hero-tags { font-size: 0.875rem; color: var(--text-4); letter-spacing: 0.02em; margin-bottom: 2rem; }
+.hero-role {
+	font-size: clamp(1.5rem, 4vw, 2.75rem);
+	color: var(--text-2);
+	letter-spacing: -0.03em;
+	font-weight: 300;
+	margin-bottom: 1.5rem;
+}
+.hero-role .rwd {
+	display: inline-block;
+	overflow: hidden;
+	vertical-align: bottom;
+}
+.hero-role .rwd .inner {
+	display: inline-block;
+	transform: translateY(110%);
+	transition: transform 0.7s var(--spring);
+}
+.slide.is-active .hero-role .rwd .inner {
+	transform: translateY(0);
+	transition-delay: calc(0.4s + var(--ri, 0) * 0.08s);
+}
+.hero-tags {
+	display: inline-flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 0.75rem 1.5rem;
+	font-size: 0.9375rem;
+	color: var(--text-3);
+	letter-spacing: 0.04em;
+	margin-bottom: 2.5rem;
+}
+.hero-tags .sep { color: var(--accent); }
 
 /* ═══ Stats ═══ */
 .stats { width: 100%; max-width: 800px; display: flex; flex-direction: column; gap: 0; }
