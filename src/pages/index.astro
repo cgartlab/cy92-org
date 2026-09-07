@@ -932,10 +932,10 @@ try { (() => {
 		requestAnimationFrame(draw);
 	};
 	draw();
-})();
+})(); catch(e) { console.warn("[1]", e.message); }
 
 // ═══ Slide observer ═══
-(() => {
+try { (() => {
 	const sl = document.getElementById('slideshow');
 	const ss = document.querySelectorAll('.slide');
 	const ib = document.getElementById('indicator-bar');
@@ -957,10 +957,10 @@ try { (() => {
 		});
 	}, { threshold: 0.5 });
 	ss.forEach(s => o.observe(s));
-})();
+})(); catch(e) { console.warn("[2]", e.message); }
 
 // ═══ Number counter animation ═══
-(() => {
+try { (() => {
 	const els = document.querySelectorAll('.stat-value[data-target]');
 	if (!els.length) return;
 	const reduce = matchMedia?.('(prefers-reduced-motion: reduce)').matches;
@@ -990,10 +990,10 @@ try { (() => {
 		});
 	}, { threshold: 0.4 });
 	els.forEach(el => obs.observe(el));
-})();
+})(); catch(e) { console.warn("[3]", e.message); }
 
 // ═══ Gallery 3D tilt ═══
-(() => {
+try { (() => {
 	const cards = document.querySelectorAll('.gcard');
 	if (!cards.length || matchMedia?.('(prefers-reduced-motion: reduce)').matches) return;
 	cards.forEach(card => {
@@ -1009,7 +1009,7 @@ try { (() => {
 			card.classList.remove('tilting');
 		});
 	});
-})();
+})(); catch(e) { console.warn("[4]", e.message); }
 
 // ═══ Smooth anchor ═══
 document.querySelectorAll('a[href^="#"]').forEach(a => {
@@ -1017,7 +1017,7 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 });
 
 // ═══ Ring cursor ═══
-(() => {
+try { (() => {
 	const ring = document.getElementById('ring-cursor');
 	if (!ring || matchMedia?.('(prefers-reduced-motion: reduce)').matches) return;
 	let mx = 0, my = 0, dx = 0, dy = 0;
