@@ -50,12 +50,12 @@ const meditationImages = [
 				<canvas id="seaweed" class="canvas-full"></canvas>
 				<div class="slide-content center">
 					<div class="hero">
-						<h1 class="hero-name anim" data-d="0">CHEN<br>YANG</h1>
+						<h1 class="hero-name anim scale" data-d="0">CHEN<br>YANG</h1>
 						<div class="hero-subline anim up" data-d="1">
 							<p class="hero-role">A <span class="rwd" style="--ri:0"><span class="inner">Designer</span></span>, <span class="rwd" style="--ri:1"><span class="inner">Writer</span></span>, <span class="rwd" style="--ri:2"><span class="inner">Engineer</span></span>.</p>
 						</div>
 						<div class="hero-divider"></div>
-						<p class="hero-tags anim" data-d="2">动态视觉设计师<span class="sep"> · </span>内容创作者<span class="sep"> · </span>产品工程师</p>
+						<p class="hero-tags anim blur" data-d="2">动态视觉设计师<span class="sep"> · </span>内容创作者<span class="sep"> · </span>产品工程师</p>
 						<a href="#work" class="btn anim" data-d="3">探索作品 <Icon name="arrow_downward" size={16} class="w-4 h-4" /></a>
 					</div>
 				</div>
@@ -599,6 +599,7 @@ a, button { cursor: none; }
 .anim.mask { clip-path: inset(0 0 100% 0); }
 
 /* Animate when slide becomes active */
+.slide.is-active .anim { animation: fadeUp 0.7s var(--spring) forwards; }
 .slide.is-active .anim.up { animation: fadeUp 0.7s var(--spring) forwards; }
 .slide.is-active .anim.left { animation: fadeLeft 0.7s var(--spring) forwards; }
 .slide.is-active .anim.right { animation: fadeRight 0.7s var(--spring) forwards; }
