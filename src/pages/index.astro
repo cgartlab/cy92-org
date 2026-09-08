@@ -2,7 +2,7 @@
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Icon from '../components/Icon.astro';
-import { SITE_TITLE, PERSONAL_INFO, SKILLS, EXPERIENCE, STATS, SOCIAL_LINKS, HONORS, WORK_EXPERIENCE, EDUCATION } from '../consts';
+import { SITE_TITLE, PERSONAL_INFO, SKILLS, EXPERIENCE, SOCIAL_LINKS, HONORS, WORK_EXPERIENCE, EDUCATION } from '../consts';
 
 const coverImage = '/images/冥想系列-cover.webp';
 const currentYear = new Date().getFullYear();
@@ -82,7 +82,7 @@ const meditationImages = [
 						</div>
 						<div class="stat anim right" data-d="3">
 							<span class="stat-label">跨领域专业项目</span>
-							<span class="stat-value" data-target="50">50</span>
+							<span class="stat-value" data-target="50" data-suffix="+">50+</span>
 							<span class="stat-unit">个</span>
 						</div>
 					</div>
@@ -121,7 +121,9 @@ const meditationImages = [
 
 			<!-- ═══ Slide 3 — Featured Work (video bg +70%, light text) ═══ -->
 			<section class="slide" data-slide="3" id="work">
-				<div class="video-overlay" style="filter:brightness(0.7)"></div>
+				<video autoplay muted loop playsinline class="video-fixed" style="filter:brightness(0.7)">
+					<source src="/video/demo.mp4" type="video/mp4" />
+				</video>
 				<div class="slide-content">
 					<div class="work">
 						<p class="label anim left" data-d="0">Featured Work</p>
@@ -369,7 +371,6 @@ a, button { cursor: none; }
 /* ═══ Canvas / Video ═══ */
 .canvas-full { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
 .video-fixed { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none; z-index: 0; }
-.video-overlay { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none; z-index: 0; background: var(--bg); }
 .img-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
 
 /* ═══ Slideshow ═══ */
@@ -379,7 +380,7 @@ a, button { cursor: none; }
 .dark { background: var(--bg); }
 .slide-content { position: relative; z-index: 1; display: flex; align-items: center; width: 100%; min-height: 100vh; padding: 5rem 1.5rem; }
 .slide-content.center { justify-content: center; }
-.slide-content.scroll-y { align-items: flex-start; overflow-y: auto; }
+.slide-content.scroll-y { align-items: flex-start; overflow-y: auto; max-height: 100vh; }
 @media (min-width: 768px) { .slide-content { padding: 5rem 3rem; } }
 
 .center { text-align: center; }
@@ -962,8 +963,8 @@ try { (() => {
 				seen.add(entry.target);
 				const el = entry.target;
 				const target = parseInt(el.dataset.target || '0', 10) || 0;
-				// Keep the '+' suffix if original text had it
-				const suffix = el.textContent.includes('+') ? '+' : '';
+				// Use data-suffix if present, else detect '+' in original text
+				const suffix = el.dataset.suffix || (el.textContent.includes('+') ? '+' : '');
 				const dur = 1800;
 				const start = performance.now();
 				const tick = now => {
