@@ -55,6 +55,8 @@ const meditationImages = [
 			     changes, so no hard edge ever appears between backgrounds -->
 			<canvas id="grad" class="scene-layer" aria-hidden="true"></canvas>
 			<canvas id="aurora" class="scene-layer" aria-hidden="true"></canvas>
+			<!-- Shared silver-gray gradient scene for About & Contact (seamless) -->
+			<div id="silver" class="scene-layer silver-scene" aria-hidden="true"></div>
 
 			<!-- ═══ Slide 0 — Hero (Seaweed particles) ═══ -->
 			<section class="slide dark" data-slide="0">
@@ -193,28 +195,8 @@ const meditationImages = [
 				</div>
 			</section>
 
-			<!-- ═══ Slide 5 — Gallery 3D ═══ -->
-			<section class="slide dark" data-slide="5">
-				<div class="slide-content center">
-					<div class="gallery-wrap">
-						<p class="label anim up" data-d="0" style="text-align:center">Gallery</p>
-						<div class="gallery-3d">
-							{meditationImages.map((img, i) => (
-								<div class="gcard anim up" data-d={i % 5} style={`--i:${i}`}>
-									<img src={img.src} alt={img.title} width="220" height="280" loading="lazy" decoding="async" class="gcard-img" />
-									<div class="gcard-info">
-										<h3 class="gcard-title">{img.title}</h3>
-										<p class="gcard-desc">{img.desc}</p>
-									</div>
-								</div>
-							))}
-						</div>
-					</div>
-				</div>
-			</section>
-
-			<!-- ═══ Slide 6 — Profile (mobile optimized) ═══ -->
-			<section class="slide dark" data-slide="6" id="profile">
+			<!-- ═══ Slide 6 → now 5 — Profile (About) ═══ -->
+			<section class="slide dark" data-slide="5" id="profile">
 				<div class="slide-content scroll-y">
 					<div class="profile">
 						<div class="profile-left">
@@ -287,7 +269,7 @@ const meditationImages = [
 			</section>
 
 			<!-- ═══ Slide 7 — Contact (wave particles) ═══ -->
-			<section class="slide dark" data-slide="7" id="contact">
+			<section class="slide dark" data-slide="6" id="contact">
 				<canvas id="waves" class="canvas-full"></canvas>
 				<div class="slide-content center">
 					<div class="contact">
@@ -401,6 +383,9 @@ body { background: var(--bg); color: var(--text); font-family: var(--ds-font-bod
 .reel { position: fixed; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; pointer-events: none; opacity: 0; transition: opacity 0.9s ease; }
 /* Fixed full-viewport scene layers — crossfade opacity on page change (no seams) */
 .scene-layer { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; opacity: 0; transition: opacity 0.9s ease; display: block; }
+.silver-scene { background: radial-gradient(120% 90% at 18% 8%, rgba(214,219,210,0.20) 0%, rgba(214,219,210,0.06) 34%, transparent 62%), linear-gradient(160deg, #17181d 0%, #23252c 42%, #101116 100%); }
+/* About (5) & Contact (6) reveal the shared silver scene instead of flat .dark */
+[data-slide="5"], [data-slide="6"] { background: transparent !important; }
 /* Slide 1 reveals fixed scene layers instead of an opaque .dark background */
 [data-slide="1"] { background: transparent !important; }
 
@@ -447,7 +432,7 @@ body { background: var(--bg); color: var(--text); font-family: var(--ds-font-bod
 .slide.dark::before { background: linear-gradient(to bottom, rgba(10,10,10,0.4) 0%, transparent 15%, transparent 85%, rgba(10,10,10,0.6) 100%); }
 /* Top fade for slides after 0 — blend from previous */
 /* Top fade for slides after 0 — blend from previous, but not too dark */
-[data-slide="1"]::after, [data-slide="2"]::after, [data-slide="3"]::after, [data-slide="4"]::after, [data-slide="5"]::after, [data-slide="6"]::after, [data-slide="7"]::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 15%; z-index: 0; pointer-events: none; background: linear-gradient(to bottom, rgba(10,10,10,0.5) 0%, transparent 100%); }
+[data-slide]:not([data-slide="0"])::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 15%; z-index: 0; pointer-events: none; background: linear-gradient(to bottom, rgba(10,10,10,0.5) 0%, transparent 100%); }
 .dark { background: var(--bg); }
 .slide-content { position: relative; z-index: 1; display: flex; align-items: center; width: 100%; min-height: 100dvh; padding: 5rem 1.5rem; }
 .slide-content.center { justify-content: center; }
@@ -718,6 +703,18 @@ body { background: var(--bg); color: var(--text); font-family: var(--ds-font-bod
 .practice-period { font-size: 0.75rem; color: var(--accent); }
 .practice-title { font-size: 0.875rem; font-weight: 500; color: var(--text); margin: 0.25rem 0 0.5rem; }
 .practice-desc { font-size: 0.75rem; color: var(--text-3); line-height: 1.6; }
+
+/* ═══ About (page 5) — re-laid out editorial over the shared silver scene ═══ */
+[data-slide="5"] .slide-content::before, [data-slide="6"] .slide-content::before { content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+[data-slide="5"] .slide-content::before { background: linear-gradient(180deg, rgba(8,9,11,0.95) 0%, rgba(8,9,11,0.42) 12%, rgba(8,9,11,0.42) 88%, rgba(8,9,11,0.95) 100%); }
+[data-slide="6"] .slide-content::before { background: radial-gradient(ellipse 80% 66% at 50% 44%, rgba(8,9,11,0.55) 0%, rgba(8,9,11,0.2) 60%, transparent 100%); }
+[data-slide="5"] .profile, [data-slide="6"] .contact { position: relative; z-index: 1; }
+[data-slide="5"] .slide-content.scroll-y { padding: 7rem 1.5rem 5rem; }
+@media (min-width: 1024px) { [data-slide="5"] .profile { grid-template-columns: 5fr 7fr; gap: clamp(2.5rem, 5vw, 4.5rem); } }
+[data-slide="5"] .profile-left .heading-lg { letter-spacing: -0.03em; margin: 0.75rem 0 1.25rem; max-width: 22ch; }
+[data-slide="5"] .psection > .label-sm { display: inline-flex; align-items: center; gap: 0.75rem; }
+[data-slide="5"] .psection > .label-sm::after { content: ''; width: 42px; height: 1px; background: var(--border); }
+[data-slide="5"] .profile-contact { display: grid; gap: 1.1rem; margin-top: 2.5rem; padding-top: 1.75rem; }
 
 /* ═══ Contact ═══ */
 .contact { max-width: 500px; }
@@ -1258,95 +1255,70 @@ try { (() => {
 	if (!c) return;
 	const ctx = c.getContext('2d');
 	if (!ctx) return;
-	let w, h;
-	const particles = [];
-	const N = 180;
-	let cx, cy;
-
-	const resize = () => { w = c.width = innerWidth; h = c.height = innerHeight; cx = w/2; cy = h/2; };
+	let w, h, cx, cy, maxR;
+	const PAL = ['202,205,196', '138,140,110', '214,219,210']; // silver / olive / bright-silver
+	const dots = [];
+	const N = 64;
+	const resize = () => {
+		w = c.width = innerWidth; h = c.height = innerHeight;
+		cx = w / 2; cy = h / 2; maxR = Math.hypot(w, h) / 1.4;
+	};
 	resize();
 	addEventListener('resize', resize);
-
+	// Center-origin dots that expand outward forever (respawn at center)
 	for (let i = 0; i < N; i++) {
-		const angle = (i / N) * Math.PI * 2;
-		const r = 60 + Math.random() * 220;
-		particles.push({
-			bA: angle, bR: r,
-			x: cx + Math.cos(angle) * r,
-			y: cy + Math.sin(angle) * r,
-			speed: 0.002 + Math.random() * 0.004,
-			r: 0.8 + Math.random() * 2.2,
-			alpha: 0.08 + Math.random() * 0.35,
-			twinkle: Math.random() * Math.PI * 2
+		dots.push({
+			a: Math.random() * Math.PI * 2,
+			r: 6 + Math.random() * 90,
+			sp: (0.7 + Math.random() * 1.4) * Math.max(0.5, w / 1600),
+			s: 0.8 + Math.random() * 1.8,
+			c: PAL[i % 3],
+			al: 0.10 + Math.random() * 0.16,
+			ph: Math.random() * 6.283,
 		});
 	}
+	// Expanding rings that grow across the ENTIRE background
+	const RINGS = 6, RING_DUR = 5.5;
+	const rings = [];
+	for (let k = 0; k < RINGS; k++) rings.push({ o: (k / RINGS) * RING_DUR, dur: RING_DUR + Math.random() * 1.5, c: PAL[k % 3] });
 
-	let time = 0;
+	let t = 0;
 	let visible = true;
-	const obs = new IntersectionObserver(es => { es.forEach(e => { visible = e.isIntersecting; }); }, { threshold: 0.1 });
+	const obs = new IntersectionObserver(es => { es.forEach(e => { visible = e.isIntersecting; }); }, { threshold: 0.08 });
 	obs.observe(c);
 	const draw = () => {
-		if (!visible) { requestAnimationFrame(draw); return; }
+		requestAnimationFrame(draw);
+		if (!visible) return;
 		ctx.clearRect(0, 0, w, h);
-		time += 0.016;
-
-		// Center glow
-		const pulse = 1 + Math.sin(time) * 0.08;
-		const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, 320 * pulse);
-		grad.addColorStop(0, 'rgba(138,140,110,0.07)');
-		grad.addColorStop(1, 'rgba(138,140,110,0)');
-		ctx.fillStyle = grad;
-		ctx.fillRect(0, 0, w, h);
-
-		// Wave rings
-		for (let ring = 0; ring < 6; ring++) {
-			const ringR = ((time * 45 + ring * 70) % 360) * pulse;
-			ctx.beginPath();
-			ctx.arc(cx, cy, ringR, 0, 6.28);
-			ctx.strokeStyle = 'rgba(138,140,110,' + ((1 - ringR / 360) * 0.09) + ')';
-			ctx.lineWidth = 1.2;
+		t += 0.016;
+		// transparent additive glow melts into the silver base gradient beneath
+		ctx.globalCompositeOperation = 'lighter';
+		// Expanding rings across the full viewport
+		for (let k = 0; k < rings.length; k++) {
+			const rk = rings[k];
+			const tt = (t + rk.o) % rk.dur;
+			const pr = tt / rk.dur;
+			const rr = 8 + pr * maxR * 0.97;
+			const fade = Math.sin(pr * Math.PI); // soft rise + fall — no jump at loop
+			ctx.beginPath(); ctx.arc(cx, cy, rr, 0, 6.283);
+			ctx.strokeStyle = 'rgba(' + rk.c + ',' + (0.05 + 0.14 * fade).toFixed(3) + ')';
+			ctx.lineWidth = 1 + (1 - fade) * 2.2;
 			ctx.stroke();
 		}
-
-		// Update particle positions + draw particles
+		// Infinite expanding particles from the center
 		for (let i = 0; i < N; i++) {
-			const p = particles[i];
-			const angle = p.bA + time * p.speed;
-			const r = p.bR + Math.sin(time * 2 + p.bA) * 18;
-			p.x = cx + Math.cos(angle) * r;
-			p.y = cy + Math.sin(angle) * r;
-			const tw = 0.5 + Math.sin(time * 3 + p.twinkle) * 0.5;
-			ctx.beginPath();
-			ctx.arc(p.x, p.y, p.r, 0, 6.28);
-			ctx.fillStyle = 'rgba(138,140,110,' + (p.alpha * (0.4 + tw * 0.6)) + ')';
+			const d = dots[i];
+			d.r += d.sp;
+			if (d.r > maxR + 60) { d.r = 10 + Math.random() * 50; d.a = Math.random() * 6.283; }
+			const x = cx + Math.cos(d.a) * d.r;
+			const y = cy + Math.sin(d.a) * d.r;
+			const fade = d.r < 40 ? d.r / 40 : 1 - Math.min(1, (d.r - 40) / (maxR - 40));
+			const shimmer = 0.7 + 0.3 * Math.sin(t * 0.8 + d.ph);
+			ctx.beginPath(); ctx.arc(x, y, d.s, 0, 6.283);
+			ctx.fillStyle = 'rgba(' + d.c + ',' + (d.al * fade * shimmer).toFixed(3) + ')';
 			ctx.fill();
 		}
-
-		// Batch ALL connection lines into ONE path, ONE stroke
-		// This reduces GPU draw calls from ~60,000 to 1
-		const CONN_DIST2 = 70 * 70; // squared threshold
-		ctx.beginPath();
-		let hasConn = false;
-		for (let i = 0; i < N; i++) {
-			const pi = particles[i];
-			for (let j = i + 1; j < N; j++) {
-				const pj = particles[j];
-				const dx = pi.x - pj.x, dy = pi.y - pj.y;
-				const d2 = dx * dx + dy * dy;
-				if (d2 < CONN_DIST2) {
-					ctx.moveTo(pi.x, pi.y);
-					ctx.lineTo(pj.x, pj.y);
-					hasConn = true;
-				}
-			}
-		}
-		if (hasConn) {
-			ctx.strokeStyle = 'rgba(138,140,110,0.06)';
-			ctx.lineWidth = 0.5;
-			ctx.stroke();
-		}
-
-		requestAnimationFrame(draw);
+		ctx.globalCompositeOperation = 'source-over';
 	};
 	draw();
 })(); } catch(e) { console.warn('[wave]', e.message); }
@@ -1477,6 +1449,7 @@ try { (() => {
 	const edgeMask = document.getElementById('edge-mask');
 	const grad = document.getElementById('grad');
 	const rainCv = document.getElementById('aurora');
+	const silver = document.getElementById('silver');
 	if (!sl || !ss.length) return;
 	const r = matchMedia?.('(prefers-reduced-motion: reduce)').matches;
 	if (r) { ss.forEach(s => s.classList.add('is-active')); return; }
@@ -1507,6 +1480,7 @@ try { (() => {
 		if (edgeMask) edgeMask.style.opacity = (cur === 2 || cur === 3) ? '1' : '0';
 		if (grad) grad.style.opacity = (cur === 1) ? '1' : '0';
 		if (rainCv) rainCv.style.opacity = (cur === 1) ? '1' : '0';
+		if (silver) silver.style.opacity = (cur === 5 || cur === 6) ? '1' : '0';
 	};
 	const onScroll = () => { if (!raf) raf = requestAnimationFrame(apply); };
 	sl.addEventListener('scroll', onScroll, { passive: true });
