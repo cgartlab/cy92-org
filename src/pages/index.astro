@@ -1469,10 +1469,12 @@ try { (() => {
 })(); } catch(e) { console.warn('[pg3]', e.message); }
 
 
-// ═══ Slide observer ═══
+// ═══ Slide observer — active page = the slide under the deck's vertical center.
+// (IntersectionRatio>0.5 broke for the tall meditation deck: a 11-stop slide only
+// ever shows ~9% of its height, so it could never become active.) ═══
 try { (() => {
 	const sl = document.getElementById('slideshow');
-	const ss = document.querySelectorAll('.slide');
+	const ss = Array.from(document.querySelectorAll('.slide'));
 	const ib = document.getElementById('indicator-bar');
 	const header = document.getElementById('header');
 	const reel = document.getElementById('reel');
@@ -1481,27 +1483,40 @@ try { (() => {
 	const rainCv = document.getElementById('aurora');
 	if (!sl || !ss.length) return;
 	const r = matchMedia?.('(prefers-reduced-motion: reduce)').matches;
-	ss[0]?.classList.add('is-active');
 	if (r) { ss.forEach(s => s.classList.add('is-active')); return; }
-	const o = new IntersectionObserver(es => {
-		es.forEach(e => {
-			if (e.isIntersecting && e.intersectionRatio > 0.5) {
-				ss.forEach(s => { if (s !== e.target) s.classList.remove('is-active'); });
-				e.target.classList.add('is-active');
-				const i = Array.from(ss).indexOf(e.target);
-				if (ib) ib.style.transform = 'scaleY(' + ((i + 1) / ss.length) + ')';
-				// Header scroll state
-				if (header) header.classList.toggle('scrolled', i > 0);
-				// Pages 3 & 4 (index 2,3): shared video un-dimmed; fixed edge mask on
-				// Scene layers crossfade → backgrounds morph, never butt at a seam
-				if (reel) { reel.style.opacity = (i === 2 || i === 3) ? '1' : '0'; reel.style.filter = (i === 2 || i === 3) ? 'brightness(1)' : ''; }
-				if (edgeMask) edgeMask.style.opacity = (i === 2 || i === 3) ? '1' : '0';
-				if (grad) grad.style.opacity = (i === 1) ? '1' : '0';
-				if (rainCv) rainCv.style.opacity = (i === 1) ? '1' : '0';
-			}
-		});
-	}, { threshold: 0.5 });
-	ss.forEach(s => o.observe(s));
+
+	let curIdx = -1, raf = 0;
+	const tops = [], heights = [];
+	const measure = () => {
+		for (let k = 0; k < ss.length; k++) {
+			tops[k] = ss[k].getBoundingClientRect().top + sl.scrollTop;
+			heights[k] = ss[k].offsetHeight;
+		}
+	};
+	const apply = () => {
+		raf = 0;
+		measure();
+		const center = sl.scrollTop + sl.clientHeight / 2;
+		let cur = ss.length - 1;
+		for (let k = 0; k < ss.length; k++) {
+			if (center >= tops[k] && center < tops[k] + heights[k]) { cur = k; break; }
+		}
+		if (cur === curIdx) return;
+		curIdx = cur;
+		ss.forEach((s, k) => s.classList.toggle('is-active', k === cur));
+		if (ib) ib.style.transform = 'scaleY(' + ((cur + 1) / ss.length) + ')';
+		if (header) header.classList.toggle('scrolled', cur > 0);
+		if (reel) { reel.style.opacity = (cur === 2 || cur === 3) ? '1' : '0'; reel.style.filter = (cur === 2 || cur === 3) ? 'brightness(1)' : ''; }
+		if (edgeMask) edgeMask.style.opacity = (cur === 2 || cur === 3) ? '1' : '0';
+		if (grad) grad.style.opacity = (cur === 1) ? '1' : '0';
+		if (rainCv) rainCv.style.opacity = (cur === 1) ? '1' : '0';
+	};
+	const onScroll = () => { if (!raf) raf = requestAnimationFrame(apply); };
+	sl.addEventListener('scroll', onScroll, { passive: true });
+	window.addEventListener('resize', onScroll, { passive: true });
+	window.addEventListener('load', onScroll);
+	ss[0]?.classList.add('is-active');
+	apply();
 })(); } catch(e) { console.warn("[2]", e.message); }
 
 // ═══ Number counter animation ═══
