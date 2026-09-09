@@ -172,7 +172,6 @@ const meditationImages = [
 							<span class="mdeck-index">{(i + 1).toString().padStart(2, '0')}<em> / {meditationImages.length}</em></span>
 							<div class="mdeck-hover">
 								<div class="mdeck-card">
-									<span class="mdeck-no">No.{(i + 1).toString().padStart(2, '0')}</span>
 									<h3 class="mdeck-title">{img.title}</h3>
 									<p class="mdeck-desc">{img.desc}</p>
 								</div>
@@ -614,17 +613,14 @@ body { background: var(--bg); color: var(--text); font-family: var(--ds-font-bod
 }
 .mdeck-item.cur .mdeck-img { transform: scale(1); }
 .mdeck-item:hover .mdeck-img { filter: brightness(0.75); }
-/* always-visible index — FIXED to the center of the page */
+/* always-visible index — small, fixed top-right of the artwork */
 .mdeck-index {
-	position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
-	display: inline-flex; align-items: baseline; gap: 0.35em;
-	font-size: clamp(2.4rem, 7vw, 5.5rem); font-weight: 200; letter-spacing: 0.02em;
-	color: rgba(250,249,246,0.9); font-variant-numeric: tabular-nums;
-	text-shadow: 0 2px 20px rgba(0,0,0,0.55);
-	z-index: 1; pointer-events: none;
+	position: absolute; top: max(4.5rem, env(safe-area-inset-top)); right: 1.25rem;
+	font-size: 0.55rem; letter-spacing: 0.14em; color: var(--text-3);
+	font-variant-numeric: tabular-nums; text-shadow: 0 1px 6px rgba(0,0,0,0.8);
+	z-index: 2; pointer-events: none;
 }
-.mdeck-index em { font-style: normal; font-size: 0.4em; color: var(--text-3); margin-left: 0.3em; }
-.mdeck-item:hover .mdeck-index, .mdeck-item:focus-within .mdeck-index { opacity: 0.22; }
+.mdeck-index em { font-style: normal; font-size: 0.9em; color: var(--text-4); margin-left: 0.5em; }
 /* hover: intro text anchors BOTTOM-LEFT, plain text (no card) */
 .mdeck-hover {
 	position: absolute; left: clamp(1.5rem, 6vw, 4rem); top: auto; right: auto;
@@ -634,7 +630,6 @@ body { background: var(--bg); color: var(--text); font-family: var(--ds-font-bod
 	transition: opacity 0.5s ease, transform 0.6s var(--spring);
 }
 .mdeck-card { background: none; border: 0; backdrop-filter: none; padding: 0; text-align: left; transform: none; }
-.mdeck-no { display: block; font-size: 0.7rem; letter-spacing: 0.32em; color: var(--accent); margin-bottom: 0.5rem; text-shadow: 0 1px 10px rgba(0,0,0,0.9); }
 .mdeck-title { font-size: clamp(1.6rem, 3.2vw, 2.5rem); font-weight: 600; color: var(--text); text-wrap: balance; margin-bottom: 0.5rem; text-shadow: 0 1px 12px rgba(0,0,0,0.85); }
 .mdeck-desc { font-size: 0.92rem; line-height: 1.7; color: var(--text-2); max-width: 46ch; text-shadow: 0 1px 10px rgba(0,0,0,0.9); }
 .mdeck-item:hover .mdeck-hover, .mdeck-item:focus-within .mdeck-hover { opacity: 1; transform: none; }
