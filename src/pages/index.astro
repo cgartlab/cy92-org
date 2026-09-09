@@ -1718,4 +1718,15 @@ document.getElementById('langToggle')?.addEventListener('click', () => {
   switchLang(currentLang === 'zh' ? 'en' : 'zh');
 });
 
+// ═══ Keyboard navigation — ArrowDown / Space → next slide, ArrowUp → prev ═══
+document.addEventListener('keydown', (e) => {
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.isContentEditable) return;
+  const deck = document.getElementById('slideshow');
+  if (!deck) return;
+  const dir = e.key === 'ArrowDown' || e.key === ' ' ? 1 : e.key === 'ArrowUp' ? -1 : 0;
+  if (!dir) return;
+  e.preventDefault();
+  deck.scrollBy({ top: dir * window.innerHeight, behavior: 'smooth' });
+});
+
 </script>
