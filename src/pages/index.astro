@@ -738,6 +738,7 @@ try { (() => {
 				depth,
 				alpha: Math.random(),
 				fadeTarget: 1,
+				fadeRate: 0.012 + Math.random() * 0.04,
 				chars: Array.from({ length: 14 }, () => CHARS[Math.floor(Math.random() * CHARS.length)]),
 			});
 		}
@@ -750,12 +751,9 @@ try { (() => {
 
 	let t = 0;
 	let visible = true;
-	// Track active slide for background mode switching
-	let activeSlide = 0;
-	let bgMode = 0;          // 0=seaweed, 1=code rain
-	let bgTransition = 1;    // 1=fully transitioned
-	let targetMode = 0;
-	let obs = new IntersectionObserver(es => {
+	let activeSlide = 0;  // which slide is most visible
+	let seaFade = 1;      // seaweed global opacity (0-1)
+	const obs = new IntersectionObserver(es => {
 		let maxIntersect = 0, maxSlide = 0;
 		es.forEach(e => {
 			if (e.isIntersecting && e.intersectionRatio > maxIntersect) {
@@ -764,11 +762,7 @@ try { (() => {
 				visible = true;
 			}
 		});
-		if (maxSlide !== activeSlide) {
-			activeSlide = maxSlide;
-			targetMode = maxSlide === 0 ? 0 : 1; // 0=seaweed, 1+=code rain
-			bgTransition = 0;
-		}
+		if (maxSlide !== activeSlide) activeSlide = maxSlide;
 	}, { threshold: [0.1, 0.5, 0.9] });
 	document.querySelectorAll('.slide').forEach(s => obs.observe(s));
 	const pBuf = new Float64Array(44); // 22 pts × 2
@@ -895,12 +889,9 @@ try { (() => {
 		ctx.clearRect(0, 0, w, h);
 		t += 0.008;
 
-		// Background mode transition (cross-fade over 1.5s)
-		if (bgTransition < 1 && bgMode !== targetMode) {
-			bgTransition = Math.min(1, bgTransition + 0.008 / 1.5);
-			if (bgTransition >= 1) bgMode = targetMode;
-		}
-		const crossFade = (bgMode !== targetMode) ? bgTransition : 1;
+		// Seaweed fades: visible only on slide 0, smooth in/out
+		const seaTarget = activeSlide === 0 ? 1 : 0;
+		seaFade += (seaTarget - seaFade) * 0.03;
 
 		// ── Background depth gradient ──
 		const bgG = ctx.createLinearGradient(0, 0, 0, h);
@@ -909,10 +900,9 @@ try { (() => {
 		bgG.addColorStop(1, 'rgba(4,6,10,0.45)');
 		ctx.fillStyle = bgG; ctx.fillRect(0, 0, w, h);
 
-		// ── Seaweed scene (mode 0) ──
-		if (bgMode === 0 || (bgMode !== targetMode && targetMode === 1)) {
-			const seaAlpha = (targetMode === 1) ? 1 - crossFade : 1;
-			ctx.globalAlpha = seaAlpha;
+		// ── Seaweed scene (slide 0) ──
+		if (seaFade > 0.01) {
+			ctx.globalAlpha = seaFade;
 
 			// ── Volumetric light rays ──
 			for (let ri = 0; ri < rays.length; ri++) {
@@ -987,15 +977,14 @@ try { (() => {
 			ctx.globalAlpha = 1;
 		}
 
-		// ── Code rain (mode 1) — continuous loop, random mutation ──
-		// Keep rendering if any column still fading out
+		// ── Code rain (slide 1) — continuous loop, random mutation ──
+		// Keep rendering while any column still fading
 		let anyRainVisible = false;
 		for (let ci = 0; ci < codeCols.length; ci++) {
 			if (codeCols[ci].alpha > 0.02) { anyRainVisible = true; break; }
 		}
-		if (bgMode === 1 || (bgMode !== targetMode && crossFade > 0.1) || anyRainVisible) {
-			const rainAlpha = (bgMode === 1) ? 1 : crossFade;
-			ctx.globalAlpha = rainAlpha;
+		if (activeSlide === 1 || anyRainVisible) {
+			const rainTarget = activeSlide === 1 ? 1 : 0;
 			// Random character mutation every ~0.5s
 			if (Math.floor(t * 60) % 30 === 0) {
 				for (let ci = 0; ci < codeCols.length; ci++) {
@@ -1006,12 +995,10 @@ try { (() => {
 				const col = codeCols[ci];
 				col.y += col.spd;
 				if (col.y > h + 100) { col.y = -100; col.x = (ci / 44) * w + (Math.random()-0.5)*25; }
-				// Fade in/out when transitioning
-				if (bgMode !== targetMode) {
-					col.fadeTarget = targetMode === 1 ? 1 : 0;
-				}
-				col.alpha += (col.fadeTarget - col.alpha) * 0.02;
-				const colAlpha = col.alpha * rainAlpha;
+				// Per-column fade: random rate → random disappear/appear
+				col.fadeTarget = rainTarget;
+				col.alpha += (col.fadeTarget - col.alpha) * col.fadeRate;
+				const colAlpha = col.alpha;
 				if (colAlpha < 0.02) continue;
 				const fontSize = Math.round(6 + col.depth * 14);
 				const doff = Math.abs(col.depth - 0.5);
