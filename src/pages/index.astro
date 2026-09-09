@@ -90,7 +90,7 @@ const meditationImages = [
 
 			<!-- ═══ Slide 2 — What I do (video bg -30%, fixed) ═══ -->
 			<section class="slide" data-slide="2">
-				<video id="shared-video" autoplay muted loop playsinline class="video-fixed" style="filter:brightness(0.45)">
+				<video id="shared-video" autoplay muted loop playsinline class="video-fixed" style="filter:brightness(0.5)">
 					<source src="/video/demo.mp4" type="video/mp4" />
 				</video>
 				<div class="slide-content">
@@ -120,7 +120,7 @@ const meditationImages = [
 
 			<!-- ═══ Slide 3 — Featured Work (video bg +70%, light text) ═══ -->
 			<section class="slide" data-slide="3" id="work">
-				<video autoplay muted loop playsinline class="video-fixed" style="filter:brightness(0.7)">
+				<video autoplay muted loop playsinline class="video-fixed" style="filter:brightness(0.5)">
 					<source src="/video/demo.mp4" type="video/mp4" />
 				</video>
 				<div class="slide-content">
@@ -145,11 +145,9 @@ const meditationImages = [
 
 			<!-- ═══ Slide 4 — Meditation (cover Ken Burns infinite, light text) ═══ -->
 			<section class="slide" data-slide="4">
-				<!-- Video bg same as slide 3 + Ken Burns -->
+				<!-- Infinite Ken Burns loop background (image) -->
 				<div class="kb-stage">
-					<video autoplay muted loop playsinline class="kb-img" style="filter:brightness(0.5)">
-						<source src="/video/demo.mp4" type="video/mp4" />
-					</video>
+					<img src={coverImage} alt="冥想系列" class="kb-img" />
 					<div class="kb-overlay"></div>
 				</div>
 				<div class="slide-content">
@@ -371,10 +369,10 @@ body { background: var(--bg); color: var(--text); font-family: var(--ds-font-bod
 .video-fixed { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none; z-index: 0; }
 .img-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
 
-/* Slide 3 text scrim — prevent text unreadable on bright video areas */
-[data-slide="3"] .slide-content { position: relative; }
-[data-slide="3"] .slide-content::before { content: ''; position: absolute; inset: 0; z-index: 0; background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(10,10,10,0.65) 0%, rgba(10,10,10,0.25) 60%, transparent 100%); pointer-events: none; }
-[data-slide="3"] .work { position: relative; z-index: 1; }
+/* Slides 3 & 4 (video pages) share the same background — consistent text scrim */
+[data-slide="2"] .slide-content, [data-slide="3"] .slide-content { position: relative; }
+[data-slide="2"] .slide-content::before, [data-slide="3"] .slide-content::before { content: ''; position: absolute; inset: 0; z-index: 0; background: radial-gradient(ellipse 80% 72% at 38% 50%, rgba(10,10,10,0.66) 0%, rgba(10,10,10,0.35) 55%, transparent 100%); pointer-events: none; }
+[data-slide="2"] .split, [data-slide="3"] .work { position: relative; z-index: 1; }
 
 /* ═══ Slideshow ═══ */
 .slideshow { height: 100dvh; overflow-y: auto; scroll-snap-type: y mandatory; scroll-behavior: smooth; scrollbar-width: none; }

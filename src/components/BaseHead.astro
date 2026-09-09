@@ -50,15 +50,10 @@ const { title, description, image = '/default-cover.webp' } = Astro.props;
 <meta property="twitter:image" content={new URL(image, Astro.url)} />
 
 <script is:inline>
-	const getThemePreference = () => {
-		if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
-			return localStorage.getItem('theme');
-		}
-		return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-	};
-	const isDark = getThemePreference() === 'dark';
-	document.documentElement.classList.toggle('dark', isDark);
-	document.documentElement.setAttribute('data-theme', isDark ? 'dark' : '');
+	// Dark-only site: always apply dark design tokens (light text on dark bg)
+	const isDark = true;
+	document.documentElement.classList.add('dark');
+	document.documentElement.setAttribute('data-theme', 'dark');
 	// Mark JS-enabled so scroll-reveal only hides content when JS can reveal it
 	document.documentElement.classList.add('ds-js');
 </script>
