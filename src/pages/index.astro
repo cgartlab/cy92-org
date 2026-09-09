@@ -66,13 +66,16 @@ const meditationImages = [
 						</div>
 						<div class="hero-divider"></div>
 						<p class="hero-tags anim blur" data-d="2">动态视觉设计师<span class="sep"> · </span>内容创作者<span class="sep"> · </span>产品工程师</p>
-						<a href="#work" class="btn anim up" data-d="3">探索作品 <Icon name="arrow_downward" size={16} class="w-4 h-4" /></a>
+						<a href="#stats" class="scroll-cue anim up" data-d="3" aria-label="向下滚动到统计页">
+							<span class="cue-label">Scroll</span>
+							<span class="cue-track"><span class="cue-dot"></span></span>
+						</a>
 					</div>
 				</div>
 			</section>
 
 			<!-- ═══ Slide 1 — Stats (transparent: reveals fixed scene layers) ═══ -->
-			<section class="slide dark" data-slide="1">
+			<section class="slide dark" data-slide="1" id="stats">
 				<div class="slide-content center">
 					<div class="stats">
 						<div class="stat anim up" data-d="0">
@@ -533,6 +536,15 @@ body { background: var(--bg); color: var(--text); font-family: var(--ds-font-bod
 }
 .hero-tags .sep { display: none; }
 
+/* Scroll cue — replaces CTA button on the hero */
+.scroll-cue { display: inline-flex; flex-direction: column; align-items: center; gap: 0.6rem; margin-top: 0.5rem; color: var(--text-3); text-decoration: none; }
+.cue-label { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.3em; color: var(--text-3); transition: color 0.3s; }
+.cue-track { position: relative; width: 1px; height: 44px; background: rgba(255,255,255,0.18); overflow: hidden; }
+.cue-dot { position: absolute; left: 0; top: -6px; width: 1px; height: 14px; background: var(--accent); animation: cueFall 1.8s cubic-bezier(.4,0,.6,1) infinite; }
+.scroll-cue:hover .cue-label { color: var(--text); }
+.scroll-cue:hover .cue-dot { background: var(--text-2); }
+@keyframes cueFall { 0% { transform: translateY(0); opacity: 0; } 25% { opacity: 1; } 70% { opacity: 1; } 100% { transform: translateY(46px); opacity: 0; } }
+
 /* ═══ Stats ═══ */
 .stats { width: 100%; max-width: 1080px; display: grid; grid-template-columns: 1fr; gap: 0; margin: 0 auto; }
 @media (min-width: 768px) { .stats { grid-template-columns: repeat(2, 1fr); } }
@@ -861,7 +873,7 @@ try { (() => {
 					alpha: 0,
 					fadeTarget: 0,
 					fadeRate: 0.012 + Math.random() * 0.04,
-					rainColor: (() => { const pc = Math.random(); return pc < 0.42 ? '115,191,196' : pc < 0.78 ? '141,160,206' : '255,129,10'; })(),
+					rainColor: (() => { const pc = Math.random(); return pc < 0.5 ? '138,140,110' : pc < 0.85 ? '202,205,196' : '168,172,136'; })(),
 					flSpd: 0.6 + Math.random() * 2.2,
 					flPh: Math.random() * 6.28,
 					sentence,
@@ -1300,13 +1312,13 @@ try { (() => {
 	let w, h, base;
 	let fade = 0;
 	let activeNow = false;
-	const COLORS = ['115,191,196', '141,160,206', '255,129,10']; // teal / periwinkle / orange — match code rain
+	const COLORS = ['138,140,110', '202,205,196', '168,172,136']; // olive green + silver gray — match code rain
 	const blobs = [];
 	for (let i = 0; i < 7; i++) {
 		blobs.push({
 			r: 0.34 + Math.random() * 0.28,
 			c: COLORS[i % 3],
-			a: 0.15 + Math.random() * 0.10,
+			a: 0.17 + Math.random() * 0.11,
 			fx: 0.10 + Math.random() * 0.2,
 			fy: 0.10 + Math.random() * 0.18,
 			ph: Math.random() * 6.283,
