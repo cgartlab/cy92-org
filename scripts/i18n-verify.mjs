@@ -103,7 +103,7 @@ for (const p of pages) {
 	};
 	const selfClosing = new Set(['img', 'input', 'br', 'hr', 'meta', 'link', 'source', 'area', 'base', 'col', 'embed', 'track', 'wbr']);
 
-	const COMMENT_RE = new RegExp('<' + '![\s\S]*?' + '-->', 'g');
+	const COMMENT_RE = new RegExp(String.raw`<![\s\S]*?-->`);
 	let stripped = html.replace(COMMENT_RE, '');
 	stripped = stripLang(stripLang(stripped, 'zh'), 'en');
 	const visible = stripped.replace(/<[^>]*>/g, ' ');
