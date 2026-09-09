@@ -951,25 +951,16 @@ try { (() => {
 	addEventListener('mouseleave', () => { mx = -9999; my = -9999; });
 
 	let t = 0;
-	let visible = true;
-	let activeSlide = 0;
+	const visible = true;   // fixed canvas loops cheaply; visibility gated by scene code below
 	let seaFade = 1;
 	let columnsReset = true;
-	const obs = new IntersectionObserver(es => {
-		let maxIntersect = 0, maxSlide = 0;
-		es.forEach(e => {
-			if (e.isIntersecting && e.intersectionRatio > maxIntersect) {
-				maxIntersect = e.intersectionRatio;
-				maxSlide = parseInt(e.target.dataset.slide);
-				visible = true;
-			}
-		});
-		if (maxSlide !== activeSlide) {
-			activeSlide = maxSlide;
-			if (activeSlide === 1) columnsReset = false;
-		}
-	}, { threshold: [0.1, 0.5, 0.9] });
-	document.querySelectorAll('.slide').forEach(s => obs.observe(s));
+	let prevIdx = 0;
+	const deck = document.getElementById('slideshow');
+	// Authoritative page index: published on #slideshow[data-active] by the [2]
+	// slide-observer (center-of-viewport). Using it here avoids the seaweed
+	// observer's stale fallback to slide 0 (which flashed the hero on meditation).
+	const act = () => parseInt(deck && deck.dataset.active, 10) || 0;
+	let activeSlide = act();
 	const pBuf = new Float64Array(44); // 22 pts × 2
 	const fBuf = new Float64Array(44);
 
@@ -1093,6 +1084,11 @@ try { (() => {
 		if (!visible) { requestAnimationFrame(draw); return; }
 		ctx.clearRect(0, 0, w, h);
 		t += 0.008;
+
+		// Refresh authoritative page index (published by the [2] observer)
+		activeSlide = act();
+		if (activeSlide === 1 && prevIdx !== 1) columnsReset = false;
+		prevIdx = activeSlide;
 
 		// Seaweed fades: visible only on slide 0, smooth in/out
 		const seaTarget = activeSlide === 0 ? 1 : 0;
@@ -1503,6 +1499,7 @@ try { (() => {
 		}
 		if (cur === curIdx) return;
 		curIdx = cur;
+		sl.dataset.active = String(cur);
 		ss.forEach((s, k) => s.classList.toggle('is-active', k === cur));
 		if (ib) ib.style.transform = 'scaleY(' + ((cur + 1) / ss.length) + ')';
 		if (header) header.classList.toggle('scrolled', cur > 0);
