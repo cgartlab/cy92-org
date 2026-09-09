@@ -103,7 +103,7 @@ for (const p of pages) {
 	};
 	const selfClosing = new Set(['img', 'input', 'br', 'hr', 'meta', 'link', 'source', 'area', 'base', 'col', 'embed', 'track', 'wbr']);
 
-	let stripped = html.replace(/<!--[\s\S]*?-->/g, '');
+	let stripped = html.replace(/<\x21--([\s\S]*?)-->/g, '');
 	stripped = stripLang(stripLang(stripped, 'zh'), 'en');
 	const visible = stripped.replace(/<[^>]*>/g, ' ');
 	const cnRuns = visible.match(/[\u4e00-\u9fff][\u4e00-\u9fff\s\uff0c\u3002\u3001\uff1a\uff0c\uff08\uff09「」·—–,.;:()"'…&%/]{0,60}/g) || [];
