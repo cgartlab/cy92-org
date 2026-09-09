@@ -19,7 +19,7 @@ export const SOCIAL_LINKS = [
 	{ name: "Twitter/X", url: "https://x.com/cgartlab", icon: "twitter" },
 	{ name: "Bilibili", url: "https://space.bilibili.com/38043072", icon: "bilibili" },
 	{ name: "少数派", url: "https://sspai.com/u/cgartlab", icon: "sspai" },
-	{ name: "RSS", url: "/rss.xml", icon: "rss_feed" }
+	{ name: "RSS", url: "https://cgartlab.com/rss.xml", icon: "rss_feed" }
 ];
 
 export const SKILLS = [

@@ -32,7 +32,7 @@ const meditationImages = [
 
 		<!-- ═══ Immersive Header ═══ -->
 		<header class="header" id="header">
-			<a href="/" class="header-logo">{SITE_TITLE.split(' | ')[0]}</a>
+			<a href="/" class="header-logo">CHEN YANG</a>
 			<nav class="header-nav">
 				<div class="nav-hover">
 					<a href="#work" class="header-link work-link" aria-haspopup="true" aria-expanded="false">Work<span class="caret"></span></a>
@@ -214,12 +214,9 @@ const meditationImages = [
 						<div class="profile-left">
 							<p class="label anim left" data-d="0">About</p>
 							<h2 class="heading-lg anim left" data-d="1">画画是画画的酬劳，写作是写作的回报。</h2>
-							<p class="body anim up" data-d="2">从 2014 年进入动态视觉至今，我在同一条路上用三种语言并行创作——设计让想法可见，代码让流程自动，写作让思考沉淀。回看这些年，真正塑造我的不是技巧，而是在 CG 艺术实验室写下的一篇篇复盘与周刊：慢一点比较快，先设计规则，再执行规则。</p>
-							<p class="body anim up" data-d="3">我把「数据主权」当作工具的底线：本地优先、自建信息流、掌控自己的内容；把「创作即认知」当作引擎：写作不是为了输出，而是为了想清楚。当 AI 进入工作台，这套原则没有改变，只是让我更坚定地做一名「规则设计师」，而不是「规则执行者」。</p>
-							<div class="profile-tags anim up" data-d="4">
-								<span class="ptag">数据主权</span><span class="ptag">创作即认知</span><span class="ptag">慢一点比较快</span>
-							</div>
-							<div class="profile-contact anim up" data-d="5">
+							<p class="body anim up" data-d="2">我是数字动态视觉出身的设计师，十余年来在设计、动画与前端之间来回穿梭。现在，我把写作当成思考的入口，把 AI 当作协作者，把每个项目都看作一次方法论的实验：慢一点比较快，先设计规则，再执行规则。</p>
+							<p class="body anim up" data-d="3">我相信「数据主权」与「创作即认知」——不把自己交给封闭平台，也不让想法只停在草稿里。工具会更新，软件会被淘汰，能一直带走的是想清楚的能力；CG 艺术实验室，就是我把这种能力写下来、做出来、验证过的地方。</p>
+							<div class="profile-contact anim up" data-d="4">
 								<p class="label-sm">Contact</p>
 								<div class="contact-row">
 									{SOCIAL_LINKS.slice(0, 4).map(link => (
@@ -296,11 +293,12 @@ const meditationImages = [
 						<p class="body anim up" data-d="2">如果你对我的作品感兴趣，或者有任何合作想法，欢迎随时联系我。</p>
 						<div class="contact-actions anim up" data-d="3">
 							<a href={`mailto:${PERSONAL_INFO.email}`} class="btn"><Icon name="mail" size={16} class="w-4 h-4" />{PERSONAL_INFO.email}</a>
-							{SOCIAL_LINKS.slice(0, 4).map(link => (
-								<a href={link.url} target="_blank" rel="noopener noreferrer" class="icon-link-lg" title={link.name} aria-label={link.name}>
-									<Icon name={link.icon} size={16} class="w-4 h-4" fill />
-								</a>
-							))}
+						</div>
+						<div class="contact-social anim up" data-d="4">
+							{SOCIAL_LINKS.slice(0, 4).map(link => {
+								const label = { github: 'GitHub', twitter: 'X', bilibili: 'BiliBli', sspai: 'Sspai' }[link.icon] || link.name;
+								return <a class="contact-link" href={link.url} target="_blank" rel="noopener noreferrer">{label}</a>;
+							})}
 						</div>
 					</div>
 				</div>
@@ -383,7 +381,7 @@ body { background: var(--bg); color: var(--text); font-family: var(--ds-font-bod
 }
 .header.scrolled { border-bottom-color: var(--border); background: rgba(10,10,10,0.8); backdrop-filter: blur(12px); }
 .header > * { pointer-events: auto; }
-.header-logo { font-size: 0.875rem; font-weight: 700; color: var(--text); text-decoration: none; letter-spacing: -0.02em; }
+.header-logo { font-size: 0.8rem; font-weight: 700; color: var(--text); text-decoration: none; letter-spacing: 0.18em; }
 .header-nav { display: flex; gap: 1.5rem; }
 .header-link { font-size: 0.65rem; color: var(--text-4); text-decoration: none; text-transform: uppercase; letter-spacing: 0.12em; transition: color 0.3s; }
 .header-link:hover { color: var(--text); }
@@ -758,8 +756,6 @@ body { background: var(--bg); color: var(--text); font-family: var(--ds-font-bod
 [data-slide="5"] .psection > .label-sm { display: inline-flex; align-items: center; gap: 0.75rem; }
 [data-slide="5"] .psection > .label-sm::after { content: ''; width: 42px; height: 1px; background: var(--border); }
 [data-slide="5"] .profile-contact { display: grid; gap: 1.1rem; margin-top: 2.5rem; padding-top: 1.75rem; }
-.profile-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.3rem; }
-.ptag { font-size: 0.62rem; letter-spacing: 0.12em; color: var(--text-3); padding: 3px 10px; border: 1px solid var(--border); border-radius: 999px; }
 .exp-sub { font-size: 0.78rem; color: var(--text-4); margin-top: 0.2rem; }
 .exp-link { color: var(--accent); text-decoration: none; margin-left: 0.5rem; }
 .exp-link:hover { color: var(--text); }
@@ -771,6 +767,10 @@ body { background: var(--bg); color: var(--text); font-family: var(--ds-font-bod
 .contact .heading-xl { margin: 0.5rem 0 1rem; }
 .contact .body { margin-bottom: 2rem; }
 .contact-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0.75rem; }
+/* Contact text social — one per line */
+.contact-social { display: flex; flex-direction: column; align-items: center; gap: 0.55rem; margin-top: 1.9rem; }
+.contact-link { font-size: 0.82rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--text-2); text-decoration: none; transition: color 0.3s, letter-spacing 0.3s; }
+.contact-link:hover { color: var(--text); letter-spacing: 0.28em; }
 .icon-link-lg { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border: 1px solid var(--border); color: var(--text-4); text-decoration: none; transition: transform 0.3s var(--spring), color 0.3s; }
 .icon-link-lg:hover { border-color: var(--text); color: var(--text); transform: scale(1.1); }
 
