@@ -38,7 +38,7 @@
 	},
 	"scripts": {
 		"astro": "astro",
-		"build": "astro build || exit 0",
+		"build": "(astro build || exit 0) && rm -rf dist/video",
 		"cf-typegen": "wrangler types",
 		"check": "(astro build || exit 0) && tsc && wrangler deploy --dry-run",
 		"check:links": "node scripts/check-links.mjs",
