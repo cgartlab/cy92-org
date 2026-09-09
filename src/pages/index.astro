@@ -34,7 +34,16 @@ const meditationImages = [
 		<header class="header" id="header">
 			<a href="/" class="header-logo">{SITE_TITLE.split(' | ')[0]}</a>
 			<nav class="header-nav">
-				<a href="#work" class="header-link">Work</a>
+				<div class="nav-hover">
+					<a href="#work" class="header-link work-link" aria-haspopup="true" aria-expanded="false">Work<span class="caret"></span></a>
+					<div class="nav-menu" role="menu" aria-label="作品导航">
+						<a class="nav-menu-link" href="#work" role="menuitem">合集</a>
+						<a class="nav-menu-link" href="#meditation" role="menuitem">冥想系列</a>
+						<span class="nav-menu-divider"></span>
+						<span class="nav-menu-note">更多作品即将加入…</span>
+						{/* 未来新作品在此追加，例如: <a href="https://men.cgartlab.com">Men</a> / <a href="https://argus.cgartlab.com">Argus</a> */}
+					</div>
+				</div>
 				<a href="#profile" class="header-link">Profile</a>
 				<a href="#contact" class="header-link">Contact</a>
 			</nav>
@@ -102,10 +111,10 @@ const meditationImages = [
 							</div>
 						</div>
 						<div class="stat anim up" data-d="3">
-							<span class="stat-kicker">跨领域专业项目</span>
+							<span class="stat-kicker">文章累计被浏览</span>
 							<div class="stat-line">
-								<span class="stat-value" data-target="50" data-suffix="+">50+</span>
-								<span class="stat-unit">个</span>
+								<span class="stat-value" data-target="1000000" data-suffix="+">1000000+</span>
+								<span class="stat-unit">次</span>
 							</div>
 						</div>
 					</div>
@@ -166,7 +175,7 @@ const meditationImages = [
 
 			<!-- ═══ Slide 4 — Meditation (cover Ken Burns infinite, light text) ═══ -->
 			<!-- ═══ Slide 5 (page 5) — Meditation: full-bleed artwork deck ═══ -->
-			<section class="slide" data-slide="4">
+			<section class="slide" data-slide="4" id="meditation">
 				<div class="meddeck">
 					{meditationImages.map((img, i) => (
 						<article class="mdeck-item" data-mid={i} tabindex="0" aria-label={`${img.title} — ${img.desc}`}>
@@ -372,6 +381,26 @@ body { background: var(--bg); color: var(--text); font-family: var(--ds-font-bod
 .header-email { font-size: 0.65rem; color: var(--text-4); text-decoration: none; letter-spacing: 0.05em; transition: color 0.3s; }
 .header-email:hover { color: var(--text); }
 @media (max-width: 767px) { .header-email { display: none; } }
+/* Work dropdown — hover expands to jump to each work section */
+.nav-hover { position: relative; display: inline-flex; }
+.caret { display: inline-block; margin-left: 0.35em; width: 0; height: 0; border-left: 3px solid transparent; border-right: 3px solid transparent; border-top: 4px solid currentColor; opacity: 0.6; transition: transform 0.25s ease; }
+.nav-hover:hover .caret, .nav-hover:focus-within .caret { transform: rotate(180deg); }
+.nav-menu {
+	position: absolute; top: calc(100% + 0.9rem); left: 50%; transform: translateX(-50%) translateY(6px);
+	min-width: 148px; padding: 0.6rem 0; list-style: none;
+	background: rgba(12,12,14,0.92); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+	border: 1px solid var(--border); opacity: 0; visibility: hidden; pointer-events: none;
+	transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s;
+	z-index: 210;
+}
+.nav-hover:hover .nav-menu, .nav-hover:focus-within .nav-menu { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); pointer-events: auto; }
+.nav-menu-link {
+	display: block; padding: 0.5rem 1.25rem; font-size: 0.72rem; letter-spacing: 0.08em;
+	color: var(--text-2); text-decoration: none; text-transform: none; transition: background 0.2s, color 0.2s;
+}
+.nav-menu-link:hover, .nav-menu-link:focus-visible { background: rgba(138,140,110,0.14); color: var(--text); }
+.nav-menu-divider { display: block; height: 1px; margin: 0.4rem 1.25rem; background: var(--border); }
+.nav-menu-note { display: block; padding: 0.35rem 1.25rem 0.15rem; font-size: 0.6rem; color: var(--text-4); letter-spacing: 0.1em; }
 
 /* ═══ Canvas / Video ═══ */
 .canvas-full { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
@@ -741,7 +770,7 @@ body { background: var(--bg); color: var(--text); font-family: var(--ds-font-bod
 .footer-link:hover { color: var(--text); }
 
 /* ═══ Indicator ═══ */
-.indicator { position: fixed; right: 1rem; top: 40%; transform: translateY(-50%); width: 2px; height: 80px; background: rgba(255,255,255,0.05); border-radius: 1px; z-index: 200; overflow: hidden; }
+.indicator { position: fixed; right: 1rem; top: 50%; transform: translateY(-50%); width: 2px; height: 80px; background: rgba(255,255,255,0.05); border-radius: 1px; z-index: 200; overflow: hidden; }
 .indicator-bar { width: 100%; height: 100%; background: var(--accent); border-radius: 1px; transform: scaleY(0); transform-origin: top; transition: transform 0.4s var(--spring); }
 
 /* ═══ Animations ═══ */
