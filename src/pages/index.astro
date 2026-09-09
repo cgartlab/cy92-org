@@ -111,10 +111,12 @@ const meditationImages = [
 							</div>
 						</div>
 						<div class="stat anim up" data-d="3">
-							<span class="stat-kicker">文章累计被浏览</span>
+							<span class="stat-kicker">文章累计被浏览
+								{/* 数据读取点（少数派个人主页成就卡片）：#viewCount > span（当前约 89.5万+，随时间增长） */}
+								<a class="stat-src" href="https://sspai.com/u/cgartlab" target="_blank" rel="noopener noreferrer" aria-label="数据来源少数派个人主页">少数派 ↗</a>
+							</span>
 							<div class="stat-line">
-								<span class="stat-value" data-target="1000000" data-suffix="+">1000000+</span>
-								<span class="stat-unit">次</span>
+								<span class="stat-value" data-target="89.5" data-dec="1" data-suffix="万+">89.5万+</span>
 							</div>
 						</div>
 					</div>
@@ -561,6 +563,8 @@ body { background: var(--bg); color: var(--text); font-family: var(--ds-font-bod
 	.stat:nth-last-child(-n+2) { border-bottom: 0; }
 }
 .stat-kicker { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.16em; color: var(--text-3); }
+.stat-src { display: inline-block; margin-left: 0.55rem; padding: 1px 7px; font-size: 0.6rem; letter-spacing: 0.08em; text-transform: none; color: var(--text-4); border: 1px solid var(--border); border-radius: 999px; vertical-align: middle; text-decoration: none; transition: color 0.3s, border-color 0.3s; }
+.stat-src:hover { color: var(--text); border-color: var(--text-4); }
 .stat-line { display: flex; align-items: baseline; gap: 0.6rem; flex-wrap: wrap; }
 .stat-value { font-size: clamp(3rem, 8vw, 6.5rem); line-height: 0.9; letter-spacing: -0.05em; font-weight: 600; color: var(--text); font-variant-numeric: tabular-nums; }
 .stat-unit { font-size: 1rem; color: var(--accent); font-weight: 500; }
@@ -1524,8 +1528,9 @@ try { (() => {
 	const els = document.querySelectorAll('.stat-value[data-target]');
 	if (!els.length) return;
 	const reduce = matchMedia?.('(prefers-reduced-motion: reduce)').matches;
-	const fmt = n => String(n);
-	if (reduce) { els.forEach(el => el.textContent = fmt(parseInt(el.dataset.target || '0', 10) || el.textContent)); return; }
+	const parse = (el) => { const v = parseFloat(el.dataset.target || '0'); const d = parseInt(el.dataset.dec || '0', 10) || 0; return { v: v || 0, d }; };
+	const fmt = (el, n) => { const d = parseInt(el.dataset.dec || '0', 10) || 0; return d ? n.toFixed(d) : String(n); };
+	if (reduce) { els.forEach(el => { const { v, d } = parse(el); el.textContent = (d ? v.toFixed(d) : String(Math.round(v))) + (el.dataset.suffix || ''); }); return; }
 
 	const seen = new Set();
 	const obs = new IntersectionObserver(entries => {
@@ -1533,17 +1538,16 @@ try { (() => {
 			if (entry.isIntersecting && !seen.has(entry.target)) {
 				seen.add(entry.target);
 				const el = entry.target;
-				const target = parseInt(el.dataset.target || '0', 10) || 0;
-				// Use data-suffix if present, else detect '+' in original text
+				const { v: target, d } = parse(el);
 				const suffix = el.dataset.suffix || (el.textContent.includes('+') ? '+' : '');
 				const dur = 1800;
 				const start = performance.now();
 				const tick = now => {
 					const p = Math.min((now - start) / dur, 1);
 					const eased = 1 - Math.pow(1 - p, 4); // easeOutQuart
-					el.textContent = fmt(Math.floor(target * eased)) + suffix;
+					el.textContent = fmt(el, target * eased) + suffix;
 					if (p < 1) requestAnimationFrame(tick);
-					else el.textContent = fmt(target) + suffix;
+					else el.textContent = fmt(el, target) + suffix;
 				};
 				requestAnimationFrame(tick);
 			}
