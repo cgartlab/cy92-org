@@ -39,16 +39,16 @@ const tickerItems = [
 	'写作是建立思维标本的过程 · 把想清楚的能力写下来',
 	'网页里那个「下载」图标越大，就越不是你要找的链接',
 ];
-// ticker 几何与纵深（远行小且模糊 → 近行大而清晰）
+// ticker 几何与纵深：高低错落、长度不一（w=带宽, lx=左偏移, ad=方向）
 const tickerRows = [
-	{ top: 8, dur: 26, sc: 0.66, bl: 2.2, op: 0.34 },
-	{ top: 15, dur: 19, sc: 0.82, bl: 1.1, op: 0.5 },
-	{ top: 22, dur: 14, sc: 0.96, bl: 0.4, op: 0.7 },
-	{ top: 29, dur: 33, sc: 0.7, bl: 1.7, op: 0.42 },
-	{ top: 71, dur: 36, sc: 0.7, bl: 1.8, op: 0.44 },
-	{ top: 78, dur: 15, sc: 1.0, bl: 0.2, op: 0.78 },
-	{ top: 85, dur: 21, sc: 0.84, bl: 1.0, op: 0.56 },
-	{ top: 92, dur: 28, sc: 0.62, bl: 2.4, op: 0.3 },
+	{ top: 5,  dur: 40, sc: 0.6,  bl: 2.6, op: 0.3,  w: 82, lx: 0,  ad: 'normal' },
+	{ top: 13, dur: 30, sc: 0.84, bl: 1.2, op: 0.5,  w: 95, lx: 5,  ad: 'normal' },
+	{ top: 19, dur: 24, sc: 1.02, bl: 0.2, op: 0.82, w: 72, lx: 0,  ad: 'normal' },
+	{ top: 26, dur: 46, sc: 0.7,  bl: 1.9, op: 0.4,  w: 88, lx: 12, ad: 'normal' },
+	{ top: 68, dur: 48, sc: 0.64, bl: 2.3, op: 0.34, w: 85, lx: 14, ad: 'reverse' },
+	{ top: 75, dur: 27, sc: 1.06, bl: 0,   op: 0.86, w: 62, lx: 0,  ad: 'reverse' },
+	{ top: 82, dur: 35, sc: 0.86, bl: 1.0, op: 0.55, w: 93, lx: 6,  ad: 'reverse' },
+	{ top: 90, dur: 42, sc: 0.6,  bl: 2.7, op: 0.28, w: 76, lx: 2,  ad: 'reverse' },
 ];
 ---
 
@@ -127,7 +127,7 @@ const tickerRows = [
 					{tickerRows.map((row, i) => (
 						<div
 							class="ticker-row"
-							style={`top:${row.top}dvh;--dur:${row.dur}s;--sc:${row.sc};--bl:${row.bl}px;--op:${row.op}`}
+							style={`top:${row.top}dvh;left:${row.lx}%;width:${row.w}%;--dur:${row.dur}s;--sc:${row.sc};--bl:${row.bl}px;--op:${row.op};--ad:${row.ad}`}
 						>
 							<div class="ticker-track">
 								{/* 24 items = 4-unit cycle × 6 → both halves identical → seamless -50%→0 loop */}
@@ -477,8 +477,8 @@ body { background: var(--bg); color: var(--text); font-family: var(--ds-font-bod
 /* Page-2 horizontal content ticker (real cgartlab text) — seamless left→right marquee
    with depth: far rows small/blurred/dim → near rows large/crisp/bright */
 .ticker { position: absolute; inset: 0; overflow: hidden; z-index: 0; pointer-events: none; }
-.ticker-row { position: absolute; left: 0; right: 0; overflow: hidden; filter: blur(var(--bl, 0px)); }
-.ticker-track { display: flex; width: max-content; animation: tickerR linear infinite; animation-duration: var(--dur, 12s); will-change: transform; }
+.ticker-row { position: absolute; left: var(--lx, 0%); width: var(--w, 100%); right: auto; overflow: hidden; filter: blur(var(--bl, 0px)); }
+.ticker-track { display: flex; width: max-content; animation: tickerR linear infinite; animation-duration: var(--dur, 12s); animation-direction: var(--ad, normal); will-change: transform; }
 .ticker-item { display: inline-flex; align-items: baseline; white-space: nowrap; font-size: calc(0.82rem * var(--sc, 1)); color: var(--text-3); opacity: var(--op, 0.5); text-shadow: 0 0 14px rgba(0,0,0,0.35); }
 .ticker-sep { color: var(--accent); margin: 0 clamp(0.7rem, 2vw, 1.8rem); opacity: 0.85; font-size: 0.92em; }
 @keyframes tickerR { from { transform: translateX(-50%); } to { transform: none; } }
