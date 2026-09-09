@@ -46,7 +46,7 @@ const meditationImages = [
 
 			<!-- ═══ Slide 0 — Hero (Seaweed particles) ═══ -->
 			<section class="slide dark" data-slide="0">
-				<canvas id="seaweed" class="canvas-full"></canvas>
+				<canvas id="seaweed" class="canvas-full" style="position:fixed"></canvas>
 				<div class="slide-content center">
 					<div class="hero">
 						<h1 class="hero-name anim scale" data-d="0">CHEN<br>YANG</h1>
@@ -753,7 +753,7 @@ try { (() => {
 			visible = exitStart >= 0 && (t - exitStart) < 1.5;
 		}
 	}); }, { threshold: 0.1 });
-	obs.observe(c);
+	obs.observe(document.querySelector('[data-slide="0"]'));
 	const pBuf = new Float64Array(44); // 22 pts × 2
 	const fBuf = new Float64Array(44);
 
@@ -880,6 +880,7 @@ try { (() => {
 
 		// Exit: camera down + scene fade + code rain
 		const exitProg = exitStart >= 0 ? Math.min(1, (t - exitStart) / 1.5) : 0;
+		if (exitProg >= 1) { visible = false; requestAnimationFrame(draw); return; } // stop after exit
 		const exitAlpha = 1 - exitProg;
 		const camOff = exitProg * 140;
 
