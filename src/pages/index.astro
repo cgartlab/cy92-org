@@ -87,7 +87,11 @@ const tickerRows = [
 				<a href="#profile" class="header-link">Profile</a>
 				<a href="#contact" class="header-link">Contact</a>
 			</nav>
-			<a href={`mailto:${PERSONAL_INFO.email}`} class="header-email">hello@cgartlab.com</a>
+			<div class="header-right">
+				<button class="lang-btn" id="langToggle" type="button" aria-label="Switch language">中/En</button>
+				<span class="header-sep" aria-hidden="true"></span>
+				<a href={`mailto:${PERSONAL_INFO.email}`} class="header-email">hello@cgartlab.com</a>
+			</div>
 		</header>
 
 		<!-- ═══ Slideshow ═══ -->
@@ -119,7 +123,7 @@ const tickerRows = [
 							<p class="hero-role">A <span class="rwd" style="--ri:0"><span class="inner">Designer</span></span>, <span class="rwd" style="--ri:1"><span class="inner">Writer</span></span>, <span class="rwd" style="--ri:2"><span class="inner">Engineer</span></span>.</p>
 						</div>
 						<div class="hero-divider"></div>
-						<p class="hero-tags anim blur" data-d="2">动态视觉设计师<span class="sep"> · </span>内容创作者<span class="sep"> · </span>产品工程师</p>
+						<p class="hero-tags anim blur" data-d="2"><span data-t="heroTag1">动态视觉设计师</span><span class="sep"> · </span><span data-t="heroTag2">内容创作者</span><span class="sep"> · </span><span data-t="heroTag3">产品工程师</span></p>
 						<a href="#stats" class="scroll-cue anim up" data-d="3" aria-label="向下滚动到统计页">
 							<span class="cue-label">Scroll</span>
 							<span class="cue-track"><span class="cue-dot"></span></span>
@@ -150,30 +154,30 @@ const tickerRows = [
 				<div class="slide-content center">
 					<div class="stats">
 						<div class="stat anim up" data-d="0">
-							<span class="stat-kicker">累计发表字数</span>
+							<span class="stat-kicker" data-t="statKicker1">累计发表字数</span>
 							<div class="stat-line">
 								<span class="stat-value" data-target="187979">187979</span>
-								<span class="stat-unit">字</span>
+								<span class="stat-unit" data-t="statUnit1">字</span>
 							</div>
 						</div>
 						<div class="stat anim up" data-d="1">
-							<span class="stat-kicker">过去一年提交代码</span>
+							<span class="stat-kicker" data-t="statKicker2">过去一年提交代码</span>
 							<div class="stat-line">
 								<span class="stat-value" data-target="5565">5565</span>
-								<span class="stat-unit">次</span>
+								<span class="stat-unit" data-t="statUnit2">次</span>
 							</div>
 						</div>
 						<div class="stat anim up" data-d="2">
-							<span class="stat-kicker">致力于数字创作领域</span>
+							<span class="stat-kicker" data-t="statKicker3">致力于数字创作领域</span>
 							<div class="stat-line">
 								<span class="stat-value" data-target={yearsActive}>{yearsActive}</span>
-								<span class="stat-unit">年</span>
+								<span class="stat-unit" data-t="statUnit3">年</span>
 							</div>
 						</div>
 						<div class="stat anim up" data-d="3">
-							<span class="stat-kicker">文章累计被浏览
+							<span class="stat-kicker"><span data-t="statKicker4">文章累计被浏览</span>
 								{/* 数据读取点（少数派个人主页成就卡片）：#viewCount > span（当前约 89.5万+，随时间增长） */}
-								<a class="stat-src" href="https://sspai.com/u/cgartlab" target="_blank" rel="noopener noreferrer" aria-label="数据来源少数派个人主页">少数派 ↗</a>
+								<a class="stat-src" href="https://sspai.com/u/cgartlab" target="_blank" rel="noopener noreferrer" aria-label="数据来源少数派个人主页"><span data-t="statSrc">少数派</span> ↗</a>
 							</span>
 							<div class="stat-line">
 								<span class="stat-value" data-target="89.5" data-dec="1" data-suffix="万+">89.5万+</span>
@@ -191,9 +195,9 @@ const tickerRows = [
 					<div class="split">
 						<div class="split-left">
 							<p class="label anim up" data-d="0">What I do</p>
-							<h2 class="heading-xl anim up" data-d="1">跨领域<br>数字创作者</h2>
+							<h2 class="heading-xl anim up" data-d="1"><span data-t="whatHeading">跨领域<br/>数字创作者</span></h2>
 							<p class="body anim up" data-d="2">
-								我创建数字产品、塑造品牌视觉、分享创作背后的思考过程。倡导数据主权，坚持创作即认知的理念。
+								<span data-t="whatBody">我创建数字产品、塑造品牌视觉、分享创作背后的思考过程。倡导数据主权，坚持创作即认知的理念。</span>
 							</p>
 						</div>
 						<div class="split-right anim right" data-d="3">
@@ -218,12 +222,12 @@ const tickerRows = [
 					<div class="glass" aria-hidden="true"></div>
 					<div class="work">
 						<p class="label anim left" data-d="0">Featured Work</p>
-						<h2 class="heading-xl anim left" data-d="1">动态视觉从业十年，只有热爱，别无他解。</h2>
+						<h2 class="heading-xl anim left" data-d="1"><span data-t="workTitle">动态视觉从业十年，只有热爱，别无他解。</span></h2>
 						<p class="body-lg anim up" data-d="2">
-							从三维动画、CG 艺术到动态视觉与数字产品，十年创作路一直在探索媒介与叙事。没有捷径可言，凭的是一点热爱与坚持——每一件作品都是对边界的试探。
+							<span data-t="workBody1">从三维动画、CG 艺术到动态视觉与数字产品，十年创作路一直在探索媒介与叙事。没有捷径可言，凭的是一点热爱与坚持——每一件作品都是对边界的试探。</span>
 						</p>
 						<p class="body anim up" data-d="3">
-							从实验性 VR 数字艺术作品《Hello World 2.0》，到品牌与发布会开场动效，再到入选 CCG EXPO 的《COVID-19》——作品在变，媒介在变，那个最初让我拿起笔的理由没有变。
+							<span data-t="workBody2">从实验性 VR 数字艺术作品《Hello World 2.0》，到品牌与发布会开场动效，再到入选 CCG EXPO 的《COVID-19》——作品在变，媒介在变，那个最初让我拿起笔的理由没有变。</span>
 						</p>
 					</div>
 				</div>
@@ -266,9 +270,9 @@ const tickerRows = [
 					<div class="profile">
 						<div class="profile-left">
 							<p class="label anim left" data-d="0">About</p>
-							<h2 class="heading-lg anim left" data-d="1">画画是画画的酬劳，写作是写作的回报。</h2>
-							<p class="body anim up" data-d="2">我是数字动态视觉出身的设计师，十余年来在设计、动画与前端之间来回穿梭。现在，我把写作当成思考的入口，把 AI 当作协作者，把每个项目都看作一次方法论的实验：慢一点比较快，先设计规则，再执行规则。</p>
-							<p class="body anim up" data-d="3">我相信「数据主权」与「创作即认知」——不把自己交给封闭平台，也不让想法只停在草稿里。工具会更新，软件会被淘汰，能一直带走的是想清楚的能力；CG 艺术实验室，就是我把这种能力写下来、做出来、验证过的地方。</p>
+							<h2 class="heading-lg anim left" data-d="1"><span data-t="aboutHeading">画画是画画的酬劳，写作是写作的回报。</span></h2>
+							<p class="body anim up" data-d="2"><span data-t="aboutBody1">我是数字动态视觉出身的设计师，十余年来在设计、动画与前端之间来回穿梭。现在，我把写作当成思考的入口，把 AI 当作协作者，把每个项目都看作一次方法论的实验：慢一点比较快，先设计规则，再执行规则。</span></p>
+							<p class="body anim up" data-d="3"><span data-t="aboutBody2">我相信「数据主权」与「创作即认知」——不把自己交给封闭平台，也不让想法只停在草稿里。工具会更新，软件会被淘汰，能一直带走的是想清楚的能力；CG 艺术实验室，就是我把这种能力写下来、做出来、验证过的地方。</span></p>
 							<div class="profile-contact anim up" data-d="4">
 								<p class="label-sm">Contact</p>
 								<div class="contact-row">
@@ -282,7 +286,7 @@ const tickerRows = [
 						</div>
 						<div class="profile-right">
 							<section class="psection anim right" data-d="1">
-								<h3 class="label-sm">工作经历</h3>
+								<h3 class="label-sm" data-t="cvWork">工作经历</h3>
 								{WORK_EXPERIENCE.map(exp => (
 									<div class="exp">
 										<span class="exp-period">{exp.period}</span>
@@ -298,7 +302,7 @@ const tickerRows = [
 								))}
 							</section>
 							<section class="psection anim right" data-d="2">
-								<h3 class="label-sm">教育经历</h3>
+								<h3 class="label-sm" data-t="cvEdu">教育经历</h3>
 								{EDUCATION.map(edu => (
 									<div class="exp">
 										<span class="exp-period">{edu.period}</span>
@@ -310,7 +314,7 @@ const tickerRows = [
 								))}
 							</section>
 							<section class="psection anim right" data-d="3">
-								<h3 class="label-sm">项目经历与奖项认证</h3>
+								<h3 class="label-sm" data-t="cvProjects">项目经历与奖项认证</h3>
 								{HONORS.map(h => (
 									<div class="exp">
 										<span class="exp-period">{h.year}</span>
@@ -333,7 +337,7 @@ const tickerRows = [
 					<div class="contact">
 						<p class="label anim up" data-d="0">Get in Touch</p>
 						<h2 class="heading-xl anim scale" data-d="1">Let's work together</h2>
-						<p class="body anim up" data-d="2">如果你对我的作品感兴趣，或者有任何合作想法，欢迎随时联系我。</p>
+						<p class="body anim up" data-d="2"><span data-t="contactBody">如果你对我的作品感兴趣，或者有任何合作想法，欢迎随时联系我。</span></p>
 						<div class="contact-actions anim up" data-d="3">
 							<a href={`mailto:${PERSONAL_INFO.email}`} class="btn"><Icon name="mail" size={16} class="w-4 h-4" />{PERSONAL_INFO.email}</a>
 						</div>
@@ -350,7 +354,7 @@ const tickerRows = [
 				<div class="footer-left">
 					<span>&copy; {currentYear} ChenYang</span>
 					<span class="dot">·</span>
-					<span class="footer-text">画画是画画的酬劳，写作是写作的回报。</span>
+					<span class="footer-text" data-t="footerQuote">画画是画画的酬劳，写作是写作的回报。</span>
 				</div>
 				<div class="footer-right">
 					{SOCIAL_LINKS.map(link => (
@@ -418,13 +422,19 @@ body { background: var(--bg); color: var(--text); font-family: var(--ds-font-bod
 }
 .header.scrolled { border-bottom-color: var(--border); background: rgba(10,10,10,0.8); backdrop-filter: blur(12px); }
 .header > * { pointer-events: auto; }
-.header-logo { font-size: 0.8rem; font-weight: 700; color: var(--text); text-decoration: none; letter-spacing: 0.18em; }
-.header-nav { display: flex; gap: 1.5rem; }
+.header-logo { font-size: 0.8rem; font-weight: 700; color: var(--text); text-decoration: none; letter-spacing: 0.18em; flex-shrink: 0; }
+.header-nav { position: absolute; left: 50%; transform: translateX(-50%); display: flex; gap: 1.5rem; }
+.header-right { margin-left: auto; display: flex; align-items: center; }
 .header-link { font-size: 0.65rem; color: var(--text-4); text-decoration: none; text-transform: uppercase; letter-spacing: 0.12em; transition: color 0.3s; }
 .header-link:hover { color: var(--text); }
 .header-email { font-size: 0.65rem; color: var(--text-4); text-decoration: none; letter-spacing: 0.05em; transition: color 0.3s; }
 .header-email:hover { color: var(--text); }
-@media (max-width: 767px) { .header-email { display: none; } }
+.header-right { display: flex; align-items: center; gap: 0; margin-left: auto; }
+.header-sep { width: 1px; height: 16px; background: rgba(255,255,255,0.18); margin: 0 clamp(6px,1.5vw,12px); display: inline-block; flex-shrink: 0; }
+.lang-btn { font-size: 0.65rem; letter-spacing: 0.1em; color: var(--text-4); background: none; border: none; padding: 0; cursor: pointer; transition: color 0.3s; line-height: 1.6; font-family: inherit; }
+.lang-btn:hover { color: var(--text); }
+html[lang="en"] .lang-btn { color: var(--accent); }
+@media (max-width: 767px) { .header-email { display: none; } .header-sep { display: none; } }
 /* Work dropdown — hover expands to jump to each work section */
 .nav-hover { position: relative; display: inline-flex; }
 .caret { display: inline-block; margin-left: 0.35em; width: 0; height: 0; border-left: 3px solid transparent; border-right: 3px solid transparent; border-top: 4px solid currentColor; opacity: 0.6; transition: transform 0.25s ease; }
@@ -908,6 +918,56 @@ body { background: var(--bg); color: var(--text); font-family: var(--ds-font-bod
 </style>
 
 <script>
+// ═══ i18n — Chinese/English bilingual system ═══
+const I18N = {
+  heroTag1: { zh: '动态视觉设计师', en: 'Motion Visual Designer' },
+  heroTag2: { zh: '内容创作者', en: 'Content Creator' },
+  heroTag3: { zh: '产品工程师', en: 'Product Engineer' },
+  statKicker1: { zh: '累计发表字数', en: 'Words Published' },
+  statUnit1: { zh: '字', en: 'words' },
+  statKicker2: { zh: '过去一年提交代码', en: 'Code Commits (Past Year)' },
+  statUnit2: { zh: '次', en: 'commits' },
+  statKicker3: { zh: '致力于数字创作领域', en: 'Years in Digital Creation' },
+  statUnit3: { zh: '年', en: 'years' },
+  statKicker4: { zh: '文章累计被浏览', en: 'Article Views' },
+  statSrc: { zh: '少数派', en: 'sspai.com' },
+  whatHeading: { zh: '跨领域<br/>数字创作者', en: 'Cross-Domain<br/>Digital Creator' },
+  whatBody: { zh: '我创建数字产品、塑造品牌视觉、分享创作背后的思考过程。倡导数据主权，坚持创作即认知的理念。', en: 'I create digital products, shape brand visuals, and share the thinking behind the work. An advocate of data sovereignty — creation as cognition.' },
+  workTitle: { zh: '动态视觉从业十年，只有热爱，别无他解。', en: 'A decade in motion visuals — nothing but love for the craft.' },
+  workBody1: { zh: '从三维动画、CG 艺术到动态视觉与数字产品，十年创作路一直在探索媒介与叙事。没有捷径可言，凭的是一点热爱与坚持——每一件作品都是对边界的试探。', en: 'From 3D animation and CG art to motion design and digital products — a decade of exploring media and narrative. No shortcuts, just love and persistence: every piece pushes a boundary.' },
+  workBody2: { zh: '从实验性 VR 数字艺术作品《Hello World 2.0》，到品牌与发布会开场动效，再到入选 CCG EXPO 的《COVID-19》——作品在变，媒介在变，那个最初让我拿起笔的理由没有变。', en: 'From the experimental VR piece Hello World 2.0, to brand event openers, to CCG EXPO's COVID-19 — the work and medium evolve, but the reason I first picked up the pen never changed.' },
+  aboutHeading: { zh: '画画是画画的酬劳，写作是写作的回报。', en: 'Painting rewards itself with painting; writing rewards itself with writing.' },
+  aboutBody1: { zh: '我是数字动态视觉出身的设计师，十余年来在设计、动画与前端之间来回穿梭。现在，我把写作当成思考的入口，把 AI 当作协作者，把每个项目都看作一次方法论的实验：慢一点比较快，先设计规则，再执行规则。', en: 'A motion-visual designer by training, I have spent over a decade moving between design, animation, and front-end. Now I treat writing as the gateway to thinking, AI as a collaborator, and every project as a methodology experiment: slower is faster — design the rules first, then execute.' },
+  aboutBody2: { zh: '我相信「数据主权」与「创作即认知」——不把自己交给封闭平台，也不让想法只停在草稿里。工具会更新，软件会被淘汰，能一直带走的是想清楚的能力；CG 艺术实验室，就是我把这种能力写下来、做出来、验证过的地方。', en: 'I believe in data sovereignty and creation as cognition — never handing yourself over to a closed platform, never letting ideas die in a draft. Tools update, software gets retired; what stays is the ability to think clearly. CG Art Lab is where I write it down, build it out, and prove it works.' },
+  cvWork: { zh: '工作经历', en: 'Work Experience' },
+  cvEdu: { zh: '教育经历', en: 'Education' },
+  cvProjects: { zh: '项目经历与奖项认证', en: 'Projects & Awards' },
+  contactBody: { zh: '如果你对我的作品感兴趣，或者有任何合作想法，欢迎随时联系我。', en: 'If you like my work or have any collaboration ideas, feel free to reach out anytime.' },
+  footerQuote: { zh: '画画是画画的酬劳，写作是写作的回报。', en: 'Painting rewards itself with painting; writing rewards itself with writing.' },
+};
+
+let currentLang = localStorage.getItem('lang') || 'zh';
+
+function switchLang(lang) {
+  currentLang = lang;
+  localStorage.setItem('lang', lang);
+  document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+  document.querySelectorAll('[data-t]').forEach(el => {
+    const key = el.getAttribute('data-t');
+    const entry = I18N[key];
+    if (!entry) return;
+    const val = entry[lang] || entry.zh;
+    if (/<[a-z][\s\S]*>/i.test(val)) {
+      el.innerHTML = val;
+    } else {
+      el.textContent = val;
+    }
+  });
+}
+
+// Apply saved language on load
+if (currentLang === 'en') switchLang('en');
+
 // ═══ Seaweed — large kelp (60fps optimized) ═══
 try { (() => {
 	const c = document.getElementById('seaweed');
@@ -1657,5 +1717,10 @@ try { (() => {
 		});
 	});
 })(); } catch(e) { console.warn('[anchor]', e.message); }
+
+// ═══ Language toggle ═══
+document.getElementById('langToggle')?.addEventListener('click', () => {
+  switchLang(currentLang === 'zh' ? 'en' : 'zh');
+});
 
 </script>
