@@ -988,7 +988,12 @@ try { (() => {
 		}
 
 		// ── Code rain (mode 1) — continuous loop, random mutation ──
-		if (bgMode === 1 || (bgMode !== targetMode && targetMode === 1 && crossFade > 0.1)) {
+		// Keep rendering if any column still fading out
+		let anyRainVisible = false;
+		for (let ci = 0; ci < codeCols.length; ci++) {
+			if (codeCols[ci].alpha > 0.02) { anyRainVisible = true; break; }
+		}
+		if (bgMode === 1 || (bgMode !== targetMode && crossFade > 0.1) || anyRainVisible) {
 			const rainAlpha = (bgMode === 1) ? 1 : crossFade;
 			ctx.globalAlpha = rainAlpha;
 			// Random character mutation every ~0.5s
