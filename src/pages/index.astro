@@ -72,7 +72,10 @@ const meditationImages = [
 			<section class="slide dark" data-slide="0">
 				<div class="slide-content center">
 					<div class="hero">
-						<h1 class="hero-name anim scale" data-d="0">CHEN<br>YANG</h1>
+						<h1 class="hero-name anim scale" data-d="0" aria-label="CHEN YANG">
+							<span class="hl" aria-hidden="true"><span>C</span><span>H</span><span>E</span><span>N</span></span>
+							<span class="hl" aria-hidden="true"><span>Y</span><span>A</span><span>N</span><span>G</span></span>
+						</h1>
 						<div class="hero-subline anim up" data-d="1">
 							<p class="hero-role">A <span class="rwd" style="--ri:0"><span class="inner">Designer</span></span>, <span class="rwd" style="--ri:1"><span class="inner">Writer</span></span>, <span class="rwd" style="--ri:2"><span class="inner">Engineer</span></span>.</p>
 						</div>
@@ -493,11 +496,14 @@ body { background: var(--bg); color: var(--text); font-family: var(--ds-font-bod
 .hero-name {
 	font-size: clamp(4.5rem, 16vw, 14rem);
 	line-height: 0.88;
-	letter-spacing: -0.06em;
+	letter-spacing: -0.02em;
 	font-weight: 700;
 	margin-bottom: 1.25rem;
 	color: var(--text);
+	display: flex; flex-direction: column; align-items: stretch; width: fit-content;
 }
+.hero-name .hl { display: flex; justify-content: space-between; width: 100%; white-space: nowrap; }
+.hero-name .hl span { display: inline-block; }
 .hero-subline {
 	display: flex;
 	align-items: baseline;
@@ -539,15 +545,16 @@ body { background: var(--bg); color: var(--text); font-family: var(--ds-font-bod
 .hero-tags {
 	display: flex;
 	flex-wrap: wrap;
+	align-items: baseline;
 	justify-content: flex-start;
-	gap: 0.5rem 1.25rem;
+	gap: 0.25rem;
 	font-size: 0.8125rem;
-	color: var(--text-4);
-	letter-spacing: 0.06em;
+	color: var(--text-3);
+	letter-spacing: 0.08em;
 	text-transform: uppercase;
 	margin-bottom: 2rem;
 }
-.hero-tags .sep { display: none; }
+.hero-tags .sep { display: inline-block; color: var(--accent); margin: 0 0.65rem; opacity: 0.8; }
 
 /* Scroll cue — replaces CTA button on the hero */
 .scroll-cue { display: inline-flex; flex-direction: column; align-items: center; gap: 0.6rem; margin-top: 0.5rem; color: var(--text-3); text-decoration: none; }
