@@ -19,6 +19,26 @@ const meditationImages = [
 	{ src: '/images/冥想系列-1754664822895.webp', title: '冥想系列 9', desc: '意识的最终形态' },
 	{ src: '/images/冥想系列-1754664829706.webp', title: '冥想系列 10', desc: '冥想之旅的终点与起点' }
 ];
+
+// 真实内容：cgartlab.com 文章标题 + 摘录、作品名称 + 介绍（横向滚动跑马灯素材）
+const tickerItems = [
+	'Men（门）Agent 团队 · 围绕一人内容创作与工程协作的 6+1 Agent 团队系统',
+	'AI 优雅食用指南 · 从「规则执行者」到「规则设计师」，慢一点才能真正用好 AI',
+	'我的上帝模式 · 一名动态视觉设计师的创作环境演变',
+	'Inkard 卡片生成器 · 4 套模板、6 种配色、3 种字体',
+	'Argus 前端设计代码审查 Agent · 自动审查硬编码、令牌与无障碍违规',
+	'Go To GitHub · 社区 hosts 源实时加速 GitHub 访问',
+	'EDIC 设计系统 · 同时面向人类与 Agent 的编辑主义设计系统',
+	'世界尽管让它去转 · 不用担心你学的东西会过时',
+	'LayerRenamer · Photoshop 图层批量重命名脚本',
+	'数权实验室 · NAS 不止是硬盘，更是你的私人数据中心',
+	'《流浪地球 3（上）》 · UI 设计师',
+	'品牌强国工程开幕式 · 动效设计师',
+	'作品集 2024 · 四年一度的创作历程缩影',
+	'冥想系列 · 解剖自己内心的过程，接近实相的道路',
+	'写作是建立思维标本的过程 · 把想清楚的能力写下来',
+	'网页里那个「下载」图标越大，就越不是你要找的链接',
+];
 ---
 
 <!doctype html>
@@ -91,6 +111,25 @@ const meditationImages = [
 
 			<!-- ═══ Slide 1 — Stats (transparent: reveals fixed scene layers) ═══ -->
 			<section class="slide dark" data-slide="1" id="stats">
+				{/* Horizontal left→right content ticker — real cgartlab titles/excerpts, works */}
+				<div class="ticker" aria-hidden="true">
+					{[8, 15, 22, 29, 71, 78, 85, 92].map((top, i) => (
+						<div class="ticker-row" style={`top:${top}dvh;--dur:${(9 + ((i * 7) % 14)).toFixed(1)}s;--op:${(0.45 + (i % 4) * 0.14).toFixed(2)}`}>
+							<div class="ticker-track">
+								{[0, 1].map(dup => (
+									<span class="ticker-half" key={dup}>
+										{Array.from({ length: 4 }, (_, k) => (
+											<span class="ticker-item" key={k}>
+												{tickerItems[(i * 2 + dup + k) % tickerItems.length]}
+												<span class="ticker-sep">·</span>
+											</span>
+										))}
+									</span>
+								))}
+							</div>
+						</div>
+					))}
+				</div>
 				<div class="slide-content center">
 					<div class="stats">
 						<div class="stat anim up" data-d="0">
@@ -426,6 +465,15 @@ body { background: var(--bg); color: var(--text); font-family: var(--ds-font-bod
 /* Fixed full-viewport scene layers — crossfade opacity on page change (no seams) */
 .scene-layer { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; opacity: 0; transition: opacity 0.9s ease; display: block; }
 .silver-scene { background: radial-gradient(120% 90% at 18% 8%, rgba(214,219,210,0.20) 0%, rgba(214,219,210,0.06) 34%, transparent 62%), linear-gradient(160deg, #17181d 0%, #23252c 42%, #101116 100%); }
+/* Page-2 horizontal content ticker (real cgartlab text) — left → right marquee */
+.ticker { position: absolute; inset: 0; overflow: hidden; z-index: 0; pointer-events: none; }
+.ticker-row { position: absolute; left: 0; right: 0; overflow: hidden; opacity: var(--op, 0.5); }
+.ticker-track { display: flex; width: max-content; animation: tickerR linear infinite; animation-duration: var(--dur, 12s); will-change: transform; }
+.ticker-half { display: inline-flex; flex-shrink: 0; align-items: baseline; }
+.ticker-item { display: inline-flex; align-items: baseline; white-space: nowrap; font-size: 0.8rem; letter-spacing: 0.06em; color: var(--text-3); }
+.ticker-sep { color: var(--accent); margin: 0 1.6rem; opacity: 0.9; }
+@keyframes tickerR { from { transform: translateX(-50%); } to { transform: none; } }
+@media (prefers-reduced-motion: reduce) { .ticker-track { animation: none; } }
 /* About (5) & Contact (6) reveal the shared silver scene instead of flat .dark */
 [data-slide="5"], [data-slide="6"] { background: transparent !important; }
 /* Slide 1 reveals fixed scene layers instead of an opaque .dark background */
@@ -1232,12 +1280,8 @@ try { (() => {
 			ctx.globalAlpha = 1;
 		}
 
-		// ── Code rain — page 2 only, drawn on the aurora canvas behind the text ──
-		let anyRainVisible = false;
-		for (let ci = 0; ci < codeCols.length; ci++) {
-			if (codeCols[ci].alpha > 0.02) { anyRainVisible = true; break; }
-		}
-		if (activeSlide === 1 || anyRainVisible) {
+		// ── Horizontal ticker replaces the vertical code rain (no char painting) ──
+		if (activeSlide === -1) {
 			if (activeSlide === 1 && !columnsReset) {
 				for (let ci = 0; ci < codeCols.length; ci++) {
 					codeCols[ci].y = Math.random() * h;
