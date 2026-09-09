@@ -678,7 +678,37 @@ try { (() => {
 	const DEPTH_W = [4.5, 1.0, 0];
 	const DEPTH_A = [0.025, 0.065, 0.13];
 	const rays = [], snow = [], codeCols = [];
-	const CHARS = 'アイウエオカキクケコサシスセソタチツテトナニヌネノ0123456789ABCDEF';
+	// 方块汉字池（常用字）
+	const RAIN_CHARS = '的一是了我不人在他有这上们来到时大地为子中你说生国年着就那和要她出也得里后自以会家可下而过天去能对小多然于心学么之都好看起发当没成只如事把还用第样道想作种开美总从无情己面最女但现前些所同日手又行意动方期它头经长儿回位分爱老因很给名法间斯知世什两次使身者被高已亲其进此话常与活正感';
+	// cgartlab.com 文章句子池
+	const RAIN_SENTENCES = [
+		'围绕一人内容创作与工程协作的六加一智能体团队系统',
+		'机械验证优先假完成必识破单字命名门思记持艺寻',
+		'面对人工智能我们和长辈其实没什么两样',
+		'都习惯了执行规则却从未学习设计规则',
+		'从规则执行者到规则设计师慢一点才能真正用好人工智能',
+		'从业十二年的动态视觉设计师回顾创作环境演变历程',
+		'在线精美卡片生成器四套模板六种配色三种字体',
+		'自动为技术文章内的术语生成百科链接提升阅读体验',
+		'实时从社区维护的域名映射源获取访问加速方案',
+		'同时面向人类与智能体的编辑主义设计系统',
+		'人工智能行业已经从模型版本竞赛到智能体代理全面转向',
+		'如何让人工智能像员工一样自主工作互相合作',
+		'一个人从机场走出来到陌生的国度前面是未知但方向明确',
+		'私人数据中心跳过复杂的命令行建立创作者存储逻辑',
+		'对于用户软件是应用对于开发者软件是他们的产品',
+		'互联网是一片大海网站是浪花而浏览器是脚下的冲浪板',
+		'电脑要换的软件要更新的只有数据伴随你一辈子',
+		'一个人独处时如果没有想起任何其他人是快乐的',
+		'冥想是解剖自己内心的过程是让人无限接近实相的道路',
+		'写作是建立思维标本的过程系统化地整理表达思考',
+		'打造自己的第二大脑处理信息爆炸的方法是一点点学来的',
+		'用小学数学的思维方式重新审视情绪问题',
+		'编剧的作用是将剧本中的元素组织起来使观众理解',
+		'网页里那个下载图标越大就越不是你要找的链接',
+		'学习不好高考复读一年改学了画画',
+		'什么更重要什么最重要是否具有长期价值的三板斧方法论',
+	];
 
 	const build = () => {
 		layers[0].length = 0; layers[1].length = 0; layers[2].length = 0;
@@ -731,18 +761,29 @@ try { (() => {
 		codeCols.length = 0;
 		for (let i = 0; i < 90; i++) {
 			const depth = 0.2 + Math.random() * 0.8;
-			codeCols.push({
-				x: (i / 89) * w + (Math.random() - 0.5) * 18,
-				y: Math.random() * h,
-				spd: 0.75 + depth * 2.5 + Math.random() * 1,
-				depth,
-				alpha: Math.random(),
-				fadeTarget: 1,
-				fadeRate: 0.012 + Math.random() * 0.04,
-				flSpd: 0.6 + Math.random() * 2.2,
-				flPh: Math.random() * 6.28,
-				chars: Array.from({ length: 14 }, () => CHARS[Math.floor(Math.random() * CHARS.length)]),
-			});
+			codeCols.push((() => {
+				const useSentence = Math.random() < 0.6;
+				const sentence = useSentence ? RAIN_SENTENCES[Math.floor(Math.random() * RAIN_SENTENCES.length)] : '';
+				const sOff = useSentence ? Math.floor(Math.random() * sentence.length) : 0;
+				const mk = (i) => useSentence
+					? sentence[(sOff + i) % sentence.length]
+					: RAIN_CHARS[Math.floor(Math.random() * RAIN_CHARS.length)];
+				return {
+					x: (i / 89) * w + (Math.random() - 0.5) * 18,
+					y: Math.random() * h,
+					spd: 0.75 + depth * 2.5 + Math.random() * 1,
+					depth,
+					alpha: Math.random(),
+					fadeTarget: 1,
+					fadeRate: 0.012 + Math.random() * 0.04,
+					flSpd: 0.6 + Math.random() * 2.2,
+					flPh: Math.random() * 6.28,
+					sentence,
+					sOff,
+					useSentence,
+					chars: Array.from({ length: 14 }, (_, ci) => mk(ci)),
+				};
+			})());
 		}
 	};
 	const resize = () => { w = c.width = innerWidth; h = c.height = innerHeight; build(); };
@@ -991,8 +1032,16 @@ try { (() => {
 			if (Math.floor(t * 60) % 9 === 0) {
 				for (let ci = 0; ci < codeCols.length; ci++) {
 					const col = codeCols[ci];
-					col.chars[Math.floor(Math.random() * 14)] = CHARS[Math.floor(Math.random() * CHARS.length)];
-					if (Math.random() < 0.5) col.chars[Math.floor(Math.random() * 14)] = CHARS[Math.floor(Math.random() * CHARS.length)];
+					const p = Math.floor(Math.random() * 14);
+					col.chars[p] = col.useSentence
+						? col.sentence[(col.sOff + p + Math.floor(Math.random() * 5)) % col.sentence.length]
+						: RAIN_CHARS[Math.floor(Math.random() * RAIN_CHARS.length)];
+					if (Math.random() < 0.5) {
+						const p2 = Math.floor(Math.random() * 14);
+						col.chars[p2] = col.useSentence
+							? col.sentence[(col.sOff + p2 + Math.floor(Math.random() * 5)) % col.sentence.length]
+							: RAIN_CHARS[Math.floor(Math.random() * RAIN_CHARS.length)];
+					}
 				}
 			}
 			for (let ci = 0; ci < codeCols.length; ci++) {
