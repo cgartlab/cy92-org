@@ -1718,7 +1718,10 @@ document.getElementById('langToggle')?.addEventListener('click', () => {
   switchLang(currentLang === 'zh' ? 'en' : 'zh');
 });
 
-// ═══ Keyboard navigation — ArrowDown / Space → next slide, ArrowUp → prev ═══
+// ═══ Keyboard navigation — ArrowDown / Space → next snap stop, ArrowUp → prev ═══
+// Steps to the actual scroll-snap target (top-level .slide AND each .mdeck-item
+// inside the tall Meditation deck) instead of blind +viewport scrollBy, which
+// overshoots under smooth-scroll animation and misaligns the full-bleed artwork.
 document.addEventListener('keydown', (e) => {
   if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.isContentEditable) return;
   const deck = document.getElementById('slideshow');
@@ -1726,7 +1729,18 @@ document.addEventListener('keydown', (e) => {
   const dir = e.key === 'ArrowDown' || e.key === ' ' ? 1 : e.key === 'ArrowUp' ? -1 : 0;
   if (!dir) return;
   e.preventDefault();
-  deck.scrollBy({ top: dir * window.innerHeight, behavior: 'smooth' });
+  const deckTop = deck.getBoundingClientRect().top;
+  const stops = Array.from(deck.querySelectorAll('.slide, .mdeck-item'))
+    .map((el) => ({ el, pos: el.getBoundingClientRect().top - deckTop + deck.scrollTop }))
+    .sort((a, b) => a.pos - b.pos);
+  const s = deck.scrollTop, eps = 8;
+  let target = null;
+  if (dir > 0) {
+    for (const st of stops) { if (st.pos > s + eps) { target = st.el; break; } }
+  } else {
+    for (let i = stops.length - 1; i >= 0; i--) { if (stops[i].pos < s - eps) { target = stops[i].el; break; } }
+  }
+  if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
 });
 
 </script>
