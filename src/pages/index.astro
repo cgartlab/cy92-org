@@ -44,6 +44,7 @@ const meditationImages = [
 						{/* 未来新作品在此追加，例如: <a href="https://men.cgartlab.com">Men</a> / <a href="https://argus.cgartlab.com">Argus</a> */}
 					</div>
 				</div>
+				<a href="https://cgartlab.com" class="header-link" target="_blank" rel="noopener noreferrer">Blog<span class="caret ext"></span></a>
 				<a href="#profile" class="header-link">Profile</a>
 				<a href="#contact" class="header-link">Contact</a>
 			</nav>
@@ -387,6 +388,9 @@ body { background: var(--bg); color: var(--text); font-family: var(--ds-font-bod
 .nav-hover { position: relative; display: inline-flex; }
 .caret { display: inline-block; margin-left: 0.35em; width: 0; height: 0; border-left: 3px solid transparent; border-right: 3px solid transparent; border-top: 4px solid currentColor; opacity: 0.6; transition: transform 0.25s ease; }
 .nav-hover:hover .caret, .nav-hover:focus-within .caret { transform: rotate(180deg); }
+/* Blog external-link caret (↗) */
+.caret.ext { width: auto; height: auto; border: 0; opacity: 0.75; font-size: 0.9em; line-height: 1; transform: none; }
+.caret.ext::after { content: '↗'; }
 .nav-menu {
 	position: absolute; top: calc(100% + 0.9rem); left: 50%; transform: translateX(-50%) translateY(6px);
 	min-width: 148px; padding: 0.6rem 0; list-style: none;
