@@ -669,7 +669,7 @@ try { (() => {
 	const layers = [[], [], []];
 	let mx = -9999, my = -9999;
 	const GLOW_R = 280, GLOW_R2 = GLOW_R * GLOW_R;
-	const PUSH_R = 300, PUSH_R2 = PUSH_R * PUSH_R, PUSH_K = 40, SPREAD = 0.86;
+	const PUSH_R = 300, PUSH_R2 = PUSH_R * PUSH_R, PUSH_K = 40;
 	const DEPTH_W = [4.5, 1.0, 0];
 	const DEPTH_A = [0.025, 0.065, 0.13];
 	const rays = [], snow = [];
@@ -698,8 +698,6 @@ try { (() => {
 				pushX: new Float32Array(numPts),
 				pushY: new Float32Array(numPts),
 				gHalo: 'hsla(' + hue + ',25%,42%,' + (alpha * 0.35) + ')',
-				gGlow: 'hsla(' + (hue + 8) + ',38%,64%,0.4)',
-				gNode: 'hsla(' + (hue + 5) + ',42%,68%,',
 				gHue: hue, gA: alpha
 			};
 			for (let j = 0; j < numPts; j++) k.pts[j].y = j * h * inv;
@@ -766,15 +764,17 @@ try { (() => {
 				pBuf[j*2+1] = p.y;
 			}
 
-			// Mouse interaction
+			// Mouse interaction — traveling pulse from touch point
 			const illum = k.illum, pushX = k.pushX, pushY = k.pushY;
 			if (skip) {
 				illum.fill(0); pushX.fill(0); pushY.fill(0);
 			} else if (mx > -1000) {
+				// Find nearest point + apply push
+				let touchIdx = 0, minD2 = Infinity;
 				for (let j = 0; j < n; j++) {
 					const dx = mx - pBuf[j*2], dy = my - pBuf[j*2+1];
 					const d2 = dx*dx + dy*dy;
-					illum[j] = d2 < GLOW_R2 ? Math.pow(1 - Math.sqrt(d2)/GLOW_R, 2.5) : 0;
+					if (d2 < minD2) { minD2 = d2; touchIdx = j; }
 					if (d2 < PUSH_R2 && d2 > 1) {
 						const d = Math.sqrt(d2);
 						const f = (1 - d/PUSH_R)*(1 - d/PUSH_R)*PUSH_K;
@@ -782,8 +782,19 @@ try { (() => {
 						pushY[j] += (dy/d*f*0.3 - pushY[j]) * 0.06;
 					} else { pushX[j] *= 0.93; pushY[j] *= 0.93; }
 				}
-				for (let j = 1; j < n; j++) illum[j] = Math.max(illum[j], illum[j-1]*SPREAD);
-				for (let j = n-2; j >= 0; j--) illum[j] = Math.max(illum[j], illum[j+1]*SPREAD);
+				// Traveling pulse — wave propagates outward from touch point
+				const touchDist = Math.sqrt(minD2);
+				if (touchDist < GLOW_R) {
+					const strength = Math.pow(1 - touchDist/GLOW_R, 2.5);
+					for (let j = 0; j < n; j++) {
+						const d = Math.abs(j - touchIdx);
+						const wave = Math.cos(t * 15 - d * 0.7);
+						const fall = Math.max(0, 1 - d * 0.1);
+						illum[j] = strength * Math.max(0, wave) * fall;
+					}
+				} else {
+					illum.fill(0);
+				}
 			} else {
 				illum.fill(0); pushX.fill(0); pushY.fill(0);
 			}
@@ -808,18 +819,23 @@ try { (() => {
 			g.addColorStop(1, 'hsla('+k.gHue+',28%,40%,'+k.gA*0.1+')');
 			ctx.strokeStyle = g; ctx.lineWidth = k.w; ctx.stroke();
 
-			// Illumination overlay
+			// Illumination overlay — pulse glow
 			if (!skip && mx > -1000) {
 				let maxI = 0;
 				for (let j = 0; j < n; j++) if (illum[j] > maxI) maxI = illum[j];
 				if (maxI > 0.02) {
+					// Glow stroke — opacity & width scale with pulse intensity
 					ctx.beginPath(); trace(fBuf, len);
-					ctx.strokeStyle = k.gGlow; ctx.lineWidth = k.w + 1.5; ctx.stroke();
+					ctx.strokeStyle = 'hsla(' + (k.gHue + 8) + ',38%,64%,' + (maxI * 0.45) + ')';
+					ctx.lineWidth = k.w + 1 + maxI * 5;
+					ctx.stroke();
+					// Pulse nodes — bright dots along illuminated path
 					for (let j = 0; j < n; j++) {
-						if (illum[j] > 0.2) {
+						if (illum[j] > 0.05) {
+							const i = illum[j];
 							ctx.beginPath();
-							ctx.arc(fBuf[j*2], fBuf[j*2+1], 1.5+illum[j]*3, 0, 6.28);
-							ctx.fillStyle = k.gNode + (illum[j]*0.55)+')';
+							ctx.arc(fBuf[j*2], fBuf[j*2+1], 1 + i * 7, 0, 6.28);
+							ctx.fillStyle = 'hsla(' + (k.gHue + 5) + ',42%,68%,' + (i * 0.6) + ')';
 							ctx.fill();
 						}
 					}
