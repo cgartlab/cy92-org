@@ -22,11 +22,13 @@ const meditationImages = [
 ---
 
 <!doctype html>
-<html lang="zh-CN">
+<html lang="zh-CN" style="color-scheme:dark">
 	<head>
 		<BaseHead title={SITE_TITLE} description={PERSONAL_INFO.description} />
 	</head>
 	<body>
+
+	<a href="#slideshow" class="skip-link">跳到主内容</a>
 
 		<!-- ═══ Immersive Header ═══ -->
 		<header class="header" id="header">
@@ -172,7 +174,7 @@ const meditationImages = [
 						<div class="gallery-3d">
 							{meditationImages.map((img, i) => (
 								<div class="gcard anim up" data-d={i % 5} style={`--i:${i}`}>
-									<img src={img.src} alt={img.title} class="gcard-img" />
+									<img src={img.src} alt={img.title} width="220" height="280" loading="lazy" decoding="async" class="gcard-img" />
 									<div class="gcard-info">
 										<h3 class="gcard-title">{img.title}</h3>
 										<p class="gcard-desc">{img.desc}</p>
@@ -197,7 +199,7 @@ const meditationImages = [
 								<p class="label-sm">Contact</p>
 								<div class="contact-row">
 									{SOCIAL_LINKS.slice(0, 4).map(link => (
-										<a href={link.url} target="_blank" rel="noopener noreferrer" class="icon-link" title={link.name}>
+										<a href={link.url} target="_blank" rel="noopener noreferrer" class="icon-link" title={link.name} aria-label={link.name}>
 											<Icon name={link.icon} size={14} class="w-3.5 h-3.5" fill />
 										</a>
 									))}
@@ -268,7 +270,7 @@ const meditationImages = [
 						<div class="contact-actions anim up" data-d="3">
 							<a href={`mailto:${PERSONAL_INFO.email}`} class="btn"><Icon name="mail" size={16} class="w-4 h-4" />{PERSONAL_INFO.email}</a>
 							{SOCIAL_LINKS.slice(0, 4).map(link => (
-								<a href={link.url} target="_blank" rel="noopener noreferrer" class="icon-link-lg" title={link.name}>
+								<a href={link.url} target="_blank" rel="noopener noreferrer" class="icon-link-lg" title={link.name} aria-label={link.name}>
 									<Icon name={link.icon} size={16} class="w-4 h-4" fill />
 								</a>
 							))}
@@ -290,7 +292,7 @@ const meditationImages = [
 				</div>
 				<div class="footer-right">
 					{SOCIAL_LINKS.map(link => (
-						<a href={link.url} target="_blank" rel="noopener noreferrer" class="footer-link" title={link.name}>
+						<a href={link.url} target="_blank" rel="noopener noreferrer" class="footer-link" title={link.name} aria-label={link.name}>
 							<Icon name={link.icon} size={14} class="w-3.5 h-3.5" fill />
 						</a>
 					))}
@@ -322,12 +324,21 @@ const meditationImages = [
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; }
-body { background: var(--bg); color: var(--text); font-family: var(--ds-font-body, 'Outfit', 'Noto Sans SC', system-ui, sans-serif); -webkit-font-smoothing: antialiased; }
+
+/* ═══ Focus States ═══ */
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* ═══ Skip Link ═══ */
+.skip-link { position: absolute; top: -100%; left: 1rem; z-index: 9999; padding: 0.75rem 1.5rem; background: var(--text); color: var(--bg); text-decoration: none; font-size: 0.875rem; font-weight: 500; transition: top 0.2s; }
+.skip-link:focus { top: 1rem; }
+
+/* ═══ Body ═══ */
+body { background: var(--bg); color: var(--text); font-family: var(--ds-font-body, 'Outfit', 'Noto Sans SC', system-ui, sans-serif); -webkit-font-smoothing: antialiased; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
 
 /* ═══ Typography ═══ */
-.heading-display { font-size: clamp(3rem, 10vw, 7rem); line-height: 0.9; letter-spacing: -0.05em; font-weight: 700; }
-.heading-xl { font-size: clamp(2rem, 5vw, 3.5rem); line-height: 1.1; letter-spacing: -0.04em; font-weight: 700; }
-.heading-lg { font-size: clamp(1.5rem, 3.5vw, 2.25rem); line-height: 1.2; letter-spacing: -0.03em; font-weight: 600; }
+.heading-display { font-size: clamp(3rem, 10vw, 7rem); line-height: 0.9; letter-spacing: -0.05em; font-weight: 700; text-wrap: balance; }
+.heading-xl { font-size: clamp(2rem, 5vw, 3.5rem); line-height: 1.1; letter-spacing: -0.04em; font-weight: 700; text-wrap: balance; }
+.heading-lg { font-size: clamp(1.5rem, 3.5vw, 2.25rem); line-height: 1.2; letter-spacing: -0.03em; font-weight: 600; text-wrap: balance; }
 .body-lg { font-size: 1.125rem; line-height: 1.7; max-width: 65ch; }
 .body { font-size: 1rem; line-height: 1.7; color: var(--text-2); max-width: 65ch; }
 .body-sm { font-size: 0.875rem; line-height: 1.6; color: var(--text-3); max-width: 65ch; }
@@ -360,7 +371,7 @@ body { background: var(--bg); color: var(--text); font-family: var(--ds-font-bod
 /* ═══ Slideshow ═══ */
 .slideshow { height: 100dvh; overflow-y: auto; scroll-snap-type: y mandatory; scroll-behavior: smooth; scrollbar-width: none; }
 .slideshow::-webkit-scrollbar { display: none; }
-.slide { position: relative; width: 100%; min-height: 100dvh; scroll-snap-align: start; scroll-snap-stop: always; overflow: hidden; contain: layout style paint; }
+.slide { position: relative; width: 100%; min-height: 100dvh; scroll-snap-align: start; scroll-snap-stop: always; overflow: hidden; contain: layout style paint; padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left); }
 .dark { background: var(--bg); }
 .slide-content { position: relative; z-index: 1; display: flex; align-items: center; width: 100%; min-height: 100dvh; padding: 5rem 1.5rem; }
 .slide-content.center { justify-content: center; }
@@ -449,7 +460,7 @@ body { background: var(--bg); color: var(--text); font-family: var(--ds-font-bod
 }
 .stat:first-child { border-top: 1px solid var(--border); }
 .stat-label { font-size: 0.875rem; color: var(--text-3); flex-shrink: 0; }
-.stat-value { font-size: clamp(3rem, 8vw, 6rem); line-height: 0.85; letter-spacing: -0.05em; font-weight: 700; text-align: right; }
+.stat-value { font-size: clamp(3rem, 8vw, 6rem); line-height: 0.85; letter-spacing: -0.05em; font-weight: 700; text-align: right; font-variant-numeric: tabular-nums; }
 .stat-unit { font-size: 1rem; color: var(--text-4); }
 
 /* ═══ Split ═══ */
@@ -561,7 +572,7 @@ body { background: var(--bg); color: var(--text); font-family: var(--ds-font-bod
 /* ═══ Footer ═══ */
 .footer { position: fixed; bottom: 0; left: 0; right: 0; z-index: 150; pointer-events: none; }
 .footer-divider { height: 1px; background: var(--border); margin: 0 1.5rem; }
-.footer-inner { display: flex; align-items: center; justify-content: space-between; padding: 0.75rem 1.5rem; pointer-events: auto; }
+.footer-inner { display: flex; align-items: center; justify-content: space-between; padding: 0.75rem 1.5rem max(0.75rem, env(safe-area-inset-bottom)); pointer-events: auto; }
 .footer-left { display: flex; align-items: center; gap: 0.5rem; font-size: 0.7rem; color: var(--text-4); }
 .dot { color: var(--accent); }
 .footer-text { display: none; }
@@ -882,7 +893,6 @@ try { (() => {
 		// Batch ALL connection lines into ONE path, ONE stroke
 		// This reduces GPU draw calls from ~60,000 to 1
 		const CONN_DIST2 = 70 * 70; // squared threshold
-		const CONN_DIST = 70;
 		ctx.beginPath();
 		let hasConn = false;
 		for (let i = 0; i < N; i++) {
