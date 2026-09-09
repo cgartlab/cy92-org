@@ -843,7 +843,7 @@ try { (() => {
 			})());
 		}
 	};
-	const resize = () => { w = c.width = innerWidth; h = c.height = innerHeight; build(); };
+	const resize = () => { w = c.width = innerWidth; h = c.height = innerHeight; if (rainC) { rainC.width = innerWidth; rainC.height = innerHeight; } build(); };
 	resize();
 	addEventListener('resize', resize);
 	addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
@@ -1112,9 +1112,10 @@ try { (() => {
 					}
 				}
 			}
-			// Paint on the aurora canvas, scaled to its own device-pixel size
+			// Paint on the aurora canvas (page-2-only layer), scaled to its own pixel size
 			const rc = rctx || ctx;
 			const rs = rainC ? (rainC.width / w) : 1;
+			if (rainC) rc.clearRect(0, 0, rainC.width, rainC.height);
 			rc.save();
 			rc.scale(rs, rs);
 			for (let ci = 0; ci < codeCols.length; ci++) {
@@ -1254,81 +1255,6 @@ try { (() => {
 })(); } catch(e) { console.warn('[wave]', e.message); }
 
 
-
-
-// ═══ Aurora shader-gradient (page 2) — flowing color field on black ═══
-try { (() => {
-	const c = document.getElementById('aurora');
-	if (!c) return;
-	const ctx = c.getContext('2d');
-	if (!ctx) return;
-	const dpr = Math.min(window.devicePixelRatio || 1, 2);
-	let w, h, base;
-	let fade = 0;        // 0→1 when page 2 becomes active
-	let activeNow = false;
-	const COLORS = ['115,191,196', '255,129,10', '141,160,206']; // teal / orange / periwinkle
-	const blobs = [];
-	for (let i = 0; i < 7; i++) {
-		blobs.push({
-			nx: Math.random(), ny: Math.random(),
-			r: 0.30 + Math.random() * 0.28,
-			c: COLORS[i % 3],
-			a: 0.10 + Math.random() * 0.10,
-			fx: 0.10 + Math.random() * 0.22,
-			fy: 0.10 + Math.random() * 0.20,
-			ph: Math.random() * 6.283,
-			ph2: Math.random() * 6.283,
-		});
-	}
-	const resize = () => {
-		w = c.width = Math.floor(innerWidth * dpr);
-		h = c.height = Math.floor(innerHeight * dpr);
-		base = Math.max(w, h);
-	};
-	resize();
-	addEventListener('resize', resize);
-	const obs = new IntersectionObserver(es => {
-		es.forEach(e => { activeNow = e.isIntersecting; });
-	}, { threshold: 0.05 });
-	const target = document.querySelector('[data-slide="1"] .slide-content');
-	if (target) obs.observe(target);
-	let t = Math.random() * 60;
-	const draw = () => {
-		requestAnimationFrame(draw);
-		fade += ((activeNow ? 1 : 0) - fade) * 0.06;
-		if (fade < 0.015 && !activeNow) return; // idle off-screen
-		ctx.clearRect(0, 0, w, h);
-		ctx.globalAlpha = fade;
-		ctx.fillStyle = '#000';
-		ctx.fillRect(0, 0, w, h);
-		t += 0.008;
-		// Additive blend = luminous shader-field look
-		ctx.globalCompositeOperation = 'lighter';
-		for (let i = 0; i < blobs.length; i++) {
-			const b = blobs[i];
-			const bx = w * (0.5 + 0.44 * Math.sin(t * b.fx + b.ph));
-			const by = h * (0.5 + 0.42 * Math.cos(t * b.fy + b.ph2));
-			const R = base * b.r * (1 + 0.16 * Math.sin(t * 0.5 + b.ph));
-			const g = ctx.createRadialGradient(bx, by, 0, bx, by, R);
-			g.addColorStop(0, 'rgba(' + b.c + ',' + b.a + ')');
-			g.addColorStop(0.5, 'rgba(' + b.c + ',' + (b.a * 0.5) + ')');
-			g.addColorStop(1, 'rgba(' + b.c + ',0)');
-			ctx.fillStyle = g;
-			ctx.fillRect(bx - R, by - R, R * 2, R * 2);
-		}
-		ctx.globalCompositeOperation = 'source-over';
-		// Edge blend — darken top/bottom so slide transitions stay seamless
-		const vg = ctx.createLinearGradient(0, 0, 0, h);
-		vg.addColorStop(0, 'rgba(5,5,7,' + (0.85 * fade) + ')');
-		vg.addColorStop(0.14, 'rgba(5,5,7,0)');
-		vg.addColorStop(0.82, 'rgba(5,5,7,0)');
-		vg.addColorStop(1, 'rgba(5,5,7,' + (0.9 * fade) + ')');
-		ctx.fillStyle = vg;
-		ctx.fillRect(0, 0, w, h);
-		ctx.globalAlpha = 1;
-	};
-	draw();
-})(); } catch(e) { console.warn('[aurora]', e.message); }
 
 
 // ═══ Slide observer ═══
