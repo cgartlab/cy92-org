@@ -163,25 +163,22 @@ const meditationImages = [
 			</section>
 
 			<!-- ═══ Slide 4 — Meditation (cover Ken Burns infinite, light text) ═══ -->
+			<!-- ═══ Slide 5 (page 5) — Meditation: full-bleed artwork deck ═══ -->
 			<section class="slide" data-slide="4">
-				<!-- Infinite Ken Burns loop background (image) -->
-				<div class="kb-stage">
-					<img src={coverImage} alt="冥想系列" class="kb-img" />
-					<div class="kb-overlay"></div>
-				</div>
-				<div class="slide-content">
-					<div class="med-text-center">
-						<p class="label anim up" data-d="0">Meditation Series</p>
-						<h2 class="heading-display anim up" data-d="1">冥想系列</h2>
-						<p class="body anim up" data-d="2">
-							冥想是一种改变意识的形式，是解剖自己内心的过程。在接下来的几年里我用自己的业余时间创作了这个系列，每一幅作品都聊到了我经历的不同阶段，每个阶段我选择不同的主题与自己的内心交谈。
-						</p>
-						<div class="med-cta anim up" data-d="3">
-							<a href="https://cgartlab.com/posts/meditation-series/" target="_blank" rel="noopener noreferrer" class="btn">
-								查看全部作品 <Icon name="arrow_forward" size={16} class="w-4 h-4" />
-							</a>
-						</div>
-					</div>
+				<div class="meddeck">
+					{meditationImages.map((img, i) => (
+						<article class="mdeck-item" data-mid={i} tabindex="0" aria-label={`${img.title} — ${img.desc}`}>
+							<img class="mdeck-img" src={img.src} alt={img.title} loading={i < 2 ? 'eager' : 'lazy'} decoding="async" />
+							<span class="mdeck-index">{(i + 1).toString().padStart(2, '0')}<em> / {meditationImages.length}</em></span>
+							<div class="mdeck-hover">
+								<div class="mdeck-card">
+									<span class="mdeck-no">No.{(i + 1).toString().padStart(2, '0')}</span>
+									<h3 class="mdeck-title">{img.title}</h3>
+									<p class="mdeck-desc">{img.desc}</p>
+								</div>
+							</div>
+						</article>
+					))}
 				</div>
 			</section>
 
@@ -402,8 +399,8 @@ body { background: var(--bg); color: var(--text); font-family: var(--ds-font-bod
    No timer ever advances it; only real scroll movement drives phase B
    (see pg3-director JS → --pg 0..1). */
 .video-dim { position: absolute; inset: 0; background: rgba(0,0,0,0.5); z-index: 0; pointer-events: none; opacity: calc(1 - var(--pg, 0)); }
-.glass { position: absolute; inset: 0; background: rgba(10,10,10,0.35); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); -webkit-mask-image: linear-gradient(to bottom, transparent 0%, transparent 40%, rgba(0,0,0,1) 100%); mask-image: linear-gradient(to bottom, transparent 0%, transparent 40%, rgba(0,0,0,1) 100%); z-index: 0; pointer-events: none; opacity: var(--g, 0); }
-[data-slide="2"] .slide-content { position: relative; justify-content: center; align-items: center; text-align: left; padding-bottom: 0; transform: translateY(calc(var(--pg, 0) * 15vh)); }
+.glass { position: absolute; inset: 0; background: rgba(10,10,10,0.28); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); -webkit-mask-image: linear-gradient(to bottom, transparent 0%, transparent 40%, rgba(0,0,0,1) 100%); mask-image: linear-gradient(to bottom, transparent 0%, transparent 40%, rgba(0,0,0,1) 100%); z-index: 0; pointer-events: none; opacity: var(--g, 0); }
+[data-slide="2"] .slide-content { position: relative; justify-content: center; align-items: center; text-align: left; padding-bottom: 0; transform: translateY(calc(var(--pg, 0) * 22vh)); }
 [data-slide="2"] .slide-content::after { content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none; }
 [data-slide="2"] .split, [data-slide="3"] .work { position: relative; z-index: 1; }
 
@@ -600,6 +597,50 @@ body { background: var(--bg); color: var(--text); font-family: var(--ds-font-bod
 .med-text-center .heading-display { margin: 0.5rem 0 1rem; }
 .med-text-center .body { margin-bottom: 1.5rem; }
 .med-cta { display: flex; justify-content: center; }
+
+/* ═══ Meditation — full-bleed artwork deck ═══ */
+.meddeck { width: 100%; }
+.mdeck-item {
+	position: relative; height: 100dvh; overflow: hidden;
+	scroll-snap-align: start; scroll-snap-stop: always;
+	display: flex; align-items: center; justify-content: center;
+	background: var(--bg);
+}
+.mdeck-img {
+	position: absolute; inset: 0; width: 100%; height: 100%;
+	object-fit: cover; filter: brightness(0.6);
+	transform: scale(1.09);
+	transition: transform 1.2s cubic-bezier(.16,1,.3,1), filter 0.5s ease;
+}
+.mdeck-item.cur .mdeck-img { transform: scale(1); }
+.mdeck-item:hover .mdeck-img { filter: brightness(0.75); }
+/* always-visible corner index */
+.mdeck-index {
+	position: absolute; top: max(5rem, env(safe-area-inset-top)); right: 1.5rem;
+	font-size: 0.7rem; letter-spacing: 0.22em; color: var(--text-3); z-index: 2;
+	font-variant-numeric: tabular-nums; text-shadow: 0 1px 6px rgba(0,0,0,0.8);
+}
+.mdeck-index em { font-style: normal; color: var(--text-4); margin-left: 0.4em; }
+/* hover: work floats to center, card reveals title / number / intro */
+.mdeck-hover {
+	position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+	opacity: 0; pointer-events: none; transition: opacity 0.5s ease; z-index: 3;
+}
+.mdeck-card {
+	background: rgba(8,8,10,0.55); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+	border: 1px solid var(--border); padding: 2.4rem 2.8rem; max-width: 420px;
+	text-align: center; transform: translateY(18px) scale(0.96);
+	transition: transform 0.6s var(--spring);
+}
+.mdeck-no { display: block; font-size: 0.7rem; letter-spacing: 0.34em; color: var(--accent); margin-bottom: 0.9rem; }
+.mdeck-title { font-size: clamp(1.6rem, 3.4vw, 2.6rem); font-weight: 600; color: var(--text); text-wrap: balance; margin-bottom: 0.6rem; }
+.mdeck-desc { font-size: 0.9rem; line-height: 1.7; color: var(--text-2); }
+.mdeck-item:hover .mdeck-hover, .mdeck-item:focus-within .mdeck-hover { opacity: 1; }
+.mdeck-item:hover .mdeck-card, .mdeck-item:focus-within .mdeck-card { transform: none; }
+@media (hover: none) {
+	.mdeck-hover { opacity: 1; align-items: flex-end; padding-bottom: 9dvh; }
+	.mdeck-card { padding: 1.4rem 1.6rem; backdrop-filter: blur(10px); }
+}
 
 /* ═══ Gallery 3D ═══ */
 .gallery-wrap { width: 100%; }
@@ -1355,6 +1396,17 @@ try { (() => {
 	draw();
 })(); } catch(e) { console.warn('[grad]', e.message); }
 
+
+
+// ═══ Meditation deck — full-screen artworks: entrance zoom + hover float card ═══
+try { (() => {
+	const items = document.querySelectorAll('.mdeck-item');
+	if (!items.length) return;
+	const io = new IntersectionObserver(es => {
+		es.forEach(e => { e.target.classList.toggle('cur', e.isIntersecting); });
+	}, { threshold: 0.55 });
+	items.forEach(it => io.observe(it));
+})(); } catch(e) { console.warn('[meddeck]', e.message); }
 
 
 // ═══ Page-3 director: Phase A is steady (centered text, dim video). Only
