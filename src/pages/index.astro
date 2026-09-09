@@ -1506,6 +1506,8 @@ try { (() => {
 		if (cur === curIdx) return;
 		curIdx = cur;
 		sl.dataset.active = String(cur);
+		// notify feature scripts (e.g., stats count-up) when entering page 2 (idx 1)
+		sl.dispatchEvent(new CustomEvent('deckact', { detail: cur }));
 		ss.forEach((s, k) => s.classList.toggle('is-active', k === cur));
 		if (ib) ib.style.transform = 'scaleY(' + ((cur + 1) / ss.length) + ')';
 		if (header) header.classList.toggle('scrolled', cur > 0);
@@ -1523,37 +1525,34 @@ try { (() => {
 	apply();
 })(); } catch(e) { console.warn("[2]", e.message); }
 
-// ═══ Number counter animation ═══
+// ═══ Number counter — count-up entrance driven by page activation (replays on re-entry) ═══
 try { (() => {
-	const els = document.querySelectorAll('.stat-value[data-target]');
+	const els = Array.from(document.querySelectorAll('.stat-value[data-target]'));
 	if (!els.length) return;
 	const reduce = matchMedia?.('(prefers-reduced-motion: reduce)').matches;
-	const parse = (el) => { const v = parseFloat(el.dataset.target || '0'); const d = parseInt(el.dataset.dec || '0', 10) || 0; return { v: v || 0, d }; };
+	const rafMap = new Map();
+	const parse = el => { const v = parseFloat(el.dataset.target || '0'); const d = parseInt(el.dataset.dec || '0', 10) || 0; return { v: v || 0, d }; };
 	const fmt = (el, n) => { const d = parseInt(el.dataset.dec || '0', 10) || 0; return d ? n.toFixed(d) : String(n); };
-	if (reduce) { els.forEach(el => { const { v, d } = parse(el); el.textContent = (d ? v.toFixed(d) : String(Math.round(v))) + (el.dataset.suffix || ''); }); return; }
-
-	const seen = new Set();
-	const obs = new IntersectionObserver(entries => {
-		entries.forEach(entry => {
-			if (entry.isIntersecting && !seen.has(entry.target)) {
-				seen.add(entry.target);
-				const el = entry.target;
-				const { v: target, d } = parse(el);
-				const suffix = el.dataset.suffix || (el.textContent.includes('+') ? '+' : '');
-				const dur = 1800;
-				const start = performance.now();
-				const tick = now => {
-					const p = Math.min((now - start) / dur, 1);
-					const eased = 1 - Math.pow(1 - p, 4); // easeOutQuart
-					el.textContent = fmt(el, target * eased) + suffix;
-					if (p < 1) requestAnimationFrame(tick);
-					else el.textContent = fmt(el, target) + suffix;
-				};
-				requestAnimationFrame(tick);
-			}
-		});
-	}, { threshold: 0.4 });
-	els.forEach(el => obs.observe(el));
+	const suffixOf = el => el.dataset.suffix || (el.textContent.includes('+') ? '+' : '');
+	const animate = el => {
+		if (reduce) { const { v, d } = parse(el); el.textContent = (d ? v.toFixed(d) : String(Math.round(v))) + suffixOf(el); return; }
+		const prev = rafMap.get(el); if (prev) cancelAnimationFrame(prev);
+		const { v: target, d } = parse(el);
+		const dur = 1800, start = performance.now();
+		const tick = now => {
+			const p = Math.min((now - start) / dur, 1);
+			const eased = 1 - Math.pow(1 - p, 4);
+			el.textContent = fmt(el, target * eased) + suffixOf(el);
+			if (p < 1) rafMap.set(el, requestAnimationFrame(tick)); else rafMap.delete(el);
+		};
+		rafMap.set(el, requestAnimationFrame(tick));
+	};
+	const runAll = () => els.forEach(animate);
+	const deck = document.getElementById('slideshow');
+	if (deck) deck.addEventListener('deckact', e => { if (e.detail === 1) runAll(); });
+	// Fallback trigger when the stat values scroll into view (hash nav / direct)
+	const io = new IntersectionObserver(es => { es.forEach(en => { if (en.isIntersecting) animate(en.target); }); }, { threshold: 0.2 });
+	els.forEach(el => io.observe(el));
 })(); } catch(e) { console.warn("[3]", e.message); }
 
 // ═══ Gallery 3D tilt ═══
