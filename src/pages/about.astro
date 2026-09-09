@@ -3,124 +3,142 @@ import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Icon from '../components/Icon.astro';
-import { SITE_TITLE, PERSONAL_INFO, SOCIAL_LINKS } from '../consts';
+import { SITE_TITLE, PERSONAL_INFO, PERSONAL_INFO_EN, SOCIAL_LINKS } from '../consts';
 ---
 
 <!doctype html>
 <html lang="zh-CN">
 	<head>
-		<BaseHead title={`关于 | ${SITE_TITLE}`} description="关于 CG艺术实验室和作者 ChenYang - 跨领域数字创作者的创作理念与实践" />
+		<BaseHead
+			title={`关于 | ${SITE_TITLE}`}
+			titleEn={`About | ${SITE_TITLE}`}
+			description="关于 CG艺术实验室和作者 ChenYang - 跨领域数字创作者的创作理念与实践"
+			descriptionEn="About CG Art Lab and its author ChenYang — a cross-domain digital creator on craft, data sovereignty and creation as cognition."
+		/>
 	</head>
 	<body class="min-h-screen" style="background: var(--ds-color-bg); color: var(--ds-color-fg);">
 		<Header />
-		<main class="container-custom py-8 md:py-12">
+		<main class="container-custom py-12 md:py-16">
 			<article class="max-w-3xl mx-auto">
-				<header class="mb-10">
-					<div class="logo-mark w-24 h-24 flex items-center justify-center mb-5" style="border-radius: var(--ds-radius-xl);">
-						<img src="/favicon.svg" alt="CG艺术实验室 Logo" class="w-full h-full object-cover" />
-					</div>
-					<span class="ds-eyebrow mb-3">About</span>
-					<h1 class="mb-3" style="font-family: var(--ds-font-display); color: var(--ds-color-fg-strong); font-size: 2rem; line-height: 1.15;">关于我</h1>
-					<div class="quote-block my-3">
+				<div class="blk" data-l="zh">
+				<!-- Hero -->
+				<header class="mb-12 md:mb-16">
+					<p class="ds-eyebrow mb-4">About</p>
+					<h1
+						class="font-bold tracking-tight mb-6"
+						style="font-size: clamp(2rem, 5vw, 3.5rem); line-height: 1.05; letter-spacing: -0.03em; color: var(--ds-color-fg-strong);"
+					>
+						关于我
+					</h1>
+					<div class="quote-block my-4">
 						<p class="text-base">{PERSONAL_INFO.bio}</p>
 					</div>
 				</header>
 
-				<div class="space-y-10">
+				<div class="space-y-12">
+					<!-- Who I am -->
 					<section class="ds-reveal">
 						<h2 class="section-title mb-4">我是谁</h2>
-						<div class="card p-5 md:p-6">
-							<p class="text-sm text-olive leading-relaxed mb-3">
+						<div class="space-y-4">
+							<p class="text-sm md:text-base leading-relaxed" style="color: var(--ds-color-fg-subtle);">
 								我是一名跨领域数字创作者，身份横跨设计师、数字艺术家、前端开发者与写作者等多个专业领域。INFJ型人格，目前居住在云南昆明。平时爱好看书写字、养鱼画画，还有各种电子产品。
 							</p>
-							<p class="text-sm text-olive leading-relaxed mb-4">
+							<p class="text-sm md:text-base leading-relaxed" style="color: var(--ds-color-fg-subtle);">
 								这种多元化的身份组合在中国创作者群体中具有相当的独特性，我并未将自己局限于某一固定标签之下，而是根据具体创作需求与项目特点灵活切换角色定位。
 							</p>
-							<p class="text-sm text-foreground font-medium mb-2">目前从事的核心领域：</p>
-							<ul class="dash-list">
-								<li><strong class="text-foreground">数字动态视觉设计</strong> — 涵盖UI/UX设计、品牌视觉系统设计、动态图形设计、交互设计等</li>
-								<li><strong class="text-foreground">前端产品研发</strong> — 将创意概念转化为可交互数字产品的技术实现能力</li>
-								<li><strong class="text-foreground">写作</strong> — 累计产出超过13万字，作为知识输出与思维外化的核心载体</li>
-								<li><strong class="text-foreground">个人纯艺术作品</strong> — 代表对艺术表达的自我追求，与商业性创作形成互补</li>
-							</ul>
+							<div>
+								<p class="text-sm font-medium mb-2" style="color: var(--ds-color-fg-strong);">目前从事的核心领域：</p>
+								<ul class="dash-list">
+									<li><strong style="color: var(--ds-color-fg-strong);">数字动态视觉设计</strong> — 涵盖UI/UX设计、品牌视觉系统设计、动态图形设计、交互设计等</li>
+									<li><strong style="color: var(--ds-color-fg-strong);">前端产品研发</strong> — 将创意概念转化为可交互数字产品的技术实现能力</li>
+									<li><strong style="color: var(--ds-color-fg-strong);">写作</strong> — 累计产出超过13万字，作为知识输出与思维外化的核心载体</li>
+									<li><strong style="color: var(--ds-color-fg-strong);">个人纯艺术作品</strong> — 代表对艺术表达的自我追求，与商业性创作形成互补</li>
+								</ul>
+							</div>
 						</div>
 					</section>
 
+					<!-- Data Sovereignty -->
 					<section class="ds-reveal">
 						<h2 class="section-title mb-4">数据主权理念</h2>
-						<div class="card p-5 md:p-6">
-							<p class="text-sm text-olive leading-relaxed mb-4">
+						<div class="space-y-4">
+							<p class="text-sm md:text-base leading-relaxed" style="color: var(--ds-color-fg-subtle);">
 								「数据主权」是我价值体系中最具特色的核心理念之一。从本质上讲，这一理念的核心诉求在于：从依赖中心化平台转向掌控个人数据，确保个体在数字空间中的自主性与独立性。
 							</p>
 							<ul class="dash-list">
-								<li><strong class="text-foreground">NAS私有云</strong> — 实现数据的本地化存储，摆脱对云服务商的数据依赖</li>
-								<li><strong class="text-foreground">Syncthing点对点同步</strong> — 去中心化的文件同步方案，数据传输路径完全自主控制</li>
-								<li><strong class="text-foreground">Miniflux自建RSS服务</strong> — 掌控信息获取渠道，摆脱算法推荐与广告追踪</li>
-								<li><strong class="text-foreground">开源优先原则</strong> — 优先选择开源、支持数据导出、设计理念透明的产品</li>
+								<li><strong style="color: var(--ds-color-fg-strong);">NAS私有云</strong> — 实现数据的本地化存储，摆脱对云服务商的数据依赖</li>
+								<li><strong style="color: var(--ds-color-fg-strong);">Syncthing点对点同步</strong> — 去中心化的文件同步方案，数据传输路径完全自主控制</li>
+								<li><strong style="color: var(--ds-color-fg-strong);">Miniflux自建RSS服务</strong> — 掌控信息获取渠道，摆脱算法推荐与广告追踪</li>
+								<li><strong style="color: var(--ds-color-fg-strong);">开源优先原则</strong> — 优先选择开源、支持数据导出、设计理念透明的产品</li>
 							</ul>
 						</div>
 					</section>
 
+					<!-- Creation as Cognition -->
 					<section class="ds-reveal">
 						<h2 class="section-title mb-4">创作即认知</h2>
-						<div class="card p-5 md:p-6">
-							<div class="quote-block mb-4">
+						<div class="space-y-4">
+							<div class="quote-block">
 								<p class="text-sm">「创作即认知」是我价值体系的另一核心支柱。这一理念主张：写作和创作的根本目的不在于获取外部认可或经济回报，而在于梳理思维、认识自我、探索内在世界。</p>
 							</div>
-							<p class="text-sm text-olive leading-relaxed">
+							<p class="text-sm md:text-base leading-relaxed" style="color: var(--ds-color-fg-subtle);">
 								别指望它吃饭，打磨的是思考本身而非爆款套路。在流量至上的内容创业浪潮中，我选择拒绝被算法绑架、拒绝为追求流量而牺牲内容质量、拒绝将创作简化为制造爆款的流水线操作。
 							</p>
 						</div>
 					</section>
 
+					<!-- Tool Philosophy -->
 					<section class="ds-reveal">
 						<h2 class="section-title mb-4">工具哲学</h2>
-						<div class="card p-5 md:p-6">
-							<div class="quote-block mb-4">
+						<div class="space-y-4">
+							<div class="quote-block">
 								<p class="text-sm">「工具是人类肢体的延伸」——扇子是手的延伸，轮子是腿脚的延伸，电话是口耳的延伸。以此类推，电脑是人脑的延伸。</p>
 							</div>
-							<p class="text-sm text-olive leading-relaxed">
+							<p class="text-sm md:text-base leading-relaxed" style="color: var(--ds-color-fg-subtle);">
 								各种软件工具进一步延伸了大脑在特定领域的能力：设计软件延伸了视觉表达能力，写作工具延伸了思维外化能力，知识管理软件延伸了记忆与关联能力。「写作是思考本身」这一观点将工具哲学延伸到了创作领域。
 							</p>
 						</div>
 					</section>
 
+					<!-- Workflow -->
 					<section class="ds-reveal">
 						<h2 class="section-title mb-4">创作者工作流</h2>
-						<div class="card p-5 md:p-6">
-							<p class="text-sm text-olive leading-relaxed mb-4">
+						<div class="space-y-4">
+							<p class="text-sm md:text-base leading-relaxed" style="color: var(--ds-color-fg-subtle);">
 								我构建了一套完整的创作者工作流，涵盖从信息输入、知识管理到内容创作与输出的完整闭环。
 							</p>
 							<div class="space-y-3">
-								<div class="p-3 rounded-lg bg-canvas">
-								<p class="text-sm font-medium text-foreground mb-1">信息输入环节</p>
-								<p class="text-xs text-olive">主要依赖RSS聚合器实现信息的主动获取与筛选。通过自建Miniflux服务，得以摆脱算法推荐的被动控制。</p>
-							</div>
-							<div class="p-3 rounded-lg bg-canvas">
-								<p class="text-sm font-medium text-foreground mb-1">知识管理环节</p>
-								<p class="text-xs text-olive">以Obsidian为核心工具构建本地优先知识管理系统。Obsidian的本地Markdown存储机制与双向链接功能，使其成为构建个人「第二大脑」的理想选择。</p>
-							</div>
-							<div class="p-3 rounded-lg bg-canvas">
-								<p class="text-sm font-medium text-foreground mb-1">内容创作到输出</p>
-								<p class="text-xs text-olive">通过将阅读输入转化为个人知识库储备，再通过写作将知识加工为可分享内容，最终通过多平台分发实现价值输出。</p>
-							</div>
+								<div class="p-4 rounded-xl" style="background: var(--ds-color-surface);">
+									<p class="text-sm font-medium mb-1" style="color: var(--ds-color-fg-strong);">信息输入环节</p>
+									<p class="text-xs leading-relaxed" style="color: var(--ds-color-fg-subtle);">主要依赖RSS聚合器实现信息的主动获取与筛选。通过自建Miniflux服务，得以摆脱算法推荐的被动控制。</p>
+								</div>
+								<div class="p-4 rounded-xl" style="background: var(--ds-color-surface);">
+									<p class="text-sm font-medium mb-1" style="color: var(--ds-color-fg-strong);">知识管理环节</p>
+									<p class="text-xs leading-relaxed" style="color: var(--ds-color-fg-subtle);">以Obsidian为核心工具构建本地优先知识管理系统。Obsidian的本地Markdown存储机制与双向链接功能，使其成为构建个人「第二大脑」的理想选择。</p>
+								</div>
+								<div class="p-4 rounded-xl" style="background: var(--ds-color-surface);">
+									<p class="text-sm font-medium mb-1" style="color: var(--ds-color-fg-strong);">内容创作到输出</p>
+									<p class="text-xs leading-relaxed" style="color: var(--ds-color-fg-subtle);">通过将阅读输入转化为个人知识库储备，再通过写作将知识加工为可分享内容，最终通过多平台分发实现价值输出。</p>
+								</div>
 							</div>
 						</div>
 					</section>
 
+					<!-- About this site -->
 					<section class="ds-reveal">
 						<h2 class="section-title mb-4">关于本站</h2>
-						<div class="card p-5 md:p-6">
-							<p class="text-sm text-olive leading-relaxed mb-3">
+						<div class="space-y-4">
+							<p class="text-sm md:text-base leading-relaxed" style="color: var(--ds-color-fg-subtle);">
 								本站是我的个人创作之一，起心动念很久，一直想在网上有个属于自己的容器。容器里的内容，是我可以公开的精神世界。创造精神世界的主要手段是「CG艺术」，整个创造过程也是一次精神实验，所以就叫【CG艺术实验室】。
 							</p>
-							<p class="text-sm text-olive leading-relaxed">
+							<p class="text-sm md:text-base leading-relaxed" style="color: var(--ds-color-fg-subtle);">
 								网站采用Astro框架构建，这一技术选择与其所代表的「现代静态站点」理念与我推崇的「数据主权」概念在深层逻辑上具有高度一致性——两者都强调对技术栈的掌控能力与对外部依赖的最小化原则。
 							</p>
 						</div>
 					</section>
 				</div>
 
+				<!-- Contact -->
 				<section class="mt-12 pt-8" style="border-top: 1px solid var(--ds-color-border-subtle);">
 					<h2 class="section-title mb-5">联系方式</h2>
 					<div class="flex flex-wrap gap-2">
@@ -129,17 +147,148 @@ import { SITE_TITLE, PERSONAL_INFO, SOCIAL_LINKS } from '../consts';
 							Email
 						</a>
 						{SOCIAL_LINKS.map(link => (
-							<a
-								href={link.url}
-								target="_blank"
-								rel="noopener noreferrer"
-								class="tag"
-							>
+							<a href={link.url} target="_blank" rel="noopener noreferrer" class="tag">
 								{link.name}
 							</a>
 						))}
 					</div>
 				</section>
+				</div>
+
+				<div class="blk" data-l="en">
+				<!-- Hero -->
+				<header class="mb-12 md:mb-16">
+					<p class="ds-eyebrow mb-4">About</p>
+					<h1
+						class="font-bold tracking-tight mb-6"
+						style="font-size: clamp(2rem, 5vw, 3.5rem); line-height: 1.05; letter-spacing: -0.03em; color: var(--ds-color-fg-strong);"
+					>
+						About Me
+					</h1>
+					<div class="quote-block my-4">
+						<p class="text-base">{PERSONAL_INFO_EN.bio}</p>
+					</div>
+				</header>
+
+				<div class="space-y-12">
+					<!-- Who I am -->
+					<section class="ds-reveal">
+						<h2 class="section-title mb-4">Who I Am</h2>
+						<div class="space-y-4">
+							<p class="text-sm md:text-base leading-relaxed" style="color: var(--ds-color-fg-subtle);">
+								I'm a cross-domain digital creator — designer, digital artist, front-end developer and writer all at once. An INFJ, currently living in Kunming, Yunnan. Outside the work I read, write, keep fish, draw, and collect electronics.
+							</p>
+							<p class="text-sm md:text-base leading-relaxed" style="color: var(--ds-color-fg-subtle);">
+								This mix of identities is unusual among Chinese creators. I don't pin myself to a single label — I switch roles depending on what the work and the project actually need.
+							</p>
+							<div>
+								<p class="text-sm font-medium mb-2" style="color: var(--ds-color-fg-strong);">Core fields:</p>
+								<ul class="dash-list">
+									<li><strong style="color: var(--ds-color-fg-strong);">Motion & visual design</strong> — UI/UX, brand identity systems, motion graphics, interaction design</li>
+									<li><strong style="color: var(--ds-color-fg-strong);">Front-end product engineering</strong> — turning creative concepts into shipped, interactive digital products</li>
+									<li><strong style="color: var(--ds-color-fg-strong);">Writing</strong> — over 130,000 words published; my main channel for outputting knowledge and externalizing thought</li>
+									<li><strong style="color: var(--ds-color-fg-strong);">Personal fine-art work</strong> — self-directed artistic expression, the counterweight to commercial commissions</li>
+								</ul>
+							</div>
+						</div>
+					</section>
+
+					<!-- Data Sovereignty -->
+					<section class="ds-reveal">
+						<h2 class="section-title mb-4">On Data Sovereignty</h2>
+						<div class="space-y-4">
+							<p class="text-sm md:text-base leading-relaxed" style="color: var(--ds-color-fg-subtle);">
+								Data sovereignty is the most distinctive principle in my value system. At its core it means moving from relying on centralized platforms to owning your own data — and with it, keeping autonomy and independence in digital space.
+							</p>
+							<ul class="dash-list">
+								<li><strong style="color: var(--ds-color-fg-strong);">Self-hosted NAS</strong> — local storage that removes the dependency on cloud providers</li>
+								<li><strong style="color: var(--ds-color-fg-strong);">Syncthing P2P sync</strong> — decentralized file sync where I control the entire transfer path</li>
+								<li><strong style="color: var(--ds-color-fg-strong);">Self-hosted Miniflux</strong> — I own the information channel, free of algorithmic feeds and ad tracking</li>
+								<li><strong style="color: var(--ds-color-fg-strong);">Open-source first</strong> — preferring software that is open, exportable and transparent in design</li>
+							</ul>
+						</div>
+					</section>
+
+					<!-- Creation as Cognition -->
+					<section class="ds-reveal">
+						<h2 class="section-title mb-4">Creation as Cognition</h2>
+						<div class="space-y-4">
+							<div class="quote-block">
+								<p class="text-sm">Creation as cognition is the other pillar of my value system. The claim is simple: the point of writing and making is not external approval or income — it's sorting out your thinking, knowing yourself, exploring your inner world.</p>
+							</div>
+							<p class="text-sm md:text-base leading-relaxed" style="color: var(--ds-color-fg-subtle);">
+								Don't expect it to pay the bills. What gets sharpened is the thinking itself, not the viral formula. In a creator economy that worships traffic, I refuse to be held hostage by algorithms, to trade content quality for reach, or to reduce making into a hit-making assembly line.
+							</p>
+						</div>
+					</section>
+
+					<!-- Tool Philosophy -->
+					<section class="ds-reveal">
+						<h2 class="section-title mb-4">On Tools</h2>
+						<div class="space-y-4">
+							<div class="quote-block">
+								<p class="text-sm">Tools are an extension of the human body — the fan extends the hand, the wheel extends the legs, the phone extends mouth and ear. By the same logic, the computer extends the brain.</p>
+							</div>
+							<p class="text-sm md:text-base leading-relaxed" style="color: var(--ds-color-fg-subtle);">
+								Software extends those capacities further: design tools extend visual expression, writing tools extend the ability to externalize thought, knowledge tools extend memory and association. "Writing is thinking itself" carries that idea into the creative act.
+							</p>
+						</div>
+					</section>
+
+					<!-- Workflow -->
+					<section class="ds-reveal">
+						<h2 class="section-title mb-4">My Workflow</h2>
+						<div class="space-y-4">
+							<p class="text-sm md:text-base leading-relaxed" style="color: var(--ds-color-fg-subtle);">
+								I've built a complete creator workflow covering the whole loop — from information intake and knowledge management through to making and publishing.
+							</p>
+							<div class="space-y-3">
+								<div class="p-4 rounded-xl" style="background: var(--ds-color-surface);">
+									<p class="text-sm font-medium mb-1" style="color: var(--ds-color-fg-strong);">Intake</p>
+									<p class="text-xs leading-relaxed" style="color: var(--ds-color-fg-subtle);">Information is gathered actively through RSS readers rather than passively pushed to me. A self-hosted Miniflux keeps me out of the algorithm's grip.</p>
+								</div>
+								<div class="p-4 rounded-xl" style="background: var(--ds-color-surface);">
+									<p class="text-sm font-medium mb-1" style="color: var(--ds-color-fg-strong);">Knowledge management</p>
+									<p class="text-xs leading-relaxed" style="color: var(--ds-color-fg-subtle);">A local-first system built around Obsidian. Its local Markdown storage and bidirectional linking make it the right tool for a personal "second brain".</p>
+								</div>
+								<div class="p-4 rounded-xl" style="background: var(--ds-color-surface);">
+									<p class="text-sm font-medium mb-1" style="color: var(--ds-color-fg-strong);">Making & publishing</p>
+									<p class="text-xs leading-relaxed" style="color: var(--ds-color-fg-subtle);">What I read becomes knowledge in the vault; writing refines it into something worth sharing; multi-platform distribution is where it reaches people.</p>
+								</div>
+							</div>
+						</div>
+					</section>
+
+					<!-- About this site -->
+					<section class="ds-reveal">
+						<h2 class="section-title mb-4">About this Site</h2>
+						<div class="space-y-4">
+							<p class="text-sm md:text-base leading-relaxed" style="color: var(--ds-color-fg-subtle);">
+								This site is one of my own creations. I'd been wanting it for a long time — a container of my own on the web. What goes inside is the part of my inner world I'm willing to make public. The main medium for building that inner world is "CG art", and making the site is itself a mental experiment — hence CG Art Lab.
+							</p>
+							<p class="text-sm md:text-base leading-relaxed" style="color: var(--ds-color-fg-subtle);">
+								It's built with Astro. That choice lines up at a deep level with the data-sovereignty idea I care about: modern static sites mean owning your stack and minimizing dependency on other people's infrastructure.
+							</p>
+						</div>
+					</section>
+				</div>
+
+				<!-- Contact -->
+				<section class="mt-12 pt-8" style="border-top: 1px solid var(--ds-color-border-subtle);">
+					<h2 class="section-title mb-5">Contact</h2>
+					<div class="flex flex-wrap gap-2">
+						<a href="mailto:hello@cgartlab.com" class="tag">
+							<Icon name="mail" size={14} class="w-3.5 h-3.5" />
+							Email
+						</a>
+						{SOCIAL_LINKS.map(link => (
+							<a href={link.url} target="_blank" rel="noopener noreferrer" class="tag">
+								{link.nameEn}
+							</a>
+						))}
+					</div>
+				</section>
+				</div>
 			</article>
 		</main>
 		<Footer />

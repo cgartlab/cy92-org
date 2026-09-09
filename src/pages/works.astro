@@ -3,7 +3,7 @@ import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Icon from '../components/Icon.astro';
-import { SITE_TITLE, PERSONAL_INFO } from '../consts';
+import { SITE_TITLE } from '../consts';
 
 const meditationImages = [
 	{ src: '/images/冥想系列-1754664750528.webp', title: '冥想系列 1' },
@@ -17,6 +17,9 @@ const meditationImages = [
 	{ src: '/images/冥想系列-1754664822895.webp', title: '冥想系列 9' },
 	{ src: '/images/冥想系列-1754664829706.webp', title: '冥想系列 10' }
 ];
+
+// English labels for the same 10 artworks (order preserved, paths shared).
+const meditationImagesEn = meditationImages.map((a, i) => ({ src: a.src, title: `Meditation ${i + 1}` }));
 
 const coverImage = '/images/冥想系列-cover.webp';
 
@@ -42,34 +45,73 @@ const meditationSeries = {
 	description: '冥想是一种改变意识的形式，是解剖自己内心的过程，是让人无限接近实相的道路。第一次接触这个概念是在2013年，在随后的工作生活中它慢慢变成了我与自己交流的一种习惯。这种奇妙的体验很适合用数字绘画的形式表达出来。在接下来的几年里我用自己的业余时间创作了这个系列，每一幅作品都聊到了我经历的不同阶段，每个阶段我选择不同的主题与自己的内心交谈。从画面上也能感觉到人类底层的内心，绝谈不上美好但也没有那么不堪，繁重的压迫，对立的矛盾，复杂的冲突，都是真实的自己。',
 	link: 'https://cgartlab.com/posts/meditation-series/'
 };
+// English counterpart of videoWorks (same video ids, own copy text).
+const videoWorksEn = [
+	{
+		title: 'Ten Years After Graduating Animation School — Portfolio 2020-2024',
+		description: 'A once-every-four-years portfolio update covering 3D animation, CG art and hand-drawn work. It traces the creative journey and artistic exploration from my 2016 graduation to today.',
+		bilibiliId: 'BV1yyyKYVEeZ',
+		year: '2024',
+		tags: ['3D Animation', 'CG Art', 'Portfolio']
+	},
+	{
+		title: 'Personal CG Art Portfolio 2016-2020',
+		description: 'My first four-year portfolio after graduating from an animation program — the record of moving from student to working creator, with both commercial projects and personal work.',
+		bilibiliId: 'BV1UK4y1X7rM',
+		year: '2020',
+		tags: ['CG Art', 'Portfolio', 'Graduation Work']
+	}
+];
+const meditationSeriesEn = {
+	title: 'Meditation Series',
+	description: 'Meditation is a way of altering consciousness — a process of dissecting your own inner self, and a road that brings you close to reality. I first met the concept in 2013, and over the years of work and life that followed it slowly became a habit for talking with myself. That strange experience turned out to suit digital painting well. Over the next few years I made this series in my spare time; each piece touches a different stage of my life, and in each stage I chose a different theme to talk to my inner self with. From the images you can feel the deep undercurrent of the human heart — nothing beautiful about it, but not quite so ugly either. Heavy pressure, opposing contradictions, complicated conflict: all of it is the real self.',
+	link: 'https://cgartlab.com/posts/meditation-series/'
+};
 ---
 
 <!doctype html>
 <html lang="zh-CN">
 	<head>
-		<BaseHead title={`作品展示 | ${SITE_TITLE}`} description="ChenYang的作品集展示 - 包含CG艺术作品集视频、冥想系列数字绘画等创作成果" />
+		<BaseHead
+			title={`作品展示 | ${SITE_TITLE}`}
+			titleEn={`Selected Work | ${SITE_TITLE}`}
+			description="ChenYang的作品集展示 - 包含CG艺术作品集视频、冥想系列数字绘画等创作成果"
+			descriptionEn="ChenYang's portfolio — CG art portfolio films, the Meditation Series digital paintings and more."
+		/>
 	</head>
 	<body class="min-h-screen" style="background: var(--ds-color-bg); color: var(--ds-color-fg);">
 		<Header />
-		<main class="container-custom py-8 md:py-12">
-			<header class="mb-10 md:mb-12">
-				<span class="ds-eyebrow mb-3">Portfolio</span>
-				<h1 class="mb-3" style="font-family: var(--ds-font-display); color: var(--ds-color-fg-strong); font-size: 2rem; line-height: 1.15;">作品展示</h1>
-				<p class="text-base leading-relaxed max-w-2xl" style="color: var(--ds-color-fg-subtle);">
-					创作是内在探索的过程，每一件作品都是与自我对话的记录
-				</p>
-			</header>
+		<main>
+
+			<div class="blk" data-l="zh">
+
+			<!-- Hero -->
+			<section class="container-custom pt-16 md:pt-24 pb-12 md:pb-16">
+				<div class="max-w-3xl">
+					<p class="ds-eyebrow mb-4 md:mb-6">Portfolio</p>
+					<h1
+						class="font-bold tracking-tight mb-6"
+						style="font-size: clamp(2rem, 5vw, 3.5rem); line-height: 1.05; letter-spacing: -0.03em; color: var(--ds-color-fg-strong);"
+					>
+						作品展示
+					</h1>
+					<p class="text-base md:text-lg leading-relaxed max-w-xl" style="color: var(--ds-color-fg-subtle);">
+						创作是内在探索的过程，每一件作品都是与自我对话的记录
+					</p>
+				</div>
+			</section>
+
 
 			<!-- CG Art Portfolio -->
-			<section class="section ds-reveal">
+			<section class="section container-custom ds-reveal">
 				<div class="section-header">
 					<h2 class="section-title">CG艺术作品集</h2>
 					<div class="section-line"></div>
 				</div>
 
 				<div class="space-y-6">
-					{videoWorks.map((work, index) => (
-						<article class="card overflow-hidden">
+					{videoWorks.map((work) => (
+						<article class="rounded-2xl overflow-hidden border" style="background: var(--ds-color-surface); border-color: var(--ds-color-border-subtle);">
 							<div class="grid md:grid-cols-2 gap-0">
 								<div class="relative aspect-video bg-black">
 									<iframe
@@ -80,16 +122,16 @@ const meditationSeries = {
 										allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
 									></iframe>
 								</div>
-								<div class="p-5 md:p-6 flex flex-col justify-center">
+								<div class="p-6 md:p-8 flex flex-col justify-center">
 									<div class="flex items-center gap-3 mb-3">
-										<span class="text-sm font-medium" style="font-family: var(--ds-font-display); color: var(--ds-accent);">{work.year}</span>
+										<span class="text-xs font-medium" style="color: var(--ds-accent);">{work.year}</span>
 										<div class="flex flex-wrap gap-2">
 											{work.tags.map(tag => (
 												<span class="tag text-xs">{tag}</span>
 											))}
 										</div>
 									</div>
-									<h3 class="text-lg font-medium mb-3" style="font-family: var(--ds-font-display); color: var(--ds-color-fg);">{work.title}</h3>
+									<h3 class="text-lg md:text-xl font-semibold tracking-tight mb-3" style="color: var(--ds-color-fg-strong);">{work.title}</h3>
 									<p class="text-sm leading-relaxed" style="color: var(--ds-color-fg-subtle);">{work.description}</p>
 								</div>
 							</div>
@@ -98,115 +140,285 @@ const meditationSeries = {
 				</div>
 			</section>
 
+
 			<!-- Meditation Series -->
-			<section class="section ds-reveal">
+			<section class="section container-custom ds-reveal">
 				<div class="section-header">
 					<h2 class="section-title">冥想系列 · 数字绘画</h2>
 					<div class="section-line"></div>
 				</div>
 
-				<div class="card p-5 md:p-6">
-					<div class="mb-6">
-						<div class="relative w-full aspect-[21/9] overflow-hidden mb-5" style="border-radius: var(--ds-radius-xl);">
-							<img
-								src={coverImage}
-								alt="冥想系列封面"
-								class="w-full h-full object-cover"
-							/>
-							<div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
-							<div class="absolute bottom-4 left-4 right-4">
-								<h3 class="text-lg md:text-xl font-medium text-white mb-1" style="font-family: var(--ds-font-display);">{meditationSeries.title}</h3>
-								<p class="text-sm text-white/80">数字绘画系列 · 2013-2016</p>
-							</div>
-						</div>
-						<p class="text-sm leading-relaxed" style="color: var(--ds-color-fg-subtle);">
-							{meditationSeries.description}
-						</p>
+				<!-- Cover -->
+				<div class="relative w-full aspect-[21/9] overflow-hidden mb-6 rounded-2xl">
+					<img
+						src={coverImage}
+						alt="冥想系列封面"
+						class="w-full h-full object-cover"
+					/>
+					<div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+					<div class="absolute bottom-6 left-6 right-6">
+						<h3 class="text-xl md:text-2xl font-semibold text-white mb-1">{meditationSeries.title}</h3>
+						<p class="text-sm text-white/70">数字绘画系列 · 2013-2016</p>
 					</div>
+				</div>
 
-					<div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-4">
-						{meditationImages.map((artwork, index) => (
-							<a
-								href={meditationSeries.link}
-								target="_blank"
-								rel="noopener noreferrer"
-								class="group relative aspect-square overflow-hidden border transition-all duration-300 hover:-translate-y-1"
-							style="border-color: var(--ds-color-border-subtle); border-radius: var(--ds-radius-xl);"
-							>
-								<img
-									src={artwork.src}
-									alt={artwork.title}
-									class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-								/>
-								<div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-									<div class="absolute bottom-2 left-2 right-2">
-										<span class="text-xs font-medium text-white">{artwork.title}</span>
-									</div>
-								</div>
-							</a>
-						))}
-					</div>
+				<!-- Description -->
+				<p class="text-sm md:text-base leading-relaxed mb-8 max-w-3xl" style="color: var(--ds-color-fg-subtle);">
+					{meditationSeries.description}
+				</p>
 
-					<div class="mt-6 pt-4" style="border-top: 1px solid var(--ds-color-border-subtle);">
+				<!-- Gallery Grid -->
+				<div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-4 mb-6">
+					{meditationImages.map((artwork) => (
 						<a
 							href={meditationSeries.link}
 							target="_blank"
 							rel="noopener noreferrer"
-							class="inline-flex items-center gap-2 text-sm font-medium transition-colors"
-							style="color: var(--ds-accent);"
+							class="group relative aspect-square overflow-hidden rounded-xl border transition-all duration-300 hover:-translate-y-0.5"
+							style="border-color: var(--ds-color-border-subtle);"
 						>
-							<span>查看完整冥想系列作品</span>
-							<Icon name="open_in_new" size={14} class="w-3.5 h-3.5" />
+							<img
+								src={artwork.src}
+								alt={artwork.title}
+								class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+							/>
+							<div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+								<div class="absolute bottom-2 left-2 right-2">
+									<span class="text-xs font-medium text-white">{artwork.title}</span>
+								</div>
+							</div>
 						</a>
-					</div>
+					))}
 				</div>
+
+				<a
+					href={meditationSeries.link}
+					target="_blank"
+					rel="noopener noreferrer"
+					class="inline-flex items-center gap-2 text-sm font-medium transition-colors"
+					style="color: var(--ds-accent);"
+				>
+					<span>查看完整冥想系列作品</span>
+					<Icon name="open_in_new" size={14} class="w-3.5 h-3.5" />
+				</a>
 			</section>
 
+
 			<!-- More Works -->
-			<section class="section ds-reveal">
+			<section class="section container-custom ds-reveal">
 				<div class="section-header">
 					<h2 class="section-title">更多作品</h2>
 					<div class="section-line"></div>
 				</div>
 
-				<div class="card p-5 md:p-6">
-					<div class="grid md:grid-cols-2 gap-4">
-						<a
-							href="https://space.bilibili.com/cgartlab"
-							target="_blank"
-							rel="noopener noreferrer"
-							class="group flex items-start gap-4 p-4 rounded-lg transition-colors"
-							style="background: var(--ds-color-surface-overlay);"
-						>
-							<div class="flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center text-white" style="background: var(--ds-accent);">
-								<Icon name="bilibili" size={20} class="w-5 h-5" fill />
-							</div>
-							<div class="flex-1">
-								<h3 class="text-sm font-medium mb-1 transition-colors" style="color: var(--ds-color-fg);">Bilibili 主页</h3>
-								<p class="text-xs" style="color: var(--ds-color-fg-subtle);">查看更多动画、CG艺术相关视频作品</p>
-							</div>
-							<Icon name="arrow_forward" size={18} class="flex-shrink-0 transition-all" style="color: var(--ds-color-muted);" />
-						</a>
+				<div class="grid md:grid-cols-2 gap-4">
+					<a
+						href="https://space.bilibili.com/cgartlab"
+						target="_blank"
+						rel="noopener noreferrer"
+						class="group flex items-start gap-4 p-5 rounded-2xl border transition-all duration-300 hover:-translate-y-0.5"
+						style="background: var(--ds-color-surface); border-color: var(--ds-color-border-subtle);"
+					>
+						<div class="flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center" style="background: var(--ds-accent);">
+							<Icon name="bilibili" size={20} class="w-5 h-5 text-white" fill />
+						</div>
+						<div class="flex-1 min-w-0">
+							<h3 class="text-sm font-semibold mb-1" style="color: var(--ds-color-fg-strong);">Bilibili 主页</h3>
+							<p class="text-xs" style="color: var(--ds-color-fg-subtle);">查看更多动画、CG艺术相关视频作品</p>
+						</div>
+						<Icon name="arrow_forward" size={16} class="flex-shrink-0 mt-1 opacity-0 group-hover:opacity-100 transition-opacity" style="color: var(--ds-color-muted);" />
+					</a>
 
-						<a
-							href="https://cgartlab.com"
-							target="_blank"
-							rel="noopener noreferrer"
-							class="group flex items-start gap-4 p-4 rounded-lg transition-colors"
-							style="background: var(--ds-color-surface-overlay);"
-						>
-							<div class="flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center text-white" style="background: var(--ds-accent);">
-								<Icon name="brush" size={20} class="w-5 h-5" />
-							</div>
-							<div class="flex-1">
-								<h3 class="text-sm font-medium mb-1 transition-colors" style="color: var(--ds-color-fg);">CG艺术实验室</h3>
-								<p class="text-xs" style="color: var(--ds-color-fg-subtle);">访问个人博客，了解更多创作与思考</p>
-							</div>
-							<Icon name="arrow_forward" size={18} class="flex-shrink-0 transition-all" style="color: var(--ds-color-muted);" />
-						</a>
-					</div>
+					<a
+						href="https://cgartlab.com"
+						target="_blank"
+						rel="noopener noreferrer"
+						class="group flex items-start gap-4 p-5 rounded-2xl border transition-all duration-300 hover:-translate-y-0.5"
+						style="background: var(--ds-color-surface); border-color: var(--ds-color-border-subtle);"
+					>
+						<div class="flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center" style="background: var(--ds-accent);">
+							<Icon name="brush" size={20} class="w-5 h-5 text-white" />
+						</div>
+						<div class="flex-1 min-w-0">
+							<h3 class="text-sm font-semibold mb-1" style="color: var(--ds-color-fg-strong);">CG艺术实验室</h3>
+							<p class="text-xs" style="color: var(--ds-color-fg-subtle);">访问个人博客，了解更多创作与思考</p>
+						</div>
+						<Icon name="arrow_forward" size={16} class="flex-shrink-0 mt-1 opacity-0 group-hover:opacity-100 transition-opacity" style="color: var(--ds-color-muted);" />
+					</a>
 				</div>
 			</section>
+
+		
+			</div>
+
+			<div class="blk" data-l="en">
+
+			<!-- Hero -->
+			<section class="container-custom pt-16 md:pt-24 pb-12 md:pb-16">
+				<div class="max-w-3xl">
+					<p class="ds-eyebrow mb-4 md:mb-6">Portfolio</p>
+					<h1
+						class="font-bold tracking-tight mb-6"
+						style="font-size: clamp(2rem, 5vw, 3.5rem); line-height: 1.05; letter-spacing: -0.03em; color: var(--ds-color-fg-strong);"
+					>
+						Selected Work
+					</h1>
+					<p class="text-base md:text-lg leading-relaxed max-w-xl" style="color: var(--ds-color-fg-subtle);">
+						Making is an act of inner exploration — every piece is a record of a conversation with myself.
+					</p>
+				</div>
+			</section>
+
+
+			<!-- CG Art Portfolio -->
+			<section class="section container-custom ds-reveal">
+				<div class="section-header">
+					<h2 class="section-title">CG Art Portfolio</h2>
+					<div class="section-line"></div>
+				</div>
+
+				<div class="space-y-6">
+					{videoWorksEn.map((work) => (
+						<article class="rounded-2xl overflow-hidden border" style="background: var(--ds-color-surface); border-color: var(--ds-color-border-subtle);">
+							<div class="grid md:grid-cols-2 gap-0">
+								<div class="relative aspect-video bg-black">
+									<iframe
+										src={`//player.bilibili.com/player.html?isOutside=true&aid=&bvid=${work.bilibiliId}&cid=&p=1&highQuality=1&danmaku=0&muted=1&controls=0&autoplay=1`}
+										title={work.title}
+										class="absolute inset-0 w-full h-full"
+										allowfullscreen="true"
+										allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+									></iframe>
+								</div>
+								<div class="p-6 md:p-8 flex flex-col justify-center">
+									<div class="flex items-center gap-3 mb-3">
+										<span class="text-xs font-medium" style="color: var(--ds-accent);">{work.year}</span>
+										<div class="flex flex-wrap gap-2">
+											{work.tags.map(tag => (
+												<span class="tag text-xs">{tag}</span>
+											))}
+										</div>
+									</div>
+									<h3 class="text-lg md:text-xl font-semibold tracking-tight mb-3" style="color: var(--ds-color-fg-strong);">{work.title}</h3>
+									<p class="text-sm leading-relaxed" style="color: var(--ds-color-fg-subtle);">{work.description}</p>
+								</div>
+							</div>
+						</article>
+					))}
+				</div>
+			</section>
+
+
+			<!-- Meditation Series -->
+			<section class="section container-custom ds-reveal">
+				<div class="section-header">
+					<h2 class="section-title">Meditation Series · Digital Painting</h2>
+					<div class="section-line"></div>
+				</div>
+
+				<!-- Cover -->
+				<div class="relative w-full aspect-[21/9] overflow-hidden mb-6 rounded-2xl">
+					<img
+						src={coverImage}
+						alt="Meditation Series cover"
+						class="w-full h-full object-cover"
+					/>
+					<div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+					<div class="absolute bottom-6 left-6 right-6">
+						<h3 class="text-xl md:text-2xl font-semibold text-white mb-1">{meditationSeriesEn.title}</h3>
+						<p class="text-sm text-white/70">Digital painting series · 2013-2016</p>
+					</div>
+				</div>
+
+				<!-- Description -->
+				<p class="text-sm md:text-base leading-relaxed mb-8 max-w-3xl" style="color: var(--ds-color-fg-subtle);">
+					{meditationSeriesEn.description}
+				</p>
+
+				<!-- Gallery Grid -->
+				<div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-4 mb-6">
+					{meditationImagesEn.map((artwork) => (
+						<a
+							href={meditationSeriesEn.link}
+							target="_blank"
+							rel="noopener noreferrer"
+							class="group relative aspect-square overflow-hidden rounded-xl border transition-all duration-300 hover:-translate-y-0.5"
+							style="border-color: var(--ds-color-border-subtle);"
+						>
+							<img
+								src={artwork.src}
+								alt={artwork.title}
+								class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+							/>
+							<div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+								<div class="absolute bottom-2 left-2 right-2">
+									<span class="text-xs font-medium text-white">{artwork.title}</span>
+								</div>
+							</div>
+						</a>
+					))}
+				</div>
+
+				<a
+					href={meditationSeriesEn.link}
+					target="_blank"
+					rel="noopener noreferrer"
+					class="inline-flex items-center gap-2 text-sm font-medium transition-colors"
+					style="color: var(--ds-accent);"
+				>
+					<span>View the full Meditation Series</span>
+					<Icon name="open_in_new" size={14} class="w-3.5 h-3.5" />
+				</a>
+			</section>
+
+
+			<!-- More Works -->
+			<section class="section container-custom ds-reveal">
+				<div class="section-header">
+					<h2 class="section-title">More Work</h2>
+					<div class="section-line"></div>
+				</div>
+
+				<div class="grid md:grid-cols-2 gap-4">
+					<a
+						href="https://space.bilibili.com/cgartlab"
+						target="_blank"
+						rel="noopener noreferrer"
+						class="group flex items-start gap-4 p-5 rounded-2xl border transition-all duration-300 hover:-translate-y-0.5"
+						style="background: var(--ds-color-surface); border-color: var(--ds-color-border-subtle);"
+					>
+						<div class="flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center" style="background: var(--ds-accent);">
+							<Icon name="bilibili" size={20} class="w-5 h-5 text-white" fill />
+						</div>
+						<div class="flex-1 min-w-0">
+							<h3 class="text-sm font-semibold mb-1" style="color: var(--ds-color-fg-strong);">Bilibili Channel</h3>
+							<p class="text-xs" style="color: var(--ds-color-fg-subtle);">More animation and CG art videos</p>
+						</div>
+						<Icon name="arrow_forward" size={16} class="flex-shrink-0 mt-1 opacity-0 group-hover:opacity-100 transition-opacity" style="color: var(--ds-color-muted);" />
+					</a>
+
+					<a
+						href="https://cgartlab.com"
+						target="_blank"
+						rel="noopener noreferrer"
+						class="group flex items-start gap-4 p-5 rounded-2xl border transition-all duration-300 hover:-translate-y-0.5"
+						style="background: var(--ds-color-surface); border-color: var(--ds-color-border-subtle);"
+					>
+						<div class="flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center" style="background: var(--ds-accent);">
+							<Icon name="brush" size={20} class="w-5 h-5 text-white" />
+						</div>
+						<div class="flex-1 min-w-0">
+							<h3 class="text-sm font-semibold mb-1" style="color: var(--ds-color-fg-strong);">CG Art Lab</h3>
+							<p class="text-xs" style="color: var(--ds-color-fg-subtle);">The blog — more on making and thinking</p>
+						</div>
+						<Icon name="arrow_forward" size={16} class="flex-shrink-0 mt-1 opacity-0 group-hover:opacity-100 transition-opacity" style="color: var(--ds-color-muted);" />
+					</a>
+				</div>
+			</section>
+
+		
+			</div>
+
 		</main>
 		<Footer />
 	</body>

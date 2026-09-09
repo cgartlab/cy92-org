@@ -2,7 +2,7 @@
 import BaseHead from '../../components/BaseHead.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
+import { SITE_TITLE, SITE_DESCRIPTION, SITE_DESCRIPTION_EN } from '../../consts';
 import { getCollection } from 'astro:content';
 import FormattedDate from '../../components/FormattedDate.astro';
 
@@ -16,7 +16,7 @@ const DEFAULT_COVER = '/default-cover.webp';
 <!doctype html>
 <html lang="zh-CN">
 	<head>
-		<BaseHead title={`博客 | ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
+		<BaseHead title={`博客 | ${SITE_TITLE}`} titleEn={`Blog | ${SITE_TITLE}`} description={SITE_DESCRIPTION} descriptionEn={SITE_DESCRIPTION_EN} />
 	</head>
 	<body class="min-h-screen" style="background: var(--ds-color-bg); color: var(--ds-color-fg);">
 		<Header />

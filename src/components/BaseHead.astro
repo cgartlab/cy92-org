@@ -3,51 +3,70 @@ import '../styles/app.css';
 
 interface Props {
 	title: string;
+	titleEn?: string;
 	description: string;
+	descriptionEn?: string;
 	image?: string;
 }
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin);
 
-const { title, description, image = '/default-cover.webp' } = Astro.props;
+const { title, titleEn, description, descriptionEn, image = '/default-cover.webp' } = Astro.props;
 ---
 
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="theme-color" content="#0a0a0a" />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta name="generator" content={Astro.generator} />
 
-<link rel="preload" href="/fonts/atkinson-regular.woff" as="font" type="font/woff" crossorigin />
-<link rel="preload" href="/fonts/atkinson-bold.woff" as="font" type="font/woff" crossorigin />
+<!-- Fonts: Outfit (Latin) + Noto Sans SC (Chinese) via Google Fonts CDN -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Outfit:wght@100;300;400;500;600;700&family=Noto+Sans+SC:wght@100;300;400;500;700&display=swap" />
+<link
+	href="https://fonts.googleapis.com/css2?family=Outfit:wght@100;300;400;500;600;700&family=Noto+Sans+SC:wght@100;300;400;500;700&display=swap"
+	rel="stylesheet"
+	media="print" onload="this.media='all'"
+/>
+<noscript>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@100;300;400;500;600;700&family=Noto+Sans+SC:wght@100;300;400;500;700&display=swap" />
+</noscript>
 
 <link rel="canonical" href={canonicalURL} />
 
-<title>{title}</title>
-<meta name="title" content={title} />
-<meta name="description" content={description} />
+<!-- data-zh/data-en: swapped client-side by LangScript.astro. Because English is the
+     default language, the RENDERED value prefers EN (titleEn/descriptionEn) so the first
+     paint and no-JS visitors see English; `data-zh` carries the Chinese twin back.
+     Pages that don't pass *_En keep their Chinese text unchanged. -->
+<title data-zh={title} data-en={titleEn ?? title}>{titleEn ?? title}</title>
+<meta name="title" content={titleEn ?? title} data-zh={title} data-en={titleEn ?? title} />
+<meta name="description" content={descriptionEn ?? description} data-zh={description} data-en={descriptionEn ?? description} />
 
 <meta property="og:type" content="website" />
 <meta property="og:url" content={Astro.url} />
-<meta property="og:title" content={title} />
-<meta property="og:description" content={description} />
+<meta property="og:title" content={titleEn ?? title} data-zh={title} data-en={titleEn ?? title} />
+<meta property="og:description" content={descriptionEn ?? description} data-zh={description} data-en={descriptionEn ?? description} />
 <meta property="og:image" content={new URL(image, Astro.url)} />
 
 <meta property="twitter:card" content="summary_large_image" />
 <meta property="twitter:url" content={Astro.url} />
-<meta property="twitter:title" content={title} />
-<meta property="twitter:description" content={description} />
+<meta property="twitter:title" content={titleEn ?? title} data-zh={title} data-en={titleEn ?? title} />
+<meta property="twitter:description" content={descriptionEn ?? description} data-zh={description} data-en={descriptionEn ?? description} />
 <meta property="twitter:image" content={new URL(image, Astro.url)} />
 
 <script is:inline>
-	const getThemePreference = () => {
-		if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
-			return localStorage.getItem('theme');
-		}
-		return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-	};
-	const isDark = getThemePreference() === 'dark';
-	document.documentElement.classList.toggle('dark', isDark);
-	document.documentElement.setAttribute('data-theme', isDark ? 'dark' : '');
+	// Dark-only site: always apply dark design tokens (light text on dark bg)
+	const isDark = true;
+	document.documentElement.classList.add('dark');
+	document.documentElement.setAttribute('data-theme', 'dark');
 	// Mark JS-enabled so scroll-reveal only hides content when JS can reveal it
 	document.documentElement.classList.add('ds-js');
+	// Language — English by default; only an explicit 'zh' keeps Chinese.
+	// Runs in <head> so the correct language paints before first frame.
+	const lang = localStorage.getItem('lang') === 'zh' ? 'zh' : 'en';
+	if (lang === 'en') {
+		document.documentElement.classList.add('lang-en');
+		document.documentElement.lang = 'en';
+	}
 </script>

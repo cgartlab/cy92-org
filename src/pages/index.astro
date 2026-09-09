@@ -1,245 +1,1789 @@
 ---
 import BaseHead from '../components/BaseHead.astro';
-import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Icon from '../components/Icon.astro';
-import { SITE_TITLE, SITE_DESCRIPTION, PERSONAL_INFO, SKILLS, EXPERIENCE, PROJECTS, STATS, SOCIAL_LINKS, HONORS, WORK_EXPERIENCE, EDUCATION } from '../consts';
+import LangScript from '../components/LangScript.astro';
+import { SITE_TITLE, SITE_DESCRIPTION_EN, PERSONAL_INFO, SKILLS, SKILLS_EN, SOCIAL_LINKS, HONORS, HONORS_EN, WORK_EXPERIENCE, WORK_EXPERIENCE_EN, EDUCATION, EDUCATION_EN } from '../consts';
+
+const coverImage = '/images/冥想系列-cover.webp';
+const currentYear = new Date().getFullYear();
+const yearsActive = currentYear - 2014;
+const meditationImages = [
+	{ src: '/images/冥想系列-1754664750528.webp', title: '冥想系列 1', titleEn: 'Meditation 1', desc: '早期冥想探索，意识的初次解剖', descEn: 'Early meditation exploration — the first dissection of consciousness' },
+	{ src: '/images/冥想系列-1754664757458.webp', title: '冥想系列 2', titleEn: 'Meditation 2', desc: '内心对话，矛盾与冲突的视觉化', descEn: 'An inner dialogue; contradictions and conflict made visible' },
+	{ src: '/images/冥想系列-1754664764581.webp', title: '冥想系列 3', titleEn: 'Meditation 3', desc: '繁重压迫下的精神释放', descEn: 'Spiritual release under heavy pressure' },
+	{ src: '/images/冥想系列-1754664772045.webp', title: '冥想系列 4', titleEn: 'Meditation 4', desc: '对立统一，真实的自我映射', descEn: 'Unity of opposites; a true reflection of the self' },
+	{ src: '/images/冥想系列-1754664780351.webp', title: '冥想系列 5', titleEn: 'Meditation 5', desc: '意识深处的宁静与动荡', descEn: 'Stillness and turbulence deep inside consciousness' },
+	{ src: '/images/冥想系列-1754664786331.webp', title: '冥想系列 6', titleEn: 'Meditation 6', desc: '精神世界的数字重构', descEn: 'A digital reconstruction of the inner world' },
+	{ src: '/images/冥想系列-1754664798635.webp', title: '冥想系列 7', titleEn: 'Meditation 7', desc: '内在探索的第七阶段', descEn: 'The seventh stage of inward exploration' },
+	{ src: '/images/冥想系列-1754664814920.webp', title: '冥想系列 8', titleEn: 'Meditation 8', desc: '接近实相的道路', descEn: 'The road toward reality' },
+	{ src: '/images/冥想系列-1754664822895.webp', title: '冥想系列 9', titleEn: 'Meditation 9', desc: '意识的最终形态', descEn: 'The final form of consciousness' },
+	{ src: '/images/冥想系列-1754664829706.webp', title: '冥想系列 10', titleEn: 'Meditation 10', desc: '冥想之旅的终点与起点', descEn: 'Where the journey of meditation ends — and begins' }
+];
+
+// English counterpart of the meditation gallery copy (same order).
+const meditationImagesEn = meditationImages.map(m => ({
+	src: m.src,
+	title: m.titleEn,
+	desc: m.descEn
+}));
+
+// 跑马灯素材：仅限 cgartlab.com 文章标题 + 文章金句
+const tickerItems = [
+	'Men（门）Agent 团队',
+	'你不知道的 AI 优雅食用指南（一）：慢一点比较快',
+	'我的上帝模式：一名设计师创作环境的演变',
+	'Inkard 卡片生成器',
+	'自动给文章术语加百科链接',
+	'Argus 前端设计代码审查 Agent',
+	'Go To GitHub 访问加速工具',
+	'EDIC 设计系统：面向人类与 Agent 的编辑主义设计系统',
+	'世界尽管让它去转，不用担心你学的东西会过时',
+	'就算掌声无法抵达舞台，我依然劝你尽快动笔',
+	'RSS 与现代阅读习惯：重新获取信息收集的主动权',
+	'大型三维设计项目实战心得：小小的文件命名',
+	'十五年的浏览器折腾之旅',
+	'碎片写作——建立一具思维标本',
+	'用小学数学破除情绪的二元对立',
+	'冥想系列：解剖自己内心的过程',
+	'面对 AI，我们和长辈其实没什么两样——都习惯了执行规则，却从未学习设计规则',
+	'从「规则执行者」到「规则设计师」，慢一点，才能真正用好 AI',
+	'互联网是一片大海，网站是浪花，而浏览器是你脚下的那块冲浪板',
+	'电脑要换的，软件要更新的，只有数据不出意外是要伴随你一辈子的',
+	'一个人独处时，如果你没有想起任何其他人，是快乐的',
+	'写作是建立思维标本的过程：系统化地整理与表达思考',
+	'什么更重要、什么最重要、是否具有长期价值——我的三板斧',
+	'网页里那个「下载」图标越大，就越不是你要找的下载链接',
+];
+// English counterpart of the ticker copy (same order — the marquee is decorative
+// texture and aria-hidden, so both languages ride the same track).
+const tickerItemsEn = [
+	'Men — a 6+1 agent team',
+	'How to Use AI Elegantly, Part 1: Slower Is Faster',
+	'My God Mode: A Designer\u2019s Evolving Creative Setup',
+	'Inkard Card Generator',
+	'Auto-linking article terms to encyclopedic entries',
+	'Argus — a front-end design code-review agent',
+	'Go To GitHub — a GitHub access accelerator',
+	'EDIC — an editorial design system for humans and agents',
+	'Let the world keep turning; do not worry that what you learn will go out of date',
+	'Even if no applause ever reaches the stage, I still urge you to start writing',
+	'RSS and Modern Reading Habits: Taking Back Control of Your Information',
+	'Field Notes from Large 3D Projects: It is the File Names',
+	'Fifteen Years of Messing with Browsers',
+	'Fragment Writing: Building a Specimen of Thought',
+	'Breaking the Binary of Emotion with Elementary Math',
+	'Meditation Series: The Process of Dissecting Your Own Inner Self',
+	'Facing AI, we are not so different from our elders — all used to executing rules, never learning to design them',
+	'From Rule Executor to Rule Designer: slow down, and you will actually use AI well',
+	'The internet is a sea, websites are the waves, and the browser is the surfboard under your feet',
+	'Computers get replaced and software gets updated; only your data stays with you for life',
+	'When alone, you are happy if you do not find yourself thinking of anyone else',
+	'Writing is how you make specimens of thought: organizing and expressing it systematically',
+	'What Matters More, What Matters Most, What Has Long-Term Value — My Three Axes',
+	'The bigger the Download icon on a page, the less likely it is the link you want',
+];
+// ticker 几何与纵深：高低错落、长度不一（w=带宽, lx=左偏移, ad=方向）
+const tickerRows = [
+	{ top: 5,  dur: 40, sc: 0.6,  bl: 2.6, op: 0.3,  w: 82, lx: 0,  ad: 'normal' },
+	{ top: 13, dur: 30, sc: 0.84, bl: 1.2, op: 0.5,  w: 95, lx: 5,  ad: 'normal' },
+	{ top: 19, dur: 24, sc: 1.02, bl: 0.2, op: 0.82, w: 72, lx: 0,  ad: 'normal' },
+	{ top: 26, dur: 46, sc: 0.7,  bl: 1.9, op: 0.4,  w: 88, lx: 12, ad: 'normal' },
+	{ top: 68, dur: 48, sc: 0.64, bl: 2.3, op: 0.34, w: 85, lx: 14, ad: 'reverse' },
+	{ top: 75, dur: 27, sc: 1.06, bl: 0,   op: 0.86, w: 62, lx: 0,  ad: 'reverse' },
+	{ top: 82, dur: 35, sc: 0.86, bl: 1.0, op: 0.55, w: 93, lx: 6,  ad: 'reverse' },
+	{ top: 90, dur: 42, sc: 0.6,  bl: 2.7, op: 0.28, w: 76, lx: 2,  ad: 'reverse' },
+];
 ---
 
 <!doctype html>
-<html lang="zh-CN">
+<html lang="zh-CN" style="color-scheme:dark">
 	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<BaseHead title={SITE_TITLE} description={PERSONAL_INFO.description} descriptionEn={SITE_DESCRIPTION_EN} />
 	</head>
-	<body class="min-h-screen" style="background: var(--ds-color-bg); color: var(--ds-color-fg);">
-		<Header />
-		<main class="container-custom py-8 md:py-12">
-			<!-- Hero Section -->
-			<section class="section pb-8 md:pb-10">
-				<div class="flex flex-col md:flex-row md:items-start md:justify-between gap-8 md:gap-10">
-					<div class="flex-1 min-w-0">
-						<div class="mb-6">
-							<span class="ds-eyebrow mb-3">跨领域数字创作者</span>
-							<h1 class="ds-gradient-text" style="font-family: var(--ds-font-display); font-size: clamp(2.25rem, 5vw, 3.25rem); line-height: 1.08; letter-spacing: var(--ds-tracking-tight);">
-								{PERSONAL_INFO.name}
-							</h1>
-						</div>
+	<body>
+	<LangScript />
 
-						<div class="quote-block my-5">
-							<p class="leading-relaxed" style="font-size: clamp(0.9375rem, 1.5vw, 1.0625rem);">
-								{PERSONAL_INFO.bio}
+	<a href="#slideshow" class="skip-link" data-t="skipLink">Skip to content</a>
+
+		<!-- ═══ Immersive Header ═══ -->
+		<header class="header" id="header">
+			<a href="/" class="header-logo">CHEN YANG</a>
+			<nav class="header-nav">
+				<div class="nav-hover">
+					<a href="#work" class="header-link work-link" aria-haspopup="true" aria-expanded="false">Work<span class="caret"></span></a>
+					<div class="nav-menu" role="menu" data-t-aria="workNavAria" aria-label="Work navigation">
+						<a class="nav-menu-link" href="#work" role="menuitem" data-t="navCollection">All Works</a>
+						<a class="nav-menu-link" href="#meditation" role="menuitem" data-t="navMeditation">Meditation Series</a>
+						<span class="nav-menu-divider"></span>
+						<span class="nav-menu-note" data-t="navMore">More works coming soon</span>
+						{/* 未来新作品在此追加，例如: <a href="https://men.cgartlab.com">Men</a> / <a href="https://argus.cgartlab.com">Argus</a> */}
+					</div>
+				</div>
+				<a href="https://cgartlab.com" class="header-link" target="_blank" rel="noopener noreferrer">Blog<span class="caret ext"></span></a>
+				<a href="#profile" class="header-link">Profile</a>
+				<a href="#contact" class="header-link">Contact</a>
+			</nav>
+			<div class="header-right">
+				<button class="lang-btn" data-lang-toggle id="langToggle" type="button" aria-label="Switch language">中/En</button>
+				<span class="header-sep" aria-hidden="true"></span>
+				<a href={`mailto:${PERSONAL_INFO.email}`} class="header-email">hello@cgartlab.com</a>
+			</div>
+		</header>
+
+		<!-- ═══ Slideshow ═══ -->
+		<main id="slideshow" class="slideshow">
+			<canvas id="seaweed" class="canvas-full" style="position:fixed;z-index:50;pointer-events:none"></canvas>
+			<!-- Shared continuous video — one undimmed scene behind pages 3 & 4 -->
+			<video id="reel" class="reel" autoplay muted loop playsinline aria-hidden="true">
+				<source src="/video/demo.mp4" type="video/mp4" />
+			</video>
+			<!-- Fixed edge mask — permanently hides the video's hard top/bottom edges,
+			     stays put while pages 3 & 4 switch (does not scroll with slides) -->
+			<div id="edge-mask" aria-hidden="true"></div>
+			<!-- Fixed scene layers — full-viewport backgrounds that crossfade on page
+			     changes, so no hard edge ever appears between backgrounds -->
+			<canvas id="grad" class="scene-layer" aria-hidden="true"></canvas>
+			<canvas id="aurora" class="scene-layer" aria-hidden="true"></canvas>
+			<!-- Shared silver-gray gradient scene for About & Contact (seamless) -->
+			<div id="silver" class="scene-layer silver-scene" aria-hidden="true"></div>
+
+			<!-- ═══ Slide 0 — Hero (Seaweed particles) ═══ -->
+			<section class="slide dark" data-slide="0">
+				<div class="slide-content center">
+					<div class="hero">
+						<h1 class="hero-name anim scale" data-d="0" aria-label="CHEN YANG">
+							<span class="hl" aria-hidden="true"><span>C</span><span>H</span><span>E</span><span>N</span></span>
+							<span class="hl" aria-hidden="true"><span>Y</span><span>A</span><span>N</span><span>G</span></span>
+						</h1>
+						<div class="hero-subline anim up" data-d="1">
+							<p class="hero-role">A <span class="rwd" style="--ri:0"><span class="inner">Designer</span></span>, <span class="rwd" style="--ri:1"><span class="inner">Writer</span></span>, <span class="rwd" style="--ri:2"><span class="inner">Engineer</span></span>.</p>
+						</div>
+						<div class="hero-divider"></div>
+						<p class="hero-tags anim blur" data-d="2"><span data-t="heroTag1">Motion Visual Designer</span><span class="sep"> · </span><span data-t="heroTag2">Content Creator</span><span class="sep"> · </span><span data-t="heroTag3">Product Engineer</span></p>
+						<a href="#stats" class="scroll-cue anim up" data-d="3" data-t-aria="scrollCueAria" aria-label="Scroll down to the statistics slide">
+							<span class="cue-label">Scroll</span>
+							<span class="cue-track"><span class="cue-dot"></span></span>
+						</a>
+					</div>
+				</div>
+			</section>
+
+			<!-- ═══ Slide 1 — Stats (transparent: reveals fixed scene layers) ═══ -->
+			<section class="slide dark" data-slide="1" id="stats">
+				{/* Horizontal left→right content ticker — real cgartlab titles/excerpts, works */}
+				<div class="ticker" aria-hidden="true">
+					{tickerRows.map((row, i) => (
+						<div
+							class="ticker-row"
+							style={`top:${row.top}dvh;left:${row.lx}%;width:${row.w}%;--dur:${row.dur}s;--sc:${row.sc};--bl:${row.bl}px;--op:${row.op};--ad:${row.ad}`}
+						>
+							<div class="ticker-track">
+								{/* 24 items = 4-unit cycle × 6 → both halves identical → seamless -50%→0 loop */}
+								{Array.from({ length: 24 }, (_, n) => {
+									const idx = (i * 2 + (n % 4)) % tickerItems.length;
+									return <span class="ticker-item"><span class="tw"><span data-l="zh">{tickerItems[idx]}</span><span data-l="en">{tickerItemsEn[idx]}</span></span><span class="ticker-sep">·</span></span>;
+								})}
+							</div>
+						</div>
+					))}
+				</div>
+				<div class="slide-content center">
+					<div class="stats">
+						<div class="stat anim up" data-d="0">
+							<span class="stat-kicker" data-t="statKicker1">Words Published</span>
+							<div class="stat-line">
+								<span class="stat-value" data-target="187979">187979</span>
+								<span class="stat-unit" data-t="statUnit1">words</span>
+							</div>
+						</div>
+						<div class="stat anim up" data-d="1">
+							<span class="stat-kicker" data-t="statKicker2">Code Commits (Past Year)</span>
+							<div class="stat-line">
+								<span class="stat-value" data-target="5565">5565</span>
+								<span class="stat-unit" data-t="statUnit2">commits</span>
+							</div>
+						</div>
+						<div class="stat anim up" data-d="2">
+							<span class="stat-kicker" data-t="statKicker3">Years in Digital Creation</span>
+							<div class="stat-line">
+								<span class="stat-value" data-target={yearsActive}>{yearsActive}</span>
+								<span class="stat-unit" data-t="statUnit3">years</span>
+							</div>
+						</div>
+						<div class="stat anim up" data-d="3">
+							<span class="stat-kicker"><span data-t="statKicker4">Article Views</span>
+								{/* 数据读取点（少数派个人主页成就卡片）：#viewCount > span（当前约 89.5万+，随时间增长） */}
+								<a class="stat-src" href="https://sspai.com/u/cgartlab" target="_blank" rel="noopener noreferrer" data-t-aria="dataSrcAria" aria-label="Source: my sspai.com profile"><span data-t="statSrc">sspai.com</span> ↗</a>
+							</span>
+							<div class="stat-line">
+								<!-- 同一数据点双单位：中文用「万+」，英文换算为 K+（89.5万 ≈ 895K） -->
+								<span class="stat-value" data-l="zh" data-target="89.5" data-dec="1" data-suffix="万+">89.5万+</span>
+								<span class="stat-value" data-l="en" data-target="895" data-suffix="K+">895K+</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- ═══ Slide 2 — What I do (page 3: center → corner, video 0.5 → full) ═══ -->
+			<section class="slide" data-slide="2">
+				<div class="video-dim"></div>
+				<div class="slide-content">
+					<div class="glass" aria-hidden="true"></div>
+					<div class="split">
+						<div class="split-left">
+							<p class="label anim up" data-d="0">What I do</p>
+							<h2 class="heading-xl anim up" data-d="1"><span data-t="whatHeading">Cross-Domain<br/>Digital Creator</span></h2>
+							<p class="body anim up" data-d="2">
+								<span data-t="whatBody">I create digital products, shape brand visuals, and share the thinking behind the work. An advocate of data sovereignty — creation as cognition.</span>
 							</p>
 						</div>
-
-						<div class="flex flex-wrap gap-2 mt-5">
-							<span class="tag">
-								<Icon name="place" size={14} class="w-3.5 h-3.5" />
-								{PERSONAL_INFO.location}
-							</span>
-							<span class="tag">
-								<Icon name="person" size={14} class="w-3.5 h-3.5" />
-								{PERSONAL_INFO.personality}
-							</span>
+						<div class="split-right anim right" data-d="3">
+							<div class="skills">
+								<div class="bl" data-l="zh">
+									{SKILLS.map((category, i) => (
+										<div class="skill">
+											<h3 class="skill-cat">{category.category}</h3>
+											<ul class="skill-list">
+												{category.items.map(s => <li>{s}</li>)}
+											</ul>
+										</div>
+									))}
+								</div>
+								<div class="bl" data-l="en">
+									{SKILLS_EN.map((category, i) => (
+										<div class="skill">
+											<h3 class="skill-cat">{category.category}</h3>
+											<ul class="skill-list">
+												{category.items.map(s => <li>{s}</li>)}
+											</ul>
+										</div>
+									))}
+								</div>
+							</div>
 						</div>
 					</div>
-
-					<div class="flex-shrink-0 flex md:block justify-center">
-						<div class="logo-mark ds-anim-float w-28 h-28 md:w-32 md:h-32">
-							<img src="/favicon.svg" alt="CG艺术实验室" class="w-full h-full object-cover" />
-						</div>
-					</div>
 				</div>
+			</section>
 
-				<!-- Contact & Social -->
-				<div class="mt-8 pt-6" style="border-top: 1px solid var(--ds-color-border-subtle);">
-					<div class="flex flex-wrap items-center gap-3">
-						<a href={`mailto:${PERSONAL_INFO.email}`} class="btn btn-primary text-sm gap-2">
-							<Icon name="mail" size={16} class="w-4 h-4" />
-							{PERSONAL_INFO.email}
-						</a>
-						{SOCIAL_LINKS.slice(0, 4).map(link => (
-							<a
-								href={link.url}
-								target="_blank"
-								rel="noopener noreferrer"
-								class="social-link"
-								title={link.name}
-							>
-								<span class="sr-only">{link.name}</span>
-								<Icon name={link.icon} size={18} class="w-[18px] h-[18px]" fill />
-							</a>
-						))}
+			<!-- ═══ Slide 3 — Featured Work (over shared reel video, text corner) ═══ -->
+			<section class="slide" data-slide="3" id="work">
+				<div class="slide-content">
+					<div class="glass" aria-hidden="true"></div>
+					<div class="work">
+						<p class="label anim left" data-d="0">Featured Work</p>
+						<h2 class="heading-xl anim left" data-d="1"><span data-t="workTitle">A decade in motion visuals — nothing but love for the craft.</span></h2>
+						<p class="body-lg anim up" data-d="2">
+							<span data-t="workBody1">From 3D animation and CG art to motion design and digital products — a decade of exploring media and narrative. No shortcuts, just love and persistence: every piece pushes a boundary.</span>
+						</p>
+						<p class="body anim up" data-d="3">
+							<span data-t="workBody2">From the experimental VR piece Hello World 2.0, to brand event openers, to CCG EXPO’s COVID-19 — the work and medium evolve, but the reason I first picked up the pen never changed.</span>
+						</p>
 					</div>
 				</div>
 			</section>
 
-			<!-- Stats -->
-			<section class="section">
-				<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-					{STATS.map((stat, index) => (
-						<div class="stat-card ds-reveal" style={`--d: ${index * 80}ms`}>
-							<div class="flex items-baseline justify-center gap-1 mb-1">
-								<span class="stat-value">{stat.value}</span>
-								<span class="stat-unit">{stat.unit}</span>
-							</div>
-							<p class="stat-label">{stat.label}</p>
-						</div>
-					))}
-				</div>
-			</section>
-
-			<!-- Skills -->
-			<section class="section ds-reveal">
-				<div class="section-header">
-					<h2 class="section-title">专业技能</h2>
-					<div class="section-line"></div>
-				</div>
-
-				<div class="grid md:grid-cols-2 gap-4 md:gap-5">
-					{SKILLS.map(category => (
-						<div class="card p-5">
-							<h3 class="text-sm font-medium mb-3" style="font-family: var(--ds-font-display); color: var(--ds-accent);">{category.category}</h3>
-							<div class="flex flex-wrap gap-2">
-								{category.items.map(skill => (
-									<span class="tag">{skill}</span>
-								))}
-							</div>
-						</div>
-					))}
-				</div>
-			</section>
-
-			<!-- Education -->
-			<section class="section ds-reveal">
-				<div class="section-header">
-					<h2 class="section-title">教育经历</h2>
-					<div class="section-line"></div>
-				</div>
-
-				<div class="card p-5 md:p-6">
-					<div class="space-y-0">
-						{EDUCATION.map(edu => (
-							<div class="timeline-item pb-6 last:pb-0">
-								<div class="text-sm font-medium mb-1" style="font-family: var(--ds-font-display); color: var(--ds-accent);">{edu.period}</div>
-								<div>
-									<h3 class="text-base font-medium mb-0.5" style="color: var(--ds-color-fg);">{edu.school}</h3>
-									<p class="text-sm mb-0.5" style="color: var(--ds-accent);">{edu.major}</p>
-									<p class="text-sm" style="color: var(--ds-color-fg-subtle);">{edu.degree}</p>
+			<!-- ═══ Slide 4 — Meditation (cover Ken Burns infinite, light text) ═══ -->
+			<!-- ═══ Slide 5 (page 5) — Meditation: full-bleed artwork deck ═══ -->
+			<section class="slide" data-slide="4" id="meditation">
+				<div class="meddeck">
+					{meditationImages.map((img, i) => (
+						<article class="mdeck-item" data-mid={i} tabindex="0" data-aria-zh={`${img.title} — ${img.desc}`} data-aria-en={`${img.titleEn} — ${img.descEn}`} aria-label={`${img.titleEn} — ${img.descEn}`}
+							style={`--pan-x:${['2%','-1.5%','1.5%','-2%','1%','-0.8%','1.8%','-1%','0.8%','-1.8%'][i] || '1%'};--pan-y:${['-1%','1.5%','-0.5%','0.8%','-1.2%','0.6%','-1%','1.2%','-0.6%','0.8%'][i] || '-0.5%'};--pan-ox:${['30%','70%','45%','60%','35%','65%','40%','55%','50%','65%'][i] || '50%'};--pan-oy:${['35%','60%','50%','40%','55%','45%','60%','35%','50%','45%'][i] || '50%'}`}>
+							<img class="mdeck-img" src={img.src} alt={img.title} loading={i < 2 ? 'eager' : 'lazy'} decoding="async" />
+							<span class="mdeck-index">{(i + 1).toString().padStart(2, '0')}<em> / {meditationImages.length}</em></span>
+							<div class="mdeck-hover">
+								<div class="mdeck-card">
+									<h3 class="mdeck-title"><span data-l="zh">{img.title}</span><span data-l="en">{img.titleEn}</span></h3>
+									<p class="mdeck-desc"><span data-l="zh">{img.desc}</span><span data-l="en">{img.descEn}</span></p>
 								</div>
-							</div>
-						))}
-					</div>
-				</div>
-			</section>
-
-			<!-- Work Experience -->
-			<section class="section ds-reveal">
-				<div class="section-header">
-					<h2 class="section-title">工作经历</h2>
-					<div class="section-line"></div>
-				</div>
-
-				<div class="card p-5 md:p-6">
-					<div class="space-y-0">
-						{WORK_EXPERIENCE.map(exp => (
-							<div class="timeline-item pb-6 last:pb-0">
-								<div class="text-sm font-medium mb-1" style="font-family: var(--ds-font-display); color: var(--ds-accent);">{exp.period}</div>
-								<div>
-									<h3 class="text-base font-medium mb-0.5" style="color: var(--ds-color-fg);">{exp.title}</h3>
-									{exp.department && exp.position && (
-										<p class="text-sm mb-1" style="color: var(--ds-accent);">{exp.department} · {exp.position}</p>
-									)}
-									<p class="text-sm leading-relaxed" style="color: var(--ds-color-fg-subtle);">{exp.description}</p>
-								</div>
-							</div>
-						))}
-					</div>
-				</div>
-			</section>
-
-			<!-- Honors -->
-			<section class="section ds-reveal">
-				<div class="section-header">
-					<h2 class="section-title">荣誉与成就</h2>
-					<div class="section-line"></div>
-				</div>
-
-				<div class="card p-5 md:p-6">
-					<div class="space-y-4">
-						{HONORS.map(honor => (
-							<div class="flex gap-4 p-3 rounded-lg" style="background: var(--ds-color-surface-overlay);">
-								<div class="flex-shrink-0 w-14 text-right">
-									<span class="text-sm font-medium" style="font-family: var(--ds-font-display); color: var(--ds-accent);">{honor.year}</span>
-								</div>
-								<div class="flex-1">
-									<h3 class="text-sm font-medium mb-0.5" style="color: var(--ds-color-fg);">{honor.title}</h3>
-									<p class="text-xs leading-relaxed" style="color: var(--ds-color-fg-subtle);">{honor.description}</p>
-								</div>
-							</div>
-						))}
-					</div>
-				</div>
-			</section>
-
-			<!-- Creative Practice -->
-			<section class="section ds-reveal">
-				<div class="section-header">
-					<h2 class="section-title">创作实践</h2>
-					<div class="section-line"></div>
-				</div>
-
-				<div class="card p-5 md:p-6">
-					<div class="space-y-0">
-						{EXPERIENCE.map(exp => (
-							<div class="timeline-item pb-6 last:pb-0">
-								<div class="text-sm font-medium mb-1" style="font-family: var(--ds-font-display); color: var(--ds-accent);">{exp.period}</div>
-								<div>
-									<h3 class="text-base font-medium mb-1" style="color: var(--ds-color-fg);">{exp.title}</h3>
-									<p class="text-sm leading-relaxed" style="color: var(--ds-color-fg-subtle);">{exp.description}</p>
-								</div>
-							</div>
-						))}
-					</div>
-				</div>
-			</section>
-
-			<!-- Projects -->
-			<section class="section ds-reveal">
-				<div class="section-header">
-					<h2 class="section-title">项目作品</h2>
-					<div class="section-line"></div>
-				</div>
-
-				<div class="grid md:grid-cols-2 gap-4 md:gap-5">
-					{PROJECTS.map(project => (
-						<article class="card p-5 group">
-							<div class="flex items-start justify-between gap-3 mb-3">
-								<h3 class="text-base font-medium transition-colors" style="font-family: var(--ds-font-display); color: var(--ds-color-fg);">
-									{project.title}
-								</h3>
-								<a
-									href={project.link}
-									target="_blank"
-									rel="noopener noreferrer"
-									class="flex-shrink-0 transition-colors"
-									style="color: var(--ds-color-muted);"
-								>
-									<Icon name="open_in_new" size={16} class="w-4 h-4" />
-								</a>
-							</div>
-
-							<p class="text-sm leading-relaxed mb-4" style="color: var(--ds-color-fg-subtle);">{project.description}</p>
-
-							<div class="flex flex-wrap gap-2">
-								{project.tags.map(tag => (
-									<span class="tag text-xs">{tag}</span>
-								))}
 							</div>
 						</article>
 					))}
+					{/* Final stop — all works arranged as a geometric full-bleed wall */}
+					<article class="mdeck-item medwall" data-mid="-1" tabindex="0" data-t-aria="medAllAria" aria-label="Meditation Series — all works">
+						<div class="medwall-grid">
+							{meditationImages.map((img, i) => (
+								<div class="medwall-cell" style={`--i:${i}`} aria-hidden="true"><img src={img.src} alt="" loading="lazy" decoding="async" /></div>
+							))}
+						</div>
+						<div class="medwall-cap">
+							<span class="medwall-eyebrow">Meditation Series</span>
+							<span class="medwall-count"><span data-t="allWorks">All works</span> · 01 – {String(meditationImages.length).padStart(2, '0')}</span>
+						</div>
+					</article>
 				</div>
 			</section>
+
+			<!-- ═══ Slide 6 → now 5 — Profile (About) ═══ -->
+			<section class="slide dark" data-slide="5" id="profile">
+				<div class="slide-content scroll-y">
+					<div class="profile">
+						<div class="profile-left">
+							<p class="label anim left" data-d="0">About</p>
+							<h2 class="heading-lg anim left" data-d="1"><span data-t="aboutHeading">Painting rewards itself with painting; writing rewards itself with writing.</span></h2>
+							<p class="body anim up" data-d="2"><span data-t="aboutBody1">A motion-visual designer by training, I have spent over a decade moving between design, animation, and front-end. Now I treat writing as the gateway to thinking, AI as a collaborator, and every project as a methodology experiment: slower is faster — design the rules first, then execute.</span></p>
+							<p class="body anim up" data-d="3"><span data-t="aboutBody2">I believe in data sovereignty and creation as cognition — never handing yourself over to a closed platform, never letting ideas die in a draft. Tools update, software gets retired; what stays is the ability to think clearly. CG Art Lab is where I write it down, build it out, and prove it works.</span></p>
+							<div class="profile-contact anim up" data-d="4">
+								<p class="label-sm">Contact</p>
+								<div class="contact-row">
+									{SOCIAL_LINKS.slice(0, 4).map(link => (
+										<a href={link.url} target="_blank" rel="noopener noreferrer" class="icon-link" title={link.nameEn} data-t-title={link.i18n} aria-label={link.nameEn}>
+											<Icon name={link.icon} size={14} class="w-3.5 h-3.5" fill />
+										</a>
+									))}
+								</div>
+							</div>
+						</div>
+						<div class="profile-right">
+							<section class="psection anim right" data-d="1">
+								<h3 class="label-sm" data-t="cvWork">Work Experience</h3>
+								<div class="bl" data-l="zh">
+									{WORK_EXPERIENCE.map(exp => (
+										<div class="exp">
+											<span class="exp-period">{exp.period}</span>
+											<div>
+												<h4 class="exp-title">{exp.title}</h4>
+												<p class="exp-sub">
+													{exp.role}
+													{exp.url && <a class="exp-link" href={exp.url} target="_blank" rel="noopener noreferrer">animpoly.com ↗</a>}
+												</p>
+												<p class="exp-desc">{exp.description}</p>
+											</div>
+										</div>
+									))}
+								</div>
+								<div class="bl" data-l="en">
+									{WORK_EXPERIENCE_EN.map(exp => (
+										<div class="exp">
+											<span class="exp-period">{exp.period}</span>
+											<div>
+												<h4 class="exp-title">{exp.title}</h4>
+												<p class="exp-sub">
+													{exp.role}
+													{exp.url && <a class="exp-link" href={exp.url} target="_blank" rel="noopener noreferrer">animpoly.com ↗</a>}
+												</p>
+												<p class="exp-desc">{exp.description}</p>
+											</div>
+										</div>
+									))}
+								</div>
+							</section>
+							<section class="psection anim right" data-d="2">
+								<h3 class="label-sm" data-t="cvEdu">Education</h3>
+								<div class="bl" data-l="zh">
+									{EDUCATION.map(edu => (
+										<div class="exp">
+											<span class="exp-period">{edu.period}</span>
+											<div>
+												<h4 class="exp-title">{edu.school}</h4>
+												<p class="exp-sub">{edu.major} · {edu.degree}</p>
+											</div>
+										</div>
+									))}
+								</div>
+								<div class="bl" data-l="en">
+									{EDUCATION_EN.map(edu => (
+										<div class="exp">
+											<span class="exp-period">{edu.period}</span>
+											<div>
+												<h4 class="exp-title">{edu.school}</h4>
+												<p class="exp-sub">{edu.major} · {edu.degree}</p>
+											</div>
+										</div>
+									))}
+								</div>
+							</section>
+							<section class="psection anim right" data-d="3">
+								<h3 class="label-sm" data-t="cvProjects">Projects & Awards</h3>
+								<div class="bl" data-l="zh">
+									{HONORS.map(h => (
+										<div class="exp">
+											<span class="exp-period">{h.year}</span>
+											<div>
+												<h4 class="exp-title">{h.title}</h4>
+												<p class="exp-sub">{h.role}</p>
+											</div>
+										</div>
+									))}
+								</div>
+								<div class="bl" data-l="en">
+									{HONORS_EN.map(h => (
+										<div class="exp">
+											<span class="exp-period">{h.year}</span>
+											<div>
+												<h4 class="exp-title">{h.title}</h4>
+												<p class="exp-sub">{h.role}</p>
+											</div>
+										</div>
+									))}
+								</div>
+							</section>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- ═══ Slide 7 — Contact (wave particles) ═══ -->
+			<section class="slide dark" data-slide="6" id="contact">
+				<canvas id="waves" class="canvas-full"></canvas>
+				<div class="slide-content center">
+					<div class="contact">
+						<p class="label anim up" data-d="0">Get in Touch</p>
+						<h2 class="heading-xl anim scale" data-d="1">Let's work together</h2>
+						<p class="body anim up" data-d="2"><span data-t="contactBody">If you like my work or have collaboration ideas, feel free to reach out.</span></p>
+						<div class="contact-actions anim up" data-d="3">
+							<a href={`mailto:${PERSONAL_INFO.email}`} class="btn"><Icon name="mail" size={16} class="w-4 h-4" />{PERSONAL_INFO.email}</a>
+						</div>
+					</div>
+				</div>
+			</section>
+
 		</main>
-		<Footer />
+
+		<!-- ═══ Footer ═══ -->
+		<footer class="footer">
+			<div class="footer-divider"></div>
+			<div class="footer-inner">
+				<div class="footer-left">
+					<span>&copy; {currentYear} ChenYang</span>
+					<span class="dot">·</span>
+					<span class="footer-text" data-t="footerQuote">Painting rewards itself with painting; writing rewards itself with writing.</span>
+				</div>
+				<div class="footer-right">
+					{SOCIAL_LINKS.map(link => (
+						<a href={link.url} target="_blank" rel="noopener noreferrer" class="footer-link" title={link.nameEn} data-t-title={link.i18n} aria-label={link.nameEn}>
+							<Icon name={link.icon} size={14} class="w-3.5 h-3.5" fill />
+						</a>
+					))}
+				</div>
+			</div>
+		</footer>
+
+		<!-- Indicator -->
+		<div class="indicator"><div class="indicator-bar" id="indicator-bar"></div></div>
+
 	</body>
 </html>
+
+<style>
+/* ══════════════════════════════════════════════
+   Design Tokens
+══════════════════════════════════════════════ */
+:root {
+	--bg: #0a0a0a;
+	--surface: #141414;
+	--elevated: #1e1e1e;
+	--text: #FAF9F6;
+	--text-2: #d4d2cc;
+	--text-3: #b8b8b0;
+	--text-4: #b8b8b0;
+	--accent: var(--ds-accent, #8A8C6E);
+	--border: rgba(255,255,255,0.08);
+	--spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; }
+
+/* ═══ Focus States ═══ */
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* ═══ Skip Link ═══ */
+.skip-link { position: absolute; top: -100%; left: 1rem; z-index: 9999; padding: 0.75rem 1.5rem; background: var(--text); color: var(--bg); text-decoration: none; font-size: 0.875rem; font-weight: 500; transition: top 0.2s; }
+.skip-link:focus { top: 1rem; }
+
+/* ═══ Body ═══ */
+body { background: var(--bg); color: var(--text); font-family: var(--ds-font-body, 'Outfit', 'Noto Sans SC', system-ui, sans-serif); -webkit-font-smoothing: antialiased; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+
+/* ═══ Typography ═══ */
+.heading-display { font-size: clamp(3rem, 10vw, 7rem); line-height: 0.9; letter-spacing: -0.05em; font-weight: 700; text-wrap: balance; }
+.heading-xl { font-size: clamp(2rem, 5vw, 3.5rem); line-height: 1.1; letter-spacing: -0.04em; font-weight: 700; text-wrap: balance; }
+.heading-lg { font-size: clamp(1.5rem, 3.5vw, 2.25rem); line-height: 1.2; letter-spacing: -0.03em; font-weight: 600; text-wrap: balance; }
+.body-lg { font-size: 1.125rem; line-height: 1.7; max-width: 65ch; }
+.body { font-size: 1rem; line-height: 1.7; color: var(--text-2); max-width: 65ch; }
+.body + .body { margin-top: 0.75rem; }
+.body-sm { font-size: 0.875rem; line-height: 1.6; color: var(--text-3); max-width: 65ch; }
+.label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--accent); font-weight: 500; }
+.label-sm { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--accent); font-weight: 500; margin-bottom: 1rem; }
+
+/* ═══ Header ═══ */
+.header {
+	position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+	display: flex; align-items: center; justify-content: space-between;
+	padding: 1.25rem 1.5rem; pointer-events: none;
+	border-bottom: 1px solid transparent;
+	transition: border-color 0.3s, background 0.3s;
+}
+.header.scrolled { border-bottom-color: var(--border); background: rgba(10,10,10,0.8); backdrop-filter: blur(12px); }
+.header > * { pointer-events: auto; }
+.header-logo { font-size: 0.8rem; font-weight: 700; color: var(--text); text-decoration: none; letter-spacing: 0.18em; flex-shrink: 0; }
+.header-nav { position: absolute; left: 50%; transform: translateX(-50%); display: flex; gap: 1.5rem; }
+.header-link { font-size: 0.65rem; color: var(--text-4); text-decoration: none; text-transform: uppercase; letter-spacing: 0.12em; transition: color 0.3s; }
+.header-link:hover { color: var(--text); }
+.header-email { font-size: 0.65rem; color: var(--text-4); text-decoration: none; letter-spacing: 0.05em; transition: color 0.3s; }
+.header-email:hover { color: var(--text); }
+.header-right { display: flex; align-items: center; gap: 0; margin-left: auto; }
+.header-sep { width: 1px; height: 16px; background: rgba(255,255,255,0.18); margin: 0 clamp(6px,1.5vw,12px); display: inline-block; flex-shrink: 0; }
+.lang-btn { font-size: 0.65rem; letter-spacing: 0.1em; color: var(--text-4); background: none; border: none; padding: 0; cursor: pointer; transition: color 0.3s; line-height: 1.6; font-family: inherit; }
+.lang-btn:hover { color: var(--text); }
+html[lang="en"] .lang-btn { color: var(--accent); }
+@media (max-width: 767px) { .header-email { display: none; } .header-sep { display: none; } .header-nav { gap: 0.8rem; } .header-link { font-size: 0.55rem; letter-spacing: 0.08em; } }
+/* Work dropdown — hover expands to jump to each work section */
+.nav-hover { position: relative; display: inline-flex; }
+.caret { display: inline-block; margin-left: 0.35em; width: 0; height: 0; border-left: 3px solid transparent; border-right: 3px solid transparent; border-top: 4px solid currentColor; opacity: 0.6; transition: transform 0.25s ease; }
+.nav-hover:hover .caret, .nav-hover:focus-within .caret { transform: rotate(180deg); }
+/* Blog external-link caret (↗) */
+.caret.ext { width: auto; height: auto; border: 0; opacity: 0.75; font-size: 0.9em; line-height: 1; transform: none; }
+.caret.ext::after { content: '↗'; }
+.nav-menu {
+	position: absolute; top: calc(100% + 0.9rem); left: 50%; transform: translateX(-50%) translateY(6px);
+	min-width: 148px; padding: 0.6rem 0; list-style: none;
+	background: rgba(12,12,14,0.92); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+	border: 1px solid var(--border); opacity: 0; visibility: hidden; pointer-events: none;
+	transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s;
+	z-index: 210;
+}
+.nav-hover:hover .nav-menu, .nav-hover:focus-within .nav-menu { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); pointer-events: auto; }
+.nav-menu-link {
+	display: block; padding: 0.5rem 1.25rem; font-size: 0.72rem; letter-spacing: 0.08em;
+	color: var(--text-2); text-decoration: none; text-transform: none; transition: background 0.2s, color 0.2s;
+}
+.nav-menu-link:hover, .nav-menu-link:focus-visible { background: rgba(138,140,110,0.14); color: var(--text); }
+.nav-menu-divider { display: block; height: 1px; margin: 0.4rem 1.25rem; background: var(--border); }
+.nav-menu-note { display: block; padding: 0.35rem 1.25rem 0.15rem; font-size: 0.6rem; color: var(--text-4); letter-spacing: 0.1em; }
+
+/* ═══ Canvas / Video ═══ */
+.canvas-full { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+.bg-canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; display: block; }
+.video-fixed { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none; z-index: 0; }
+.img-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+
+/* Pages 3 & 4 share ONE undimmed continuous video (#reel) behind transparent slides */
+.reel { position: fixed; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; pointer-events: none; opacity: 0; transition: opacity 0.9s ease; }
+/* Fixed full-viewport scene layers — crossfade opacity on page change (no seams) */
+.scene-layer { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; opacity: 0; transition: opacity 0.9s ease; display: block; }
+.silver-scene { background: radial-gradient(120% 90% at 18% 8%, rgba(214,219,210,0.20) 0%, rgba(214,219,210,0.06) 34%, transparent 62%), linear-gradient(160deg, #17181d 0%, #23252c 42%, #101116 100%); }
+/* Page-2 horizontal content ticker (real cgartlab text) — seamless left→right marquee
+   with depth: far rows small/blurred/dim → near rows large/crisp/bright */
+.ticker { position: absolute; inset: 0; overflow: hidden; z-index: 0; pointer-events: none; }
+.ticker-row { position: absolute; left: var(--lx, 0%); width: var(--w, 100%); right: auto; overflow: hidden; filter: blur(var(--bl, 0px));
+	-webkit-mask-image: linear-gradient(to right, transparent 0%, #000 9%, #000 91%, transparent 100%);
+	mask-image: linear-gradient(to right, transparent 0%, #000 9%, #000 91%, transparent 100%); }
+.ticker-track { display: flex; width: max-content; animation: tickerR linear infinite; animation-duration: var(--dur, 12s); animation-direction: var(--ad, normal); will-change: transform; }
+.ticker-item { display: inline-flex; align-items: baseline; white-space: nowrap; font-size: calc(0.82rem * var(--sc, 1)); color: var(--text-3); opacity: var(--op, 0.5); text-shadow: 0 0 14px rgba(0,0,0,0.35); }
+.ticker-sep { color: var(--accent); margin: 0 clamp(0.7rem, 2vw, 1.8rem); opacity: 0.85; font-size: 0.92em; }
+@keyframes tickerR { from { transform: translateX(-50%); } to { transform: none; } }
+@media (prefers-reduced-motion: reduce) { .ticker-track { animation: none; } }
+/* About (5) & Contact (6) reveal the shared silver scene instead of flat .dark */
+[data-slide="5"], [data-slide="6"] { background: transparent !important; }
+/* Slide 1 reveals fixed scene layers instead of an opaque .dark background */
+[data-slide="1"] { background: transparent !important; }
+
+/* ── Page 3 (data-slide 2): center → corner, video 50% → full ── */
+/* ── Page 3 (data-slide 2) choreography: center+dim(hold) → settle down → brighten ── */
+/* Phase A — PERMANENT steady state: text centered on a 50%-dimmed video.
+   No timer ever advances it; only real scroll movement drives phase B
+   (see pg3-director JS → --pg 0..1). */
+.video-dim { position: absolute; inset: 0; background: rgba(0,0,0,0.5); z-index: 0; pointer-events: none; opacity: calc(1 - var(--pg, 0)); }
+.glass { position: absolute; inset: 0; background: rgba(10,10,10,0.28); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); -webkit-mask-image: linear-gradient(to bottom, transparent 0%, transparent 40%, rgba(0,0,0,1) 100%); mask-image: linear-gradient(to bottom, transparent 0%, transparent 40%, rgba(0,0,0,1) 100%); z-index: 0; pointer-events: none; opacity: var(--g, 0); }
+[data-slide="2"] .slide-content { position: relative; justify-content: center; align-items: center; text-align: left; padding-bottom: 0; transform: translateY(calc(var(--pg, 0) * 22vh)); }
+[data-slide="2"] .slide-content::after { content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none; }
+[data-slide="2"] .split, [data-slide="3"] .work { position: relative; z-index: 1; }
+
+/* Gradient edges — FIXED mask over the video, independent of slide scroll */
+#edge-mask {
+	position: fixed; inset: 0; z-index: 120; pointer-events: none; opacity: 0;
+	transition: opacity 0.6s ease;
+	background:
+		linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, transparent 22%, transparent 78%, rgba(0,0,0,0.6) 100%);
+}
+/* Page 3/4: disable per-slide edge pseudo elements entirely (mask takes over) */
+[data-slide="2"]::before, [data-slide="2"]::after, [data-slide="3"]::before, [data-slide="3"]::after { content: none !important; }
+/* Text shadow for readability over video */
+[data-slide="2"] .split .heading-xl, [data-slide="2"] .split .body, [data-slide="2"] .split .label, [data-slide="2"] .split .skill-cat, [data-slide="2"] .split .skill-list li { text-shadow: 0 1px 3px rgba(0,0,0,0.9), 0 8px 32px rgba(0,0,0,0.55); }
+/* Page 4 (data-slide 3): corner text, no dim (edges via fixed mask) */
+[data-slide="3"] .slide-content { position: relative; justify-content: flex-start; align-items: flex-end; text-align: left; padding-bottom: 12dvh; }
+[data-slide="3"] .work { max-width: 560px; }
+[data-slide="3"] .work .heading-xl { font-size: clamp(1.9rem, 4.2vw, 3.2rem); margin: 0.5rem 0 0.9rem; }
+[data-slide="3"] .work .body-lg { margin-bottom: 0.75rem; }
+[data-slide="3"] .work .body { margin-bottom: 1rem; }
+[data-slide="3"] .work .heading-xl, [data-slide="3"] .work .body-lg, [data-slide="3"] .work .body, [data-slide="3"] .work .label, [data-slide="3"] .work .tag { text-shadow: 0 1px 3px rgba(0,0,0,0.9), 0 8px 32px rgba(0,0,0,0.55); }
+/* Page 2 — aurora gradient background + readable text scrim */
+[data-slide="1"] .slide-content { position: relative; }
+[data-slide="1"] .slide-content::before { content: ''; position: absolute; inset: 0; z-index: 0; background: radial-gradient(ellipse 80% 70% at 50% 46%, rgba(4,4,6,0.55) 0%, rgba(4,4,6,0.2) 55%, transparent 100%); pointer-events: none; }
+[data-slide="1"] .stats { position: relative; z-index: 1; }
+
+/* ═══ Slideshow ═══ */
+.slideshow { height: 100dvh; overflow-y: auto; scroll-snap-type: y mandatory; scroll-behavior: smooth; scrollbar-width: none; }
+.slideshow::-webkit-scrollbar { display: none; }
+.slide { position: relative; width: 100%; min-height: 100dvh; scroll-snap-align: start; scroll-snap-stop: always; overflow: hidden; contain: layout style paint; padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left); }
+/* Gradient transitions between slides — seamless background blending */
+.slide::before { content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none; background: linear-gradient(to bottom, transparent 0%, transparent 85%, rgba(10,10,10,0.6) 100%); transition: opacity 0.6s; }
+.slide.dark::before { background: linear-gradient(to bottom, rgba(10,10,10,0.4) 0%, transparent 15%, transparent 85%, rgba(10,10,10,0.6) 100%); }
+/* Top fade for slides after 0 — blend from previous */
+/* Top fade for slides after 0 — blend from previous, but not too dark */
+[data-slide]:not([data-slide="0"])::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 15%; z-index: 0; pointer-events: none; background: linear-gradient(to bottom, rgba(10,10,10,0.5) 0%, transparent 100%); }
+.dark { background: var(--bg); }
+.slide-content { position: relative; z-index: 1; display: flex; align-items: center; width: 100%; min-height: 100dvh; padding: 5rem 1.5rem; }
+.slide-content.center { justify-content: center; }
+.slide-content.scroll-y { align-items: flex-start; overflow-y: auto; max-height: 100dvh; }
+@media (min-width: 768px) { .slide-content { padding: 5rem 3rem; } }
+
+.center { text-align: center; }
+
+/* ═══ Hero ═══ */
+/* ═══ Hero — poster left-aligned ═══ */
+[data-slide="0"] .slide-content {
+	flex-direction: column;
+	justify-content: flex-end;
+	align-items: flex-start;
+	text-align: left;
+	padding-bottom: 10dvh;
+}
+.hero { max-width: 860px; width: 100%; }
+.hero-name {
+	font-size: clamp(4.5rem, 16vw, 14rem);
+	line-height: 0.88;
+	letter-spacing: -0.02em;
+	font-weight: 700;
+	margin-bottom: 1.25rem;
+	color: var(--text);
+	display: flex; flex-direction: column; align-items: stretch; width: fit-content;
+}
+.hero-name .hl { display: flex; justify-content: space-between; width: 100%; white-space: nowrap; }
+.hero-name .hl span { display: inline-block; }
+.hero-subline {
+	display: flex;
+	align-items: baseline;
+	gap: 0.6em;
+	flex-wrap: wrap;
+	margin-bottom: 1.25rem;
+}
+.hero-role {
+	font-size: clamp(1.25rem, 3.2vw, 2.2rem);
+	color: var(--text-3);
+	letter-spacing: -0.02em;
+	font-weight: 300;
+}
+.hero-role .rwd {
+	display: inline-block;
+	overflow: hidden;
+	vertical-align: bottom;
+}
+.hero-role .rwd .inner {
+	display: inline-block;
+	transform: translateY(110%);
+	transition: transform 0.7s var(--spring);
+}
+.slide.is-active .hero-role .rwd .inner {
+	transform: translateY(0);
+	transition-delay: calc(0.4s + var(--ri, 0) * 0.08s);
+}
+.hero-divider {
+	width: 48px;
+	height: 1px;
+	background: var(--accent);
+	margin-bottom: 1.25rem;
+	opacity: 0;
+	transform: scaleX(0);
+	transform-origin: left;
+	transition: opacity 0.6s var(--spring) 0.3s, transform 0.6s var(--spring) 0.3s;
+}
+.slide.is-active .hero-divider { opacity: 1; transform: scaleX(1); }
+.hero-tags {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	justify-content: flex-start;
+	gap: 0.25rem;
+	font-size: 0.8125rem;
+	color: var(--text-3);
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	margin-bottom: 2rem;
+}
+.hero-tags .sep { display: inline-block; color: var(--accent); margin: 0 0.65rem; opacity: 0.8; }
+
+/* Scroll cue — replaces CTA button on the hero */
+.scroll-cue { display: inline-flex; flex-direction: column; align-items: center; gap: 0.6rem; margin-top: 0.5rem; color: var(--text-3); text-decoration: none; }
+.cue-label { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.3em; color: var(--text-3); transition: color 0.3s; }
+.cue-track { position: relative; width: 1px; height: 44px; background: rgba(255,255,255,0.18); overflow: hidden; }
+.cue-dot { position: absolute; left: 0; top: -6px; width: 1px; height: 14px; background: var(--accent); animation: cueFall 1.8s cubic-bezier(.4,0,.6,1) infinite; }
+.scroll-cue:hover .cue-label { color: var(--text); }
+.scroll-cue:hover .cue-dot { background: var(--text-2); }
+@keyframes cueFall { 0% { transform: translateY(0); opacity: 0; } 25% { opacity: 1; } 70% { opacity: 1; } 100% { transform: translateY(46px); opacity: 0; } }
+
+/* ═══ Stats ═══ */
+.stats { width: 100%; max-width: 1080px; display: grid; grid-template-columns: 1fr; gap: 0; margin: 0 auto; transform: translate(1.2vw, -4dvh); }
+@media (max-width: 768px) { .stats { transform: translate(0.6vw, -2dvh); } }
+@media (min-width: 768px) { .stats { grid-template-columns: repeat(2, 1fr); } }
+.stat {
+	display: flex; flex-direction: column; align-items: flex-start; gap: 0.4rem;
+	padding: 2rem 1.5rem; border-bottom: 1px solid var(--border); position: relative; z-index: 1;
+}
+@media (min-width: 768px) {
+	.stat { padding: 2.75rem 2.25rem; border-right: 1px solid var(--border); }
+	.stat:nth-child(2n) { border-right: 0; }
+	.stat:nth-last-child(-n+2) { border-bottom: 0; }
+}
+.stat-kicker { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.16em; color: var(--text-3); }
+.stat-src { display: inline-block; margin-left: 0.55rem; padding: 1px 7px; font-size: 0.6rem; letter-spacing: 0.08em; text-transform: none; color: var(--text-4); border: 1px solid var(--border); border-radius: 999px; vertical-align: middle; text-decoration: none; transition: color 0.3s, border-color 0.3s; }
+.stat-src:hover { color: var(--text); border-color: var(--text-4); }
+.stat-line { display: flex; align-items: baseline; gap: 0.6rem; flex-wrap: wrap; }
+.stat-value { font-size: clamp(3rem, 8vw, 6.5rem); line-height: 0.9; letter-spacing: -0.05em; font-weight: 600; color: var(--text); font-variant-numeric: tabular-nums; }
+.stat-unit { font-size: 1rem; color: var(--accent); font-weight: 500; }
+@media (min-width: 768px) {
+	.stat:nth-child(1) { border-top: 1px solid var(--border); }
+	.stat:nth-child(2) { border-top: 1px solid var(--border); }
+}
+
+/* ═══ Split ═══ */
+.split { display: grid; grid-template-columns: 1fr; gap: 2.5rem; width: 100%; }
+@media (min-width: 1024px) { .split { grid-template-columns: 5fr 7fr; gap: 4rem; } }
+.split-left { max-width: 480px; }
+.split-left .heading-xl { margin-bottom: 1rem; }
+.skills { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+.skill-cat { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--accent); margin-bottom: 0.75rem; }
+.skill-list { list-style: none; padding: 0; }
+.skill-list li { font-size: 0.875rem; color: var(--text-2); line-height: 1.8; }
+
+/* ═══ Work ═══ */
+.work { max-width: 640px; }
+.work .heading-xl { margin: 0.5rem 0 1rem; }
+.work .body-lg { color: var(--text-2); margin-bottom: 1rem; }
+.work .body { margin-bottom: 1.5rem; }
+.tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.tag { padding: 4px 12px; font-size: 0.7rem; background: rgba(255,255,255,0.06); color: var(--text-3); border: 1px solid var(--border); transition: transform 0.3s var(--spring), color 0.3s, background 0.3s; }
+.tag:hover { background: rgba(255,255,255,0.1); color: var(--text); border-color: rgba(255,255,255,0.15); }
+
+/* ═══ Meditation ═══ */
+/* Meditation: Ken Burns infinite background */
+.kb-stage { position: absolute; inset: 0; overflow: hidden; z-index: 0; }
+.kb-img {
+	position: absolute; inset: -12%;
+	width: 124%; height: 124%;
+	object-fit: cover;
+	filter: brightness(0.45);
+	animation: kenburns 24s ease-in-out infinite alternate;
+	will-change: transform;
+}
+.kb-overlay {
+	position: absolute; inset: 0;
+	background: linear-gradient(180deg, rgba(10,10,10,0.3) 0%, rgba(10,10,10,0.15) 40%, rgba(10,10,10,0.7) 100%);
+}
+@keyframes kenburns {
+	0% { transform: scale(1) translate(0, 0); }
+	25% { transform: scale(1.08) translate(-2%, 1%); }
+	50% { transform: scale(1.12) translate(1.5%, -1%); }
+	75% { transform: scale(1.06) translate(-1%, -2%); }
+	100% { transform: scale(1.1) translate(2%, 1.5%); }
+}
+.med-text-center {
+	max-width: 560px;
+	margin-left: auto;
+	text-align: center;
+	padding: 2rem 1.5rem;
+	background: rgba(10,10,10,0.55);
+	backdrop-filter: blur(6px);
+	border: 1px solid var(--border);
+}
+.med-text-center .heading-display { margin: 0.5rem 0 1rem; }
+.med-text-center .body { margin-bottom: 1.5rem; }
+.med-cta { display: flex; justify-content: center; }
+
+/* ═══ Meditation — full-bleed artwork deck ═══ */
+.meddeck { width: 100%; }
+.mdeck-item {
+	position: relative; height: 100dvh; overflow: hidden;
+	scroll-snap-align: start; scroll-snap-stop: always;
+	display: flex; align-items: center; justify-content: center;
+	background: var(--bg);
+}
+.mdeck-img {
+	position: absolute; inset: 0; width: 100%; height: 100%;
+	object-fit: cover; filter: brightness(0.6);
+	transform: scale(1.09);
+	transition: transform 1.2s cubic-bezier(.16,1,.3,1), filter 0.5s ease;
+}
+.mdeck-item.cur .mdeck-img { animation: float 30s ease-in-out infinite alternate !important; transform-origin: var(--pan-ox, 50%) var(--pan-oy, 50%); }
+.mdeck-item:hover .mdeck-img { filter: brightness(0.75); }
+@keyframes float { from { transform: scale(1.06) translate(0, 0); } to { transform: scale(1.06) translate(var(--pan-x, 2%), var(--pan-y, -1%)); } }
+/* always-visible index — small, fixed top-right of the artwork */
+.mdeck-index {
+	position: absolute; top: max(4.5rem, env(safe-area-inset-top)); right: 1.25rem;
+	font-size: 0.55rem; letter-spacing: 0.14em; color: var(--text-3);
+	font-variant-numeric: tabular-nums; text-shadow: 0 1px 6px rgba(0,0,0,0.8);
+	z-index: 2; pointer-events: none;
+}
+.mdeck-index em { font-style: normal; font-size: 0.9em; color: var(--text-4); margin-left: 0.5em; }
+/* hover: intro text anchors BOTTOM-LEFT, plain text (no card) */
+.mdeck-hover {
+	position: absolute; left: clamp(1.5rem, 6vw, 4rem); top: auto; right: auto;
+	bottom: max(9dvh, calc(env(safe-area-inset-bottom) + 2.5rem));
+	max-width: min(560px, 82vw); z-index: 3;
+	opacity: 0; transform: translateY(18px); pointer-events: none;
+	transition: opacity 0.5s ease, transform 0.6s var(--spring);
+}
+.mdeck-card { background: none; border: 0; backdrop-filter: none; padding: 0; text-align: left; transform: none; }
+.mdeck-title { font-size: clamp(1.6rem, 3.2vw, 2.5rem); font-weight: 600; color: var(--text); text-wrap: balance; margin-bottom: 0.5rem; text-shadow: 0 1px 12px rgba(0,0,0,0.85); }
+.mdeck-desc { font-size: 0.92rem; line-height: 1.7; color: var(--text-2); max-width: 46ch; text-shadow: 0 1px 10px rgba(0,0,0,0.9); }
+.mdeck-item:hover .mdeck-hover, .mdeck-item:focus-within .mdeck-hover { opacity: 1; transform: none; }
+@media (hover: none) {
+	.mdeck-hover { opacity: 1; transform: none; bottom: calc(env(safe-area-inset-bottom) + 6dvh); }
+}
+/* Soft dissolve: every artwork fades to near-black at its top/bottom edges so a
+   snap transition meets dark-to-dark — no hard cut between pieces */
+.mdeck-item::after {
+	content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+	background: linear-gradient(to bottom, rgba(5,5,7,0.92) 0%, rgba(5,5,7,0.5) 5%, transparent 13%, transparent 87%, rgba(5,5,7,0.5) 95%, rgba(5,5,7,0.92) 100%);
+}
+/* Hover text (z3) and index (z2) stay above the dissolve overlay (z1) */
+.mdeck-index { z-index: 2; }
+.mdeck-hover { z-index: 3; }
+
+/* ═══ Meditation — final wall: ALL works in a geometric full-bleed mosaic ═══ */
+.medwall-grid { position: absolute; inset: 0; display: grid; grid-template-columns: repeat(5, 1fr); grid-template-rows: repeat(2, 1fr); gap: 2px; background: var(--bg); }
+@media (max-width: 640px) { .medwall-grid { grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(5, 1fr); } }
+.medwall-cell { position: relative; overflow: hidden; }
+.medwall-cell img {
+	position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+	filter: brightness(0.6); transform: scale(1.16);
+	transition: transform 1.5s cubic-bezier(.16,1,.3,1) calc(var(--i, 0) * 50ms), filter 0.6s ease calc(var(--i, 0) * 50ms);
+}
+.medwall.cur .medwall-cell img { transform: scale(1); filter: brightness(0.9); }
+.medwall-cap {
+	position: absolute; left: clamp(1.5rem, 6vw, 4rem); bottom: max(8dvh, calc(env(safe-area-inset-bottom) + 2rem));
+	z-index: 3; pointer-events: none; opacity: 0; transform: translateY(16px);
+	transition: opacity 0.7s ease 0.4s, transform 0.8s var(--spring) 0.4s;
+}
+.medwall.cur .medwall-cap { opacity: 1; transform: none; }
+.medwall-eyebrow { display: block; font-size: 0.68rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.5rem; text-shadow: 0 1px 10px rgba(0,0,0,0.9); }
+.medwall-count { display: block; font-size: clamp(1.4rem, 3vw, 2.2rem); font-weight: 300; letter-spacing: 0.06em; color: var(--text); text-shadow: 0 1px 14px rgba(0,0,0,0.85); }
+
+/* ═══ Gallery 3D ═══ */
+.gallery-wrap { width: 100%; }
+.gallery-3d { display: flex; justify-content: center; flex-wrap: wrap; gap: 1rem; padding: 1.5rem 0; perspective: 1000px; contain: layout style; }
+.gcard { width: 180px; height: 240px; overflow: hidden; position: relative; transform: perspective(1000px) rotateY(calc((var(--i) - 5) * 5deg)) translateZ(calc(var(--i) * -10px)); transition: transform 0.5s var(--spring), box-shadow 0.4s; }
+.gcard.tilting { transform: perspective(1000px) rotateY(var(--ry, 0deg)) rotateX(var(--rx, 0deg)) translateZ(30px) scale(1.04); z-index: 10; box-shadow: 0 24px 60px rgba(0,0,0,0.5); }
+@media (min-width: 768px) { .gcard { width: 220px; height: 280px; } }
+.gcard:hover { transform: rotateY(0) translateZ(30px) scale(1.05); box-shadow: 0 20px 50px rgba(0,0,0,0.4); z-index: 10; }
+.gcard-img { width: 100%; height: 100%; object-fit: cover; }
+.gcard-info { position: absolute; bottom: 0; left: 0; right: 0; padding: 1rem; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); opacity: 0; transition: opacity 0.4s; }
+.gcard:hover .gcard-info { opacity: 1; }
+@media (hover: none) { .gcard-info { opacity: 1; } }
+.gcard-title { font-size: 0.875rem; font-weight: 600; color: var(--text); margin-bottom: 0.25rem; }
+.gcard-desc { font-size: 0.75rem; color: var(--text-3); line-height: 1.5; }
+
+/* ═══ Profile ═══ */
+.profile { display: grid; grid-template-columns: 1fr; gap: 2.5rem; width: 100%; }
+@media (min-width: 1024px) { .profile { grid-template-columns: 4fr 8fr; gap: 3rem; } }
+.profile-contact { margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+.contact-row { display: flex; gap: 0.5rem; }
+.icon-link { display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; border: 1px solid var(--border); color: var(--text-4); text-decoration: none; transition: transform 0.3s var(--spring), color 0.3s; }
+.icon-link:hover { border-color: var(--text); color: var(--text); }
+
+.psection { margin-bottom: 2rem; }
+.psection:not(:first-child) { padding-top: 2rem; border-top: 1px solid var(--border); }
+.exp { display: flex; gap: 1rem; padding: 0.75rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+.exp-period { font-size: 0.75rem; color: var(--text-4); width: 80px; flex-shrink: 0; padding-top: 2px; }
+.exp-title { font-size: 0.9375rem; font-weight: 500; color: var(--text); }
+.exp-desc { font-size: 0.8125rem; color: var(--text-3); line-height: 1.6; margin-top: 0.25rem; }
+.exp-accent { font-size: 0.8125rem; color: var(--accent); margin-top: 0.25rem; }
+
+.honors { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+.honor { padding: 1rem; background: var(--surface); }
+.honor-year { font-size: 0.75rem; color: var(--accent); }
+.honor-title { font-size: 0.8125rem; color: var(--text); margin-top: 0.25rem; line-height: 1.5; font-weight: 500; }
+
+.practice { display: grid; grid-template-columns: 1fr; gap: 1px; background: var(--border); }
+@media (min-width: 768px) { .practice { grid-template-columns: 1fr 1fr 1fr; } }
+
+/* ═══ About (page 5) — re-laid out editorial over the shared silver scene ═══ */
+[data-slide="5"] .slide-content::before, [data-slide="6"] .slide-content::before { content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+[data-slide="6"] .slide-content::before { background: radial-gradient(ellipse 80% 66% at 50% 44%, rgba(8,9,11,0.55) 0%, rgba(8,9,11,0.2) 60%, transparent 100%); }
+[data-slide="5"] .profile, [data-slide="6"] .contact { position: relative; z-index: 1; }
+[data-slide="5"] .slide-content.scroll-y { padding: 7rem 1.5rem 5rem; }
+@media (min-width: 1024px) { [data-slide="5"] .profile { grid-template-columns: 5fr 7fr; gap: clamp(2.5rem, 5vw, 4.5rem); } }
+[data-slide="5"] .profile-left .heading-lg { letter-spacing: -0.03em; margin: 0.75rem 0 1.25rem; max-width: 22ch; }
+[data-slide="5"] .psection > .label-sm { display: inline-flex; align-items: center; gap: 0.75rem; }
+[data-slide="5"] .psection > .label-sm::after { content: ''; width: 42px; height: 1px; background: var(--border); }
+[data-slide="5"] .profile-contact { display: grid; gap: 1.1rem; margin-top: 2.5rem; padding-top: 1.75rem; }
+.exp-sub { font-size: 0.78rem; color: var(--text-4); margin-top: 0.2rem; }
+.exp-link { color: var(--accent); text-decoration: none; margin-left: 0.5rem; }
+.exp-link:hover { color: var(--text); }
+[data-slide="5"] .exp-desc { margin-top: 0.2rem; }
+[data-slide="5"] .exp-period { color: var(--text-3); font-variant-numeric: tabular-nums; }
+
+/* ═══ Contact ═══ */
+.contact { max-width: 660px; }
+.contact .heading-xl { margin: 0.5rem 0 1rem; }
+/* Slide 6 closing line: 65ch cap would wrap it (EN 74 chars ≈ 590px at 1rem), so lift it.
+   On narrow viewports the box clamps to the available width and the line wraps normally. */
+.contact .body { margin-bottom: 2rem; max-width: none; }
+.contact-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0.75rem; }
+.icon-link-lg { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border: 1px solid var(--border); color: var(--text-4); text-decoration: none; transition: transform 0.3s var(--spring), color 0.3s; }
+.icon-link-lg:hover { border-color: var(--text); color: var(--text); transform: scale(1.1); }
+
+/* ═══ Button ═══ */
+.btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.5rem; font-size: 0.875rem; font-weight: 500; background: var(--text); color: var(--bg); text-decoration: none; transition: transform 0.4s var(--spring), background 0.3s; }
+.btn:hover { background: #fff; transform: scale(1.05); }
+
+/* ═══ Footer ═══ */
+.footer { position: fixed; bottom: 0; left: 0; right: 0; z-index: 150; pointer-events: none; }
+.footer-divider { height: 1px; background: var(--border); margin: 0 1.5rem; }
+.footer-inner { display: flex; align-items: center; justify-content: space-between; padding: 0.75rem 1.5rem max(0.75rem, env(safe-area-inset-bottom)); pointer-events: auto; }
+.footer-left { display: flex; align-items: center; gap: 0.5rem; font-size: 0.7rem; color: var(--text-4); }
+.dot { color: var(--accent); }
+.footer-text { display: none; }
+@media (min-width: 768px) { .footer-text { display: inline; } }
+.footer-right { display: flex; gap: 0.75rem; }
+.footer-link { display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; color: var(--text-4); text-decoration: none; transition: color 0.3s; }
+.footer-link:hover { color: var(--text); }
+
+/* ═══ Indicator ═══ */
+.indicator { position: fixed; right: 1rem; top: 50%; transform: translateY(-50%); width: 2px; height: 80px; background: rgba(255,255,255,0.05); border-radius: 1px; z-index: 200; overflow: hidden; }
+.indicator-bar { width: 100%; height: 100%; background: var(--accent); border-radius: 1px; transform: scaleY(0); transform-origin: top; transition: transform 0.4s var(--spring); }
+
+/* ═══ Animations ═══ */
+/* Base state: hidden with directional transform */
+.anim { opacity: 0; }
+.anim.up { transform: translateY(32px); }
+.anim.left { transform: translateX(-40px); }
+.anim.right { transform: translateX(40px); }
+.anim.scale { transform: scale(0.92); }
+.anim.blur { filter: blur(8px); transform: translateY(16px); }
+.anim.mask { clip-path: inset(0 0 100% 0); }
+
+/* Animate when slide becomes active */
+.slide.is-active .anim.up { animation: fadeUp 0.7s var(--spring) forwards; }
+.slide.is-active .anim.left { animation: fadeLeft 0.7s var(--spring) forwards; }
+.slide.is-active .anim.right { animation: fadeRight 0.7s var(--spring) forwards; }
+.slide.is-active .anim.scale { animation: fadeScale 0.8s var(--spring) forwards; }
+.slide.is-active .anim.blur { animation: fadeBlur 0.9s var(--ease-out, cubic-bezier(0.16,1,0.3,1)) forwards; }
+.slide.is-active .anim.mask { animation: fadeMask 0.8s var(--spring) forwards; }
+
+/* Stagger delays */
+.slide.is-active .anim[data-d="0"] { animation-delay: 0.05s; }
+.slide.is-active .anim[data-d="1"] { animation-delay: 0.13s; }
+.slide.is-active .anim[data-d="2"] { animation-delay: 0.22s; }
+.slide.is-active .anim[data-d="3"] { animation-delay: 0.31s; }
+.slide.is-active .anim[data-d="4"] { animation-delay: 0.4s; }
+.slide.is-active .anim[data-d="5"] { animation-delay: 0.5s; }
+.slide.is-active .anim[data-d="6"] { animation-delay: 0.6s; }
+.slide.is-active .anim[data-d="7"] { animation-delay: 0.7s; }
+.slide.is-active .anim[data-d="8"] { animation-delay: 0.8s; }
+.slide.is-active .anim[data-d="9"] { animation-delay: 0.9s; }
+
+@keyframes fadeUp {
+	from { opacity: 0; transform: translateY(32px); }
+	to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeLeft {
+	from { opacity: 0; transform: translateX(-40px); }
+	to { opacity: 1; transform: translateX(0); }
+}
+@keyframes fadeRight {
+	from { opacity: 0; transform: translateX(40px); }
+	to { opacity: 1; transform: translateX(0); }
+}
+@keyframes fadeScale {
+	from { opacity: 0; transform: scale(0.92); }
+	to { opacity: 1; transform: scale(1); }
+}
+@keyframes fadeBlur {
+	from { opacity: 0; filter: blur(8px); transform: translateY(16px); }
+	to { opacity: 1; filter: blur(0); transform: translateY(0); }
+}
+@keyframes fadeMask {
+	from { opacity: 0; clip-path: inset(0 0 100% 0); }
+	to { opacity: 1; clip-path: inset(0 0 0 0); }
+}
+
+/* Gallery cards: 3D rotate-in */
+.slide.is-active .gcard.anim { animation: fadeScale 0.8s var(--spring) forwards; animation-delay: calc(var(--i) * 0.05s); }
+
+@media (prefers-reduced-motion: reduce) {
+	.slideshow { scroll-behavior: auto; scroll-snap-type: none; }
+	.slide.is-active .anim { opacity: 1; transform: none; animation: none; }
+	.kb-img { animation: none; }
+}
+</style>
+
+<script>
+// ═══ Seaweed — large kelp (60fps optimized) ═══
+try { (() => {
+	const c = document.getElementById('seaweed');
+	if (!c) return;
+	const ctx = c.getContext('2d');
+	if (!ctx) return;
+	// Code rain paints onto the aurora canvas — a true page-2 background layer
+	// that sits under the stats text and scrolls away with the slide.
+	const rainC = document.getElementById('aurora');
+	const rctx = rainC ? rainC.getContext('2d') : null;
+	let w, h;
+	const layers = [[], [], []];
+	let mx = -9999, my = -9999;
+	const GLOW_R = 280, GLOW_R2 = GLOW_R * GLOW_R;
+	const PUSH_R = 420, PUSH_R2 = PUSH_R * PUSH_R, PUSH_K = 75;
+	const DEPTH_W = [4.5, 1.0, 0];
+	const DEPTH_A = [0.025, 0.065, 0.13];
+	const rays = [], snow = [], codeCols = [];
+	// 方块汉字池（常用字）
+	const RAIN_CHARS = '的一是了我不人在他有这上们来到时大地为子中你说生国年着就那和要她出也得里后自以会家可下而过天去能对小多然于心学么之都好看起发当没成只如事把还用第样道想作种开美总从无情己面最女但现前些所同日手又行意动方期它头经长儿回位分爱老因很给名法间斯知世什两次使身者被高已亲其进此话常与活正感';
+	// cgartlab.com 文章句子池
+	const RAIN_SENTENCES = [
+		'围绕一人内容创作与工程协作的六加一智能体团队系统',
+		'机械验证优先假完成必识破单字命名门思记持艺寻',
+		'面对人工智能我们和长辈其实没什么两样',
+		'都习惯了执行规则却从未学习设计规则',
+		'从规则执行者到规则设计师慢一点才能真正用好人工智能',
+		'从业十二年的动态视觉设计师回顾创作环境演变历程',
+		'在线精美卡片生成器四套模板六种配色三种字体',
+		'自动为技术文章内的术语生成百科链接提升阅读体验',
+		'实时从社区维护的域名映射源获取访问加速方案',
+		'同时面向人类与智能体的编辑主义设计系统',
+		'人工智能行业已经从模型版本竞赛到智能体代理全面转向',
+		'如何让人工智能像员工一样自主工作互相合作',
+		'一个人从机场走出来到陌生的国度前面是未知但方向明确',
+		'私人数据中心跳过复杂的命令行建立创作者存储逻辑',
+		'对于用户软件是应用对于开发者软件是他们的产品',
+		'互联网是一片大海网站是浪花而浏览器是脚下的冲浪板',
+		'电脑要换的软件要更新的只有数据伴随你一辈子',
+		'一个人独处时如果没有想起任何其他人是快乐的',
+		'冥想是解剖自己内心的过程是让人无限接近实相的道路',
+		'写作是建立思维标本的过程系统化地整理表达思考',
+		'打造自己的第二大脑处理信息爆炸的方法是一点点学来的',
+		'用小学数学的思维方式重新审视情绪问题',
+		'编剧的作用是将剧本中的元素组织起来使观众理解',
+		'网页里那个下载图标越大就越不是你要找的链接',
+		'学习不好高考复读一年改学了画画',
+		'什么更重要什么最重要是否具有长期价值的三板斧方法论',
+	];
+
+	const build = () => {
+		layers[0].length = 0; layers[1].length = 0; layers[2].length = 0;
+		const n = Math.max(40, Math.floor(w / 26));
+		for (let i = 0; i < n; i++) {
+			const t = i / n;
+			const li = t < 0.33 ? 0 : t < 0.66 ? 1 : 2;
+			const numPts = li === 0 ? 8 + Math.floor(Math.random() * 3) : 10 + Math.floor(Math.random() * 5);
+			const nM1 = numPts - 1;
+			const inv = 1 / nM1;
+			const hue = 65 + Math.random() * 35;
+			const alpha = DEPTH_A[li] + Math.random() * 0.03;
+			const lw = DEPTH_W[li] + [0.4, 1.0, 2.0][li] + Math.random() * 0.7;
+			const k = {
+				baseX: t * w + (Math.random() - 0.5) * 50,
+				hue, alpha, w: lw,
+				speed: 0.2 + Math.random() * 0.3,
+				phase: Math.random() * 6.28,
+				amp: 25 + Math.random() * 40,
+				numPts, invN: inv,
+				pts: Array.from({ length: numPts }, () => ({ y: 0, off: Math.random() * 6.28 })),
+				illum: new Float32Array(numPts),
+				pushX: new Float32Array(numPts),
+				pushY: new Float32Array(numPts),
+				gHalo: 'hsla(' + hue + ',25%,42%,' + (alpha * 0.35) + ')',
+				gHue: hue, gA: alpha
+			};
+			for (let j = 0; j < numPts; j++) k.pts[j].y = j * h * inv;
+			layers[li].push(k);
+		}
+		// Volumetric light rays
+		rays.length = 0;
+		for (let i = 0; i < 6; i++) {
+			rays.push({
+				x: Math.random() * w, ang: (Math.random() - 0.5) * 0.3,
+				wd: 70 + Math.random() * 130, a: 0.02 + Math.random() * 0.025,
+				spd: 0.25 + Math.random() * 0.45, ph: Math.random() * 6.28
+			});
+		}
+		// Marine snow particles
+		snow.length = 0;
+		for (let i = 0; i < 60; i++) {
+			snow.push({
+				x: Math.random() * w, y: Math.random() * h,
+				sz: 0.4 + Math.random() * 1.6, sp: 0.15 + Math.random() * 0.35,
+				df: (Math.random() - 0.5) * 0.25, al: 0.03 + Math.random() * 0.1
+			});
+		}
+		// Code rain columns for exit animation
+		codeCols.length = 0;
+		for (let i = 0; i < 90; i++) {
+			const depth = 0.2 + Math.random() * 0.8;
+			codeCols.push((() => {
+				const useSentence = Math.random() < 0.6;
+				const sentence = useSentence ? RAIN_SENTENCES[Math.floor(Math.random() * RAIN_SENTENCES.length)] : '';
+				const sOff = useSentence ? Math.floor(Math.random() * sentence.length) : 0;
+				const maxLen = 6 + Math.floor(Math.random() * 18);
+				const mk = (i) => useSentence
+					? sentence[(sOff + i) % sentence.length]
+					: RAIN_CHARS[Math.floor(Math.random() * RAIN_CHARS.length)];
+				return {
+					x: (i / 89) * w + (Math.random() - 0.5) * 18,
+					y: Math.random() * h,
+					spd: 0.375 + depth * 1.25 + Math.random() * 0.5,
+					depth,
+					alpha: 0,
+					fadeTarget: 0,
+					fadeRate: 0.012 + Math.random() * 0.04,
+					rainColor: (() => { const pc = Math.random(); return pc < 0.5 ? '138,140,110' : pc < 0.85 ? '202,205,196' : '168,172,136'; })(),
+					flSpd: 0.6 + Math.random() * 2.2,
+					flPh: Math.random() * 6.28,
+					sentence,
+					sOff,
+					useSentence,
+					maxLen,
+					golden: false,
+					dispX: 0,
+					chars: Array.from({ length: maxLen }, (_, ci) => mk(ci)),
+				};
+			})());
+		}
+	};
+	const resize = () => { w = c.width = innerWidth; h = c.height = innerHeight; if (rainC) { rainC.width = innerWidth; rainC.height = innerHeight; } build(); };
+	resize();
+	addEventListener('resize', resize);
+	addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+	addEventListener('mouseleave', () => { mx = -9999; my = -9999; });
+
+	let t = 0;
+	const visible = true;   // fixed canvas loops cheaply; visibility gated by scene code below
+	let seaFade = 1;
+	let columnsReset = true;
+	let prevIdx = 0;
+	const deck = document.getElementById('slideshow');
+	// Authoritative page index: published on #slideshow[data-active] by the [2]
+	// slide-observer (center-of-viewport). Using it here avoids the seaweed
+	// observer's stale fallback to slide 0 (which flashed the hero on meditation).
+	const act = () => parseInt(deck && deck.dataset.active, 10) || 0;
+	let activeSlide = act();
+	const pBuf = new Float64Array(44); // 22 pts × 2
+	const fBuf = new Float64Array(44);
+
+	const trace = (pts, len) => {
+		ctx.moveTo(pts[0], pts[1]);
+		for (let i = 2; i < len - 2; i += 2)
+			ctx.quadraticCurveTo(pts[i], pts[i+1], (pts[i]+pts[i+2])*0.5, (pts[i+1]+pts[i+3])*0.5);
+		ctx.lineTo(pts[len-2], pts[len-1]);
+	};
+
+	const drawLayer = (ki) => {
+		const arr = layers[ki];
+		if (!arr.length) return;
+		const skip = ki === 0;
+		for (let ai = 0; ai < arr.length; ai++) {
+			const k = arr[ai];
+			const n = k.numPts, invN = k.invN;
+			const timeSpd = t * k.speed;
+			const baseX = k.baseX, amp = k.amp;
+			const pts = k.pts;
+
+			// Sway — left straight, right relaxed curves
+			const xFrac = k.baseX / w;
+			const flex = 0.08 + 0.92 * xFrac * xFrac; // quadratic: 8%→100%
+			const a = amp * flex;
+			for (let j = 0; j < n; j++) {
+				const p = pts[j];
+				const frac = j * invN;
+				const s1 = Math.sin(timeSpd + p.off + k.phase) * a;
+				const s2 = Math.sin(timeSpd * 0.6 + p.off * 1.4 + k.phase * 0.5) * a * 0.35;
+				const s3 = Math.sin(timeSpd * 1.7 + p.off * 0.6) * a * 0.12;
+				const s4 = Math.sin(timeSpd * 0.35 + p.off * 0.8 + k.phase * 0.3) * a * 0.25 * xFrac;
+				pBuf[j*2] = baseX + (s1 + s2 + s3 + s4) * frac * frac;
+				pBuf[j*2+1] = p.y;
+			}
+
+			// Mouse interaction — traveling pulse from touch point
+			const illum = k.illum, pushX = k.pushX, pushY = k.pushY;
+			if (skip) {
+				illum.fill(0); pushX.fill(0); pushY.fill(0);
+			} else if (mx > -1000) {
+				// Find nearest point + apply push
+				let touchIdx = 0, minD2 = Infinity;
+				for (let j = 0; j < n; j++) {
+					const dx = mx - pBuf[j*2], dy = my - pBuf[j*2+1];
+					const d2 = dx*dx + dy*dy;
+					if (d2 < minD2) { minD2 = d2; touchIdx = j; }
+					if (d2 < PUSH_R2 && d2 > 1) {
+						const d = Math.sqrt(d2);
+						const f = (1 - d/PUSH_R)*(1 - d/PUSH_R)*PUSH_K;
+						pushX[j] += (dx/d*f - pushX[j]) * 0.06;
+						pushY[j] += (dy/d*f*0.3 - pushY[j]) * 0.06;
+					} else { pushX[j] *= 0.96; pushY[j] *= 0.96; }
+				}
+				// Bioluminescent pulse — slow, segment-by-segment propagation
+				const touchDist = Math.sqrt(minD2);
+				if (touchDist < GLOW_R) {
+					const strength = Math.pow(1 - touchDist/GLOW_R, 2.5);
+					for (let j = 0; j < n; j++) {
+						const d = Math.abs(j - touchIdx);
+						// Slow wave: ~0.6 Hz, underwater feel
+						const wave = Math.cos(t * 4 - d * 0.5);
+						// Sharp segment shape: pow3 makes narrow bright pulses
+						const pulse = Math.max(0, Math.pow(Math.max(0, wave), 3));
+						const fall = Math.max(0, 1 - d * 0.08);
+						illum[j] = strength * pulse * fall;
+					}
+				} else {
+					illum.fill(0);
+				}
+			} else {
+				illum.fill(0); pushX.fill(0); pushY.fill(0);
+			}
+
+			// Final positions
+			const len = n * 2;
+			for (let j = 0; j < len; j += 2) {
+				fBuf[j] = pBuf[j] + pushX[j>>1];
+				fBuf[j+1] = pBuf[j+1] + pushY[j>>1];
+			}
+
+			// Glow halo
+			ctx.beginPath(); trace(fBuf, len);
+			ctx.strokeStyle = k.gHalo; ctx.lineWidth = k.w + 6; ctx.stroke();
+
+			// Main line
+			ctx.beginPath(); trace(fBuf, len);
+			const g = ctx.createLinearGradient(baseX - amp, 0, baseX + amp, h);
+			g.addColorStop(0, 'hsla('+k.gHue+',28%,40%,'+k.gA*0.1+')');
+			g.addColorStop(0.35, 'hsla('+k.gHue+',28%,46%,'+k.gA+')');
+			g.addColorStop(0.65, 'hsla('+k.gHue+',28%,46%,'+k.gA+')');
+			g.addColorStop(1, 'hsla('+k.gHue+',28%,40%,'+k.gA*0.1+')');
+			ctx.strokeStyle = g; ctx.lineWidth = k.w; ctx.stroke();
+
+			// Illumination overlay — pulse glow
+			if (!skip && mx > -1000) {
+				let maxI = 0;
+				for (let j = 0; j < n; j++) if (illum[j] > maxI) maxI = illum[j];
+				if (maxI > 0.02) {
+					// Glow stroke — opacity & width scale with pulse intensity
+					ctx.beginPath(); trace(fBuf, len);
+					ctx.strokeStyle = 'hsla(' + (k.gHue + 8) + ',38%,64%,' + (maxI * 0.45) + ')';
+					ctx.lineWidth = k.w + 1 + maxI * 5;
+					ctx.stroke();
+					// Pulse nodes — bright dots along illuminated path
+					for (let j = 0; j < n; j++) {
+						if (illum[j] > 0.05) {
+							const i = illum[j];
+							ctx.beginPath();
+							ctx.arc(fBuf[j*2], fBuf[j*2+1], 1 + i * 7, 0, 6.28);
+							ctx.fillStyle = 'hsla(' + (k.gHue + 5) + ',42%,68%,' + (i * 0.6) + ')';
+							ctx.fill();
+						}
+					}
+				}
+			}
+		}
+	};
+
+	const draw = () => {
+		if (!visible) { requestAnimationFrame(draw); return; }
+		ctx.clearRect(0, 0, w, h);
+		t += 0.008;
+
+		// Refresh authoritative page index (published by the [2] observer)
+		activeSlide = act();
+		if (activeSlide === 1 && prevIdx !== 1) columnsReset = false;
+		prevIdx = activeSlide;
+
+		// Seaweed fades: visible only on slide 0, smooth in/out
+		const seaTarget = activeSlide === 0 ? 1 : 0;
+		seaFade += (seaTarget - seaFade) * 0.03;
+
+		// ── Seaweed scene (slide 0) ──
+		if (seaFade > 0.01) {
+			ctx.globalAlpha = seaFade;
+
+			// Background depth gradient
+			const bgG = ctx.createLinearGradient(0, 0, 0, h);
+			bgG.addColorStop(0, 'rgba(8,12,18,0)');
+			bgG.addColorStop(0.5, 'rgba(6,10,16,0.25)');
+			bgG.addColorStop(1, 'rgba(4,6,10,0.45)');
+			ctx.fillStyle = bgG; ctx.fillRect(0, 0, w, h);
+
+			// ── Volumetric light rays ──
+			for (let ri = 0; ri < rays.length; ri++) {
+				const r = rays[ri];
+				r.x += Math.sin(t * r.spd + r.ph) * 0.35;
+				const xoff = Math.sin(r.ang) * h;
+				let boost = 0;
+				if (mx > -1000) {
+					const dist = Math.abs(mx - r.x);
+					if (dist < 500) {
+						const wave = Math.cos(t * 4 - dist * 0.012);
+						boost = Math.pow(Math.max(0, wave), 3) * (1 - dist/500) * 0.035;
+					}
+				}
+				const rg = ctx.createLinearGradient(r.x, 0, r.x + xoff, h);
+				const aa = (r.a + boost) * (0.7 + 0.3 * Math.sin(t * r.spd * 0.6 + r.ph));
+				rg.addColorStop(0, 'rgba(180,175,155,' + aa + ')');
+				rg.addColorStop(0.35, 'rgba(180,175,155,' + (aa * 0.55) + ')');
+				rg.addColorStop(0.75, 'rgba(180,175,155,' + (aa * 0.15) + ')');
+				rg.addColorStop(1, 'rgba(180,175,155,0)');
+				ctx.fillStyle = rg;
+				ctx.fillRect(r.x - r.wd, 0, r.wd * 2, h);
+			}
+
+			// ── Marine snow ──
+			for (let si = 0; si < snow.length; si++) {
+				const s = snow[si];
+				s.y += s.sp;
+				s.x += s.df + Math.sin(t * 0.5 + s.x * 0.01) * 0.08;
+				if (s.y > h + 5) { s.y = -5; s.x = Math.random() * w; }
+				if (s.x < -5) s.x = w + 5; if (s.x > w + 5) s.x = -5;
+				let inRay = false;
+				for (let ri = 0; ri < rays.length; ri++) {
+					const r = rays[ri];
+					const rayX = r.x + Math.sin(r.ang) * s.y;
+					if (Math.abs(s.x - rayX) < r.wd * (0.5 + s.y / h * 0.5)) { inRay = true; break; }
+				}
+				let mglow = 0;
+				if (mx > -1000) {
+					const dx = mx - s.x, dy = my - s.y;
+					const d2 = dx*dx + dy*dy;
+					if (d2 < 36000) {
+						const dist = Math.sqrt(d2);
+						const base = Math.pow(1 - dist/190, 2.5);
+						const wave = Math.cos(t * 4 - dist * 0.015);
+						const mod = 0.4 + 0.6 * Math.pow(Math.max(0, wave), 3);
+						mglow = base * mod;
+					}
+				}
+				const a = s.al * (inRay ? 3.0 : 1.0) + mglow * 0.45;
+				ctx.beginPath();
+				ctx.arc(s.x, s.y, s.sz * (1 + mglow * 0.8), 0, 6.28);
+				ctx.fillStyle = 'rgba(200,195,180,' + Math.min(a, 0.45) + ')';
+				ctx.fill();
+			}
+
+			// ── Mouse glow (3-zone falloff) ──
+			if (mx > -1000) {
+				const mg1 = ctx.createRadialGradient(mx, my, 0, mx, my, 100);
+				mg1.addColorStop(0, 'rgba(138,140,110,0.09)');
+				mg1.addColorStop(0.6, 'rgba(138,140,110,0.04)');
+				mg1.addColorStop(1, 'rgba(138,140,110,0)');
+				ctx.fillStyle = mg1; ctx.fillRect(0, 0, w, h);
+				const mg2 = ctx.createRadialGradient(mx, my, 60, mx, my, 380);
+				mg2.addColorStop(0, 'rgba(138,140,110,0.045)');
+				mg2.addColorStop(0.4, 'rgba(138,140,110,0.015)');
+				mg2.addColorStop(1, 'rgba(138,140,110,0)');
+				ctx.fillStyle = mg2; ctx.fillRect(0, 0, w, h);
+			}
+
+			drawLayer(0); drawLayer(1); drawLayer(2);
+			ctx.globalAlpha = 1;
+		}
+
+		// ── Horizontal ticker replaces the vertical code rain (no char painting) ──
+		if (activeSlide === -1) {
+			if (activeSlide === 1 && !columnsReset) {
+				for (let ci = 0; ci < codeCols.length; ci++) {
+					codeCols[ci].y = Math.random() * h;
+					codeCols[ci].alpha = 0;
+				}
+				columnsReset = true;
+			}
+			const rainTarget = activeSlide === 1 ? 1 : 0;
+			// Random character mutation every ~0.15s (2-3 chars per column)
+			if (Math.floor(t * 60) % 9 === 0) {
+				for (let ci = 0; ci < codeCols.length; ci++) {
+					const col = codeCols[ci];
+					if (col.golden) continue;
+					const p = Math.floor(Math.random() * col.maxLen);
+					col.chars[p] = col.useSentence
+						? col.sentence[(col.sOff + p + Math.floor(Math.random() * 5)) % col.sentence.length]
+						: RAIN_CHARS[Math.floor(Math.random() * RAIN_CHARS.length)];
+					if (Math.random() < 0.5) {
+						const p2 = Math.floor(Math.random() * col.maxLen);
+						col.chars[p2] = col.useSentence
+							? col.sentence[(col.sOff + p2 + Math.floor(Math.random() * 5)) % col.sentence.length]
+							: RAIN_CHARS[Math.floor(Math.random() * RAIN_CHARS.length)];
+					}
+				}
+			}
+			// Paint on the aurora canvas (page-2-only layer), scaled to its own pixel size
+			const rc = rctx || ctx;
+			const rs = rainC ? (rainC.width / w) : 1;
+			if (rainC) rc.clearRect(0, 0, rainC.width, rainC.height);
+			rc.save();
+			rc.scale(rs, rs);
+			for (let ci = 0; ci < codeCols.length; ci++) {
+				const col = codeCols[ci];
+				col.y += col.spd;
+				if (col.y > h + 100) { col.y = -100; col.x = (ci / 89) * w + (Math.random()-0.5)*18; }
+				col.fadeTarget = rainTarget;
+				col.alpha += (col.fadeTarget - col.alpha) * (col.fadeTarget > col.alpha ? col.fadeRate : col.fadeRate * 2.4);
+				if (col.alpha < 0.02) continue;
+				const flick = 0.65 + 0.3 * Math.sin(t * col.flSpd + col.flPh) + (Math.random() - 0.5) * 0.18;
+				const bright = Math.max(0.25, Math.min(1, flick));
+				const colA = col.alpha * bright;
+				const fontSize = Math.round(6 + col.depth * 14);
+				const doff = Math.abs(col.depth - 0.5);
+				const depthDim = doff > 0.25 ? 1 - (doff - 0.25) * 0.9 : 1;
+				rc.font = fontSize + 'px monospace';
+				rc.globalAlpha = colA;
+				for (let ch = 0; ch < col.maxLen; ch++) {
+					const cy = col.y - ch * fontSize * 1.3;
+					if (cy > -fontSize && cy < h + fontSize) {
+						const headFade = ch === 0 ? 1.0 : (1 - ch / col.maxLen) * 0.5;
+						const a = headFade * depthDim * 0.62;
+						rc.fillStyle = 'rgba(' + col.rainColor + ',' + a + ')';
+						rc.fillText(col.chars[ch], col.x, cy);
+					}
+				}
+			}
+			rc.restore();
+			rc.globalAlpha = 1;
+		}
+
+		requestAnimationFrame(draw);
+	};
+	draw();
+})(); } catch(e) { console.warn('[seaweed]', e.message); }
+
+
+
+
+// ═══ Wave particles (Contact) — 60fps optimized ═══
+try { (() => {
+	const c = document.getElementById('waves');
+	if (!c) return;
+	const ctx = c.getContext('2d');
+	if (!ctx) return;
+	let w, h, cx, cy, maxR;
+	const PAL = ['202,205,196', '138,140,110', '214,219,210']; // silver / olive / bright-silver
+	const dots = [];
+	const N = 64;
+	const resize = () => {
+		w = c.width = innerWidth; h = c.height = innerHeight;
+		cx = w / 2; cy = h / 2; maxR = Math.hypot(w, h) / 1.4;
+	};
+	resize();
+	addEventListener('resize', resize);
+	// Center-origin dots that expand outward forever (respawn at center)
+	for (let i = 0; i < N; i++) {
+		dots.push({
+			a: Math.random() * Math.PI * 2,
+			r: 6 + Math.random() * 90,
+			sp: (0.7 + Math.random() * 1.4) * Math.max(0.5, w / 1600),
+			s: 0.8 + Math.random() * 1.8,
+			c: PAL[i % 3],
+			al: 0.10 + Math.random() * 0.16,
+			ph: Math.random() * 6.283,
+		});
+	}
+	// Expanding rings that grow across the ENTIRE background
+	const RINGS = 6, RING_DUR = 5.5;
+	const rings = [];
+	for (let k = 0; k < RINGS; k++) rings.push({ o: (k / RINGS) * RING_DUR, dur: RING_DUR + Math.random() * 1.5, c: PAL[k % 3] });
+
+	let t = 0;
+	let visible = true;
+	const obs = new IntersectionObserver(es => { es.forEach(e => { visible = e.isIntersecting; }); }, { threshold: 0.08 });
+	obs.observe(c);
+	const draw = () => {
+		requestAnimationFrame(draw);
+		if (!visible) return;
+		ctx.clearRect(0, 0, w, h);
+		t += 0.016;
+		// transparent additive glow melts into the silver base gradient beneath
+		ctx.globalCompositeOperation = 'lighter';
+		// Expanding rings across the full viewport
+		for (let k = 0; k < rings.length; k++) {
+			const rk = rings[k];
+			const tt = (t + rk.o) % rk.dur;
+			const pr = tt / rk.dur;
+			const rr = 8 + pr * maxR * 0.97;
+			const fade = Math.sin(pr * Math.PI); // soft rise + fall — no jump at loop
+			ctx.beginPath(); ctx.arc(cx, cy, rr, 0, 6.283);
+			ctx.strokeStyle = 'rgba(' + rk.c + ',' + (0.05 + 0.14 * fade).toFixed(3) + ')';
+			ctx.lineWidth = 1 + (1 - fade) * 2.2;
+			ctx.stroke();
+		}
+		// Infinite expanding particles from the center
+		for (let i = 0; i < N; i++) {
+			const d = dots[i];
+			d.r += d.sp;
+			if (d.r > maxR + 60) { d.r = 10 + Math.random() * 50; d.a = Math.random() * 6.283; }
+			const x = cx + Math.cos(d.a) * d.r;
+			const y = cy + Math.sin(d.a) * d.r;
+			const fade = d.r < 40 ? d.r / 40 : 1 - Math.min(1, (d.r - 40) / (maxR - 40));
+			const shimmer = 0.7 + 0.3 * Math.sin(t * 0.8 + d.ph);
+			ctx.beginPath(); ctx.arc(x, y, d.s, 0, 6.283);
+			ctx.fillStyle = 'rgba(' + d.c + ',' + (d.al * fade * shimmer).toFixed(3) + ')';
+			ctx.fill();
+		}
+		ctx.globalCompositeOperation = 'source-over';
+	};
+	draw();
+})(); } catch(e) { console.warn('[wave]', e.message); }
+
+
+
+
+
+// ═══ Page-2 flowing gradient base layer (#grad, below code rain) ═══
+try { (() => {
+	const c = document.getElementById('grad');
+	if (!c) return;
+	const ctx = c.getContext('2d');
+	if (!ctx) return;
+	const dpr = Math.min(window.devicePixelRatio || 1, 2);
+	let w, h, base;
+	let fade = 0;
+	let activeNow = false;
+	const COLORS = ['138,140,110', '202,205,196', '168,172,136']; // olive green + silver gray — match code rain
+	const blobs = [];
+	for (let i = 0; i < 7; i++) {
+		blobs.push({
+			r: 0.34 + Math.random() * 0.28,
+			c: COLORS[i % 3],
+			a: 0.17 + Math.random() * 0.11,
+			fx: 0.10 + Math.random() * 0.2,
+			fy: 0.10 + Math.random() * 0.18,
+			ph: Math.random() * 6.283,
+			ph2: Math.random() * 6.283,
+		});
+	}
+	const resize = () => {
+		w = c.width = Math.floor(innerWidth * dpr);
+		h = c.height = Math.floor(innerHeight * dpr);
+		base = Math.max(w, h);
+	};
+	resize();
+	addEventListener('resize', resize);
+	const obs = new IntersectionObserver(es => {
+		es.forEach(e => { activeNow = e.isIntersecting; });
+	}, { threshold: 0.05 });
+	const target = document.querySelector('[data-slide="1"] .slide-content');
+	if (target) obs.observe(target);
+	let t = Math.random() * 60;
+	const draw = () => {
+		requestAnimationFrame(draw);
+		fade += ((activeNow ? 1 : 0) - fade) * 0.06;
+		if (fade < 0.015 && !activeNow) return; // idle off-screen
+		ctx.clearRect(0, 0, w, h);
+		ctx.globalAlpha = fade;
+		ctx.fillStyle = '#000';
+		ctx.fillRect(0, 0, w, h);
+		t += 0.008;
+		ctx.globalCompositeOperation = 'lighter';
+		for (let i = 0; i < blobs.length; i++) {
+			const b = blobs[i];
+			const bx = w * (0.5 + 0.46 * Math.sin(t * b.fx + b.ph));
+			const by = h * (0.5 + 0.44 * Math.cos(t * b.fy + b.ph2));
+			const R = base * b.r * (1 + 0.16 * Math.sin(t * 0.5 + b.ph));
+			const g = ctx.createRadialGradient(bx, by, 0, bx, by, R);
+			g.addColorStop(0, 'rgba(' + b.c + ',' + b.a + ')');
+			g.addColorStop(0.5, 'rgba(' + b.c + ',' + (b.a * 0.5) + ')');
+			g.addColorStop(1, 'rgba(' + b.c + ',0)');
+			ctx.fillStyle = g;
+			ctx.fillRect(bx - R, by - R, R * 2, R * 2);
+		}
+		ctx.globalCompositeOperation = 'source-over';
+		// Edge blend for seamless page transitions
+		const vg = ctx.createLinearGradient(0, 0, 0, h);
+		vg.addColorStop(0, 'rgba(6,6,8,' + (0.75 * fade) + ')');
+		vg.addColorStop(0.2, 'rgba(6,6,8,0)');
+		vg.addColorStop(0.8, 'rgba(6,6,8,0)');
+		vg.addColorStop(1, 'rgba(6,6,8,' + (0.75 * fade) + ')');
+		ctx.fillStyle = vg;
+		ctx.fillRect(0, 0, w, h);
+		ctx.globalAlpha = 1;
+	};
+	draw();
+})(); } catch(e) { console.warn('[grad]', e.message); }
+
+
+
+// ═══ Meditation deck — full-screen artworks: entrance zoom + hover float card ═══
+try { (() => {
+	const items = document.querySelectorAll('.mdeck-item');
+	if (!items.length) return;
+	const io = new IntersectionObserver(es => {
+		es.forEach(e => { e.target.classList.toggle('cur', e.isIntersecting); });
+	}, { threshold: 0.55 });
+	items.forEach(it => io.observe(it));
+})(); } catch(e) { console.warn('[meddeck]', e.message); }
+
+
+// ═══ Page-3 director: Phase A is steady (centered text, dim video). Only
+// real scroll movement toward page 4 drives settle (--pg) and brighten/glass (--g). ═══
+try { (() => {
+	const sc = document.getElementById('slideshow');
+	const slide = document.querySelector('[data-slide="2"]');
+	const next = document.querySelector('[data-slide="3"]');
+	if (!sc || !slide || !next) return;
+	if (matchMedia?.('(prefers-reduced-motion: reduce)').matches) return;
+	let raf = 0, a0 = 0, span = 1;
+	const rectTop = el => el.getBoundingClientRect().top + sc.scrollTop;
+	const measure = () => { a0 = rectTop(slide); span = Math.max(1, rectTop(next) - a0); };
+	const apply = () => {
+		raf = 0;
+		const p = Math.min(1, Math.max(0, (sc.scrollTop - a0) / span));
+		const g = p <= 0.3 ? 0 : p >= 1 ? 1 : (p - 0.3) / 0.7;
+		slide.style.setProperty('--pg', String(p));
+		slide.style.setProperty('--g', String(g));
+	};
+	const onScroll = () => { if (!raf) raf = requestAnimationFrame(apply); };
+	sc.addEventListener('scroll', onScroll, { passive: true });
+	window.addEventListener('resize', () => { measure(); onScroll(); }, { passive: true });
+	measure(); apply();
+})(); } catch(e) { console.warn('[pg3]', e.message); }
+
+
+// ═══ Slide observer — active page = the slide under the deck's vertical center.
+// (IntersectionRatio>0.5 broke for the tall meditation deck: a 11-stop slide only
+// ever shows ~9% of its height, so it could never become active.) ═══
+try { (() => {
+	const sl = document.getElementById('slideshow');
+	const ss = Array.from(document.querySelectorAll('.slide'));
+	const ib = document.getElementById('indicator-bar');
+	const header = document.getElementById('header');
+	const reel = document.getElementById('reel');
+	const edgeMask = document.getElementById('edge-mask');
+	const grad = document.getElementById('grad');
+	const rainCv = document.getElementById('aurora');
+	const silver = document.getElementById('silver');
+	if (!sl || !ss.length) return;
+	const r = matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+	if (r) { ss.forEach(s => s.classList.add('is-active')); return; }
+
+	let curIdx = -1, raf = 0;
+	const tops = [], heights = [];
+	const measure = () => {
+		for (let k = 0; k < ss.length; k++) {
+			tops[k] = ss[k].getBoundingClientRect().top + sl.scrollTop;
+			heights[k] = ss[k].offsetHeight;
+		}
+	};
+	const apply = () => {
+		raf = 0;
+		measure();
+		const center = sl.scrollTop + sl.clientHeight / 2;
+		let cur = ss.length - 1;
+		for (let k = 0; k < ss.length; k++) {
+			if (center >= tops[k] && center < tops[k] + heights[k]) { cur = k; break; }
+		}
+		if (cur === curIdx) return;
+		curIdx = cur;
+		sl.dataset.active = String(cur);
+		// notify feature scripts (e.g., stats count-up) when entering page 2 (idx 1)
+		sl.dispatchEvent(new CustomEvent('deckact', { detail: cur }));
+		ss.forEach((s, k) => s.classList.toggle('is-active', k === cur));
+		if (ib) ib.style.transform = 'scaleY(' + ((cur + 1) / ss.length) + ')';
+		if (header) header.classList.toggle('scrolled', cur > 0);
+		if (reel) { reel.style.opacity = (cur === 2 || cur === 3) ? '1' : '0'; reel.style.filter = (cur === 2 || cur === 3) ? 'brightness(1)' : ''; }
+		if (edgeMask) edgeMask.style.opacity = (cur === 2 || cur === 3) ? '1' : '0';
+		if (grad) grad.style.opacity = (cur === 1) ? '1' : '0';
+		if (rainCv) rainCv.style.opacity = (cur === 1) ? '1' : '0';
+		if (silver) silver.style.opacity = (cur === 5 || cur === 6) ? '1' : '0';
+	};
+	const onScroll = () => { if (!raf) raf = requestAnimationFrame(apply); };
+	sl.addEventListener('scroll', onScroll, { passive: true });
+	window.addEventListener('resize', onScroll, { passive: true });
+	window.addEventListener('load', onScroll);
+	ss[0]?.classList.add('is-active');
+	apply();
+})(); } catch(e) { console.warn("[2]", e.message); }
+
+// ═══ Number counter — count-up entrance driven by page activation (replays on re-entry) ═══
+try { (() => {
+	const els = Array.from(document.querySelectorAll('.stat-value[data-target]'));
+	if (!els.length) return;
+	const reduce = matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+	const rafMap = new Map();
+	const parse = el => { const v = parseFloat(el.dataset.target || '0'); const d = parseInt(el.dataset.dec || '0', 10) || 0; return { v: v || 0, d }; };
+	const fmt = (el, n) => { const d = parseInt(el.dataset.dec || '0', 10) || 0; return d ? n.toFixed(d) : String(n); };
+	const suffixOf = el => el.dataset.suffix || (el.textContent.includes('+') ? '+' : '');
+	const animate = el => {
+		if (reduce) { const { v, d } = parse(el); el.textContent = (d ? v.toFixed(d) : String(Math.round(v))) + suffixOf(el); return; }
+		const prev = rafMap.get(el); if (prev) cancelAnimationFrame(prev);
+		const { v: target, d } = parse(el);
+		const dur = 800, start = performance.now();
+		const tick = now => {
+			const p = Math.min((now - start) / dur, 1);
+			const eased = 1 - Math.pow(1 - p, 3); // easeOutCubic — quick, gentle
+			if (p >= 1) {
+				el.textContent = fmt(el, target) + suffixOf(el);
+				rafMap.delete(el);
+			} else if (d) {
+				// mid-run: integers only (no 12.3万+ noise); decimals reveal at the end
+				el.textContent = String(Math.round(target * eased)) + suffixOf(el);
+				rafMap.set(el, requestAnimationFrame(tick));
+			} else {
+				// large integers: quantized jumps so the digits don't crawl forever
+				const step = Math.max(1, Math.round(target / 26));
+				el.textContent = String(Math.min(target, Math.round(target * eased / step) * step)) + suffixOf(el);
+				rafMap.set(el, requestAnimationFrame(tick));
+			}
+		};
+		rafMap.set(el, requestAnimationFrame(tick));
+	};
+	const runAll = () => els.forEach(animate);
+	const deck = document.getElementById('slideshow');
+	if (deck) deck.addEventListener('deckact', e => { if (e.detail === 1) runAll(); });
+	// Fallback trigger when the stat values scroll into view (hash nav / direct)
+	const io = new IntersectionObserver(es => { es.forEach(en => { if (en.isIntersecting) animate(en.target); }); }, { threshold: 0.2 });
+	els.forEach(el => io.observe(el));
+})(); } catch(e) { console.warn("[3]", e.message); }
+
+// ═══ Gallery 3D tilt ═══
+try { (() => {
+	const cards = document.querySelectorAll('.gcard');
+	if (!cards.length || matchMedia?.('(prefers-reduced-motion: reduce)').matches || matchMedia?.('(pointer: coarse)').matches) return;
+	cards.forEach(card => {
+		card.addEventListener('mousemove', e => {
+			const r = card.getBoundingClientRect();
+			const px = (e.clientX - r.left) / r.width - 0.5; // -0.5 .. 0.5
+			const py = (e.clientY - r.top) / r.height - 0.5;
+			card.style.setProperty('--ry', (px * 14).toFixed(2) + 'deg');
+			card.style.setProperty('--rx', (-py * 12).toFixed(2) + 'deg');
+			card.classList.add('tilting');
+		});
+		card.addEventListener('mouseleave', () => {
+			card.classList.remove('tilting');
+		});
+	});
+})(); } catch(e) { console.warn("[4]", e.message); }
+
+// ═══ Smooth anchor ═══
+try { (() => {
+	document.querySelectorAll('a[href^="#"]').forEach(a => {
+		a.addEventListener('click', e => {
+			e.preventDefault();
+			const href = a.getAttribute('href');
+			const t = document.querySelector(href);
+			if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+		});
+	});
+})(); } catch(e) { console.warn('[anchor]', e.message); }
+
+// ═══ Keyboard navigation — ArrowDown / Space → next snap stop, ArrowUp → prev ═══
+// Steps to the actual scroll-snap target (top-level .slide AND each .mdeck-item
+// inside the tall Meditation deck) instead of blind +viewport scrollBy, which
+// overshoots under smooth-scroll animation and misaligns the full-bleed artwork.
+document.addEventListener('keydown', (e) => {
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.isContentEditable) return;
+  const deck = document.getElementById('slideshow');
+  if (!deck) return;
+  const dir = e.key === 'ArrowDown' || e.key === ' ' ? 1 : e.key === 'ArrowUp' ? -1 : 0;
+  if (!dir) return;
+  e.preventDefault();
+  const deckTop = deck.getBoundingClientRect().top;
+  const stops = Array.from(deck.querySelectorAll('.slide, .mdeck-item'))
+    .map((el) => ({ el, pos: el.getBoundingClientRect().top - deckTop + deck.scrollTop }))
+    .sort((a, b) => a.pos - b.pos);
+  const s = deck.scrollTop, eps = 8;
+  let target = null;
+  if (dir > 0) {
+    for (const st of stops) { if (st.pos > s + eps) { target = st.el; break; } }
+  } else {
+    for (let i = stops.length - 1; i >= 0; i--) { if (stops[i].pos < s - eps) { target = stops[i].el; break; } }
+  }
+  if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+});
+
+</script>
