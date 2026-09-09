@@ -621,25 +621,21 @@ body { background: var(--bg); color: var(--text); font-family: var(--ds-font-bod
 	font-variant-numeric: tabular-nums; text-shadow: 0 1px 6px rgba(0,0,0,0.8);
 }
 .mdeck-index em { font-style: normal; color: var(--text-4); margin-left: 0.4em; }
-/* hover: work floats to center, card reveals title / number / intro */
+/* hover: intro text anchors BOTTOM-LEFT, plain text (no card) */
 .mdeck-hover {
-	position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
-	opacity: 0; pointer-events: none; transition: opacity 0.5s ease; z-index: 3;
+	position: absolute; left: clamp(1.5rem, 6vw, 4rem); top: auto; right: auto;
+	bottom: max(9dvh, calc(env(safe-area-inset-bottom) + 2.5rem));
+	max-width: min(560px, 82vw); z-index: 3;
+	opacity: 0; transform: translateY(18px); pointer-events: none;
+	transition: opacity 0.5s ease, transform 0.6s var(--spring);
 }
-.mdeck-card {
-	background: rgba(8,8,10,0.55); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-	border: 1px solid var(--border); padding: 2.4rem 2.8rem; max-width: 420px;
-	text-align: center; transform: translateY(18px) scale(0.96);
-	transition: transform 0.6s var(--spring);
-}
-.mdeck-no { display: block; font-size: 0.7rem; letter-spacing: 0.34em; color: var(--accent); margin-bottom: 0.9rem; }
-.mdeck-title { font-size: clamp(1.6rem, 3.4vw, 2.6rem); font-weight: 600; color: var(--text); text-wrap: balance; margin-bottom: 0.6rem; }
-.mdeck-desc { font-size: 0.9rem; line-height: 1.7; color: var(--text-2); }
-.mdeck-item:hover .mdeck-hover, .mdeck-item:focus-within .mdeck-hover { opacity: 1; }
-.mdeck-item:hover .mdeck-card, .mdeck-item:focus-within .mdeck-card { transform: none; }
+.mdeck-card { background: none; border: 0; backdrop-filter: none; padding: 0; text-align: left; transform: none; }
+.mdeck-no { display: block; font-size: 0.7rem; letter-spacing: 0.32em; color: var(--accent); margin-bottom: 0.5rem; text-shadow: 0 1px 10px rgba(0,0,0,0.9); }
+.mdeck-title { font-size: clamp(1.6rem, 3.2vw, 2.5rem); font-weight: 600; color: var(--text); text-wrap: balance; margin-bottom: 0.5rem; text-shadow: 0 1px 12px rgba(0,0,0,0.85); }
+.mdeck-desc { font-size: 0.92rem; line-height: 1.7; color: var(--text-2); max-width: 46ch; text-shadow: 0 1px 10px rgba(0,0,0,0.9); }
+.mdeck-item:hover .mdeck-hover, .mdeck-item:focus-within .mdeck-hover { opacity: 1; transform: none; }
 @media (hover: none) {
-	.mdeck-hover { opacity: 1; align-items: flex-end; padding-bottom: 9dvh; }
-	.mdeck-card { padding: 1.4rem 1.6rem; backdrop-filter: blur(10px); }
+	.mdeck-hover { opacity: 1; transform: none; bottom: calc(env(safe-area-inset-bottom) + 6dvh); }
 }
 
 /* ═══ Gallery 3D ═══ */
