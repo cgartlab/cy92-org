@@ -668,10 +668,11 @@ try { (() => {
 	let w, h;
 	const layers = [[], [], []];
 	let mx = -9999, my = -9999;
-	const GLOW_R = 240, GLOW_R2 = GLOW_R * GLOW_R;
+	const GLOW_R = 280, GLOW_R2 = GLOW_R * GLOW_R;
 	const PUSH_R = 300, PUSH_R2 = PUSH_R * PUSH_R, PUSH_K = 40, SPREAD = 0.86;
 	const DEPTH_W = [4.5, 1.0, 0];
 	const DEPTH_A = [0.025, 0.065, 0.13];
+	const rays = [], snow = [];
 
 	const build = () => {
 		layers[0].length = 0; layers[1].length = 0; layers[2].length = 0;
@@ -703,6 +704,24 @@ try { (() => {
 			};
 			for (let j = 0; j < numPts; j++) k.pts[j].y = j * h * inv;
 			layers[li].push(k);
+		}
+		// Volumetric light rays
+		rays.length = 0;
+		for (let i = 0; i < 6; i++) {
+			rays.push({
+				x: Math.random() * w, ang: (Math.random() - 0.5) * 0.3,
+				wd: 70 + Math.random() * 130, a: 0.02 + Math.random() * 0.025,
+				spd: 0.25 + Math.random() * 0.45, ph: Math.random() * 6.28
+			});
+		}
+		// Marine snow particles
+		snow.length = 0;
+		for (let i = 0; i < 60; i++) {
+			snow.push({
+				x: Math.random() * w, y: Math.random() * h,
+				sz: 0.4 + Math.random() * 1.6, sp: 0.15 + Math.random() * 0.35,
+				df: (Math.random() - 0.5) * 0.25, al: 0.03 + Math.random() * 0.1
+			});
 		}
 	};
 	const resize = () => { w = c.width = innerWidth; h = c.height = innerHeight; build(); };
@@ -755,7 +774,7 @@ try { (() => {
 				for (let j = 0; j < n; j++) {
 					const dx = mx - pBuf[j*2], dy = my - pBuf[j*2+1];
 					const d2 = dx*dx + dy*dy;
-					illum[j] = d2 < GLOW_R2 ? Math.pow(1 - Math.sqrt(d2)/GLOW_R, 1.5) : 0;
+					illum[j] = d2 < GLOW_R2 ? Math.pow(1 - Math.sqrt(d2)/GLOW_R, 2.5) : 0;
 					if (d2 < PUSH_R2 && d2 > 1) {
 						const d = Math.sqrt(d2);
 						const f = (1 - d/PUSH_R)*(1 - d/PUSH_R)*PUSH_K;
@@ -813,12 +832,76 @@ try { (() => {
 		if (!visible) { requestAnimationFrame(draw); return; }
 		ctx.clearRect(0, 0, w, h);
 		t += 0.008;
-		if (mx > -1000) {
-			const mg = ctx.createRadialGradient(mx, my, 0, mx, my, 380);
-			mg.addColorStop(0, 'rgba(138,140,110,0.035)');
-			mg.addColorStop(1, 'rgba(138,140,110,0)');
-			ctx.fillStyle = mg; ctx.fillRect(0, 0, w, h);
+
+		// ── Background depth gradient ──
+		const bgG = ctx.createLinearGradient(0, 0, 0, h);
+		bgG.addColorStop(0, 'rgba(8,12,18,0)');
+		bgG.addColorStop(0.5, 'rgba(6,10,16,0.25)');
+		bgG.addColorStop(1, 'rgba(4,6,10,0.45)');
+		ctx.fillStyle = bgG; ctx.fillRect(0, 0, w, h);
+
+		// ── Volumetric light rays ──
+		for (let ri = 0; ri < rays.length; ri++) {
+			const r = rays[ri];
+			r.x += Math.sin(t * r.spd + r.ph) * 0.35;
+			const xoff = Math.sin(r.ang) * h;
+			const rg = ctx.createLinearGradient(r.x, 0, r.x + xoff, h);
+			const aa = r.a * (0.7 + 0.3 * Math.sin(t * r.spd * 0.6 + r.ph));
+			rg.addColorStop(0, 'rgba(180,175,155,' + aa + ')');
+			rg.addColorStop(0.35, 'rgba(180,175,155,' + (aa * 0.55) + ')');
+			rg.addColorStop(0.75, 'rgba(180,175,155,' + (aa * 0.15) + ')');
+			rg.addColorStop(1, 'rgba(180,175,155,0)');
+			ctx.fillStyle = rg;
+			ctx.fillRect(r.x - r.wd, 0, r.wd * 2, h);
 		}
+
+		// ── Marine snow ──
+		for (let si = 0; si < snow.length; si++) {
+			const s = snow[si];
+			s.y += s.sp;
+			s.x += s.df + Math.sin(t * 0.5 + s.x * 0.01) * 0.08;
+			if (s.y > h + 5) { s.y = -5; s.x = Math.random() * w; }
+			if (s.x < -5) s.x = w + 5; if (s.x > w + 5) s.x = -5;
+
+			// Check if in a light ray
+			let inRay = false;
+			for (let ri = 0; ri < rays.length; ri++) {
+				const r = rays[ri];
+				const rayX = r.x + Math.sin(r.ang) * s.y;
+				if (Math.abs(s.x - rayX) < r.wd * (0.5 + s.y / h * 0.5)) { inRay = true; break; }
+			}
+
+			// Mouse proximity glow
+			let mglow = 0;
+			if (mx > -1000) {
+				const dx = mx - s.x, dy = my - s.y;
+				const d2 = dx*dx + dy*dy;
+				if (d2 < 36000) mglow = Math.pow(1 - Math.sqrt(d2)/190, 2.5);
+			}
+
+			const a = s.al * (inRay ? 3.0 : 1.0) + mglow * 0.45;
+			ctx.beginPath();
+			ctx.arc(s.x, s.y, s.sz * (1 + mglow * 0.8), 0, 6.28);
+			ctx.fillStyle = 'rgba(200,195,180,' + Math.min(a, 0.45) + ')';
+			ctx.fill();
+		}
+
+		// ── Mouse glow (3-zone falloff) ──
+		if (mx > -1000) {
+			// Core — bright, sharp boundary
+			const mg1 = ctx.createRadialGradient(mx, my, 0, mx, my, 100);
+			mg1.addColorStop(0, 'rgba(138,140,110,0.09)');
+			mg1.addColorStop(0.6, 'rgba(138,140,110,0.04)');
+			mg1.addColorStop(1, 'rgba(138,140,110,0)');
+			ctx.fillStyle = mg1; ctx.fillRect(0, 0, w, h);
+			// Outer — soft, wide
+			const mg2 = ctx.createRadialGradient(mx, my, 60, mx, my, 380);
+			mg2.addColorStop(0, 'rgba(138,140,110,0.045)');
+			mg2.addColorStop(0.4, 'rgba(138,140,110,0.015)');
+			mg2.addColorStop(1, 'rgba(138,140,110,0)');
+			ctx.fillStyle = mg2; ctx.fillRect(0, 0, w, h);
+		}
+
 		drawLayer(0); drawLayer(1); drawLayer(2);
 		requestAnimationFrame(draw);
 	};
