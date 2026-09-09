@@ -1,0 +1,79 @@
+---
+// Shared language runtime — render once per page (usually right after <body>).
+//
+// Drives BOTH bilingual mechanisms from a single toggle:
+//   1. `data-t="<key>"`    — static copy (element text), from I18N in ../i18n/dict.
+//   2. `data-t-aria="<k>"` — same dictionary, written to the aria-label attribute.
+//   3. `[data-l="zh|en"]`  — dual-rendered markup, shown/hidden by CSS through the
+//      `html.lang-en` class (see .bl/.blk rules in styles/app.css).
+//
+// English is the default: an unset or unknown `localStorage['lang']` means 'en'.
+// The value is also read in BaseHead's head script so the right language paints
+// before first frame (no Chinese flash for EN visitors).
+//
+// Buttons carrying `data-lang-toggle` flip the language (Header, homepage).
+---
+
+<script>
+import { I18N } from '../i18n/dict';
+
+type Lang = 'zh' | 'en';
+
+// Default language for every fresh visit; only an explicit 'zh' opts out.
+function savedLang(): Lang {
+	return localStorage.getItem('lang') === 'zh' ? 'zh' : 'en';
+}
+
+let currentLang: Lang = savedLang();
+
+function applyLang(lang: Lang) {
+	currentLang = lang;
+	localStorage.setItem('lang', lang);
+	document.documentElement.classList.toggle('lang-en', lang === 'en');
+	document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+
+	// 1) Static copy — element text via data-t
+	document.querySelectorAll('[data-t]').forEach((el) => {
+		const entry = I18N[el.getAttribute('data-t') ?? ''];
+		if (!entry) return;
+		const val = entry[lang] || entry.zh;
+		if (/<[a-z][\s\S]*>/i.test(val)) {
+			el.innerHTML = val;
+		} else {
+			el.textContent = val;
+		}
+	});
+
+	// 2) Accessible names — aria-label via data-t-aria, tooltip via data-t-title
+	//    (both keep the element's visible text untouched)
+	document.querySelectorAll('[data-t-aria], [data-t-title]').forEach((el) => {
+		const isAria = el.hasAttribute('data-t-aria');
+		const key = el.getAttribute(isAria ? 'data-t-aria' : 'data-t-title') ?? '';
+		const entry = I18N[key];
+		if (!entry) return;
+		el.setAttribute(isAria ? 'aria-label' : 'title', entry[lang] || entry.zh);
+	});
+
+	// 3) Notify other scripts that need to keep generated labels in sync
+	window.dispatchEvent(new CustomEvent('langchange', { detail: { lang } }));
+
+	// 4) <title> / <meta data-en> / data-zh for search engines + social cards
+	document.querySelectorAll('title[data-en], meta[data-en]').forEach((el) => {
+		const next = lang === 'en' ? el.dataset.en : el.dataset.zh;
+		if (!next) return;
+		if (el.tagName.toLowerCase() === 'title') el.textContent = next;
+		else el.setAttribute('content', next);
+	});
+}
+
+function toggleLang() {
+	applyLang(currentLang === 'zh' ? 'en' : 'zh');
+}
+
+// Apply the saved language before the rest of the page scripts run
+applyLang(currentLang);
+
+document.querySelectorAll('[data-lang-toggle]').forEach((btn) => {
+	btn.addEventListener('click', toggleLang);
+});
+</script>

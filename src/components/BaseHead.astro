@@ -3,13 +3,15 @@ import '../styles/app.css';
 
 interface Props {
 	title: string;
+	titleEn?: string;
 	description: string;
+	descriptionEn?: string;
 	image?: string;
 }
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin);
 
-const { title, description, image = '/default-cover.webp' } = Astro.props;
+const { title, titleEn, description, descriptionEn, image = '/default-cover.webp' } = Astro.props;
 ---
 
 <meta charset="utf-8" />
@@ -33,20 +35,24 @@ const { title, description, image = '/default-cover.webp' } = Astro.props;
 
 <link rel="canonical" href={canonicalURL} />
 
-<title>{title}</title>
-<meta name="title" content={title} />
-<meta name="description" content={description} />
+<!-- data-zh/data-en: swapped client-side by LangScript.astro. Because English is the
+     default language, the RENDERED value prefers EN (titleEn/descriptionEn) so the first
+     paint and no-JS visitors see English; `data-zh` carries the Chinese twin back.
+     Pages that don't pass *_En keep their Chinese text unchanged. -->
+<title data-zh={title} data-en={titleEn ?? title}>{titleEn ?? title}</title>
+<meta name="title" content={titleEn ?? title} data-zh={title} data-en={titleEn ?? title} />
+<meta name="description" content={descriptionEn ?? description} data-zh={description} data-en={descriptionEn ?? description} />
 
 <meta property="og:type" content="website" />
 <meta property="og:url" content={Astro.url} />
-<meta property="og:title" content={title} />
-<meta property="og:description" content={description} />
+<meta property="og:title" content={titleEn ?? title} data-zh={title} data-en={titleEn ?? title} />
+<meta property="og:description" content={descriptionEn ?? description} data-zh={description} data-en={descriptionEn ?? description} />
 <meta property="og:image" content={new URL(image, Astro.url)} />
 
 <meta property="twitter:card" content="summary_large_image" />
 <meta property="twitter:url" content={Astro.url} />
-<meta property="twitter:title" content={title} />
-<meta property="twitter:description" content={description} />
+<meta property="twitter:title" content={titleEn ?? title} data-zh={title} data-en={titleEn ?? title} />
+<meta property="twitter:description" content={descriptionEn ?? description} data-zh={description} data-en={descriptionEn ?? description} />
 <meta property="twitter:image" content={new URL(image, Astro.url)} />
 
 <script is:inline>
@@ -56,4 +62,11 @@ const { title, description, image = '/default-cover.webp' } = Astro.props;
 	document.documentElement.setAttribute('data-theme', 'dark');
 	// Mark JS-enabled so scroll-reveal only hides content when JS can reveal it
 	document.documentElement.classList.add('ds-js');
+	// Language — English by default; only an explicit 'zh' keeps Chinese.
+	// Runs in <head> so the correct language paints before first frame.
+	const lang = localStorage.getItem('lang') === 'zh' ? 'zh' : 'en';
+	if (lang === 'en') {
+		document.documentElement.classList.add('lang-en');
+		document.documentElement.lang = 'en';
+	}
 </script>

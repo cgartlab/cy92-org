@@ -14,7 +14,7 @@ const today = new Date();
 					<span class="font-medium" style="color: var(--ds-color-fg);">ChenYang</span>
 				</div>
 				<p class="text-xs italic" style="color: var(--ds-color-muted);">
-					工具是人类肢体的延伸，电脑是大脑的延伸，写作是思考本身。
+					<span data-t="footerQuoteTools">Tools extend our limbs, computers extend our minds, and writing is thinking itself.</span>
 				</p>
 			</div>
 			<div class="flex items-center gap-2">
@@ -24,9 +24,10 @@ const today = new Date();
 						target="_blank"
 						rel="noopener noreferrer"
 						class="social-link w-8 h-8"
-						title={link.name}
+						title={link.nameEn}
+						data-t-title={link.i18n}
 					>
-						<span class="sr-only">{link.name}</span>
+						<span class="sr-only"><span data-l="zh">{link.name}</span><span data-l="en">{link.nameEn}</span></span>
 						<Icon name={link.icon} size={14} class="w-3.5 h-3.5" fill />
 					</a>
 				))}

@@ -13,11 +13,11 @@ const getLevelColor = (level: number): string => {
 	return 'from-muted-foreground/30 to-muted-foreground/50';
 };
 
-const getLevelLabel = (level: number): string => {
-	if (level >= 90) return '精通';
-	if (level >= 80) return '熟练';
-	if (level >= 70) return '良好';
-	return '基础';
+const getLevelLabel = (level: number): { key: string; fallback: string } => {
+	if (level >= 90) return { key: 'skillExpert', fallback: 'Expert' };
+	if (level >= 80) return { key: 'skillAdvanced', fallback: 'Advanced' };
+	if (level >= 70) return { key: 'skillIntermediate', fallback: 'Intermediate' };
+	return { key: 'skillBeginner', fallback: 'Beginner' };
 };
 
 const getLevelBgColor = (level: number): string => {
@@ -32,8 +32,8 @@ const getLevelBgColor = (level: number): string => {
 	<div class="flex justify-between items-center mb-2.5">
 		<span class="text-sm font-medium text-foreground group-hover:text-primary transition-colors duration-300">{name}</span>
 		<div class="flex items-center gap-2">
-			<span class={`text-xs font-semibold px-2.5 py-1 rounded-full ${getLevelBgColor(level)}`}>
-				{getLevelLabel(level)}
+			<span class={`text-xs font-semibold px-2.5 py-1 rounded-full ${getLevelBgColor(level)}` data-t={getLevelLabel(level).key}>
+				{getLevelLabel(level).fallback}
 			</span>
 			<span class="text-xs text-muted-foreground font-semibold min-w-[40px] text-right">
 				{level}%

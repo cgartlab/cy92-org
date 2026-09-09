@@ -984,3 +984,19 @@
 	.ds-gradient-text { animation: none; }
 	.ds-anim-float { animation: none; }
 }
+
+/* ===== Bilingual rendering（中英双语切换） ===== */
+/* 三档标记，可见性由 `html.lang-en` 决定（LangScript.astro 设置）:
+   .bl  — display:contents 中性包裹层，子元素保持父级 flex/grid/行内流，
+          供 SKILLS/HONORS 等数据驱动列表做双份渲染。
+   .blk — 块级容器，用于整段/整页双份渲染。
+   裸用  — <span data-l="…"> 本身即行内。
+   仅两条规则: 非英文态隐藏英文, 英文态隐藏中文。 */
+.bl { display: contents; }
+.blk { display: block; }
+html:not(.lang-en) [data-l="en"] { display: none; }
+html.lang-en [data-l="zh"] { display: none; }
+
+/* 语言切换按钮（Header / 首页共用） */
+.ds-lang-toggle { font-size: 0.65rem; letter-spacing: 0.06em; color: var(--ds-color-fg-subtle); background: none; border: none; padding: 0; cursor: pointer; transition: color .2s; font-family: inherit; line-height: 1.6; }
+.ds-lang-toggle:hover, .ds-lang-toggle:focus-visible { color: var(--ds-color-fg-strong); }

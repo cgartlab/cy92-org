@@ -42,6 +42,7 @@
 		"cf-typegen": "wrangler types",
 		"check": "(astro build || exit 0) && tsc && wrangler deploy --dry-run",
 		"check:links": "node scripts/check-links.mjs",
+		"check:i18n": "node scripts/i18n-verify.mjs",
 		"deploy": "wrangler deploy",
 		"dev": "astro dev",
 		"preview": "(astro build || exit 0) && wrangler dev",

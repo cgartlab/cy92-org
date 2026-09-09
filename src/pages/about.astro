@@ -3,18 +3,24 @@ import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Icon from '../components/Icon.astro';
-import { SITE_TITLE, PERSONAL_INFO, SOCIAL_LINKS } from '../consts';
+import { SITE_TITLE, PERSONAL_INFO, PERSONAL_INFO_EN, SOCIAL_LINKS } from '../consts';
 ---
 
 <!doctype html>
 <html lang="zh-CN">
 	<head>
-		<BaseHead title={`关于 | ${SITE_TITLE}`} description="关于 CG艺术实验室和作者 ChenYang - 跨领域数字创作者的创作理念与实践" />
+		<BaseHead
+			title={`关于 | ${SITE_TITLE}`}
+			titleEn={`About | ${SITE_TITLE}`}
+			description="关于 CG艺术实验室和作者 ChenYang - 跨领域数字创作者的创作理念与实践"
+			descriptionEn="About CG Art Lab and its author ChenYang — a cross-domain digital creator on craft, data sovereignty and creation as cognition."
+		/>
 	</head>
 	<body class="min-h-screen" style="background: var(--ds-color-bg); color: var(--ds-color-fg);">
 		<Header />
 		<main class="container-custom py-12 md:py-16">
 			<article class="max-w-3xl mx-auto">
+				<div class="blk" data-l="zh">
 				<!-- Hero -->
 				<header class="mb-12 md:mb-16">
 					<p class="ds-eyebrow mb-4">About</p>
@@ -141,17 +147,148 @@ import { SITE_TITLE, PERSONAL_INFO, SOCIAL_LINKS } from '../consts';
 							Email
 						</a>
 						{SOCIAL_LINKS.map(link => (
-							<a
-								href={link.url}
-								target="_blank"
-								rel="noopener noreferrer"
-								class="tag"
-							>
+							<a href={link.url} target="_blank" rel="noopener noreferrer" class="tag">
 								{link.name}
 							</a>
 						))}
 					</div>
 				</section>
+				</div>
+
+				<div class="blk" data-l="en">
+				<!-- Hero -->
+				<header class="mb-12 md:mb-16">
+					<p class="ds-eyebrow mb-4">About</p>
+					<h1
+						class="font-bold tracking-tight mb-6"
+						style="font-size: clamp(2rem, 5vw, 3.5rem); line-height: 1.05; letter-spacing: -0.03em; color: var(--ds-color-fg-strong);"
+					>
+						About Me
+					</h1>
+					<div class="quote-block my-4">
+						<p class="text-base">{PERSONAL_INFO_EN.bio}</p>
+					</div>
+				</header>
+
+				<div class="space-y-12">
+					<!-- Who I am -->
+					<section class="ds-reveal">
+						<h2 class="section-title mb-4">Who I Am</h2>
+						<div class="space-y-4">
+							<p class="text-sm md:text-base leading-relaxed" style="color: var(--ds-color-fg-subtle);">
+								I'm a cross-domain digital creator — designer, digital artist, front-end developer and writer all at once. An INFJ, currently living in Kunming, Yunnan. Outside the work I read, write, keep fish, draw, and collect electronics.
+							</p>
+							<p class="text-sm md:text-base leading-relaxed" style="color: var(--ds-color-fg-subtle);">
+								This mix of identities is unusual among Chinese creators. I don't pin myself to a single label — I switch roles depending on what the work and the project actually need.
+							</p>
+							<div>
+								<p class="text-sm font-medium mb-2" style="color: var(--ds-color-fg-strong);">Core fields:</p>
+								<ul class="dash-list">
+									<li><strong style="color: var(--ds-color-fg-strong);">Motion & visual design</strong> — UI/UX, brand identity systems, motion graphics, interaction design</li>
+									<li><strong style="color: var(--ds-color-fg-strong);">Front-end product engineering</strong> — turning creative concepts into shipped, interactive digital products</li>
+									<li><strong style="color: var(--ds-color-fg-strong);">Writing</strong> — over 130,000 words published; my main channel for outputting knowledge and externalizing thought</li>
+									<li><strong style="color: var(--ds-color-fg-strong);">Personal fine-art work</strong> — self-directed artistic expression, the counterweight to commercial commissions</li>
+								</ul>
+							</div>
+						</div>
+					</section>
+
+					<!-- Data Sovereignty -->
+					<section class="ds-reveal">
+						<h2 class="section-title mb-4">On Data Sovereignty</h2>
+						<div class="space-y-4">
+							<p class="text-sm md:text-base leading-relaxed" style="color: var(--ds-color-fg-subtle);">
+								Data sovereignty is the most distinctive principle in my value system. At its core it means moving from relying on centralized platforms to owning your own data — and with it, keeping autonomy and independence in digital space.
+							</p>
+							<ul class="dash-list">
+								<li><strong style="color: var(--ds-color-fg-strong);">Self-hosted NAS</strong> — local storage that removes the dependency on cloud providers</li>
+								<li><strong style="color: var(--ds-color-fg-strong);">Syncthing P2P sync</strong> — decentralized file sync where I control the entire transfer path</li>
+								<li><strong style="color: var(--ds-color-fg-strong);">Self-hosted Miniflux</strong> — I own the information channel, free of algorithmic feeds and ad tracking</li>
+								<li><strong style="color: var(--ds-color-fg-strong);">Open-source first</strong> — preferring software that is open, exportable and transparent in design</li>
+							</ul>
+						</div>
+					</section>
+
+					<!-- Creation as Cognition -->
+					<section class="ds-reveal">
+						<h2 class="section-title mb-4">Creation as Cognition</h2>
+						<div class="space-y-4">
+							<div class="quote-block">
+								<p class="text-sm">Creation as cognition is the other pillar of my value system. The claim is simple: the point of writing and making is not external approval or income — it's sorting out your thinking, knowing yourself, exploring your inner world.</p>
+							</div>
+							<p class="text-sm md:text-base leading-relaxed" style="color: var(--ds-color-fg-subtle);">
+								Don't expect it to pay the bills. What gets sharpened is the thinking itself, not the viral formula. In a creator economy that worships traffic, I refuse to be held hostage by algorithms, to trade content quality for reach, or to reduce making into a hit-making assembly line.
+							</p>
+						</div>
+					</section>
+
+					<!-- Tool Philosophy -->
+					<section class="ds-reveal">
+						<h2 class="section-title mb-4">On Tools</h2>
+						<div class="space-y-4">
+							<div class="quote-block">
+								<p class="text-sm">Tools are an extension of the human body — the fan extends the hand, the wheel extends the legs, the phone extends mouth and ear. By the same logic, the computer extends the brain.</p>
+							</div>
+							<p class="text-sm md:text-base leading-relaxed" style="color: var(--ds-color-fg-subtle);">
+								Software extends those capacities further: design tools extend visual expression, writing tools extend the ability to externalize thought, knowledge tools extend memory and association. "Writing is thinking itself" carries that idea into the creative act.
+							</p>
+						</div>
+					</section>
+
+					<!-- Workflow -->
+					<section class="ds-reveal">
+						<h2 class="section-title mb-4">My Workflow</h2>
+						<div class="space-y-4">
+							<p class="text-sm md:text-base leading-relaxed" style="color: var(--ds-color-fg-subtle);">
+								I've built a complete creator workflow covering the whole loop — from information intake and knowledge management through to making and publishing.
+							</p>
+							<div class="space-y-3">
+								<div class="p-4 rounded-xl" style="background: var(--ds-color-surface);">
+									<p class="text-sm font-medium mb-1" style="color: var(--ds-color-fg-strong);">Intake</p>
+									<p class="text-xs leading-relaxed" style="color: var(--ds-color-fg-subtle);">Information is gathered actively through RSS readers rather than passively pushed to me. A self-hosted Miniflux keeps me out of the algorithm's grip.</p>
+								</div>
+								<div class="p-4 rounded-xl" style="background: var(--ds-color-surface);">
+									<p class="text-sm font-medium mb-1" style="color: var(--ds-color-fg-strong);">Knowledge management</p>
+									<p class="text-xs leading-relaxed" style="color: var(--ds-color-fg-subtle);">A local-first system built around Obsidian. Its local Markdown storage and bidirectional linking make it the right tool for a personal "second brain".</p>
+								</div>
+								<div class="p-4 rounded-xl" style="background: var(--ds-color-surface);">
+									<p class="text-sm font-medium mb-1" style="color: var(--ds-color-fg-strong);">Making & publishing</p>
+									<p class="text-xs leading-relaxed" style="color: var(--ds-color-fg-subtle);">What I read becomes knowledge in the vault; writing refines it into something worth sharing; multi-platform distribution is where it reaches people.</p>
+								</div>
+							</div>
+						</div>
+					</section>
+
+					<!-- About this site -->
+					<section class="ds-reveal">
+						<h2 class="section-title mb-4">About this Site</h2>
+						<div class="space-y-4">
+							<p class="text-sm md:text-base leading-relaxed" style="color: var(--ds-color-fg-subtle);">
+								This site is one of my own creations. I'd been wanting it for a long time — a container of my own on the web. What goes inside is the part of my inner world I'm willing to make public. The main medium for building that inner world is "CG art", and making the site is itself a mental experiment — hence CG Art Lab.
+							</p>
+							<p class="text-sm md:text-base leading-relaxed" style="color: var(--ds-color-fg-subtle);">
+								It's built with Astro. That choice lines up at a deep level with the data-sovereignty idea I care about: modern static sites mean owning your stack and minimizing dependency on other people's infrastructure.
+							</p>
+						</div>
+					</section>
+				</div>
+
+				<!-- Contact -->
+				<section class="mt-12 pt-8" style="border-top: 1px solid var(--ds-color-border-subtle);">
+					<h2 class="section-title mb-5">Contact</h2>
+					<div class="flex flex-wrap gap-2">
+						<a href="mailto:hello@cgartlab.com" class="tag">
+							<Icon name="mail" size={14} class="w-3.5 h-3.5" />
+							Email
+						</a>
+						{SOCIAL_LINKS.map(link => (
+							<a href={link.url} target="_blank" rel="noopener noreferrer" class="tag">
+								{link.nameEn}
+							</a>
+						))}
+					</div>
+				</section>
+				</div>
 			</article>
 		</main>
 		<Footer />

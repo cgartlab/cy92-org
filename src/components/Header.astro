@@ -6,14 +6,14 @@ import { SITE_TITLE, SOCIAL_LINKS } from '../consts';
 
 <header id="site-header" class="ds-navbar">
 	<div class="ds-navbar-inner">
-		<a href="/" class="ds-navbar-brand" aria-label="返回首页">
+		<a href="/" class="ds-navbar-brand" data-t-aria="brandAria" aria-label="Back to home">
 			{SITE_TITLE.split(' | ')[0]}
 		</a>
 
-		<nav id="mnav-panel" class="ds-navbar-links" aria-label="主导航">
-			<a href="#about" class="ds-navbar-link">关于</a>
-			<a href="#work" class="ds-navbar-link">作品</a>
-			<a href="https://cgartlab.com" target="_blank" rel="noopener noreferrer" class="ds-navbar-link">博客</a>
+		<nav id="mnav-panel" class="ds-navbar-links" data-t-aria="mainNavAria" aria-label="Main navigation">
+			<a href="#about" class="ds-navbar-link" data-t="navAbout">About</a>
+			<a href="#work" class="ds-navbar-link" data-t="navWork">Work</a>
+			<a href="https://cgartlab.com" target="_blank" rel="noopener noreferrer" class="ds-navbar-link" data-t="navBlog">Blog</a>
 
 			<!-- Social row: only visible inside the mobile drawer -->
 			<div class="ds-mnav-social">
@@ -22,10 +22,11 @@ import { SITE_TITLE, SOCIAL_LINKS } from '../consts';
 						href={link.url}
 						target="_blank"
 						rel="noopener noreferrer"
-						title={link.name}
+						title={link.nameEn}
+						data-t-title={link.i18n}
 						class="social-link w-9 h-9"
 					>
-						<span class="sr-only">{link.name}</span>
+						<span class="sr-only">{link.nameEn}</span>
 						<Icon name={link.icon} size={16} class="w-4 h-4" fill />
 					</a>
 				))}
@@ -40,16 +41,21 @@ import { SITE_TITLE, SOCIAL_LINKS } from '../consts';
 						href={link.url}
 						target="_blank"
 						rel="noopener noreferrer"
-						title={link.name}
+						title={link.nameEn}
+						data-t-title={link.i18n}
 						class="social-link w-9 h-9"
 					>
-						<span class="sr-only">{link.name}</span>
+						<span class="sr-only">{link.nameEn}</span>
 						<Icon name={link.icon} size={16} class="w-4 h-4" fill />
 					</a>
 				))}
 			</div>
 
-			<button id="theme-toggle" class="social-link w-9 h-9" aria-label="切换主题">
+			<button data-lang-toggle class="ds-lang-toggle" type="button" data-t-aria="langAria" aria-label="Switch language">
+				<span class="sr-only">Language</span> 中/EN
+			</button>
+
+			<button id="theme-toggle" class="social-link w-9 h-9" data-t-aria="themeAria" aria-label="Toggle color theme">
 				<Icon name="dark_mode" size={16} class="w-4 h-4 hidden dark:block" fill />
 				<Icon name="light_mode" size={16} class="w-4 h-4 block dark:hidden" fill />
 			</button>
@@ -58,7 +64,8 @@ import { SITE_TITLE, SOCIAL_LINKS } from '../consts';
 				id="mnav-trigger"
 				class="ds-mnav-trigger"
 				type="button"
-				aria-label="打开导航菜单"
+				data-t-aria="menuOpenAria"
+				aria-label="Open the navigation menu"
 				aria-expanded="false"
 				aria-controls="mnav-panel"
 			>
@@ -73,6 +80,12 @@ import { SITE_TITLE, SOCIAL_LINKS } from '../consts';
 <div id="mnav-backdrop" class="ds-mnav-backdrop" aria-hidden="true"></div>
 
 <script>
+	import { I18N } from '../i18n/dict';
+
+	// English is the default; only an explicit 'zh' keeps Chinese.
+	const lang = () => (localStorage.getItem('lang') === 'zh' ? 'zh' : 'en');
+	const t = (key: string) => I18N[key]?.[lang()] ?? I18N[key]?.zh ?? key;
+
 	// ===== Theme toggle =====
 	const toggleTheme = () => {
 		const isDark = document.documentElement.classList.toggle('dark');
@@ -94,6 +107,8 @@ import { SITE_TITLE, SOCIAL_LINKS } from '../consts';
 		let savedTouchAction = '';
 		let lastFocused: HTMLElement | null = null;
 
+		const labelFor = () => t(isOpen ? 'menuCloseAria' : 'menuOpenAria');
+
 		const open = () => {
 			if (isOpen) return;
 			isOpen = true;
@@ -109,7 +124,7 @@ import { SITE_TITLE, SOCIAL_LINKS } from '../consts';
 			backdrop?.classList.add('is-open');
 			trigger.classList.add('is-open');
 			trigger.setAttribute('aria-expanded', 'true');
-			trigger.setAttribute('aria-label', '关闭导航菜单');
+			trigger.setAttribute('aria-label', labelFor());
 			setTimeout(() => {
 				(panel.querySelector('.ds-navbar-link') as HTMLElement | null)?.focus();
 			}, 60);
@@ -127,7 +142,7 @@ import { SITE_TITLE, SOCIAL_LINKS } from '../consts';
 			backdrop?.classList.remove('is-open');
 			trigger.classList.remove('is-open');
 			trigger.setAttribute('aria-expanded', 'false');
-			trigger.setAttribute('aria-label', '打开导航菜单');
+			trigger.setAttribute('aria-label', labelFor());
 			lastFocused?.focus?.();
 		};
 
@@ -164,6 +179,11 @@ import { SITE_TITLE, SOCIAL_LINKS } from '../consts';
 				if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
 				else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
 			}
+		});
+
+		// Keep the trigger's accessible name current across language switches
+		window.addEventListener('langchange', () => {
+			if (trigger) trigger.setAttribute('aria-label', labelFor());
 		});
 
 		const mq = window.matchMedia('(min-width: 768px)');
