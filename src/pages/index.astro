@@ -753,14 +753,18 @@ try { (() => {
 			const baseX = k.baseX, amp = k.amp;
 			const pts = k.pts;
 
-			// Sway (flat, no objects)
+			// Sway — left straight, right relaxed curves
+			const xFrac = k.baseX / w;
+			const flex = 0.08 + 0.92 * xFrac * xFrac; // quadratic: 8%→100%
+			const a = amp * flex;
 			for (let j = 0; j < n; j++) {
 				const p = pts[j];
 				const frac = j * invN;
-				const s1 = Math.sin(timeSpd + p.off + k.phase) * amp;
-				const s2 = Math.sin(timeSpd * 0.6 + p.off * 1.4 + k.phase * 0.5) * amp * 0.35;
-				const s3 = Math.sin(timeSpd * 1.7 + p.off * 0.6) * amp * 0.12;
-				pBuf[j*2] = baseX + (s1 + s2 + s3) * frac * frac;
+				const s1 = Math.sin(timeSpd + p.off + k.phase) * a;
+				const s2 = Math.sin(timeSpd * 0.6 + p.off * 1.4 + k.phase * 0.5) * a * 0.35;
+				const s3 = Math.sin(timeSpd * 1.7 + p.off * 0.6) * a * 0.12;
+				const s4 = Math.sin(timeSpd * 0.35 + p.off * 0.8 + k.phase * 0.3) * a * 0.25 * xFrac;
+				pBuf[j*2] = baseX + (s1 + s2 + s3 + s4) * frac * frac;
 				pBuf[j*2+1] = p.y;
 			}
 
@@ -782,15 +786,18 @@ try { (() => {
 						pushY[j] += (dy/d*f*0.3 - pushY[j]) * 0.06;
 					} else { pushX[j] *= 0.93; pushY[j] *= 0.93; }
 				}
-				// Traveling pulse — wave propagates outward from touch point
+				// Bioluminescent pulse — slow, segment-by-segment propagation
 				const touchDist = Math.sqrt(minD2);
 				if (touchDist < GLOW_R) {
 					const strength = Math.pow(1 - touchDist/GLOW_R, 2.5);
 					for (let j = 0; j < n; j++) {
 						const d = Math.abs(j - touchIdx);
-						const wave = Math.cos(t * 15 - d * 0.7);
-						const fall = Math.max(0, 1 - d * 0.1);
-						illum[j] = strength * Math.max(0, wave) * fall;
+						// Slow wave: ~0.6 Hz, underwater feel
+						const wave = Math.cos(t * 8 - d * 0.5);
+						// Sharp segment shape: pow3 makes narrow bright pulses
+						const pulse = Math.max(0, Math.pow(Math.max(0, wave), 3));
+						const fall = Math.max(0, 1 - d * 0.08);
+						illum[j] = strength * pulse * fall;
 					}
 				} else {
 					illum.fill(0);
@@ -861,8 +868,17 @@ try { (() => {
 			const r = rays[ri];
 			r.x += Math.sin(t * r.spd + r.ph) * 0.35;
 			const xoff = Math.sin(r.ang) * h;
+			// Mouse-proximity pulse boost — syncs with seaweed bioluminescence
+			let boost = 0;
+			if (mx > -1000) {
+				const dist = Math.abs(mx - r.x);
+				if (dist < 500) {
+					const wave = Math.cos(t * 8 - dist * 0.012);
+					boost = Math.pow(Math.max(0, wave), 3) * (1 - dist/500) * 0.035;
+				}
+			}
 			const rg = ctx.createLinearGradient(r.x, 0, r.x + xoff, h);
-			const aa = r.a * (0.7 + 0.3 * Math.sin(t * r.spd * 0.6 + r.ph));
+			const aa = (r.a + boost) * (0.7 + 0.3 * Math.sin(t * r.spd * 0.6 + r.ph));
 			rg.addColorStop(0, 'rgba(180,175,155,' + aa + ')');
 			rg.addColorStop(0.35, 'rgba(180,175,155,' + (aa * 0.55) + ')');
 			rg.addColorStop(0.75, 'rgba(180,175,155,' + (aa * 0.15) + ')');
@@ -887,12 +903,19 @@ try { (() => {
 				if (Math.abs(s.x - rayX) < r.wd * (0.5 + s.y / h * 0.5)) { inRay = true; break; }
 			}
 
-			// Mouse proximity glow
+			// Pulse-modulated mouse glow
 			let mglow = 0;
 			if (mx > -1000) {
 				const dx = mx - s.x, dy = my - s.y;
 				const d2 = dx*dx + dy*dy;
-				if (d2 < 36000) mglow = Math.pow(1 - Math.sqrt(d2)/190, 2.5);
+				if (d2 < 36000) {
+					const dist = Math.sqrt(d2);
+					const base = Math.pow(1 - dist/190, 2.5);
+					// Pulse sync with seaweed bioluminescence
+					const wave = Math.cos(t * 8 - dist * 0.015);
+					const mod = 0.4 + 0.6 * Math.pow(Math.max(0, wave), 3);
+					mglow = base * mod;
+				}
 			}
 
 			const a = s.al * (inRay ? 3.0 : 1.0) + mglow * 0.45;
