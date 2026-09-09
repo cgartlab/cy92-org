@@ -45,7 +45,7 @@ const meditationImages = [
 		<main id="slideshow" class="slideshow">
 			<canvas id="seaweed" class="canvas-full" style="position:fixed;z-index:50;pointer-events:none"></canvas>
 			<!-- Shared continuous video — one undimmed scene behind pages 3 & 4 -->
-			<video id="reel" class="reel" autoplay muted loop playsinline aria-hidden="true" style="filter:brightness(0.55)">
+			<video id="reel" class="reel" autoplay muted loop playsinline aria-hidden="true">
 				<source src="/video/demo.mp4" type="video/mp4" />
 			</video>
 
@@ -101,21 +101,23 @@ const meditationImages = [
 				</div>
 			</section>
 
-			<!-- ═══ Slide 2 — What I do (over shared reel video) ═══ -->
+			<!-- ═══ Slide 2 — What I do (page 3: center → corner, video 0.5 → full) ═══ -->
 			<section class="slide" data-slide="2">
+				<div class="video-dim"></div>
 				<div class="slide-content">
+					<div class="glass" aria-hidden="true"></div>
 					<div class="split">
 						<div class="split-left">
-							<p class="label anim left" data-d="0">What I do</p>
-							<h2 class="heading-xl anim left" data-d="1">跨领域<br>数字创作者</h2>
+							<p class="label anim up" data-d="0">What I do</p>
+							<h2 class="heading-xl anim up" data-d="1">跨领域<br>数字创作者</h2>
 							<p class="body anim up" data-d="2">
 								我创建数字产品、塑造品牌视觉、分享创作背后的思考过程。倡导数据主权，坚持创作即认知的理念。
 							</p>
 						</div>
-						<div class="split-right">
+						<div class="split-right anim right" data-d="3">
 							<div class="skills">
 								{SKILLS.map((category, i) => (
-									<div class="skill anim right" data-d={i + 2}>
+									<div class="skill">
 										<h3 class="skill-cat">{category.category}</h3>
 										<ul class="skill-list">
 											{category.items.map(s => <li>{s}</li>)}
@@ -131,6 +133,7 @@ const meditationImages = [
 			<!-- ═══ Slide 3 — Featured Work (over shared reel video, text corner) ═══ -->
 			<section class="slide" data-slide="3" id="work">
 				<div class="slide-content">
+					<div class="glass" aria-hidden="true"></div>
 					<div class="work">
 						<p class="label anim left" data-d="0">Featured Work</p>
 						<h2 class="heading-xl anim left" data-d="1">本科动画毕业十年后的作品集</h2>
@@ -379,17 +382,33 @@ body { background: var(--bg); color: var(--text); font-family: var(--ds-font-bod
 
 /* Pages 3 & 4 share ONE undimmed continuous video (#reel) behind transparent slides */
 .reel { position: fixed; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; pointer-events: none; }
-[data-slide="2"] .slide-content, [data-slide="3"] .slide-content { position: relative; justify-content: flex-start; align-items: flex-end; text-align: left; padding-bottom: 12dvh; }
+
+/* ── Page 3 (data-slide 2): center → corner, video 50% → full ── */
+/* Video dim overlay — fades out when slide becomes active */
+.video-dim { position: absolute; inset: 0; background: rgba(0,0,0,0.5); z-index: 0; pointer-events: none; opacity: 1; transition: opacity 1.2s ease-out; }
+.slide.is-active .video-dim { opacity: 0; }
+/* Frosted glass — appears behind text at bottom, gradient to clear above */
+.glass { position: absolute; inset: 0; background: rgba(10,10,10,0.35); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); -webkit-mask-image: linear-gradient(to bottom, transparent 0%, transparent 40%, rgba(0,0,0,1) 100%); mask-image: linear-gradient(to bottom, transparent 0%, transparent 40%, rgba(0,0,0,1) 100%); z-index: 0; pointer-events: none; opacity: 0; transition: opacity 1.2s ease-out; }
+.slide.is-active .glass { opacity: 1; transition-delay: 0.8s; }
+/* Text starts centered → slides to bottom corner on activation */
+[data-slide="2"] .slide-content { position: relative; justify-content: flex-start; align-items: center; text-align: left; padding-bottom: 0; transition: align-items 1.2s var(--spring), padding-bottom 1.2s var(--spring); }
+.slide.is-active[data-slide="2"] .slide-content { align-items: flex-end; padding-bottom: 12dvh; transition-delay: 0.8s; }
 [data-slide="2"] .split, [data-slide="3"] .work { position: relative; z-index: 1; }
-[data-slide="2"] .split .heading-xl, [data-slide="2"] .split .body, [data-slide="3"] .work .heading-xl, [data-slide="3"] .work .body-lg, [data-slide="3"] .work .body, [data-slide="3"] .work .label, [data-slide="3"] .work .tag { text-shadow: 0 1px 2px rgba(0,0,0,0.85), 0 8px 30px rgba(0,0,0,0.5); }
-[data-slide="2"] .split .skill-cat, [data-slide="2"] .split .skill-list li { text-shadow: 0 1px 2px rgba(0,0,0,0.8); }
-/* No video dimming on pages 3 & 4 — override generic slide edge overlays */
-[data-slide="2"]::before, [data-slide="3"]::before, [data-slide="2"]::after, [data-slide="3"]::after { background: linear-gradient(to bottom, rgba(8,8,10,0.25) 0%, transparent 12%) !important; height: 12% !important; }
-[data-slide="2"]::before, [data-slide="3"]::before { background: linear-gradient(to bottom, transparent 88%, rgba(8,8,10,0.4) 100%) !important; }
+/* Gradient black edges — top and bottom of video */
+[data-slide="2"]::after { background: linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, transparent 22%, transparent 78%, rgba(0,0,0,0.55) 100%) !important; height: 100% !important; }
+[data-slide="2"]::before { background: none !important; }
+/* Text shadow for readability over video */
+[data-slide="2"] .split .heading-xl, [data-slide="2"] .split .body, [data-slide="2"] .split .label, [data-slide="2"] .split .skill-cat, [data-slide="2"] .split .skill-list li { text-shadow: 0 1px 3px rgba(0,0,0,0.9), 0 8px 32px rgba(0,0,0,0.55); }
+/* Page 4 (data-slide 3): corner text, no dim */
+[data-slide="3"] .slide-content { position: relative; justify-content: flex-start; align-items: flex-end; text-align: left; padding-bottom: 12dvh; }
 [data-slide="3"] .work { max-width: 560px; }
 [data-slide="3"] .work .heading-xl { font-size: clamp(1.9rem, 4.2vw, 3.2rem); margin: 0.5rem 0 0.9rem; }
 [data-slide="3"] .work .body-lg { margin-bottom: 0.75rem; }
 [data-slide="3"] .work .body { margin-bottom: 1rem; }
+[data-slide="3"] .work .heading-xl, [data-slide="3"] .work .body-lg, [data-slide="3"] .work .body, [data-slide="3"] .work .label, [data-slide="3"] .work .tag { text-shadow: 0 1px 3px rgba(0,0,0,0.9), 0 8px 32px rgba(0,0,0,0.55); }
+/* Page 4 gradient edges */
+[data-slide="3"]::after { background: linear-gradient(to bottom, rgba(0,0,0,0.45) 0%, transparent 20%, transparent 80%, rgba(0,0,0,0.45) 100%) !important; height: 100% !important; }
+[data-slide="3"]::before { background: none !important; }
 /* Page 2 — aurora gradient background + readable text scrim */
 [data-slide="1"] .slide-content { position: relative; }
 [data-slide="1"] .slide-content::before { content: ''; position: absolute; inset: 0; z-index: 0; background: radial-gradient(ellipse 80% 70% at 50% 46%, rgba(4,4,6,0.55) 0%, rgba(4,4,6,0.2) 55%, transparent 100%); pointer-events: none; }
@@ -699,6 +718,10 @@ try { (() => {
 	if (!c) return;
 	const ctx = c.getContext('2d');
 	if (!ctx) return;
+	// Code rain paints onto the aurora canvas — a true page-2 background layer
+	// that sits under the stats text and scrolls away with the slide.
+	const rainC = document.getElementById('aurora');
+	const rctx = rainC ? rainC.getContext('2d') : null;
 	let w, h;
 	const layers = [[], [], []];
 	let mx = -9999, my = -9999;
@@ -806,6 +829,7 @@ try { (() => {
 					alpha: 0,
 					fadeTarget: 0,
 					fadeRate: 0.012 + Math.random() * 0.04,
+					rainColor: (() => { const pc = Math.random(); return pc < 0.42 ? '115,191,196' : pc < 0.78 ? '141,160,206' : '255,129,10'; })(),
 					flSpd: 0.6 + Math.random() * 2.2,
 					flPh: Math.random() * 6.28,
 					sentence,
@@ -1057,12 +1081,12 @@ try { (() => {
 			ctx.globalAlpha = 1;
 		}
 
-		// ── Code rain — retired as page-2 bg (aurora replaces). Fade-out only. ──
+		// ── Code rain — page 2 only, drawn on the aurora canvas behind the text ──
 		let anyRainVisible = false;
 		for (let ci = 0; ci < codeCols.length; ci++) {
 			if (codeCols[ci].alpha > 0.02) { anyRainVisible = true; break; }
 		}
-		if (activeSlide === -1 || anyRainVisible) {
+		if (activeSlide === 1 || anyRainVisible) {
 			if (activeSlide === 1 && !columnsReset) {
 				for (let ci = 0; ci < codeCols.length; ci++) {
 					codeCols[ci].y = Math.random() * h;
@@ -1088,12 +1112,17 @@ try { (() => {
 					}
 				}
 			}
+			// Paint on the aurora canvas, scaled to its own device-pixel size
+			const rc = rctx || ctx;
+			const rs = rainC ? (rainC.width / w) : 1;
+			rc.save();
+			rc.scale(rs, rs);
 			for (let ci = 0; ci < codeCols.length; ci++) {
 				const col = codeCols[ci];
 				col.y += col.spd;
 				if (col.y > h + 100) { col.y = -100; col.x = (ci / 89) * w + (Math.random()-0.5)*18; }
 				col.fadeTarget = rainTarget;
-				col.alpha += (col.fadeTarget - col.alpha) * col.fadeRate;
+				col.alpha += (col.fadeTarget - col.alpha) * (col.fadeTarget > col.alpha ? col.fadeRate : col.fadeRate * 2.4);
 				if (col.alpha < 0.02) continue;
 				const flick = 0.65 + 0.3 * Math.sin(t * col.flSpd + col.flPh) + (Math.random() - 0.5) * 0.18;
 				const bright = Math.max(0.25, Math.min(1, flick));
@@ -1101,20 +1130,20 @@ try { (() => {
 				const fontSize = Math.round(6 + col.depth * 14);
 				const doff = Math.abs(col.depth - 0.5);
 				const depthDim = doff > 0.25 ? 1 - (doff - 0.25) * 0.9 : 1;
-				ctx.font = fontSize + 'px monospace';
-				ctx.globalAlpha = colA;
+				rc.font = fontSize + 'px monospace';
+				rc.globalAlpha = colA;
 				for (let ch = 0; ch < col.maxLen; ch++) {
 					const cy = col.y - ch * fontSize * 1.3;
 					if (cy > -fontSize && cy < h + fontSize) {
 						const headFade = ch === 0 ? 1.0 : (1 - ch / col.maxLen) * 0.5;
-						const a = headFade * depthDim * 0.7;
-						ctx.fillStyle = 'rgba(138,140,110,' + a + ')';
-						ctx.fillText(col.chars[ch], col.x, cy);
+						const a = headFade * depthDim * 0.62;
+						rc.fillStyle = 'rgba(' + col.rainColor + ',' + a + ')';
+						rc.fillText(col.chars[ch], col.x, cy);
 					}
 				}
 			}
-
-			ctx.globalAlpha = 1;
+			rc.restore();
+			rc.globalAlpha = 1;
 		}
 
 		requestAnimationFrame(draw);
@@ -1308,6 +1337,7 @@ try { (() => {
 	const ss = document.querySelectorAll('.slide');
 	const ib = document.getElementById('indicator-bar');
 	const header = document.getElementById('header');
+	const reel = document.getElementById('reel');
 	if (!sl || !ss.length) return;
 	const r = matchMedia?.('(prefers-reduced-motion: reduce)').matches;
 	ss[0]?.classList.add('is-active');
@@ -1321,6 +1351,8 @@ try { (() => {
 				if (ib) ib.style.transform = 'scaleY(' + ((i + 1) / ss.length) + ')';
 				// Header scroll state
 				if (header) header.classList.toggle('scrolled', i > 0);
+				// Reel video brightness: page 3 (data-slide 2) recovers from 0.55 → 0.8
+				if (reel) reel.style.filter = 'brightness(' + (i === 2 ? 0.8 : 0.55) + ')';
 			}
 		});
 	}, { threshold: 0.5 });
