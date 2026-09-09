@@ -43,7 +43,7 @@ const meditationImages = [
 
 		<!-- ═══ Slideshow ═══ -->
 		<main id="slideshow" class="slideshow">
-			<canvas id="seaweed" class="canvas-full" style="position:fixed;z-index:50"></canvas>
+			<canvas id="seaweed" class="canvas-full" style="position:fixed;z-index:50;pointer-events:none"></canvas>
 
 			<!-- ═══ Slide 0 — Hero (Seaweed particles) ═══ -->
 			<section class="slide dark" data-slide="0">
@@ -382,7 +382,8 @@ body { background: var(--bg); color: var(--text); font-family: var(--ds-font-bod
 .slide::before { content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none; background: linear-gradient(to bottom, transparent 0%, transparent 85%, rgba(10,10,10,0.6) 100%); transition: opacity 0.6s; }
 .slide.dark::before { background: linear-gradient(to bottom, rgba(10,10,10,0.4) 0%, transparent 15%, transparent 85%, rgba(10,10,10,0.6) 100%); }
 /* Top fade for slides after 0 — blend from previous */
-[data-slide="1"]::after, [data-slide="2"]::after, [data-slide="3"]::after, [data-slide="4"]::after, [data-slide="5"]::after, [data-slide="6"]::after, [data-slide="7"]::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 20%; z-index: 0; pointer-events: none; background: linear-gradient(to bottom, rgba(10,10,10,0.8) 0%, transparent 100%); }
+/* Top fade for slides after 0 — blend from previous, but not too dark */
+[data-slide="1"]::after, [data-slide="2"]::after, [data-slide="3"]::after, [data-slide="4"]::after, [data-slide="5"]::after, [data-slide="6"]::after, [data-slide="7"]::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 15%; z-index: 0; pointer-events: none; background: linear-gradient(to bottom, rgba(10,10,10,0.5) 0%, transparent 100%); }
 .dark { background: var(--bg); }
 .slide-content { position: relative; z-index: 1; display: flex; align-items: center; width: 100%; min-height: 100dvh; padding: 5rem 1.5rem; }
 .slide-content.center { justify-content: center; }
@@ -732,7 +733,7 @@ try { (() => {
 	let goldenStart = 0;
 	let goldenFade = 1;
 	const GOLDEN_R = 160;
-	const GOLDEN_IDLE = 8;
+	const GOLDEN_IDLE = 10;
 
 	const build = () => {
 		layers[0].length = 0; layers[1].length = 0; layers[2].length = 0;
@@ -1111,13 +1112,14 @@ try { (() => {
 			}
 
 			// ── Golden sentence: mouse proximity → repel + attract ──
+			const gFontSize = 18;
 			if (mx > -1000) {
 				// Find closest column to mouse
 				let closest = -1, minDist = Infinity;
 				for (let ci = 0; ci < codeCols.length; ci++) {
 					const col = codeCols[ci];
 					if (col.alpha < 0.3) continue;
-					const dx = mx - col.x, dy = my - (col.y - col.maxLen * fontSize * 0.65);
+					const dx = mx - col.x, dy = my - (col.y - col.maxLen * gFontSize * 0.65);
 					const dist = Math.sqrt(dx*dx + dy*dy);
 					if (dist < GOLDEN_R && dist < minDist) { minDist = dist; closest = ci; }
 				}
@@ -1145,15 +1147,21 @@ try { (() => {
 				const gSentence = GOLDEN[Math.floor(goldenStart * 100) % GOLDEN.length];
 				const gChars = gSentence.split('');
 				const gFontSize = 18;
-				ctx.font = 'bold ' + gFontSize + 'px monospace';
+				ctx.font = 'bold ' + gFontSize + 'px "Outfit", "Noto Sans SC", sans-serif';
 				// Repel position: push away from mouse, gather nearby
 				const dx = gCol.x - mx;
-				const repelX = mx + dx * 0.5;
+				const repelX = mx + Math.sign(dx) * Math.min(Math.abs(dx) * 0.6, 200);
 				const repelY = my + 40;
 				// Soft glow behind golden text
-				ctx.globalAlpha = goldenFade * 0.12;
-				ctx.fillStyle = 'rgba(138,140,110,0.3)';
-				ctx.fillRect(repelX - 10, repelY - gFontSize * 1.3, gFontSize * gChars.length * 1.1 + 20, gFontSize * 1.8);
+				const gGlow = ctx.createRadialGradient(
+					repelX + gFontSize * gChars.length * 0.55, repelY - gFontSize * 0.3, 0,
+					repelX + gFontSize * gChars.length * 0.55, repelY - gFontSize * 0.3, gFontSize * gChars.length * 0.7
+				);
+				gGlow.addColorStop(0, 'rgba(138,140,110,' + (goldenFade * 0.18) + ')');
+				gGlow.addColorStop(0.6, 'rgba(138,140,110,' + (goldenFade * 0.08) + ')');
+				gGlow.addColorStop(1, 'rgba(138,140,110,0)');
+				ctx.fillStyle = gGlow;
+				ctx.fillRect(repelX - gFontSize * 2, repelY - gFontSize * 2, gFontSize * gChars.length * 1.3 + gFontSize * 4, gFontSize * 4);
 				// Draw each char with vertical offset
 				for (let ch = 0; ch < gChars.length; ch++) {
 					const cx = repelX + ch * gFontSize * 1.1;
@@ -1166,8 +1174,8 @@ try { (() => {
 				for (let ch = 0; ch < Math.min(4, gChars.length); ch++) {
 					const cx = repelX + ch * gFontSize * 1.1;
 					const cy = repelY + Math.sin(t * 2 + ch * 0.5) * 2;
-					ctx.globalAlpha = goldenFade * 0.4;
-					ctx.fillStyle = 'rgba(255,255,255,0.6)';
+					ctx.globalAlpha = goldenFade * 0.7;
+					ctx.fillStyle = 'rgba(255,255,255,0.8)';
 					ctx.fillText(gChars[ch], cx, cy);
 				}
 			}
