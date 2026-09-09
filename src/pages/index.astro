@@ -1538,12 +1538,23 @@ try { (() => {
 		if (reduce) { const { v, d } = parse(el); el.textContent = (d ? v.toFixed(d) : String(Math.round(v))) + suffixOf(el); return; }
 		const prev = rafMap.get(el); if (prev) cancelAnimationFrame(prev);
 		const { v: target, d } = parse(el);
-		const dur = 1800, start = performance.now();
+		const dur = 800, start = performance.now();
 		const tick = now => {
 			const p = Math.min((now - start) / dur, 1);
-			const eased = 1 - Math.pow(1 - p, 4);
-			el.textContent = fmt(el, target * eased) + suffixOf(el);
-			if (p < 1) rafMap.set(el, requestAnimationFrame(tick)); else rafMap.delete(el);
+			const eased = 1 - Math.pow(1 - p, 3); // easeOutCubic — quick, gentle
+			if (p >= 1) {
+				el.textContent = fmt(el, target) + suffixOf(el);
+				rafMap.delete(el);
+			} else if (d) {
+				// mid-run: integers only (no 12.3万+ noise); decimals reveal at the end
+				el.textContent = String(Math.round(target * eased)) + suffixOf(el);
+				rafMap.set(el, requestAnimationFrame(tick));
+			} else {
+				// large integers: quantized jumps so the digits don't crawl forever
+				const step = Math.max(1, Math.round(target / 26));
+				el.textContent = String(Math.min(target, Math.round(target * eased / step) * step)) + suffixOf(el);
+				rafMap.set(el, requestAnimationFrame(tick));
+			}
 		};
 		rafMap.set(el, requestAnimationFrame(tick));
 	};
