@@ -44,6 +44,10 @@ const meditationImages = [
 		<!-- ═══ Slideshow ═══ -->
 		<main id="slideshow" class="slideshow">
 			<canvas id="seaweed" class="canvas-full" style="position:fixed;z-index:50;pointer-events:none"></canvas>
+			<!-- Shared continuous video — one undimmed scene behind pages 3 & 4 -->
+			<video id="reel" class="reel" autoplay muted loop playsinline aria-hidden="true" style="filter:brightness(0.55)">
+				<source src="/video/demo.mp4" type="video/mp4" />
+			</video>
 
 			<!-- ═══ Slide 0 — Hero (Seaweed particles) ═══ -->
 			<section class="slide dark" data-slide="0">
@@ -97,11 +101,8 @@ const meditationImages = [
 				</div>
 			</section>
 
-			<!-- ═══ Slide 2 — What I do (video bg -30%, fixed) ═══ -->
+			<!-- ═══ Slide 2 — What I do (over shared reel video) ═══ -->
 			<section class="slide" data-slide="2">
-				<video id="shared-video" autoplay muted loop playsinline class="video-fixed" style="filter:brightness(0.5)">
-					<source src="/video/demo.mp4" type="video/mp4" />
-				</video>
 				<div class="slide-content">
 					<div class="split">
 						<div class="split-left">
@@ -127,11 +128,8 @@ const meditationImages = [
 				</div>
 			</section>
 
-			<!-- ═══ Slide 3 — Featured Work (video bg +70%, light text) ═══ -->
+			<!-- ═══ Slide 3 — Featured Work (over shared reel video, text corner) ═══ -->
 			<section class="slide" data-slide="3" id="work">
-				<video autoplay muted loop playsinline class="video-fixed" style="filter:brightness(0.5)">
-					<source src="/video/demo.mp4" type="video/mp4" />
-				</video>
 				<div class="slide-content">
 					<div class="work">
 						<p class="label anim left" data-d="0">Featured Work</p>
@@ -379,10 +377,19 @@ body { background: var(--bg); color: var(--text); font-family: var(--ds-font-bod
 .video-fixed { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none; z-index: 0; }
 .img-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
 
-/* Slides 3 & 4 (video pages) share the same background — consistent text scrim */
-[data-slide="2"] .slide-content, [data-slide="3"] .slide-content { position: relative; }
-[data-slide="2"] .slide-content::before, [data-slide="3"] .slide-content::before { content: ''; position: absolute; inset: 0; z-index: 0; background: radial-gradient(ellipse 80% 72% at 38% 50%, rgba(10,10,10,0.66) 0%, rgba(10,10,10,0.35) 55%, transparent 100%); pointer-events: none; }
+/* Pages 3 & 4 share ONE undimmed continuous video (#reel) behind transparent slides */
+.reel { position: fixed; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; pointer-events: none; }
+[data-slide="2"] .slide-content, [data-slide="3"] .slide-content { position: relative; justify-content: flex-start; align-items: flex-end; text-align: left; padding-bottom: 12dvh; }
 [data-slide="2"] .split, [data-slide="3"] .work { position: relative; z-index: 1; }
+[data-slide="2"] .split .heading-xl, [data-slide="2"] .split .body, [data-slide="3"] .work .heading-xl, [data-slide="3"] .work .body-lg, [data-slide="3"] .work .body, [data-slide="3"] .work .label, [data-slide="3"] .work .tag { text-shadow: 0 1px 2px rgba(0,0,0,0.85), 0 8px 30px rgba(0,0,0,0.5); }
+[data-slide="2"] .split .skill-cat, [data-slide="2"] .split .skill-list li { text-shadow: 0 1px 2px rgba(0,0,0,0.8); }
+/* No video dimming on pages 3 & 4 — override generic slide edge overlays */
+[data-slide="2"]::before, [data-slide="3"]::before, [data-slide="2"]::after, [data-slide="3"]::after { background: linear-gradient(to bottom, rgba(8,8,10,0.25) 0%, transparent 12%) !important; height: 12% !important; }
+[data-slide="2"]::before, [data-slide="3"]::before { background: linear-gradient(to bottom, transparent 88%, rgba(8,8,10,0.4) 100%) !important; }
+[data-slide="3"] .work { max-width: 560px; }
+[data-slide="3"] .work .heading-xl { font-size: clamp(1.9rem, 4.2vw, 3.2rem); margin: 0.5rem 0 0.9rem; }
+[data-slide="3"] .work .body-lg { margin-bottom: 0.75rem; }
+[data-slide="3"] .work .body { margin-bottom: 1rem; }
 /* Page 2 — aurora gradient background + readable text scrim */
 [data-slide="1"] .slide-content { position: relative; }
 [data-slide="1"] .slide-content::before { content: ''; position: absolute; inset: 0; z-index: 0; background: radial-gradient(ellipse 80% 70% at 50% 46%, rgba(4,4,6,0.55) 0%, rgba(4,4,6,0.2) 55%, transparent 100%); pointer-events: none; }
@@ -796,8 +803,8 @@ try { (() => {
 					y: Math.random() * h,
 					spd: 0.375 + depth * 1.25 + Math.random() * 0.5,
 					depth,
-					alpha: Math.random(),
-					fadeTarget: 1,
+					alpha: 0,
+					fadeTarget: 0,
 					fadeRate: 0.012 + Math.random() * 0.04,
 					flSpd: 0.6 + Math.random() * 2.2,
 					flPh: Math.random() * 6.28,
@@ -966,16 +973,16 @@ try { (() => {
 		const seaTarget = activeSlide === 0 ? 1 : 0;
 		seaFade += (seaTarget - seaFade) * 0.03;
 
-		// ── Background depth gradient ──
-		const bgG = ctx.createLinearGradient(0, 0, 0, h);
-		bgG.addColorStop(0, 'rgba(8,12,18,0)');
-		bgG.addColorStop(0.5, 'rgba(6,10,16,0.25)');
-		bgG.addColorStop(1, 'rgba(4,6,10,0.45)');
-		ctx.fillStyle = bgG; ctx.fillRect(0, 0, w, h);
-
 		// ── Seaweed scene (slide 0) ──
 		if (seaFade > 0.01) {
 			ctx.globalAlpha = seaFade;
+
+			// Background depth gradient
+			const bgG = ctx.createLinearGradient(0, 0, 0, h);
+			bgG.addColorStop(0, 'rgba(8,12,18,0)');
+			bgG.addColorStop(0.5, 'rgba(6,10,16,0.25)');
+			bgG.addColorStop(1, 'rgba(4,6,10,0.45)');
+			ctx.fillStyle = bgG; ctx.fillRect(0, 0, w, h);
 
 			// ── Volumetric light rays ──
 			for (let ri = 0; ri < rays.length; ri++) {
