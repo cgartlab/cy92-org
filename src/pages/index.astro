@@ -614,13 +614,17 @@ body { background: var(--bg); color: var(--text); font-family: var(--ds-font-bod
 }
 .mdeck-item.cur .mdeck-img { transform: scale(1); }
 .mdeck-item:hover .mdeck-img { filter: brightness(0.75); }
-/* always-visible corner index */
+/* always-visible index — FIXED to the center of the page */
 .mdeck-index {
-	position: absolute; top: max(5rem, env(safe-area-inset-top)); right: 1.5rem;
-	font-size: 0.7rem; letter-spacing: 0.22em; color: var(--text-3); z-index: 2;
-	font-variant-numeric: tabular-nums; text-shadow: 0 1px 6px rgba(0,0,0,0.8);
+	position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+	display: inline-flex; align-items: baseline; gap: 0.35em;
+	font-size: clamp(2.4rem, 7vw, 5.5rem); font-weight: 200; letter-spacing: 0.02em;
+	color: rgba(250,249,246,0.9); font-variant-numeric: tabular-nums;
+	text-shadow: 0 2px 20px rgba(0,0,0,0.55);
+	z-index: 1; pointer-events: none;
 }
-.mdeck-index em { font-style: normal; color: var(--text-4); margin-left: 0.4em; }
+.mdeck-index em { font-style: normal; font-size: 0.4em; color: var(--text-3); margin-left: 0.3em; }
+.mdeck-item:hover .mdeck-index, .mdeck-item:focus-within .mdeck-index { opacity: 0.22; }
 /* hover: intro text anchors BOTTOM-LEFT, plain text (no card) */
 .mdeck-hover {
 	position: absolute; left: clamp(1.5rem, 6vw, 4rem); top: auto; right: auto;
