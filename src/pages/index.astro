@@ -794,8 +794,9 @@ try { (() => {
 
 	let t = 0;
 	let visible = true;
-	let activeSlide = 0;  // which slide is most visible
-	let seaFade = 1;      // seaweed global opacity (0-1)
+	let activeSlide = 0;
+	let seaFade = 1;
+	let columnsReset = true;
 	const obs = new IntersectionObserver(es => {
 		let maxIntersect = 0, maxSlide = 0;
 		es.forEach(e => {
@@ -805,7 +806,10 @@ try { (() => {
 				visible = true;
 			}
 		});
-		if (maxSlide !== activeSlide) activeSlide = maxSlide;
+		if (maxSlide !== activeSlide) {
+			activeSlide = maxSlide;
+			if (activeSlide === 1) columnsReset = false;
+		}
 	}, { threshold: [0.1, 0.5, 0.9] });
 	document.querySelectorAll('.slide').forEach(s => obs.observe(s));
 	const pBuf = new Float64Array(44); // 22 pts × 2
@@ -1027,6 +1031,13 @@ try { (() => {
 			if (codeCols[ci].alpha > 0.02) { anyRainVisible = true; break; }
 		}
 		if (activeSlide === 1 || anyRainVisible) {
+			if (activeSlide === 1 && !columnsReset) {
+				for (let ci = 0; ci < codeCols.length; ci++) {
+					codeCols[ci].y = Math.random() * h;
+					codeCols[ci].alpha = 0;
+				}
+				columnsReset = true;
+			}
 			const rainTarget = activeSlide === 1 ? 1 : 0;
 			// Random character mutation every ~0.15s (2-3 chars per column)
 			if (Math.floor(t * 60) % 9 === 0) {
