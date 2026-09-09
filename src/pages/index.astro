@@ -398,15 +398,13 @@ body { background: var(--bg); color: var(--text); font-family: var(--ds-font-bod
 
 /* ── Page 3 (data-slide 2): center → corner, video 50% → full ── */
 /* ── Page 3 (data-slide 2) choreography: center+dim(hold) → settle down → brighten ── */
-/* Phase A→C: center+dark HOLD (~1.5s), then video lifts brightness as text settles */
-.video-dim { position: absolute; inset: 0; background: rgba(0,0,0,0.5); z-index: 0; pointer-events: none; opacity: 1; transition: opacity 1.8s ease-out 1.5s; }
-.slide.is-active .video-dim { opacity: 0; }
-/* Frosted glass — fades in behind the settled lower text (edges stay clear above) */
-.glass { position: absolute; inset: 0; background: rgba(10,10,10,0.35); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); -webkit-mask-image: linear-gradient(to bottom, transparent 0%, transparent 40%, rgba(0,0,0,1) 100%); mask-image: linear-gradient(to bottom, transparent 0%, transparent 40%, rgba(0,0,0,1) 100%); z-index: 0; pointer-events: none; opacity: 0; transition: opacity 1.4s ease-out 2s; }
-.slide.is-active .glass { opacity: 1; }
-/* Phase A: text band centered on a dimmed scene; Phase B: settles to lower layout */
-[data-slide="2"] .slide-content { position: relative; justify-content: center; align-items: center; text-align: left; padding-bottom: 0; transition: align-items 1.6s var(--spring) 1.35s, padding-bottom 1.6s var(--spring) 1.35s; }
-.slide.is-active[data-slide="2"] .slide-content { align-items: flex-end; padding-bottom: 12dvh; }
+/* Phase A — PERMANENT steady state: text centered on a 50%-dimmed video.
+   No timer ever advances it; only real scroll movement drives phase B
+   (see pg3-director JS → --pg 0..1). */
+.video-dim { position: absolute; inset: 0; background: rgba(0,0,0,0.5); z-index: 0; pointer-events: none; opacity: calc(1 - var(--pg, 0)); }
+.glass { position: absolute; inset: 0; background: rgba(10,10,10,0.35); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); -webkit-mask-image: linear-gradient(to bottom, transparent 0%, transparent 40%, rgba(0,0,0,1) 100%); mask-image: linear-gradient(to bottom, transparent 0%, transparent 40%, rgba(0,0,0,1) 100%); z-index: 0; pointer-events: none; opacity: var(--g, 0); }
+[data-slide="2"] .slide-content { position: relative; justify-content: center; align-items: center; text-align: left; padding-bottom: 0; transform: translateY(calc(var(--pg, 0) * 15vh)); }
+[data-slide="2"] .slide-content::after { content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none; }
 [data-slide="2"] .split, [data-slide="3"] .work { position: relative; z-index: 1; }
 
 /* Gradient edges — FIXED mask over the video, independent of slide scroll */
@@ -1356,6 +1354,32 @@ try { (() => {
 	};
 	draw();
 })(); } catch(e) { console.warn('[grad]', e.message); }
+
+
+
+// ═══ Page-3 director: Phase A is steady (centered text, dim video). Only
+// real scroll movement toward page 4 drives settle (--pg) and brighten/glass (--g). ═══
+try { (() => {
+	const sc = document.getElementById('slideshow');
+	const slide = document.querySelector('[data-slide="2"]');
+	const next = document.querySelector('[data-slide="3"]');
+	if (!sc || !slide || !next) return;
+	if (matchMedia?.('(prefers-reduced-motion: reduce)').matches) return;
+	let raf = 0, a0 = 0, span = 1;
+	const rectTop = el => el.getBoundingClientRect().top + sc.scrollTop;
+	const measure = () => { a0 = rectTop(slide); span = Math.max(1, rectTop(next) - a0); };
+	const apply = () => {
+		raf = 0;
+		const p = Math.min(1, Math.max(0, (sc.scrollTop - a0) / span));
+		const g = p <= 0.3 ? 0 : p >= 1 ? 1 : (p - 0.3) / 0.7;
+		slide.style.setProperty('--pg', String(p));
+		slide.style.setProperty('--g', String(g));
+	};
+	const onScroll = () => { if (!raf) raf = requestAnimationFrame(apply); };
+	sc.addEventListener('scroll', onScroll, { passive: true });
+	window.addEventListener('resize', () => { measure(); onScroll(); }, { passive: true });
+	measure(); apply();
+})(); } catch(e) { console.warn('[pg3]', e.message); }
 
 
 // ═══ Slide observer ═══
