@@ -2,7 +2,7 @@
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Icon from '../components/Icon.astro';
-import { SITE_TITLE, PERSONAL_INFO, SKILLS, EXPERIENCE, SOCIAL_LINKS, HONORS, WORK_EXPERIENCE, EDUCATION } from '../consts';
+import { SITE_TITLE, PERSONAL_INFO, SKILLS, SOCIAL_LINKS, HONORS, WORK_EXPERIENCE, EDUCATION } from '../consts';
 
 const coverImage = '/images/冥想系列-cover.webp';
 const currentYear = new Date().getFullYear();
@@ -321,16 +321,6 @@ const tickerRows = [
 									</div>
 								))}
 							</section>
-							<section class="psection anim right" data-d="4">
-								<h3 class="label-sm">创作实践</h3>
-								{EXPERIENCE.map(exp => (
-									<div class="practice-card">
-										<span class="practice-period">{exp.period}</span>
-										<h4 class="practice-title">{exp.title}</h4>
-										<p class="practice-desc">{exp.description}</p>
-									</div>
-								))}
-							</section>
 						</div>
 					</div>
 				</div>
@@ -346,12 +336,6 @@ const tickerRows = [
 						<p class="body anim up" data-d="2">如果你对我的作品感兴趣，或者有任何合作想法，欢迎随时联系我。</p>
 						<div class="contact-actions anim up" data-d="3">
 							<a href={`mailto:${PERSONAL_INFO.email}`} class="btn"><Icon name="mail" size={16} class="w-4 h-4" />{PERSONAL_INFO.email}</a>
-						</div>
-						<div class="contact-social anim up" data-d="4">
-							{SOCIAL_LINKS.slice(0, 4).map(link => {
-								const label = { github: 'GitHub', twitter: 'X', bilibili: 'BiliBli', sspai: 'Sspai' }[link.icon] || link.name;
-								return <a class="contact-link" href={link.url} target="_blank" rel="noopener noreferrer">{label}</a>;
-							})}
 						</div>
 					</div>
 				</div>
