@@ -39,6 +39,17 @@ const tickerItems = [
 	'写作是建立思维标本的过程 · 把想清楚的能力写下来',
 	'网页里那个「下载」图标越大，就越不是你要找的链接',
 ];
+// ticker 几何与纵深（远行小且模糊 → 近行大而清晰）
+const tickerRows = [
+	{ top: 8, dur: 26, sc: 0.66, bl: 2.2, op: 0.34 },
+	{ top: 15, dur: 19, sc: 0.82, bl: 1.1, op: 0.5 },
+	{ top: 22, dur: 14, sc: 0.96, bl: 0.4, op: 0.7 },
+	{ top: 29, dur: 33, sc: 0.7, bl: 1.7, op: 0.42 },
+	{ top: 71, dur: 36, sc: 0.7, bl: 1.8, op: 0.44 },
+	{ top: 78, dur: 15, sc: 1.0, bl: 0.2, op: 0.78 },
+	{ top: 85, dur: 21, sc: 0.84, bl: 1.0, op: 0.56 },
+	{ top: 92, dur: 28, sc: 0.62, bl: 2.4, op: 0.3 },
+];
 ---
 
 <!doctype html>
@@ -113,19 +124,17 @@ const tickerItems = [
 			<section class="slide dark" data-slide="1" id="stats">
 				{/* Horizontal left→right content ticker — real cgartlab titles/excerpts, works */}
 				<div class="ticker" aria-hidden="true">
-					{[8, 15, 22, 29, 71, 78, 85, 92].map((top, i) => (
-						<div class="ticker-row" style={`top:${top}dvh;--dur:${(9 + ((i * 7) % 14)).toFixed(1)}s;--op:${(0.45 + (i % 4) * 0.14).toFixed(2)}`}>
+					{tickerRows.map((row, i) => (
+						<div
+							class="ticker-row"
+							style={`top:${row.top}dvh;--dur:${row.dur}s;--sc:${row.sc};--bl:${row.bl}px;--op:${row.op}`}
+						>
 							<div class="ticker-track">
-								{[0, 1].map(dup => (
-									<span class="ticker-half" key={dup}>
-										{Array.from({ length: 4 }, (_, k) => (
-											<span class="ticker-item" key={k}>
-												{tickerItems[(i * 2 + dup + k) % tickerItems.length]}
-												<span class="ticker-sep">·</span>
-											</span>
-										))}
-									</span>
-								))}
+								{/* 24 items = 4-unit cycle × 6 → both halves identical → seamless -50%→0 loop */}
+								{Array.from({ length: 24 }, (_, n) => {
+									const txt = tickerItems[(i * 2 + (n % 4)) % tickerItems.length];
+									return <span class="ticker-item"><span class="tw">{txt}</span><span class="ticker-sep">·</span></span>;
+								})}
 							</div>
 						</div>
 					))}
@@ -465,13 +474,13 @@ body { background: var(--bg); color: var(--text); font-family: var(--ds-font-bod
 /* Fixed full-viewport scene layers — crossfade opacity on page change (no seams) */
 .scene-layer { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; opacity: 0; transition: opacity 0.9s ease; display: block; }
 .silver-scene { background: radial-gradient(120% 90% at 18% 8%, rgba(214,219,210,0.20) 0%, rgba(214,219,210,0.06) 34%, transparent 62%), linear-gradient(160deg, #17181d 0%, #23252c 42%, #101116 100%); }
-/* Page-2 horizontal content ticker (real cgartlab text) — left → right marquee */
+/* Page-2 horizontal content ticker (real cgartlab text) — seamless left→right marquee
+   with depth: far rows small/blurred/dim → near rows large/crisp/bright */
 .ticker { position: absolute; inset: 0; overflow: hidden; z-index: 0; pointer-events: none; }
-.ticker-row { position: absolute; left: 0; right: 0; overflow: hidden; opacity: var(--op, 0.5); }
+.ticker-row { position: absolute; left: 0; right: 0; overflow: hidden; filter: blur(var(--bl, 0px)); }
 .ticker-track { display: flex; width: max-content; animation: tickerR linear infinite; animation-duration: var(--dur, 12s); will-change: transform; }
-.ticker-half { display: inline-flex; flex-shrink: 0; align-items: baseline; }
-.ticker-item { display: inline-flex; align-items: baseline; white-space: nowrap; font-size: 0.8rem; letter-spacing: 0.06em; color: var(--text-3); }
-.ticker-sep { color: var(--accent); margin: 0 1.6rem; opacity: 0.9; }
+.ticker-item { display: inline-flex; align-items: baseline; white-space: nowrap; font-size: calc(0.82rem * var(--sc, 1)); color: var(--text-3); opacity: var(--op, 0.5); text-shadow: 0 0 14px rgba(0,0,0,0.35); }
+.ticker-sep { color: var(--accent); margin: 0 clamp(0.7rem, 2vw, 1.8rem); opacity: 0.85; font-size: 0.92em; }
 @keyframes tickerR { from { transform: translateX(-50%); } to { transform: none; } }
 @media (prefers-reduced-motion: reduce) { .ticker-track { animation: none; } }
 /* About (5) & Contact (6) reveal the shared silver scene instead of flat .dark */
