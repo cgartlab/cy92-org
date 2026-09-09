@@ -316,8 +316,8 @@ const meditationImages = [
 	--elevated: #1e1e1e;
 	--text: #FAF9F6;
 	--text-2: #d4d2cc;
-	--text-3: #a0a098;
-	--text-4: #7e7e76;
+	--text-3: #b8b8b0;
+	--text-4: #9a9a92;
 	--accent: var(--ds-accent, #8A8C6E);
 	--border: rgba(255,255,255,0.08);
 	--spring: cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -378,6 +378,11 @@ body { background: var(--bg); color: var(--text); font-family: var(--ds-font-bod
 .slideshow { height: 100dvh; overflow-y: auto; scroll-snap-type: y mandatory; scroll-behavior: smooth; scrollbar-width: none; }
 .slideshow::-webkit-scrollbar { display: none; }
 .slide { position: relative; width: 100%; min-height: 100dvh; scroll-snap-align: start; scroll-snap-stop: always; overflow: hidden; contain: layout style paint; padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left); }
+/* Gradient transitions between slides — seamless background blending */
+.slide::before { content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none; background: linear-gradient(to bottom, transparent 0%, transparent 85%, rgba(10,10,10,0.6) 100%); transition: opacity 0.6s; }
+.slide.dark::before { background: linear-gradient(to bottom, rgba(10,10,10,0.4) 0%, transparent 15%, transparent 85%, rgba(10,10,10,0.6) 100%); }
+/* Top fade for slides after 0 — blend from previous */
+[data-slide="1"]::after, [data-slide="2"]::after, [data-slide="3"]::after, [data-slide="4"]::after, [data-slide="5"]::after, [data-slide="6"]::after, [data-slide="7"]::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 20%; z-index: 0; pointer-events: none; background: linear-gradient(to bottom, rgba(10,10,10,0.8) 0%, transparent 100%); }
 .dark { background: var(--bg); }
 .slide-content { position: relative; z-index: 1; display: flex; align-items: center; width: 100%; min-height: 100dvh; padding: 5rem 1.5rem; }
 .slide-content.center { justify-content: center; }
@@ -743,17 +748,27 @@ try { (() => {
 
 	let t = 0;
 	let visible = true;
-	let exitStart = -1;
-	let wasVisible = true;
-	const obs = new IntersectionObserver(es => { es.forEach(e => {
-		if (e.isIntersecting) {
-			visible = true; exitStart = -1; wasVisible = true;
-		} else {
-			if (wasVisible) { exitStart = t; wasVisible = false; }
-			visible = exitStart >= 0 && (t - exitStart) < 1.5;
+	// Track active slide for background mode switching
+	let activeSlide = 0;
+	let bgMode = 0;          // 0=seaweed, 1=code rain
+	let bgTransition = 1;    // 1=fully transitioned
+	let targetMode = 0;
+	let obs = new IntersectionObserver(es => {
+		let maxIntersect = 0, maxSlide = 0;
+		es.forEach(e => {
+			if (e.isIntersecting && e.intersectionRatio > maxIntersect) {
+				maxIntersect = e.intersectionRatio;
+				maxSlide = parseInt(e.target.dataset.slide);
+				visible = true;
+			}
+		});
+		if (maxSlide !== activeSlide) {
+			activeSlide = maxSlide;
+			targetMode = maxSlide === 0 ? 0 : 1; // 0=seaweed, 1+=code rain
+			bgTransition = 0;
 		}
-	}); }, { threshold: 0.1 });
-	obs.observe(document.querySelector('[data-slide="0"]'));
+	}, { threshold: [0.1, 0.5, 0.9] });
+	document.querySelectorAll('.slide').forEach(s => obs.observe(s));
 	const pBuf = new Float64Array(44); // 22 pts × 2
 	const fBuf = new Float64Array(44);
 
@@ -878,17 +893,12 @@ try { (() => {
 		ctx.clearRect(0, 0, w, h);
 		t += 0.008;
 
-		// Exit: camera down + scene fade + code rain
-		const exitProg = exitStart >= 0 ? Math.min(1, (t - exitStart) / 1.5) : 0;
-		if (exitProg >= 1) { visible = false; requestAnimationFrame(draw); return; } // stop after exit
-		const exitAlpha = 1 - exitProg;
-		const camOff = exitProg * 140;
-
-		ctx.save();
-		if (exitProg > 0) {
-			ctx.translate(0, camOff);
-			ctx.globalAlpha = exitAlpha;
+		// Background mode transition (cross-fade over 1.5s)
+		if (bgTransition < 1 && bgMode !== targetMode) {
+			bgTransition = Math.min(1, bgTransition + 0.008 / 1.5);
+			if (bgTransition >= 1) bgMode = targetMode;
 		}
+		const crossFade = (bgMode !== targetMode) ? bgTransition : 1;
 
 		// ── Background depth gradient ──
 		const bgG = ctx.createLinearGradient(0, 0, 0, h);
@@ -897,101 +907,96 @@ try { (() => {
 		bgG.addColorStop(1, 'rgba(4,6,10,0.45)');
 		ctx.fillStyle = bgG; ctx.fillRect(0, 0, w, h);
 
-		// ── Volumetric light rays ──
-		for (let ri = 0; ri < rays.length; ri++) {
-			const r = rays[ri];
-			r.x += Math.sin(t * r.spd + r.ph) * 0.35;
-			const xoff = Math.sin(r.ang) * h;
-			// Mouse-proximity pulse boost — syncs with seaweed bioluminescence
-			let boost = 0;
-			if (mx > -1000) {
-				const dist = Math.abs(mx - r.x);
-				if (dist < 500) {
-					const wave = Math.cos(t * 4 - dist * 0.012);
-					boost = Math.pow(Math.max(0, wave), 3) * (1 - dist/500) * 0.035;
-				}
-			}
-			const rg = ctx.createLinearGradient(r.x, 0, r.x + xoff, h);
-			const aa = (r.a + boost) * (0.7 + 0.3 * Math.sin(t * r.spd * 0.6 + r.ph));
-			rg.addColorStop(0, 'rgba(180,175,155,' + aa + ')');
-			rg.addColorStop(0.35, 'rgba(180,175,155,' + (aa * 0.55) + ')');
-			rg.addColorStop(0.75, 'rgba(180,175,155,' + (aa * 0.15) + ')');
-			rg.addColorStop(1, 'rgba(180,175,155,0)');
-			ctx.fillStyle = rg;
-			ctx.fillRect(r.x - r.wd, 0, r.wd * 2, h);
-		}
+		// ── Seaweed scene (mode 0) ──
+		if (bgMode === 0 || (bgMode !== targetMode && targetMode === 1)) {
+			const seaAlpha = (targetMode === 1) ? 1 - crossFade : 1;
+			ctx.globalAlpha = seaAlpha;
 
-		// ── Marine snow ──
-		for (let si = 0; si < snow.length; si++) {
-			const s = snow[si];
-			s.y += s.sp;
-			s.x += s.df + Math.sin(t * 0.5 + s.x * 0.01) * 0.08;
-			if (s.y > h + 5) { s.y = -5; s.x = Math.random() * w; }
-			if (s.x < -5) s.x = w + 5; if (s.x > w + 5) s.x = -5;
-
-			// Check if in a light ray
-			let inRay = false;
+			// ── Volumetric light rays ──
 			for (let ri = 0; ri < rays.length; ri++) {
 				const r = rays[ri];
-				const rayX = r.x + Math.sin(r.ang) * s.y;
-				if (Math.abs(s.x - rayX) < r.wd * (0.5 + s.y / h * 0.5)) { inRay = true; break; }
-			}
-
-			// Pulse-modulated mouse glow
-			let mglow = 0;
-			if (mx > -1000) {
-				const dx = mx - s.x, dy = my - s.y;
-				const d2 = dx*dx + dy*dy;
-				if (d2 < 36000) {
-					const dist = Math.sqrt(d2);
-					const base = Math.pow(1 - dist/190, 2.5);
-					// Pulse sync with seaweed bioluminescence
-					const wave = Math.cos(t * 4 - dist * 0.015);
-					const mod = 0.4 + 0.6 * Math.pow(Math.max(0, wave), 3);
-					mglow = base * mod;
+				r.x += Math.sin(t * r.spd + r.ph) * 0.35;
+				const xoff = Math.sin(r.ang) * h;
+				let boost = 0;
+				if (mx > -1000) {
+					const dist = Math.abs(mx - r.x);
+					if (dist < 500) {
+						const wave = Math.cos(t * 4 - dist * 0.012);
+						boost = Math.pow(Math.max(0, wave), 3) * (1 - dist/500) * 0.035;
+					}
 				}
+				const rg = ctx.createLinearGradient(r.x, 0, r.x + xoff, h);
+				const aa = (r.a + boost) * (0.7 + 0.3 * Math.sin(t * r.spd * 0.6 + r.ph));
+				rg.addColorStop(0, 'rgba(180,175,155,' + aa + ')');
+				rg.addColorStop(0.35, 'rgba(180,175,155,' + (aa * 0.55) + ')');
+				rg.addColorStop(0.75, 'rgba(180,175,155,' + (aa * 0.15) + ')');
+				rg.addColorStop(1, 'rgba(180,175,155,0)');
+				ctx.fillStyle = rg;
+				ctx.fillRect(r.x - r.wd, 0, r.wd * 2, h);
 			}
 
-			const a = s.al * (inRay ? 3.0 : 1.0) + mglow * 0.45;
-			ctx.beginPath();
-			ctx.arc(s.x, s.y, s.sz * (1 + mglow * 0.8), 0, 6.28);
-			ctx.fillStyle = 'rgba(200,195,180,' + Math.min(a, 0.45) + ')';
-			ctx.fill();
+			// ── Marine snow ──
+			for (let si = 0; si < snow.length; si++) {
+				const s = snow[si];
+				s.y += s.sp;
+				s.x += s.df + Math.sin(t * 0.5 + s.x * 0.01) * 0.08;
+				if (s.y > h + 5) { s.y = -5; s.x = Math.random() * w; }
+				if (s.x < -5) s.x = w + 5; if (s.x > w + 5) s.x = -5;
+				let inRay = false;
+				for (let ri = 0; ri < rays.length; ri++) {
+					const r = rays[ri];
+					const rayX = r.x + Math.sin(r.ang) * s.y;
+					if (Math.abs(s.x - rayX) < r.wd * (0.5 + s.y / h * 0.5)) { inRay = true; break; }
+				}
+				let mglow = 0;
+				if (mx > -1000) {
+					const dx = mx - s.x, dy = my - s.y;
+					const d2 = dx*dx + dy*dy;
+					if (d2 < 36000) {
+						const dist = Math.sqrt(d2);
+						const base = Math.pow(1 - dist/190, 2.5);
+						const wave = Math.cos(t * 4 - dist * 0.015);
+						const mod = 0.4 + 0.6 * Math.pow(Math.max(0, wave), 3);
+						mglow = base * mod;
+					}
+				}
+				const a = s.al * (inRay ? 3.0 : 1.0) + mglow * 0.45;
+				ctx.beginPath();
+				ctx.arc(s.x, s.y, s.sz * (1 + mglow * 0.8), 0, 6.28);
+				ctx.fillStyle = 'rgba(200,195,180,' + Math.min(a, 0.45) + ')';
+				ctx.fill();
+			}
+
+			// ── Mouse glow (3-zone falloff) ──
+			if (mx > -1000) {
+				const mg1 = ctx.createRadialGradient(mx, my, 0, mx, my, 100);
+				mg1.addColorStop(0, 'rgba(138,140,110,0.09)');
+				mg1.addColorStop(0.6, 'rgba(138,140,110,0.04)');
+				mg1.addColorStop(1, 'rgba(138,140,110,0)');
+				ctx.fillStyle = mg1; ctx.fillRect(0, 0, w, h);
+				const mg2 = ctx.createRadialGradient(mx, my, 60, mx, my, 380);
+				mg2.addColorStop(0, 'rgba(138,140,110,0.045)');
+				mg2.addColorStop(0.4, 'rgba(138,140,110,0.015)');
+				mg2.addColorStop(1, 'rgba(138,140,110,0)');
+				ctx.fillStyle = mg2; ctx.fillRect(0, 0, w, h);
+			}
+
+			drawLayer(0); drawLayer(1); drawLayer(2);
+			ctx.globalAlpha = 1;
 		}
 
-		// ── Mouse glow (3-zone falloff) ──
-		if (mx > -1000) {
-			// Core — bright, sharp boundary
-			const mg1 = ctx.createRadialGradient(mx, my, 0, mx, my, 100);
-			mg1.addColorStop(0, 'rgba(138,140,110,0.09)');
-			mg1.addColorStop(0.6, 'rgba(138,140,110,0.04)');
-			mg1.addColorStop(1, 'rgba(138,140,110,0)');
-			ctx.fillStyle = mg1; ctx.fillRect(0, 0, w, h);
-			// Outer — soft, wide
-			const mg2 = ctx.createRadialGradient(mx, my, 60, mx, my, 380);
-			mg2.addColorStop(0, 'rgba(138,140,110,0.045)');
-			mg2.addColorStop(0.4, 'rgba(138,140,110,0.015)');
-			mg2.addColorStop(1, 'rgba(138,140,110,0)');
-			ctx.fillStyle = mg2; ctx.fillRect(0, 0, w, h);
-		}
-
-		drawLayer(0); drawLayer(1); drawLayer(2);
-		ctx.restore();
-
-		// ── Code rain (exit animation) — alpha-based fake blur, no ctx.filter ──
-		if (exitProg > 0.1 && exitProg < 1) {
-			const rainAlpha = Math.min(1, (exitProg - 0.1) / 0.2) * (1 - exitProg);
+		// ── Code rain (mode 1) — continuous loop ──
+		if (bgMode === 1 || (bgMode !== targetMode && targetMode === 1 && crossFade > 0.1)) {
+			const rainAlpha = (bgMode === 1) ? 1 : crossFade;
 			ctx.globalAlpha = rainAlpha;
 			for (let ci = 0; ci < codeCols.length; ci++) {
 				const col = codeCols[ci];
 				col.y += col.spd;
 				if (col.y > h + 100) { col.y = -100; col.x = (ci / 14) * w + (Math.random()-0.5)*40; }
 				const fontSize = Math.round(10 + col.depth * 24);
-				// Fake DOF: draw slightly offset copies at low alpha for near/far
 				const doff = Math.abs(col.depth - 0.5);
 				const fakeBlur = doff > 0.3 ? (doff - 0.3) * 4 : 0;
 				ctx.font = fontSize + 'px monospace';
-				// Fake blur pass (low alpha, offset)
 				if (fakeBlur > 0.5) {
 					ctx.globalAlpha = rainAlpha * 0.3;
 					ctx.fillStyle = 'rgba(138,140,110,0.5)';
@@ -1003,7 +1008,6 @@ try { (() => {
 						}
 					}
 				}
-				// Sharp pass
 				ctx.globalAlpha = rainAlpha;
 				for (let ch = 0; ch < col.chars.length; ch++) {
 					const cy = col.y - ch * fontSize * 1.3;
