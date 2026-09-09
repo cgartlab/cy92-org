@@ -398,34 +398,17 @@ body { background: var(--bg); color: var(--text); font-family: var(--ds-font-bod
 
 /* ── Page 3 (data-slide 2): center → corner, video 50% → full ── */
 /* ── Page 3 (data-slide 2) choreography: center+dim(hold) → settle down → brighten ── */
-/* Phase A→C: dim overlay holds 50% ~1.1s, then lifts over 1.4s as text settles */
-.video-dim { position: absolute; inset: 0; background: rgba(0,0,0,0.5); z-index: 0; pointer-events: none; opacity: 1; transition: opacity 1.5s ease-out 1.05s; }
+/* Phase A→C: center+dark HOLD (~1.5s), then video lifts brightness as text settles */
+.video-dim { position: absolute; inset: 0; background: rgba(0,0,0,0.5); z-index: 0; pointer-events: none; opacity: 1; transition: opacity 1.8s ease-out 1.5s; }
 .slide.is-active .video-dim { opacity: 0; }
 /* Frosted glass — fades in behind the settled lower text (edges stay clear above) */
-.glass { position: absolute; inset: 0; background: rgba(10,10,10,0.35); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); -webkit-mask-image: linear-gradient(to bottom, transparent 0%, transparent 40%, rgba(0,0,0,1) 100%); mask-image: linear-gradient(to bottom, transparent 0%, transparent 40%, rgba(0,0,0,1) 100%); z-index: 0; pointer-events: none; opacity: 0; transition: opacity 1.3s ease-out 1.7s; }
+.glass { position: absolute; inset: 0; background: rgba(10,10,10,0.35); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); -webkit-mask-image: linear-gradient(to bottom, transparent 0%, transparent 40%, rgba(0,0,0,1) 100%); mask-image: linear-gradient(to bottom, transparent 0%, transparent 40%, rgba(0,0,0,1) 100%); z-index: 0; pointer-events: none; opacity: 0; transition: opacity 1.4s ease-out 2s; }
 .slide.is-active .glass { opacity: 1; }
 /* Phase A: text band centered on a dimmed scene; Phase B: settles to lower layout */
-[data-slide="2"] .slide-content { position: relative; justify-content: flex-start; align-items: center; text-align: left; padding-bottom: 0; transition: align-items 1.5s var(--spring) 1.1s, padding-bottom 1.5s var(--spring) 1.1s; }
+[data-slide="2"] .slide-content { position: relative; justify-content: center; align-items: center; text-align: left; padding-bottom: 0; transition: align-items 1.6s var(--spring) 1.35s, padding-bottom 1.6s var(--spring) 1.35s; }
 .slide.is-active[data-slide="2"] .slide-content { align-items: flex-end; padding-bottom: 12dvh; }
 [data-slide="2"] .split, [data-slide="3"] .work { position: relative; z-index: 1; }
 
-/* Scroll-driven choreography (no library): piece movement, dim lift and frosted
-   glass are all keyed to ACTUAL scroll position inside the deck, so they reverse
-   when scrolling back and never depend on timers. Falls back to the timed CSS
-   above in browsers without animation-timeline support. */
-@supports (animation-timeline: view()) {
-	/* Rest position = lower layout; center appearance comes from scroll transform */
-	[data-slide="2"] .slide-content { align-items: flex-end !important; padding-bottom: 12dvh !important; transition: none; animation: pg3settle cubic-bezier(.2,.75,.2,1) both; animation-timeline: view(block); animation-range: entry 45% entry 100%; }
-	[data-slide="2"] .video-dim { transition: none; animation: pg3dim linear both; animation-timeline: view(block); animation-range: entry 30% entry 100%; }
-	[data-slide="2"] .glass { transition: none; animation: pg3glass ease-out both; animation-timeline: view(block); animation-range: entry 60% entry 100%; }
-	/* text pieces ride in with staggered windows → “分别移动自动排版” */
-	[data-slide="2"] .split-left { animation: pg3rise cubic-bezier(.2,.75,.2,1) both; animation-timeline: view(block); animation-range: entry 30% entry 100%; }
-	[data-slide="2"] .split-right { animation: pg3rise cubic-bezier(.2,.75,.2,1) both; animation-timeline: view(block); animation-range: entry 52% entry 100%; }
-	@keyframes pg3dim { from { opacity: 1; } to { opacity: 0; } }        /* 50% black → video recovers as page fills */
-	@keyframes pg3settle { from { transform: translateY(-17vh); } to { transform: translateY(0); } } /* text starts center, settles to lower layout */
-	@keyframes pg3rise { from { transform: translateY(9vh); } to { transform: translateY(0); } }
-	@keyframes pg3glass { from { opacity: 0; } to { opacity: 1; } }
-}
 /* Gradient edges — FIXED mask over the video, independent of slide scroll */
 #edge-mask {
 	position: fixed; inset: 0; z-index: 120; pointer-events: none; opacity: 0;
