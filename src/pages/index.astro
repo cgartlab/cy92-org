@@ -62,27 +62,36 @@ const meditationImages = [
 
 			<!-- ═══ Slide 1 — Stats ═══ -->
 			<section class="slide dark" data-slide="1">
+				<canvas id="aurora" class="bg-canvas" aria-hidden="true"></canvas>
 				<div class="slide-content center">
 					<div class="stats">
-						<div class="stat anim right" data-d="0">
-							<span class="stat-label">累计发表字数</span>
-							<span class="stat-value" data-target="187979">187,979</span>
-							<span class="stat-unit">字</span>
+						<div class="stat anim up" data-d="0">
+							<span class="stat-kicker">累计发表字数</span>
+							<div class="stat-line">
+								<span class="stat-value" data-target="187979">187,979</span>
+								<span class="stat-unit">字</span>
+							</div>
 						</div>
-						<div class="stat anim right" data-d="1">
-							<span class="stat-label">过去一年提交代码</span>
-							<span class="stat-value" data-target="5565">5,565</span>
-							<span class="stat-unit">次</span>
+						<div class="stat anim up" data-d="1">
+							<span class="stat-kicker">过去一年提交代码</span>
+							<div class="stat-line">
+								<span class="stat-value" data-target="5565">5,565</span>
+								<span class="stat-unit">次</span>
+							</div>
 						</div>
-						<div class="stat anim right" data-d="2">
-							<span class="stat-label">致力于数字创作领域</span>
-							<span class="stat-value" data-target={yearsActive}>{yearsActive}</span>
-							<span class="stat-unit">年</span>
+						<div class="stat anim up" data-d="2">
+							<span class="stat-kicker">致力于数字创作领域</span>
+							<div class="stat-line">
+								<span class="stat-value" data-target={yearsActive}>{yearsActive}</span>
+								<span class="stat-unit">年</span>
+							</div>
 						</div>
-						<div class="stat anim right" data-d="3">
-							<span class="stat-label">跨领域专业项目</span>
-							<span class="stat-value" data-target="50" data-suffix="+">50+</span>
-							<span class="stat-unit">个</span>
+						<div class="stat anim up" data-d="3">
+							<span class="stat-kicker">跨领域专业项目</span>
+							<div class="stat-line">
+								<span class="stat-value" data-target="50" data-suffix="+">50+</span>
+								<span class="stat-unit">个</span>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -366,6 +375,7 @@ body { background: var(--bg); color: var(--text); font-family: var(--ds-font-bod
 
 /* ═══ Canvas / Video ═══ */
 .canvas-full { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+.bg-canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; display: block; }
 .video-fixed { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none; z-index: 0; }
 .img-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
 
@@ -373,6 +383,10 @@ body { background: var(--bg); color: var(--text); font-family: var(--ds-font-bod
 [data-slide="2"] .slide-content, [data-slide="3"] .slide-content { position: relative; }
 [data-slide="2"] .slide-content::before, [data-slide="3"] .slide-content::before { content: ''; position: absolute; inset: 0; z-index: 0; background: radial-gradient(ellipse 80% 72% at 38% 50%, rgba(10,10,10,0.66) 0%, rgba(10,10,10,0.35) 55%, transparent 100%); pointer-events: none; }
 [data-slide="2"] .split, [data-slide="3"] .work { position: relative; z-index: 1; }
+/* Page 2 — aurora gradient background + readable text scrim */
+[data-slide="1"] .slide-content { position: relative; }
+[data-slide="1"] .slide-content::before { content: ''; position: absolute; inset: 0; z-index: 0; background: radial-gradient(ellipse 80% 70% at 50% 46%, rgba(4,4,6,0.55) 0%, rgba(4,4,6,0.2) 55%, transparent 100%); pointer-events: none; }
+[data-slide="1"] .stats { position: relative; z-index: 1; }
 
 /* ═══ Slideshow ═══ */
 .slideshow { height: 100dvh; overflow-y: auto; scroll-snap-type: y mandatory; scroll-behavior: smooth; scrollbar-width: none; }
@@ -462,18 +476,25 @@ body { background: var(--bg); color: var(--text); font-family: var(--ds-font-bod
 .hero-tags .sep { display: none; }
 
 /* ═══ Stats ═══ */
-.stats { width: 100%; max-width: 800px; display: flex; flex-direction: column; gap: 0; }
+.stats { width: 100%; max-width: 1080px; display: grid; grid-template-columns: 1fr; gap: 0; margin: 0 auto; }
+@media (min-width: 768px) { .stats { grid-template-columns: repeat(2, 1fr); } }
 .stat {
-	display: flex; align-items: baseline; gap: 1rem;
-	border-bottom: 1px solid var(--border);
-	padding: 1.5rem 0;
-	text-align: left;
-	justify-content: space-between;
+	display: flex; flex-direction: column; align-items: flex-start; gap: 0.4rem;
+	padding: 2rem 1.5rem; border-bottom: 1px solid var(--border); position: relative; z-index: 1;
 }
-.stat:first-child { border-top: 1px solid var(--border); }
-.stat-label { font-size: 0.875rem; color: var(--text-3); flex-shrink: 0; }
-.stat-value { font-size: clamp(3rem, 8vw, 6rem); line-height: 0.85; letter-spacing: -0.05em; font-weight: 700; text-align: right; font-variant-numeric: tabular-nums; }
-.stat-unit { font-size: 1rem; color: var(--text-4); }
+@media (min-width: 768px) {
+	.stat { padding: 2.75rem 2.25rem; border-right: 1px solid var(--border); }
+	.stat:nth-child(2n) { border-right: 0; }
+	.stat:nth-last-child(-n+2) { border-bottom: 0; }
+}
+.stat-kicker { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.16em; color: var(--text-3); }
+.stat-line { display: flex; align-items: baseline; gap: 0.6rem; flex-wrap: wrap; }
+.stat-value { font-size: clamp(3rem, 8vw, 6.5rem); line-height: 0.9; letter-spacing: -0.05em; font-weight: 600; color: var(--text); font-variant-numeric: tabular-nums; }
+.stat-unit { font-size: 1rem; color: var(--accent); font-weight: 500; }
+@media (min-width: 768px) {
+	.stat:nth-child(1) { border-top: 1px solid var(--border); }
+	.stat:nth-child(2) { border-top: 1px solid var(--border); }
+}
 
 /* ═══ Split ═══ */
 .split { display: grid; grid-template-columns: 1fr; gap: 2.5rem; width: 100%; }
@@ -1029,13 +1050,12 @@ try { (() => {
 			ctx.globalAlpha = 1;
 		}
 
-		// ── Code rain (slide 1) — continuous loop, random mutation ──
-		// Keep rendering while any column still fading
+		// ── Code rain — retired as page-2 bg (aurora replaces). Fade-out only. ──
 		let anyRainVisible = false;
 		for (let ci = 0; ci < codeCols.length; ci++) {
 			if (codeCols[ci].alpha > 0.02) { anyRainVisible = true; break; }
 		}
-		if (activeSlide === 1 || anyRainVisible) {
+		if (activeSlide === -1 || anyRainVisible) {
 			if (activeSlide === 1 && !columnsReset) {
 				for (let ci = 0; ci < codeCols.length; ci++) {
 					codeCols[ci].y = Math.random() * h;
@@ -1198,6 +1218,81 @@ try { (() => {
 })(); } catch(e) { console.warn('[wave]', e.message); }
 
 
+
+
+// ═══ Aurora shader-gradient (page 2) — flowing color field on black ═══
+try { (() => {
+	const c = document.getElementById('aurora');
+	if (!c) return;
+	const ctx = c.getContext('2d');
+	if (!ctx) return;
+	const dpr = Math.min(window.devicePixelRatio || 1, 2);
+	let w, h, base;
+	let fade = 0;        // 0→1 when page 2 becomes active
+	let activeNow = false;
+	const COLORS = ['115,191,196', '255,129,10', '141,160,206']; // teal / orange / periwinkle
+	const blobs = [];
+	for (let i = 0; i < 7; i++) {
+		blobs.push({
+			nx: Math.random(), ny: Math.random(),
+			r: 0.30 + Math.random() * 0.28,
+			c: COLORS[i % 3],
+			a: 0.10 + Math.random() * 0.10,
+			fx: 0.10 + Math.random() * 0.22,
+			fy: 0.10 + Math.random() * 0.20,
+			ph: Math.random() * 6.283,
+			ph2: Math.random() * 6.283,
+		});
+	}
+	const resize = () => {
+		w = c.width = Math.floor(innerWidth * dpr);
+		h = c.height = Math.floor(innerHeight * dpr);
+		base = Math.max(w, h);
+	};
+	resize();
+	addEventListener('resize', resize);
+	const obs = new IntersectionObserver(es => {
+		es.forEach(e => { activeNow = e.isIntersecting; });
+	}, { threshold: 0.05 });
+	const target = document.querySelector('[data-slide="1"] .slide-content');
+	if (target) obs.observe(target);
+	let t = Math.random() * 60;
+	const draw = () => {
+		requestAnimationFrame(draw);
+		fade += ((activeNow ? 1 : 0) - fade) * 0.06;
+		if (fade < 0.015 && !activeNow) return; // idle off-screen
+		ctx.clearRect(0, 0, w, h);
+		ctx.globalAlpha = fade;
+		ctx.fillStyle = '#000';
+		ctx.fillRect(0, 0, w, h);
+		t += 0.008;
+		// Additive blend = luminous shader-field look
+		ctx.globalCompositeOperation = 'lighter';
+		for (let i = 0; i < blobs.length; i++) {
+			const b = blobs[i];
+			const bx = w * (0.5 + 0.44 * Math.sin(t * b.fx + b.ph));
+			const by = h * (0.5 + 0.42 * Math.cos(t * b.fy + b.ph2));
+			const R = base * b.r * (1 + 0.16 * Math.sin(t * 0.5 + b.ph));
+			const g = ctx.createRadialGradient(bx, by, 0, bx, by, R);
+			g.addColorStop(0, 'rgba(' + b.c + ',' + b.a + ')');
+			g.addColorStop(0.5, 'rgba(' + b.c + ',' + (b.a * 0.5) + ')');
+			g.addColorStop(1, 'rgba(' + b.c + ',0)');
+			ctx.fillStyle = g;
+			ctx.fillRect(bx - R, by - R, R * 2, R * 2);
+		}
+		ctx.globalCompositeOperation = 'source-over';
+		// Edge blend — darken top/bottom so slide transitions stay seamless
+		const vg = ctx.createLinearGradient(0, 0, 0, h);
+		vg.addColorStop(0, 'rgba(5,5,7,' + (0.85 * fade) + ')');
+		vg.addColorStop(0.14, 'rgba(5,5,7,0)');
+		vg.addColorStop(0.82, 'rgba(5,5,7,0)');
+		vg.addColorStop(1, 'rgba(5,5,7,' + (0.9 * fade) + ')');
+		ctx.fillStyle = vg;
+		ctx.fillRect(0, 0, w, h);
+		ctx.globalAlpha = 1;
+	};
+	draw();
+})(); } catch(e) { console.warn('[aurora]', e.message); }
 
 
 // ═══ Slide observer ═══
