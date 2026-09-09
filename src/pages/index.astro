@@ -2,23 +2,31 @@
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Icon from '../components/Icon.astro';
-import { SITE_TITLE, PERSONAL_INFO, SKILLS, SOCIAL_LINKS, HONORS, WORK_EXPERIENCE, EDUCATION } from '../consts';
+import LangScript from '../components/LangScript.astro';
+import { SITE_TITLE, SITE_DESCRIPTION_EN, PERSONAL_INFO, SKILLS, SKILLS_EN, SOCIAL_LINKS, HONORS, HONORS_EN, WORK_EXPERIENCE, WORK_EXPERIENCE_EN, EDUCATION, EDUCATION_EN } from '../consts';
 
 const coverImage = '/images/冥想系列-cover.webp';
 const currentYear = new Date().getFullYear();
 const yearsActive = currentYear - 2014;
 const meditationImages = [
-	{ src: '/images/冥想系列-1754664750528.webp', title: '冥想系列 1', desc: '早期冥想探索，意识的初次解剖' },
-	{ src: '/images/冥想系列-1754664757458.webp', title: '冥想系列 2', desc: '内心对话，矛盾与冲突的视觉化' },
-	{ src: '/images/冥想系列-1754664764581.webp', title: '冥想系列 3', desc: '繁重压迫下的精神释放' },
-	{ src: '/images/冥想系列-1754664772045.webp', title: '冥想系列 4', desc: '对立统一，真实的自我映射' },
-	{ src: '/images/冥想系列-1754664780351.webp', title: '冥想系列 5', desc: '意识深处的宁静与动荡' },
-	{ src: '/images/冥想系列-1754664786331.webp', title: '冥想系列 6', desc: '精神世界的数字重构' },
-	{ src: '/images/冥想系列-1754664798635.webp', title: '冥想系列 7', desc: '内在探索的第七阶段' },
-	{ src: '/images/冥想系列-1754664814920.webp', title: '冥想系列 8', desc: '接近实相的道路' },
-	{ src: '/images/冥想系列-1754664822895.webp', title: '冥想系列 9', desc: '意识的最终形态' },
-	{ src: '/images/冥想系列-1754664829706.webp', title: '冥想系列 10', desc: '冥想之旅的终点与起点' }
+	{ src: '/images/冥想系列-1754664750528.webp', title: '冥想系列 1', titleEn: 'Meditation 1', desc: '早期冥想探索，意识的初次解剖', descEn: 'Early meditation exploration — the first dissection of consciousness' },
+	{ src: '/images/冥想系列-1754664757458.webp', title: '冥想系列 2', titleEn: 'Meditation 2', desc: '内心对话，矛盾与冲突的视觉化', descEn: 'An inner dialogue; contradictions and conflict made visible' },
+	{ src: '/images/冥想系列-1754664764581.webp', title: '冥想系列 3', titleEn: 'Meditation 3', desc: '繁重压迫下的精神释放', descEn: 'Spiritual release under heavy pressure' },
+	{ src: '/images/冥想系列-1754664772045.webp', title: '冥想系列 4', titleEn: 'Meditation 4', desc: '对立统一，真实的自我映射', descEn: 'Unity of opposites; a true reflection of the self' },
+	{ src: '/images/冥想系列-1754664780351.webp', title: '冥想系列 5', titleEn: 'Meditation 5', desc: '意识深处的宁静与动荡', descEn: 'Stillness and turbulence deep inside consciousness' },
+	{ src: '/images/冥想系列-1754664786331.webp', title: '冥想系列 6', titleEn: 'Meditation 6', desc: '精神世界的数字重构', descEn: 'A digital reconstruction of the inner world' },
+	{ src: '/images/冥想系列-1754664798635.webp', title: '冥想系列 7', titleEn: 'Meditation 7', desc: '内在探索的第七阶段', descEn: 'The seventh stage of inward exploration' },
+	{ src: '/images/冥想系列-1754664814920.webp', title: '冥想系列 8', titleEn: 'Meditation 8', desc: '接近实相的道路', descEn: 'The road toward reality' },
+	{ src: '/images/冥想系列-1754664822895.webp', title: '冥想系列 9', titleEn: 'Meditation 9', desc: '意识的最终形态', descEn: 'The final form of consciousness' },
+	{ src: '/images/冥想系列-1754664829706.webp', title: '冥想系列 10', titleEn: 'Meditation 10', desc: '冥想之旅的终点与起点', descEn: 'Where the journey of meditation ends — and begins' }
 ];
+
+// English counterpart of the meditation gallery copy (same order).
+const meditationImagesEn = meditationImages.map(m => ({
+	src: m.src,
+	title: m.titleEn,
+	desc: m.descEn
+}));
 
 // 跑马灯素材：仅限 cgartlab.com 文章标题 + 文章金句
 const tickerItems = [
@@ -47,6 +55,34 @@ const tickerItems = [
 	'什么更重要、什么最重要、是否具有长期价值——我的三板斧',
 	'网页里那个「下载」图标越大，就越不是你要找的下载链接',
 ];
+// English counterpart of the ticker copy (same order — the marquee is decorative
+// texture and aria-hidden, so both languages ride the same track).
+const tickerItemsEn = [
+	'Men — a 6+1 agent team',
+	'How to Use AI Elegantly, Part 1: Slower Is Faster',
+	'My God Mode: A Designer\u2019s Evolving Creative Setup',
+	'Inkard Card Generator',
+	'Auto-linking article terms to encyclopedic entries',
+	'Argus — a front-end design code-review agent',
+	'Go To GitHub — a GitHub access accelerator',
+	'EDIC — an editorial design system for humans and agents',
+	'Let the world keep turning; do not worry that what you learn will go out of date',
+	'Even if no applause ever reaches the stage, I still urge you to start writing',
+	'RSS and Modern Reading Habits: Taking Back Control of Your Information',
+	'Field Notes from Large 3D Projects: It is the File Names',
+	'Fifteen Years of Messing with Browsers',
+	'Fragment Writing: Building a Specimen of Thought',
+	'Breaking the Binary of Emotion with Elementary Math',
+	'Meditation Series: The Process of Dissecting Your Own Inner Self',
+	'Facing AI, we are not so different from our elders — all used to executing rules, never learning to design them',
+	'From Rule Executor to Rule Designer: slow down, and you will actually use AI well',
+	'The internet is a sea, websites are the waves, and the browser is the surfboard under your feet',
+	'Computers get replaced and software gets updated; only your data stays with you for life',
+	'When alone, you are happy if you do not find yourself thinking of anyone else',
+	'Writing is how you make specimens of thought: organizing and expressing it systematically',
+	'What Matters More, What Matters Most, What Has Long-Term Value — My Three Axes',
+	'The bigger the Download icon on a page, the less likely it is the link you want',
+];
 // ticker 几何与纵深：高低错落、长度不一（w=带宽, lx=左偏移, ad=方向）
 const tickerRows = [
 	{ top: 5,  dur: 40, sc: 0.6,  bl: 2.6, op: 0.3,  w: 82, lx: 0,  ad: 'normal' },
@@ -63,11 +99,12 @@ const tickerRows = [
 <!doctype html>
 <html lang="zh-CN" style="color-scheme:dark">
 	<head>
-		<BaseHead title={SITE_TITLE} description={PERSONAL_INFO.description} />
+		<BaseHead title={SITE_TITLE} description={PERSONAL_INFO.description} descriptionEn={SITE_DESCRIPTION_EN} />
 	</head>
 	<body>
+	<LangScript />
 
-	<a href="#slideshow" class="skip-link">跳到主内容</a>
+	<a href="#slideshow" class="skip-link" data-t="skipLink">Skip to content</a>
 
 		<!-- ═══ Immersive Header ═══ -->
 		<header class="header" id="header">
@@ -75,11 +112,11 @@ const tickerRows = [
 			<nav class="header-nav">
 				<div class="nav-hover">
 					<a href="#work" class="header-link work-link" aria-haspopup="true" aria-expanded="false">Work<span class="caret"></span></a>
-					<div class="nav-menu" role="menu" aria-label="作品导航">
-						<a class="nav-menu-link" href="#work" role="menuitem">合集</a>
-						<a class="nav-menu-link" href="#meditation" role="menuitem">冥想系列</a>
+					<div class="nav-menu" role="menu" data-t-aria="workNavAria" aria-label="Work navigation">
+						<a class="nav-menu-link" href="#work" role="menuitem" data-t="navCollection">All Works</a>
+						<a class="nav-menu-link" href="#meditation" role="menuitem" data-t="navMeditation">Meditation Series</a>
 						<span class="nav-menu-divider"></span>
-						<span class="nav-menu-note">更多作品即将加入…</span>
+						<span class="nav-menu-note" data-t="navMore">More works coming soon</span>
 						{/* 未来新作品在此追加，例如: <a href="https://men.cgartlab.com">Men</a> / <a href="https://argus.cgartlab.com">Argus</a> */}
 					</div>
 				</div>
@@ -88,7 +125,7 @@ const tickerRows = [
 				<a href="#contact" class="header-link">Contact</a>
 			</nav>
 			<div class="header-right">
-				<button class="lang-btn" id="langToggle" type="button" aria-label="Switch language">中/En</button>
+				<button class="lang-btn" data-lang-toggle id="langToggle" type="button" aria-label="Switch language">中/En</button>
 				<span class="header-sep" aria-hidden="true"></span>
 				<a href={`mailto:${PERSONAL_INFO.email}`} class="header-email">hello@cgartlab.com</a>
 			</div>
@@ -123,8 +160,8 @@ const tickerRows = [
 							<p class="hero-role">A <span class="rwd" style="--ri:0"><span class="inner">Designer</span></span>, <span class="rwd" style="--ri:1"><span class="inner">Writer</span></span>, <span class="rwd" style="--ri:2"><span class="inner">Engineer</span></span>.</p>
 						</div>
 						<div class="hero-divider"></div>
-						<p class="hero-tags anim blur" data-d="2"><span data-t="heroTag1">动态视觉设计师</span><span class="sep"> · </span><span data-t="heroTag2">内容创作者</span><span class="sep"> · </span><span data-t="heroTag3">产品工程师</span></p>
-						<a href="#stats" class="scroll-cue anim up" data-d="3" aria-label="向下滚动到统计页">
+						<p class="hero-tags anim blur" data-d="2"><span data-t="heroTag1">Motion Visual Designer</span><span class="sep"> · </span><span data-t="heroTag2">Content Creator</span><span class="sep"> · </span><span data-t="heroTag3">Product Engineer</span></p>
+						<a href="#stats" class="scroll-cue anim up" data-d="3" data-t-aria="scrollCueAria" aria-label="Scroll down to the statistics slide">
 							<span class="cue-label">Scroll</span>
 							<span class="cue-track"><span class="cue-dot"></span></span>
 						</a>
@@ -144,8 +181,8 @@ const tickerRows = [
 							<div class="ticker-track">
 								{/* 24 items = 4-unit cycle × 6 → both halves identical → seamless -50%→0 loop */}
 								{Array.from({ length: 24 }, (_, n) => {
-									const txt = tickerItems[(i * 2 + (n % 4)) % tickerItems.length];
-									return <span class="ticker-item"><span class="tw">{txt}</span><span class="ticker-sep">·</span></span>;
+									const idx = (i * 2 + (n % 4)) % tickerItems.length;
+									return <span class="ticker-item"><span class="tw"><span data-l="zh">{tickerItems[idx]}</span><span data-l="en">{tickerItemsEn[idx]}</span></span><span class="ticker-sep">·</span></span>;
 								})}
 							</div>
 						</div>
@@ -154,33 +191,35 @@ const tickerRows = [
 				<div class="slide-content center">
 					<div class="stats">
 						<div class="stat anim up" data-d="0">
-							<span class="stat-kicker" data-t="statKicker1">累计发表字数</span>
+							<span class="stat-kicker" data-t="statKicker1">Words Published</span>
 							<div class="stat-line">
 								<span class="stat-value" data-target="187979">187979</span>
-								<span class="stat-unit" data-t="statUnit1">字</span>
+								<span class="stat-unit" data-t="statUnit1">words</span>
 							</div>
 						</div>
 						<div class="stat anim up" data-d="1">
-							<span class="stat-kicker" data-t="statKicker2">过去一年提交代码</span>
+							<span class="stat-kicker" data-t="statKicker2">Code Commits (Past Year)</span>
 							<div class="stat-line">
 								<span class="stat-value" data-target="5565">5565</span>
-								<span class="stat-unit" data-t="statUnit2">次</span>
+								<span class="stat-unit" data-t="statUnit2">commits</span>
 							</div>
 						</div>
 						<div class="stat anim up" data-d="2">
-							<span class="stat-kicker" data-t="statKicker3">致力于数字创作领域</span>
+							<span class="stat-kicker" data-t="statKicker3">Years in Digital Creation</span>
 							<div class="stat-line">
 								<span class="stat-value" data-target={yearsActive}>{yearsActive}</span>
-								<span class="stat-unit" data-t="statUnit3">年</span>
+								<span class="stat-unit" data-t="statUnit3">years</span>
 							</div>
 						</div>
 						<div class="stat anim up" data-d="3">
-							<span class="stat-kicker"><span data-t="statKicker4">文章累计被浏览</span>
+							<span class="stat-kicker"><span data-t="statKicker4">Article Views</span>
 								{/* 数据读取点（少数派个人主页成就卡片）：#viewCount > span（当前约 89.5万+，随时间增长） */}
-								<a class="stat-src" href="https://sspai.com/u/cgartlab" target="_blank" rel="noopener noreferrer" aria-label="数据来源少数派个人主页"><span data-t="statSrc">少数派</span> ↗</a>
+								<a class="stat-src" href="https://sspai.com/u/cgartlab" target="_blank" rel="noopener noreferrer" data-t-aria="dataSrcAria" aria-label="Source: my sspai.com profile"><span data-t="statSrc">sspai.com</span> ↗</a>
 							</span>
 							<div class="stat-line">
-								<span class="stat-value" data-target="89.5" data-dec="1" data-suffix="万+">89.5万+</span>
+								<!-- 同一数据点双单位：中文用「万+」，英文换算为 K+（89.5万 ≈ 895K） -->
+								<span class="stat-value" data-l="zh" data-target="89.5" data-dec="1" data-suffix="万+">89.5万+</span>
+								<span class="stat-value" data-l="en" data-target="895" data-suffix="K+">895K+</span>
 							</div>
 						</div>
 					</div>
@@ -195,21 +234,33 @@ const tickerRows = [
 					<div class="split">
 						<div class="split-left">
 							<p class="label anim up" data-d="0">What I do</p>
-							<h2 class="heading-xl anim up" data-d="1"><span data-t="whatHeading">跨领域<br/>数字创作者</span></h2>
+							<h2 class="heading-xl anim up" data-d="1"><span data-t="whatHeading">Cross-Domain<br/>Digital Creator</span></h2>
 							<p class="body anim up" data-d="2">
-								<span data-t="whatBody">我创建数字产品、塑造品牌视觉、分享创作背后的思考过程。倡导数据主权，坚持创作即认知的理念。</span>
+								<span data-t="whatBody">I create digital products, shape brand visuals, and share the thinking behind the work. An advocate of data sovereignty — creation as cognition.</span>
 							</p>
 						</div>
 						<div class="split-right anim right" data-d="3">
 							<div class="skills">
-								{SKILLS.map((category, i) => (
-									<div class="skill">
-										<h3 class="skill-cat">{category.category}</h3>
-										<ul class="skill-list">
-											{category.items.map(s => <li>{s}</li>)}
-										</ul>
-									</div>
-								))}
+								<div class="bl" data-l="zh">
+									{SKILLS.map((category, i) => (
+										<div class="skill">
+											<h3 class="skill-cat">{category.category}</h3>
+											<ul class="skill-list">
+												{category.items.map(s => <li>{s}</li>)}
+											</ul>
+										</div>
+									))}
+								</div>
+								<div class="bl" data-l="en">
+									{SKILLS_EN.map((category, i) => (
+										<div class="skill">
+											<h3 class="skill-cat">{category.category}</h3>
+											<ul class="skill-list">
+												{category.items.map(s => <li>{s}</li>)}
+											</ul>
+										</div>
+									))}
+								</div>
 							</div>
 						</div>
 					</div>
@@ -222,12 +273,12 @@ const tickerRows = [
 					<div class="glass" aria-hidden="true"></div>
 					<div class="work">
 						<p class="label anim left" data-d="0">Featured Work</p>
-						<h2 class="heading-xl anim left" data-d="1"><span data-t="workTitle">动态视觉从业十年，只有热爱，别无他解。</span></h2>
+						<h2 class="heading-xl anim left" data-d="1"><span data-t="workTitle">A decade in motion visuals — nothing but love for the craft.</span></h2>
 						<p class="body-lg anim up" data-d="2">
-							<span data-t="workBody1">从三维动画、CG 艺术到动态视觉与数字产品，十年创作路一直在探索媒介与叙事。没有捷径可言，凭的是一点热爱与坚持——每一件作品都是对边界的试探。</span>
+							<span data-t="workBody1">From 3D animation and CG art to motion design and digital products — a decade of exploring media and narrative. No shortcuts, just love and persistence: every piece pushes a boundary.</span>
 						</p>
 						<p class="body anim up" data-d="3">
-							<span data-t="workBody2">从实验性 VR 数字艺术作品《Hello World 2.0》，到品牌与发布会开场动效，再到入选 CCG EXPO 的《COVID-19》——作品在变，媒介在变，那个最初让我拿起笔的理由没有变。</span>
+							<span data-t="workBody2">From the experimental VR piece Hello World 2.0, to brand event openers, to CCG EXPO’s COVID-19 — the work and medium evolve, but the reason I first picked up the pen never changed.</span>
 						</p>
 					</div>
 				</div>
@@ -238,19 +289,20 @@ const tickerRows = [
 			<section class="slide" data-slide="4" id="meditation">
 				<div class="meddeck">
 					{meditationImages.map((img, i) => (
-						<article class="mdeck-item" data-mid={i} tabindex="0" aria-label={`${img.title} — ${img.desc}`}>
+						<article class="mdeck-item" data-mid={i} tabindex="0" data-aria-zh={`${img.title} — ${img.desc}`} data-aria-en={`${img.titleEn} — ${img.descEn}`} aria-label={`${img.titleEn} — ${img.descEn}`}
+							style={`--pan-x:${['2%','-1.5%','1.5%','-2%','1%','-0.8%','1.8%','-1%','0.8%','-1.8%'][i] || '1%'};--pan-y:${['-1%','1.5%','-0.5%','0.8%','-1.2%','0.6%','-1%','1.2%','-0.6%','0.8%'][i] || '-0.5%'};--pan-ox:${['30%','70%','45%','60%','35%','65%','40%','55%','50%','65%'][i] || '50%'};--pan-oy:${['35%','60%','50%','40%','55%','45%','60%','35%','50%','45%'][i] || '50%'}`}>
 							<img class="mdeck-img" src={img.src} alt={img.title} loading={i < 2 ? 'eager' : 'lazy'} decoding="async" />
 							<span class="mdeck-index">{(i + 1).toString().padStart(2, '0')}<em> / {meditationImages.length}</em></span>
 							<div class="mdeck-hover">
 								<div class="mdeck-card">
-									<h3 class="mdeck-title">{img.title}</h3>
-									<p class="mdeck-desc">{img.desc}</p>
+									<h3 class="mdeck-title"><span data-l="zh">{img.title}</span><span data-l="en">{img.titleEn}</span></h3>
+									<p class="mdeck-desc"><span data-l="zh">{img.desc}</span><span data-l="en">{img.descEn}</span></p>
 								</div>
 							</div>
 						</article>
 					))}
 					{/* Final stop — all works arranged as a geometric full-bleed wall */}
-					<article class="mdeck-item medwall" data-mid="-1" tabindex="0" aria-label="冥想系列 — 全部作品">
+					<article class="mdeck-item medwall" data-mid="-1" tabindex="0" data-t-aria="medAllAria" aria-label="Meditation Series — all works">
 						<div class="medwall-grid">
 							{meditationImages.map((img, i) => (
 								<div class="medwall-cell" style={`--i:${i}`} aria-hidden="true"><img src={img.src} alt="" loading="lazy" decoding="async" /></div>
@@ -258,7 +310,7 @@ const tickerRows = [
 						</div>
 						<div class="medwall-cap">
 							<span class="medwall-eyebrow">Meditation Series</span>
-							<span class="medwall-count">全部作品 · 01 – {String(meditationImages.length).padStart(2, '0')}</span>
+							<span class="medwall-count"><span data-t="allWorks">All works</span> · 01 – {String(meditationImages.length).padStart(2, '0')}</span>
 						</div>
 					</article>
 				</div>
@@ -270,14 +322,14 @@ const tickerRows = [
 					<div class="profile">
 						<div class="profile-left">
 							<p class="label anim left" data-d="0">About</p>
-							<h2 class="heading-lg anim left" data-d="1"><span data-t="aboutHeading">画画是画画的酬劳，写作是写作的回报。</span></h2>
-							<p class="body anim up" data-d="2"><span data-t="aboutBody1">我是数字动态视觉出身的设计师，十余年来在设计、动画与前端之间来回穿梭。现在，我把写作当成思考的入口，把 AI 当作协作者，把每个项目都看作一次方法论的实验：慢一点比较快，先设计规则，再执行规则。</span></p>
-							<p class="body anim up" data-d="3"><span data-t="aboutBody2">我相信「数据主权」与「创作即认知」——不把自己交给封闭平台，也不让想法只停在草稿里。工具会更新，软件会被淘汰，能一直带走的是想清楚的能力；CG 艺术实验室，就是我把这种能力写下来、做出来、验证过的地方。</span></p>
+							<h2 class="heading-lg anim left" data-d="1"><span data-t="aboutHeading">Painting rewards itself with painting; writing rewards itself with writing.</span></h2>
+							<p class="body anim up" data-d="2"><span data-t="aboutBody1">A motion-visual designer by training, I have spent over a decade moving between design, animation, and front-end. Now I treat writing as the gateway to thinking, AI as a collaborator, and every project as a methodology experiment: slower is faster — design the rules first, then execute.</span></p>
+							<p class="body anim up" data-d="3"><span data-t="aboutBody2">I believe in data sovereignty and creation as cognition — never handing yourself over to a closed platform, never letting ideas die in a draft. Tools update, software gets retired; what stays is the ability to think clearly. CG Art Lab is where I write it down, build it out, and prove it works.</span></p>
 							<div class="profile-contact anim up" data-d="4">
 								<p class="label-sm">Contact</p>
 								<div class="contact-row">
 									{SOCIAL_LINKS.slice(0, 4).map(link => (
-										<a href={link.url} target="_blank" rel="noopener noreferrer" class="icon-link" title={link.name} aria-label={link.name}>
+										<a href={link.url} target="_blank" rel="noopener noreferrer" class="icon-link" title={link.nameEn} data-t-title={link.i18n} aria-label={link.nameEn}>
 											<Icon name={link.icon} size={14} class="w-3.5 h-3.5" fill />
 										</a>
 									))}
@@ -286,44 +338,87 @@ const tickerRows = [
 						</div>
 						<div class="profile-right">
 							<section class="psection anim right" data-d="1">
-								<h3 class="label-sm" data-t="cvWork">工作经历</h3>
-								{WORK_EXPERIENCE.map(exp => (
-									<div class="exp">
-										<span class="exp-period">{exp.period}</span>
-										<div>
-											<h4 class="exp-title">{exp.title}</h4>
-											<p class="exp-sub">
-												{exp.role}
-												{exp.url && <a class="exp-link" href={exp.url} target="_blank" rel="noopener noreferrer">animpoly.com ↗</a>}
-											</p>
-											<p class="exp-desc">{exp.description}</p>
+								<h3 class="label-sm" data-t="cvWork">Work Experience</h3>
+								<div class="bl" data-l="zh">
+									{WORK_EXPERIENCE.map(exp => (
+										<div class="exp">
+											<span class="exp-period">{exp.period}</span>
+											<div>
+												<h4 class="exp-title">{exp.title}</h4>
+												<p class="exp-sub">
+													{exp.role}
+													{exp.url && <a class="exp-link" href={exp.url} target="_blank" rel="noopener noreferrer">animpoly.com ↗</a>}
+												</p>
+												<p class="exp-desc">{exp.description}</p>
+											</div>
 										</div>
-									</div>
-								))}
+									))}
+								</div>
+								<div class="bl" data-l="en">
+									{WORK_EXPERIENCE_EN.map(exp => (
+										<div class="exp">
+											<span class="exp-period">{exp.period}</span>
+											<div>
+												<h4 class="exp-title">{exp.title}</h4>
+												<p class="exp-sub">
+													{exp.role}
+													{exp.url && <a class="exp-link" href={exp.url} target="_blank" rel="noopener noreferrer">animpoly.com ↗</a>}
+												</p>
+												<p class="exp-desc">{exp.description}</p>
+											</div>
+										</div>
+									))}
+								</div>
 							</section>
 							<section class="psection anim right" data-d="2">
-								<h3 class="label-sm" data-t="cvEdu">教育经历</h3>
-								{EDUCATION.map(edu => (
-									<div class="exp">
-										<span class="exp-period">{edu.period}</span>
-										<div>
-											<h4 class="exp-title">{edu.school}</h4>
-											<p class="exp-sub">{edu.major} · {edu.degree}</p>
+								<h3 class="label-sm" data-t="cvEdu">Education</h3>
+								<div class="bl" data-l="zh">
+									{EDUCATION.map(edu => (
+										<div class="exp">
+											<span class="exp-period">{edu.period}</span>
+											<div>
+												<h4 class="exp-title">{edu.school}</h4>
+												<p class="exp-sub">{edu.major} · {edu.degree}</p>
+											</div>
 										</div>
-									</div>
-								))}
+									))}
+								</div>
+								<div class="bl" data-l="en">
+									{EDUCATION_EN.map(edu => (
+										<div class="exp">
+											<span class="exp-period">{edu.period}</span>
+											<div>
+												<h4 class="exp-title">{edu.school}</h4>
+												<p class="exp-sub">{edu.major} · {edu.degree}</p>
+											</div>
+										</div>
+									))}
+								</div>
 							</section>
 							<section class="psection anim right" data-d="3">
-								<h3 class="label-sm" data-t="cvProjects">项目经历与奖项认证</h3>
-								{HONORS.map(h => (
-									<div class="exp">
-										<span class="exp-period">{h.year}</span>
-										<div>
-											<h4 class="exp-title">{h.title}</h4>
-											<p class="exp-sub">{h.role}</p>
+								<h3 class="label-sm" data-t="cvProjects">Projects & Awards</h3>
+								<div class="bl" data-l="zh">
+									{HONORS.map(h => (
+										<div class="exp">
+											<span class="exp-period">{h.year}</span>
+											<div>
+												<h4 class="exp-title">{h.title}</h4>
+												<p class="exp-sub">{h.role}</p>
+											</div>
 										</div>
-									</div>
-								))}
+									))}
+								</div>
+								<div class="bl" data-l="en">
+									{HONORS_EN.map(h => (
+										<div class="exp">
+											<span class="exp-period">{h.year}</span>
+											<div>
+												<h4 class="exp-title">{h.title}</h4>
+												<p class="exp-sub">{h.role}</p>
+											</div>
+										</div>
+									))}
+								</div>
 							</section>
 						</div>
 					</div>
@@ -337,7 +432,7 @@ const tickerRows = [
 					<div class="contact">
 						<p class="label anim up" data-d="0">Get in Touch</p>
 						<h2 class="heading-xl anim scale" data-d="1">Let's work together</h2>
-						<p class="body anim up" data-d="2"><span data-t="contactBody">如果你对我的作品感兴趣，或者有任何合作想法，欢迎随时联系我。</span></p>
+						<p class="body anim up" data-d="2"><span data-t="contactBody">If you like my work or have collaboration ideas, feel free to reach out.</span></p>
 						<div class="contact-actions anim up" data-d="3">
 							<a href={`mailto:${PERSONAL_INFO.email}`} class="btn"><Icon name="mail" size={16} class="w-4 h-4" />{PERSONAL_INFO.email}</a>
 						</div>
@@ -354,11 +449,11 @@ const tickerRows = [
 				<div class="footer-left">
 					<span>&copy; {currentYear} ChenYang</span>
 					<span class="dot">·</span>
-					<span class="footer-text" data-t="footerQuote">画画是画画的酬劳，写作是写作的回报。</span>
+					<span class="footer-text" data-t="footerQuote">Painting rewards itself with painting; writing rewards itself with writing.</span>
 				</div>
 				<div class="footer-right">
 					{SOCIAL_LINKS.map(link => (
-						<a href={link.url} target="_blank" rel="noopener noreferrer" class="footer-link" title={link.name} aria-label={link.name}>
+						<a href={link.url} target="_blank" rel="noopener noreferrer" class="footer-link" title={link.nameEn} data-t-title={link.i18n} aria-label={link.nameEn}>
 							<Icon name={link.icon} size={14} class="w-3.5 h-3.5" fill />
 						</a>
 					))}
@@ -711,8 +806,9 @@ html[lang="en"] .lang-btn { color: var(--accent); }
 	transform: scale(1.09);
 	transition: transform 1.2s cubic-bezier(.16,1,.3,1), filter 0.5s ease;
 }
-.mdeck-item.cur .mdeck-img { transform: scale(1); }
+.mdeck-item.cur .mdeck-img { animation: float 30s ease-in-out infinite alternate !important; transform-origin: var(--pan-ox, 50%) var(--pan-oy, 50%); }
 .mdeck-item:hover .mdeck-img { filter: brightness(0.75); }
+@keyframes float { from { transform: scale(1.06) translate(0, 0); } to { transform: scale(1.06) translate(var(--pan-x, 2%), var(--pan-y, -1%)); } }
 /* always-visible index — small, fixed top-right of the artwork */
 .mdeck-index {
 	position: absolute; top: max(4.5rem, env(safe-area-inset-top)); right: 1.25rem;
@@ -820,9 +916,11 @@ html[lang="en"] .lang-btn { color: var(--accent); }
 [data-slide="5"] .exp-period { color: var(--text-3); font-variant-numeric: tabular-nums; }
 
 /* ═══ Contact ═══ */
-.contact { max-width: 500px; }
+.contact { max-width: 660px; }
 .contact .heading-xl { margin: 0.5rem 0 1rem; }
-.contact .body { margin-bottom: 2rem; }
+/* Slide 6 closing line: 65ch cap would wrap it (EN 74 chars ≈ 590px at 1rem), so lift it.
+   On narrow viewports the box clamps to the available width and the line wraps normally. */
+.contact .body { margin-bottom: 2rem; max-width: none; }
 .contact-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0.75rem; }
 .icon-link-lg { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border: 1px solid var(--border); color: var(--text-4); text-decoration: none; transition: transform 0.3s var(--spring), color 0.3s; }
 .icon-link-lg:hover { border-color: var(--text); color: var(--text); transform: scale(1.1); }
@@ -913,56 +1011,6 @@ html[lang="en"] .lang-btn { color: var(--accent); }
 </style>
 
 <script>
-// ═══ i18n — Chinese/English bilingual system ═══
-const I18N = {
-  heroTag1: { zh: '动态视觉设计师', en: 'Motion Visual Designer' },
-  heroTag2: { zh: '内容创作者', en: 'Content Creator' },
-  heroTag3: { zh: '产品工程师', en: 'Product Engineer' },
-  statKicker1: { zh: '累计发表字数', en: 'Words Published' },
-  statUnit1: { zh: '字', en: 'words' },
-  statKicker2: { zh: '过去一年提交代码', en: 'Code Commits (Past Year)' },
-  statUnit2: { zh: '次', en: 'commits' },
-  statKicker3: { zh: '致力于数字创作领域', en: 'Years in Digital Creation' },
-  statUnit3: { zh: '年', en: 'years' },
-  statKicker4: { zh: '文章累计被浏览', en: 'Article Views' },
-  statSrc: { zh: '少数派', en: 'sspai.com' },
-  whatHeading: { zh: '跨领域<br/>数字创作者', en: 'Cross-Domain<br/>Digital Creator' },
-  whatBody: { zh: '我创建数字产品、塑造品牌视觉、分享创作背后的思考过程。倡导数据主权，坚持创作即认知的理念。', en: 'I create digital products, shape brand visuals, and share the thinking behind the work — an advocate of data sovereignty and creation as cognition.' },
-  workTitle: { zh: '动态视觉从业十年，只有热爱，别无他解。', en: 'A decade in motion visuals — nothing but love for the craft.' },
-  workBody1: { zh: '从三维动画、CG 艺术到动态视觉与数字产品，十年创作路一直在探索媒介与叙事。没有捷径可言，凭的是一点热爱与坚持——每一件作品都是对边界的试探。', en: 'From 3D animation and CG art to motion design and digital products — a decade of exploring media and narrative. No shortcuts, just love and persistence.' },
-  workBody2: { zh: '从实验性 VR 数字艺术作品《Hello World 2.0》，到品牌与发布会开场动效，再到入选 CCG EXPO 的《COVID-19》——作品在变，媒介在变，那个最初让我拿起笔的理由没有变。', en: 'From the VR piece Hello World 2.0 to brand event openers and CCG EXPO\u2019s COVID-19 — the work evolves, but the reason I first picked up the pen never changed.' },
-  aboutHeading: { zh: '画画是画画的酬劳，写作是写作的回报。', en: 'Painting rewards itself; writing rewards itself.' },
-  aboutBody1: { zh: '我是数字动态视觉出身的设计师，十余年来在设计、动画与前端之间来回穿梭。现在，我把写作当成思考的入口，把 AI 当作协作者，把每个项目都看作一次方法论的实验：慢一点比较快，先设计规则，再执行规则。', en: 'A motion-visual designer by training, I have spent over a decade moving between design, animation, and front-end. Now I write to think, collaborate with AI, and treat every project as a methodology experiment — slower is faster, design the rules first.' },
-  aboutBody2: { zh: '我相信「数据主权」与「创作即认知」——不把自己交给封闭平台，也不让想法只停在草稿里。工具会更新，软件会被淘汰，能一直带走的是想清楚的能力；CG 艺术实验室，就是我把这种能力写下来、做出来、验证过的地方。', en: 'I believe in data sovereignty and creation as cognition — never surrendering to closed platforms, never letting ideas die in drafts. Tools update, software retires; what stays is the ability to think clearly. CG Art Lab is where I write it down, build it out, and prove it works.' },
-  cvWork: { zh: '工作经历', en: 'Work Experience' },
-  cvEdu: { zh: '教育经历', en: 'Education' },
-  cvProjects: { zh: '项目经历与奖项认证', en: 'Projects & Awards' },
-  contactBody: { zh: '如果你对我的作品感兴趣，或者有任何合作想法，欢迎随时联系我。', en: 'If you like my work or have collaboration ideas, feel free to reach out.' },
-  footerQuote: { zh: '画画是画画的酬劳，写作是写作的回报。', en: 'Painting rewards itself; writing rewards itself.' },
-};
-
-let currentLang = localStorage.getItem('lang') || 'zh';
-
-function switchLang(lang) {
-  currentLang = lang;
-  localStorage.setItem('lang', lang);
-  document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
-  document.querySelectorAll('[data-t]').forEach(el => {
-    const key = el.getAttribute('data-t');
-    const entry = I18N[key];
-    if (!entry) return;
-    const val = entry[lang] || entry.zh;
-    if (/<[a-z][\s\S]*>/i.test(val)) {
-      el.innerHTML = val;
-    } else {
-      el.textContent = val;
-    }
-  });
-}
-
-// Apply saved language on load
-if (currentLang === 'en') switchLang('en');
-
 // ═══ Seaweed — large kelp (60fps optimized) ═══
 try { (() => {
 	const c = document.getElementById('seaweed');
@@ -1712,11 +1760,6 @@ try { (() => {
 		});
 	});
 })(); } catch(e) { console.warn('[anchor]', e.message); }
-
-// ═══ Language toggle ═══
-document.getElementById('langToggle')?.addEventListener('click', () => {
-  switchLang(currentLang === 'zh' ? 'en' : 'zh');
-});
 
 // ═══ Keyboard navigation — ArrowDown / Space → next snap stop, ArrowUp → prev ═══
 // Steps to the actual scroll-snap target (top-level .slide AND each .mdeck-item
