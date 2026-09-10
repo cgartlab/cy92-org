@@ -308,6 +308,7 @@
 
 	::selection {
 		background: rgba(138, 140, 110, 0.25);
+		background: color-mix(in srgb, var(--ds-accent) 25%, transparent);
 		color: var(--ds-color-fg-strong);
 	}
 
