@@ -2,6 +2,7 @@
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import LangScript from '../components/LangScript.astro';
 import Icon from '../components/Icon.astro';
 import { SITE_TITLE, PERSONAL_INFO, PERSONAL_INFO_EN, SOCIAL_LINKS } from '../consts';
 ---
@@ -16,7 +17,8 @@ import { SITE_TITLE, PERSONAL_INFO, PERSONAL_INFO_EN, SOCIAL_LINKS } from '../co
 			descriptionEn="About CG Art Lab and its author ChenYang — a cross-domain digital creator on craft, data sovereignty and creation as cognition."
 		/>
 	</head>
-	<body class="min-h-screen" style="background: var(--ds-color-bg); color: var(--ds-color-fg);">
+	<body class="min-h-screen">
+		<LangScript />
 		<Header />
 		<main class="container-custom py-12 md:py-16">
 			<article class="max-w-3xl mx-auto">

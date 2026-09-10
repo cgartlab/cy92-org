@@ -1,5 +1,4 @@
 ---
-import HeaderLink from './HeaderLink.astro';
 import Icon from './Icon.astro';
 import { SITE_TITLE, SOCIAL_LINKS } from '../consts';
 ---
@@ -11,8 +10,10 @@ import { SITE_TITLE, SOCIAL_LINKS } from '../consts';
 		</a>
 
 		<nav id="mnav-panel" class="ds-navbar-links" data-t-aria="mainNavAria" aria-label="Main navigation">
-			<a href="#about" class="ds-navbar-link" data-t="navAbout">About</a>
-			<a href="#work" class="ds-navbar-link" data-t="navWork">Work</a>
+			<!-- 指向真实路由而不是页内锚点：`#about` 全站无此元素，
+			     `#work` 只在首页幻灯片里存在，在 about/works/blog 上点这两个链接是死链。 -->
+			<a href="/about" class="ds-navbar-link" data-t="navAbout">About</a>
+			<a href="/works" class="ds-navbar-link" data-t="navWork">Work</a>
 			<a href="https://cgartlab.com" target="_blank" rel="noopener noreferrer" class="ds-navbar-link" data-t="navBlog">Blog</a>
 
 			<!-- Social row: only visible inside the mobile drawer -->
@@ -209,12 +210,17 @@ import { SITE_TITLE, SOCIAL_LINKS } from '../consts';
 	})();
 
 	// ===== Scroll-reveal observer (global) =====
+	// 选择器必须是 .ds-reveal：app.css 里被 `opacity:0` 门控的是它，
+	// 早期写的 .scroll-reveal 无人使用，导致 about/works/blog 页面的
+	// 所有 reveal 区块永久不可见。
 	(() => {
-		const els = document.querySelectorAll('.scroll-reveal');
-		if (!els.length) return;
+		const SEL = '.ds-reveal';
+		const pending = () =>
+			document.querySelectorAll<HTMLElement>(SEL + ':not(.is-visible)');
+
 		const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
 		if (reduce || !('IntersectionObserver' in window)) {
-			els.forEach(el => el.classList.add('is-visible'));
+			pending().forEach(el => el.classList.add('is-visible'));
 			return;
 		}
 		const obs = new IntersectionObserver((entries) => {
@@ -225,6 +231,11 @@ import { SITE_TITLE, SOCIAL_LINKS } from '../consts';
 				}
 			});
 		}, { threshold: 0.06, rootMargin: '0px 0px -2% 0px' });
-		els.forEach(el => obs.observe(el));
+
+		const observePending = () => pending().forEach(el => obs.observe(el));
+		observePending();
+		// data-l 门控用 display:none 隐藏另一语言，隐藏节点无法 intersect；
+		// 切语言后必须重新收集尚未显示的节点。
+		window.addEventListener('langchange', observePending);
 	})();
 </script>
