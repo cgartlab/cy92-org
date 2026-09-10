@@ -130,7 +130,7 @@ const tickerRows = [
 				<a href="#contact" class="header-link">Contact</a>
 			</nav>
 			<div class="header-right">
-				<button class="lang-btn" data-lang-toggle id="langToggle" type="button" aria-label="Switch language">中/En</button>
+				<button class="lang-btn" data-lang-toggle id="langToggle" type="button" data-t-aria="langAria" aria-label="Switch language">中/En</button>
 				<span class="header-sep" aria-hidden="true"></span>
 				<a href={`mailto:${PERSONAL_INFO.email}`} class="header-email">{PERSONAL_INFO.email}</a>
 			</div>
@@ -140,7 +140,7 @@ const tickerRows = [
 		<main id="slideshow" class="slideshow">
 			<canvas id="seaweed" class="canvas-full" style="position:fixed;z-index:50;pointer-events:none" aria-hidden="true"></canvas>
 			<!-- Shared continuous video — one undimmed scene behind pages 3 & 4 -->
-			<video id="reel" class="reel" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
+			<video id="reel" class="reel" autoplay muted loop playsinline preload="none" aria-hidden="true">
 				<source src="/video/Demo-lite.mp4" type="video/mp4" />
 			</video>
 			<!-- Fixed edge mask — permanently hides the video's hard top/bottom edges,
