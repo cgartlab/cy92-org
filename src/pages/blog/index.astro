@@ -46,7 +46,7 @@ const DEFAULT_COVER = '/default-cover.webp';
 										width={index === 0 ? 1020 : 720}
 										height={index === 0 ? 437 : 405}
 										src={post.data.heroImage || DEFAULT_COVER}
-										alt=""
+										alt={post.data.title}
 										loading="lazy"
 										class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
 									/>
