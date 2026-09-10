@@ -91,3 +91,20 @@ __pycache__/
 # Debug scripts with API tokens
 .omo/
 
+
+# Secrets
+*.key
+*.pem
+*.cert
+*.p12
+*.pfx
+secrets.*
+
+# Generated — `pnpm cf-typegen` output / npm template residue. Still tracked
+# today; needs `git rm --cached` before these patterns take effect.
+worker-configuration.d.ts
+package-lock.json
+
+# Local scratch
+.pi/
+.verify-dist/

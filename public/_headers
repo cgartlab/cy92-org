@@ -1,0 +1,21 @@
+# Security + cache headers for Cloudflare Workers static assets.
+# Wrangler reads this file from the assets directory (dist/) at deploy time and
+# strips it from the served set, so it is never publicly accessible.
+#
+# NOTE: `script-src` keeps 'unsafe-inline' because BaseHead ships a tiny inline
+# bootstrap script (dark/lang pre-paint) and the Google Fonts stylesheet uses an
+# inline `onload` media swap. Hashing them would be the tighter option but is not
+# worth the fragility for a zero-user-input static site.
+
+/*
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; frame-src https://player.bilibili.com; upgrade-insecure-requests
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+  Cross-Origin-Opener-Policy: same-origin
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+
+# Astro fingerprints these filenames, so they never change content under the same path.
+/_astro/*
+  Cache-Control: public, max-age=604800, immutable

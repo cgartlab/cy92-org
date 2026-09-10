@@ -6,6 +6,8 @@
 //   2. `data-t-aria="<k>"` — same dictionary, written to the aria-label attribute.
 //   3. `[data-l="zh|en"]`  — dual-rendered markup, shown/hidden by CSS through the
 //      `html.lang-en` class (see .bl/.blk rules in styles/app.css).
+//   4. `data-aria-zh` + `data-aria-en` — paired accessible names written to `alt`
+//      (img) or `aria-label`; needed because neither can be switched by CSS.
 //
 // English is the default: an unset or unknown `localStorage['lang']` means 'en'.
 // The value is also read in BaseHead's head script so the right language paints
@@ -20,15 +22,25 @@ import { I18N } from '../i18n/dict';
 type Lang = 'zh' | 'en';
 
 // Default language for every fresh visit; only an explicit 'zh' opts out.
+// Storage can throw (Safari private mode, storage blocked) — fall back to en
+// rather than breaking the entire language runtime.
 function savedLang(): Lang {
-	return localStorage.getItem('lang') === 'zh' ? 'zh' : 'en';
+	try {
+		return localStorage.getItem('lang') === 'zh' ? 'zh' : 'en';
+	} catch {
+		return 'en';
+	}
 }
 
 let currentLang: Lang = savedLang();
 
 function applyLang(lang: Lang) {
 	currentLang = lang;
-	localStorage.setItem('lang', lang);
+	try {
+		localStorage.setItem('lang', lang);
+	} catch {
+		/* storage unavailable — the switch still applies for this visit */
+	}
 	document.documentElement.classList.toggle('lang-en', lang === 'en');
 	document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
 
@@ -54,10 +66,19 @@ function applyLang(lang: Lang) {
 		el.setAttribute(isAria ? 'aria-label' : 'title', entry[lang] || entry.zh);
 	});
 
-	// 3) Notify other scripts that need to keep generated labels in sync
+	// 3) Accessible names stored as pairs — data-aria-zh / data-aria-en.
+	//    用于 img 的 alt 与 article 的 aria-label：这两种不能靠 CSS 切换，
+	//    也不能用 data-t-aria（那只是字典键）。
+	document.querySelectorAll('[data-aria-zh][data-aria-en]').forEach((el) => {
+		const next = lang === 'zh' ? el.dataset.ariaZh : el.dataset.ariaEn;
+		if (!next) return;
+		el.setAttribute(el.tagName.toLowerCase() === 'img' ? 'alt' : 'aria-label', next);
+	});
+
+	// 4) Notify other scripts that need to keep generated labels in sync
 	window.dispatchEvent(new CustomEvent('langchange', { detail: { lang } }));
 
-	// 4) <title> / <meta data-en> / data-zh for search engines + social cards
+	// 5) <title> / <meta data-en> / data-zh for search engines + social cards
 	document.querySelectorAll('title[data-en], meta[data-en]').forEach((el) => {
 		const next = lang === 'en' ? el.dataset.en : el.dataset.zh;
 		if (!next) return;

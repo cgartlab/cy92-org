@@ -3,7 +3,12 @@ import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Icon from '../components/Icon.astro';
 import LangScript from '../components/LangScript.astro';
-import { SITE_TITLE, SITE_DESCRIPTION_EN, PERSONAL_INFO, SKILLS, SKILLS_EN, SOCIAL_LINKS, HONORS, HONORS_EN, WORK_EXPERIENCE, WORK_EXPERIENCE_EN, EDUCATION, EDUCATION_EN } from '../consts';
+import { SITE_TITLE, SITE_DESCRIPTION_EN, PERSONAL_INFO, SKILLS, SKILLS_EN, SOCIAL_LINKS, HONORS, HONORS_EN, WORK_EXPERIENCE, WORK_EXPERIENCE_EN, EDUCATION, EDUCATION_EN, STATS } from '../consts';
+
+// 累计字数：由 src/scripts/sync-word-count.mjs 从 cgartlab.github.io 统计后
+// 原子写回 consts.ts 的 STATS[0].value。此处去逗号后作为 data-target 与首帧文本，
+// 否则同步脚本改的数字永远不会出现在页面上（STATS 原本无人消费）。
+const wordsPublished = STATS[0].value.replace(/,/g, '');
 
 const coverImage = '/images/冥想系列-cover.webp';
 const currentYear = new Date().getFullYear();
@@ -127,16 +132,16 @@ const tickerRows = [
 			<div class="header-right">
 				<button class="lang-btn" data-lang-toggle id="langToggle" type="button" aria-label="Switch language">中/En</button>
 				<span class="header-sep" aria-hidden="true"></span>
-				<a href={`mailto:${PERSONAL_INFO.email}`} class="header-email">hello@cgartlab.com</a>
+				<a href={`mailto:${PERSONAL_INFO.email}`} class="header-email">{PERSONAL_INFO.email}</a>
 			</div>
 		</header>
 
 		<!-- ═══ Slideshow ═══ -->
 		<main id="slideshow" class="slideshow">
-			<canvas id="seaweed" class="canvas-full" style="position:fixed;z-index:50;pointer-events:none"></canvas>
+			<canvas id="seaweed" class="canvas-full" style="position:fixed;z-index:50;pointer-events:none" aria-hidden="true"></canvas>
 			<!-- Shared continuous video — one undimmed scene behind pages 3 & 4 -->
-			<video id="reel" class="reel" autoplay muted loop playsinline aria-hidden="true">
-				<source src="/video/demo.mp4" type="video/mp4" />
+			<video id="reel" class="reel" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
+				<source src="/video/Demo-lite.mp4" type="video/mp4" />
 			</video>
 			<!-- Fixed edge mask — permanently hides the video's hard top/bottom edges,
 			     stays put while pages 3 & 4 switch (does not scroll with slides) -->
@@ -193,7 +198,7 @@ const tickerRows = [
 						<div class="stat anim up" data-d="0">
 							<span class="stat-kicker" data-t="statKicker1">Words Published</span>
 							<div class="stat-line">
-								<span class="stat-value" data-target="187979">187979</span>
+								<span class="stat-value" data-target={wordsPublished}>{wordsPublished}</span>
 								<span class="stat-unit" data-t="statUnit1">words</span>
 							</div>
 						</div>
@@ -291,7 +296,7 @@ const tickerRows = [
 					{meditationImages.map((img, i) => (
 						<article class="mdeck-item" data-mid={i} tabindex="0" data-aria-zh={`${img.title} — ${img.desc}`} data-aria-en={`${img.titleEn} — ${img.descEn}`} aria-label={`${img.titleEn} — ${img.descEn}`}
 							style={`--pan-x:${['2%','-1.5%','1.5%','-2%','1%','-0.8%','1.8%','-1%','0.8%','-1.8%'][i] || '1%'};--pan-y:${['-1%','1.5%','-0.5%','0.8%','-1.2%','0.6%','-1%','1.2%','-0.6%','0.8%'][i] || '-0.5%'};--pan-ox:${['30%','70%','45%','60%','35%','65%','40%','55%','50%','65%'][i] || '50%'};--pan-oy:${['35%','60%','50%','40%','55%','45%','60%','35%','50%','45%'][i] || '50%'}`}>
-							<img class="mdeck-img" src={img.src} alt={img.title} loading={i < 2 ? 'eager' : 'lazy'} decoding="async" />
+							<img class="mdeck-img" src={img.src} alt={img.titleEn} data-aria-zh={`${img.title} — ${img.desc}`} data-aria-en={`${img.titleEn} — ${img.descEn}`} loading={i < 2 ? 'eager' : 'lazy'} decoding="async" />
 							<span class="mdeck-index">{(i + 1).toString().padStart(2, '0')}<em> / {meditationImages.length}</em></span>
 							<div class="mdeck-hover">
 								<div class="mdeck-card">
@@ -427,7 +432,7 @@ const tickerRows = [
 
 			<!-- ═══ Slide 7 — Contact (wave particles) ═══ -->
 			<section class="slide dark" data-slide="6" id="contact">
-				<canvas id="waves" class="canvas-full"></canvas>
+				<canvas id="waves" class="canvas-full" aria-hidden="true"></canvas>
 				<div class="slide-content center">
 					<div class="contact">
 						<p class="label anim up" data-d="0">Get in Touch</p>
@@ -528,7 +533,14 @@ body { background: var(--bg); color: var(--text); font-family: var(--ds-font-bod
 .lang-btn { font-size: 0.65rem; letter-spacing: 0.1em; color: var(--text-4); background: none; border: none; padding: 0; cursor: pointer; transition: color 0.3s; line-height: 1.6; font-family: inherit; }
 .lang-btn:hover { color: var(--text); }
 html[lang="en"] .lang-btn { color: var(--accent); }
-@media (max-width: 767px) { .header-email { display: none; } .header-sep { display: none; } .header-nav { gap: 0.8rem; } .header-link { font-size: 0.55rem; letter-spacing: 0.08em; } }
+/* Mobile: the absolute-centered nav overlapped the logo at narrow viewports
+   (a ~180px nav centered on 50% starts around 100px while the logo ends around
+   116px). Put it back in flex flow, then shrink everything below 400px where
+   it stops fitting. The dropdown caret is a hover-only affordance, so hide it
+   on touch — tapping "Work" navigates and the menu never opens. */
+@media (max-width: 767px) { .header-email { display: none; } .header-sep { display: none; } .header-nav { position: static; transform: none; left: auto; margin-left: auto; gap: 0.75rem; } .header-right { margin-left: 0.75rem; } .header-link { font-size: 0.55rem; letter-spacing: 0.08em; } }
+@media (max-width: 400px) { .header { padding-left: 1rem; padding-right: 1rem; } .header-logo { letter-spacing: 0.12em; } .header-nav { gap: 0.5rem; } .header-link { font-size: 0.5rem; letter-spacing: 0.06em; } }
+@media (hover: none) { .nav-hover .caret { display: none; } }
 /* Work dropdown — hover expands to jump to each work section */
 .nav-hover { position: relative; display: inline-flex; }
 .caret { display: inline-block; margin-left: 0.35em; width: 0; height: 0; border-left: 3px solid transparent; border-right: 3px solid transparent; border-top: 4px solid currentColor; opacity: 0.6; transition: transform 0.25s ease; }
@@ -627,7 +639,12 @@ html[lang="en"] .lang-btn { color: var(--accent); }
 .dark { background: var(--bg); }
 .slide-content { position: relative; z-index: 1; display: flex; align-items: center; width: 100%; min-height: 100dvh; padding: 5rem 1.5rem; }
 .slide-content.center { justify-content: center; }
-.slide-content.scroll-y { align-items: flex-start; overflow-y: auto; max-height: 100dvh; }
+/* The About slide is an inner scroll trap inside the outer snap deck. Without
+   overscroll-behavior the momentum scroll bleeds out into the deck and the
+   bottom of the CV is unreachable on touch. On phones the grid is single-column
+   so reclaim vertical space by tightening the padding. */
+.slide-content.scroll-y { align-items: flex-start; overflow-y: auto; overscroll-behavior: contain; max-height: 100dvh; }
+@media (max-width: 767px) { .slide-content.scroll-y { padding-top: 5.5rem; padding-bottom: 3.5rem; } }
 @media (min-width: 768px) { .slide-content { padding: 5rem 3rem; } }
 
 .center { text-align: center; }
@@ -938,7 +955,7 @@ html[lang="en"] .lang-btn { color: var(--accent); }
 .footer-text { display: none; }
 @media (min-width: 768px) { .footer-text { display: inline; } }
 .footer-right { display: flex; gap: 0.75rem; }
-.footer-link { display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; color: var(--text-4); text-decoration: none; transition: color 0.3s; }
+.footer-link { display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; color: var(--text-4); text-decoration: none; transition: color 0.3s; }
 .footer-link:hover { color: var(--text); }
 
 /* ═══ Indicator ═══ */
@@ -1020,7 +1037,6 @@ try { (() => {
 	// Code rain paints onto the aurora canvas — a true page-2 background layer
 	// that sits under the stats text and scrolls away with the slide.
 	const rainC = document.getElementById('aurora');
-	const rctx = rainC ? rainC.getContext('2d') : null;
 	let w, h;
 	const layers = [[], [], []];
 	let mx = -9999, my = -9999;
@@ -1028,7 +1044,7 @@ try { (() => {
 	const PUSH_R = 420, PUSH_R2 = PUSH_R * PUSH_R, PUSH_K = 75;
 	const DEPTH_W = [4.5, 1.0, 0];
 	const DEPTH_A = [0.025, 0.065, 0.13];
-	const rays = [], snow = [], codeCols = [];
+	const rays = [], snow = [];
 	// 方块汉字池（常用字）
 	const RAIN_CHARS = '的一是了我不人在他有这上们来到时大地为子中你说生国年着就那和要她出也得里后自以会家可下而过天去能对小多然于心学么之都好看起发当没成只如事把还用第样道想作种开美总从无情己面最女但现前些所同日手又行意动方期它头经长儿回位分爱老因很给名法间斯知世什两次使身者被高已亲其进此话常与活正感';
 	// cgartlab.com 文章句子池
@@ -1108,39 +1124,6 @@ try { (() => {
 				df: (Math.random() - 0.5) * 0.25, al: 0.03 + Math.random() * 0.1
 			});
 		}
-		// Code rain columns for exit animation
-		codeCols.length = 0;
-		for (let i = 0; i < 90; i++) {
-			const depth = 0.2 + Math.random() * 0.8;
-			codeCols.push((() => {
-				const useSentence = Math.random() < 0.6;
-				const sentence = useSentence ? RAIN_SENTENCES[Math.floor(Math.random() * RAIN_SENTENCES.length)] : '';
-				const sOff = useSentence ? Math.floor(Math.random() * sentence.length) : 0;
-				const maxLen = 6 + Math.floor(Math.random() * 18);
-				const mk = (i) => useSentence
-					? sentence[(sOff + i) % sentence.length]
-					: RAIN_CHARS[Math.floor(Math.random() * RAIN_CHARS.length)];
-				return {
-					x: (i / 89) * w + (Math.random() - 0.5) * 18,
-					y: Math.random() * h,
-					spd: 0.375 + depth * 1.25 + Math.random() * 0.5,
-					depth,
-					alpha: 0,
-					fadeTarget: 0,
-					fadeRate: 0.012 + Math.random() * 0.04,
-					rainColor: (() => { const pc = Math.random(); return pc < 0.5 ? '138,140,110' : pc < 0.85 ? '202,205,196' : '168,172,136'; })(),
-					flSpd: 0.6 + Math.random() * 2.2,
-					flPh: Math.random() * 6.28,
-					sentence,
-					sOff,
-					useSentence,
-					maxLen,
-					golden: false,
-					dispX: 0,
-					chars: Array.from({ length: maxLen }, (_, ci) => mk(ci)),
-				};
-			})());
-		}
 	};
 	const resize = () => { w = c.width = innerWidth; h = c.height = innerHeight; if (rainC) { rainC.width = innerWidth; rainC.height = innerHeight; } build(); };
 	resize();
@@ -1149,10 +1132,8 @@ try { (() => {
 	addEventListener('mouseleave', () => { mx = -9999; my = -9999; });
 
 	let t = 0;
-	const visible = true;   // fixed canvas loops cheaply; visibility gated by scene code below
 	let seaFade = 1;
-	let columnsReset = true;
-	let prevIdx = 0;
+	let running = false;
 	const deck = document.getElementById('slideshow');
 	// Authoritative page index: published on #slideshow[data-active] by the [2]
 	// slide-observer (center-of-viewport). Using it here avoids the seaweed
@@ -1279,14 +1260,11 @@ try { (() => {
 	};
 
 	const draw = () => {
-		if (!visible) { requestAnimationFrame(draw); return; }
 		ctx.clearRect(0, 0, w, h);
 		t += 0.008;
 
 		// Refresh authoritative page index (published by the [2] observer)
 		activeSlide = act();
-		if (activeSlide === 1 && prevIdx !== 1) columnsReset = false;
-		prevIdx = activeSlide;
 
 		// Seaweed fades: visible only on slide 0, smooth in/out
 		const seaTarget = activeSlide === 0 ? 1 : 0;
@@ -1376,71 +1354,15 @@ try { (() => {
 			ctx.globalAlpha = 1;
 		}
 
-		// ── Horizontal ticker replaces the vertical code rain (no char painting) ──
-		if (activeSlide === -1) {
-			if (activeSlide === 1 && !columnsReset) {
-				for (let ci = 0; ci < codeCols.length; ci++) {
-					codeCols[ci].y = Math.random() * h;
-					codeCols[ci].alpha = 0;
-				}
-				columnsReset = true;
-			}
-			const rainTarget = activeSlide === 1 ? 1 : 0;
-			// Random character mutation every ~0.15s (2-3 chars per column)
-			if (Math.floor(t * 60) % 9 === 0) {
-				for (let ci = 0; ci < codeCols.length; ci++) {
-					const col = codeCols[ci];
-					if (col.golden) continue;
-					const p = Math.floor(Math.random() * col.maxLen);
-					col.chars[p] = col.useSentence
-						? col.sentence[(col.sOff + p + Math.floor(Math.random() * 5)) % col.sentence.length]
-						: RAIN_CHARS[Math.floor(Math.random() * RAIN_CHARS.length)];
-					if (Math.random() < 0.5) {
-						const p2 = Math.floor(Math.random() * col.maxLen);
-						col.chars[p2] = col.useSentence
-							? col.sentence[(col.sOff + p2 + Math.floor(Math.random() * 5)) % col.sentence.length]
-							: RAIN_CHARS[Math.floor(Math.random() * RAIN_CHARS.length)];
-					}
-				}
-			}
-			// Paint on the aurora canvas (page-2-only layer), scaled to its own pixel size
-			const rc = rctx || ctx;
-			const rs = rainC ? (rainC.width / w) : 1;
-			if (rainC) rc.clearRect(0, 0, rainC.width, rainC.height);
-			rc.save();
-			rc.scale(rs, rs);
-			for (let ci = 0; ci < codeCols.length; ci++) {
-				const col = codeCols[ci];
-				col.y += col.spd;
-				if (col.y > h + 100) { col.y = -100; col.x = (ci / 89) * w + (Math.random()-0.5)*18; }
-				col.fadeTarget = rainTarget;
-				col.alpha += (col.fadeTarget - col.alpha) * (col.fadeTarget > col.alpha ? col.fadeRate : col.fadeRate * 2.4);
-				if (col.alpha < 0.02) continue;
-				const flick = 0.65 + 0.3 * Math.sin(t * col.flSpd + col.flPh) + (Math.random() - 0.5) * 0.18;
-				const bright = Math.max(0.25, Math.min(1, flick));
-				const colA = col.alpha * bright;
-				const fontSize = Math.round(6 + col.depth * 14);
-				const doff = Math.abs(col.depth - 0.5);
-				const depthDim = doff > 0.25 ? 1 - (doff - 0.25) * 0.9 : 1;
-				rc.font = fontSize + 'px monospace';
-				rc.globalAlpha = colA;
-				for (let ch = 0; ch < col.maxLen; ch++) {
-					const cy = col.y - ch * fontSize * 1.3;
-					if (cy > -fontSize && cy < h + fontSize) {
-						const headFade = ch === 0 ? 1.0 : (1 - ch / col.maxLen) * 0.5;
-						const a = headFade * depthDim * 0.62;
-						rc.fillStyle = 'rgba(' + col.rainColor + ',' + a + ')';
-						rc.fillText(col.chars[ch], col.x, cy);
-					}
-				}
-			}
-			rc.restore();
-			rc.globalAlpha = 1;
-		}
-
+		// Idle out once the hero has fully faded; #deckact restarts the loop.
+		// Without this the rAF keeps running at 60fps for the page's whole lifetime.
+		if (seaFade < 0.005) { running = false; return; }
+		running = true;
 		requestAnimationFrame(draw);
 	};
-	draw();
+	const start = () => { if (!running) { running = true; requestAnimationFrame(draw); } };
+	if (deck) deck.addEventListener('deckact', start);
+	start();
 })(); } catch(e) { console.warn('[seaweed]', e.message); }
 
 
@@ -1766,7 +1688,7 @@ try { (() => {
 // inside the tall Meditation deck) instead of blind +viewport scrollBy, which
 // overshoots under smooth-scroll animation and misaligns the full-bleed artwork.
 document.addEventListener('keydown', (e) => {
-  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.isContentEditable) return;
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT' || e.target.tagName === 'BUTTON' || e.target.isContentEditable) return;
   const deck = document.getElementById('slideshow');
   if (!deck) return;
   const dir = e.key === 'ArrowDown' || e.key === ' ' ? 1 : e.key === 'ArrowUp' ? -1 : 0;

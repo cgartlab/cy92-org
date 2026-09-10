@@ -105,5 +105,10 @@ export const I18N: Record<string, I18NEntry> = {
 	},
 
 	// ══ Footer ══
-	footerQuote: { zh: '画画是画画的酬劳，写作是写作的回报。', en: 'Painting rewards itself with painting; writing rewards itself with writing.' }
+	footerQuote: { zh: '画画是画画的酬劳，写作是写作的回报。', en: 'Painting rewards itself with painting; writing rewards itself with writing.' },
+
+	// ══ Blog list page ══
+	blogTitle: { zh: '博客文章', en: 'Blog' },
+	blogSubtitle: { zh: '思考、创作与探索的记录', en: 'Notes on thinking, making and exploring' },
+	blogEmpty: { zh: '暂无博客文章', en: 'No posts yet' }
 };

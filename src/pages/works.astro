@@ -2,6 +2,7 @@
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import LangScript from '../components/LangScript.astro';
 import Icon from '../components/Icon.astro';
 import { SITE_TITLE } from '../consts';
 
@@ -80,6 +81,7 @@ const meditationSeriesEn = {
 		/>
 	</head>
 	<body class="min-h-screen" style="background: var(--ds-color-bg); color: var(--ds-color-fg);">
+		<LangScript />
 		<Header />
 		<main>
 
@@ -115,11 +117,13 @@ const meditationSeriesEn = {
 							<div class="grid md:grid-cols-2 gap-0">
 								<div class="relative aspect-video bg-black">
 									<iframe
-										src={`//player.bilibili.com/player.html?isOutside=true&aid=&bvid=${work.bilibiliId}&cid=&p=1&highQuality=1&danmaku=0&muted=1&controls=0&autoplay=1`}
+										src={`https://player.bilibili.com/player.html?isOutside=true&aid=&bvid=${work.bilibiliId}&cid=&p=1&highQuality=1&danmaku=0&muted=1&controls=0&autoplay=1`}
 										title={work.title}
 										class="absolute inset-0 w-full h-full"
 										allowfullscreen="true"
 										allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+										loading="lazy"
+										referrerpolicy="no-referrer"
 									></iframe>
 								</div>
 								<div class="p-6 md:p-8 flex flex-col justify-center">
@@ -283,11 +287,13 @@ const meditationSeriesEn = {
 							<div class="grid md:grid-cols-2 gap-0">
 								<div class="relative aspect-video bg-black">
 									<iframe
-										src={`//player.bilibili.com/player.html?isOutside=true&aid=&bvid=${work.bilibiliId}&cid=&p=1&highQuality=1&danmaku=0&muted=1&controls=0&autoplay=1`}
+										src={`https://player.bilibili.com/player.html?isOutside=true&aid=&bvid=${work.bilibiliId}&cid=&p=1&highQuality=1&danmaku=0&muted=1&controls=0&autoplay=1`}
 										title={work.title}
 										class="absolute inset-0 w-full h-full"
 										allowfullscreen="true"
 										allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+										loading="lazy"
+										referrerpolicy="no-referrer"
 									></iframe>
 								</div>
 								<div class="p-6 md:p-8 flex flex-col justify-center">

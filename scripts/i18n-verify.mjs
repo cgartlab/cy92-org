@@ -62,20 +62,27 @@ for (const p of pages) {
 	const stripLang = (html, lang) => {
 		const langDepth = new Map();
 		let activeLang = null;
+		let langRoot = null; // 携带 data-l 的那个标签名；只有它自己闭合才算块结束
 		let out = '';
 		let i = 0;
 		while (i < html.length) {
 			const lt = html.indexOf('<', i);
-			if (lt < 0) return out + html.slice(i);
-			out += html.slice(i, lt);
+			if (lt < 0) return out + (activeLang === lang ? '' : html.slice(i));
+			// 文本节点也必须受门控。漏掉这一步会导致只剥掉标签而保留块内正文，
+			// data-l="zh" 块内的中文会全部漏检(假阳性)。
+			if (activeLang !== lang) out += html.slice(i, lt);
 			const gt = html.indexOf('>', lt);
-			if (gt < 0) return out + html.slice(lt);
+			if (gt < 0) return out + (activeLang === lang ? '' : html.slice(lt));
 			const tag = html.slice(lt, gt + 1);
 			i = gt + 1;
 			if (/^<(script|style)/i.test(tag)) {
-				const end = html.indexOf(`</${tag.slice(1).split(/[\s.]/)[0]}>`, i);
+				// 跳过整个标签对。必须跳过完整的闭合标签 '</name>'(len = name.length + 3)，
+				// 只跳 2 个字符会把下一个 '</script>' 的开头吃掉，导致 indexOf 返回 -1、
+				// 函数提前 return out——即第一处 <script> 之后的全部内容都不会被检查(假阴性)。
+				const nm = tag.match(/^<(script|style)/i)[1].toLowerCase();
+				const end = html.indexOf(`</${nm}>`, i);
 				if (end < 0) return out;
-				i = end + 2;
+				i = end + nm.length + 3;
 				continue;
 			}
 			const m = tag.match(/^<(\/?)([a-z][\w-]*)((?:[^>]*?))>/i);
@@ -84,12 +91,21 @@ for (const p of pages) {
 			const selfClose = /\s\/>$/.test(tag) || selfClosing.has(name.toLowerCase());
 			if (closing) {
 				if (langDepth.get(name) > 0) langDepth.set(name, langDepth.get(name) - 1);
-				if (langDepth.get(name) === 0 && activeLang === lang) activeLang = null;
+				// 只能在承载 data-l 的根标签自身闭合时结束门控；任何内部标签深度归零都不算，
+				// 否则会提前解除门控，让 .blk[data-l=zh] 整块内容被当作可见文本(假阳性)。
+				if (activeLang === lang && name === langRoot && langDepth.get(name) === 0) {
+					activeLang = null;
+					langRoot = null;
+				}
 				continue;
 			}
 			if (selfClose) continue;
-			if (!activeLang && new RegExp(`\\bdata-l="${lang}"\\b`).test(attrs)) {
+			// attrs 里 data-l 总是前面有空格；若它是最后一个属性，后面是末尾而不是空格，
+			// 所以不能用尾部 \b —— '"' 与 '>' 之间没有词边界，整块内容就不会被剥掉(假阳性)。
+			const langRe = new RegExp(`(?:\\s|^)data-l="${lang}"(?:\\s|$)`);
+			if (!activeLang && langRe.test(attrs)) {
 				activeLang = lang;
+				langRoot = name;
 				langDepth.set(name, 1);
 				continue;
 			}
@@ -105,6 +121,8 @@ for (const p of pages) {
 
 	const COMMENT_RE = new RegExp(String.raw`<![\s\S]*?-->`);
 	let stripped = html.replace(COMMENT_RE, '');
+	// 语言切换按钮本身就是双语文本（如「中/EN」），是刻意的 UI，不算泄漏。
+	stripped = stripped.replace(/<button[^>]*data-lang-toggle[^>]*>[\s\S]*?<\/button>/g, ' ');
 	stripped = stripLang(stripLang(stripped, 'zh'), 'en');
 	const visible = stripped.replace(/<[^>]*>/g, ' ');
 	const cnRuns = visible.match(/[\u4e00-\u9fff][\u4e00-\u9fff\s\uff0c\u3002\u3001\uff1a\uff0c\uff08\uff09「」·—–,.;:()"'…&%/]{0,60}/g) || [];
