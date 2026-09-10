@@ -58,7 +58,7 @@ cy92-org/
 | 英文译文 | `index.astro` 内 `<script>` 的 `I18N` 字典 | 中英双语见「5. i18n」 |
 | 主样式 | `src/styles/app.css` | 设计 token + 站点 shell；Tailwind 颜色映射到 CSS 变量 |
 | 遗留样式 | `src/styles/global.css` | **不要修改**，改样式一律在 app.css |
-| 主题（暗色） | `BaseHead.astro` 初始态 + `app.css` `[data-theme="dark"]`/`.dark` 两处 token | 见「4. 主题」 |
+| 主题（暗色） | `BaseHead.astro` 初始态 + `app.css` `[data-theme="dark"], .dark` 合并选择器 token | 见「4. 主题」 |
 | 图标 | `src/components/Icon.astro` | SVG path 硬编码，新图标必须在此注册 |
 | Cloudflare 配置 | `astro.config.mjs` + `wrangler.json` | `platformProxy.enabled: false`，`compatibility_date: 2025-10-08`，`nodejs_compat` |
 | 字数同步 | `src/scripts/sync-word-count.mjs` | 写回 consts.ts `STATS[0].value`（见「6. 跨仓库依赖」） |
@@ -77,10 +77,10 @@ cy92-org/
 
 ## 4. 主题系统（易误判，读清楚）
 
-- `app.css` **同时定义了浅色与深色两套 token**：浅色在 `:root` 块（约 1-190 行，`--ds-*` 与 `--background`/`--primary` 等 HSL 变量），深色在 `[data-theme="dark"]`（189 行）与 `.dark`（258 行）两处**重复定义**，改深色色值要改两处。
+- `app.css` **同时定义了浅色与深色两套 token**：浅色在 `:root` 块（约 1-185 行，`--ds-*` 与 `--background`/`--primary` 等 HSL 变量），深色在 **`[data-theme="dark"], .dark` 合并选择器**（189 行起，单一来源，改一次即可）。
 - `BaseHead.astro` 内联脚本**无条件** `isDark = true` → 加 `.dark` 类 + `data-theme="dark"`，并加 `.ds-js` 类（使 scroll-reveal 仅在 JS 可用时隐藏内容）。注释称 "Dark-only site"，与实际不完全一致。
 - `Header.astro` 保留了 `#theme-toggle` 按钮，点击可切到浅色；但 **BaseHead 不读取 `localStorage.theme`，用户偏好不会在下次加载恢复**（始终回到暗色）。这是当前已知行为，非 bug 修复项——若要改，需同时动 BaseHead 与 Header。
-- `html.dark, html[data-theme="dark"] { color-scheme: dark; }`（app.css 391 行）。
+- `html.dark, html[data-theme="dark"] { color-scheme: dark; }`（app.css 332 行）。
 
 ## 5. i18n（中英双语，仅首页）
 
