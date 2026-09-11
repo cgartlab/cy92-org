@@ -499,7 +499,7 @@ const tickerRows = [
 .skip-link:focus { top: 1rem; }
 
 /* ═══ Body ═══ */
-body { background: var(--bg); color: var(--text); font-family: var(--ds-font-body, 'Outfit', 'Noto Sans SC', system-ui, sans-serif); -webkit-font-smoothing: antialiased; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+body { background: var(--bg); color: var(--text); font-family: var(--ds-font-body, 'Outfit', 'Noto Sans SC', system-ui, sans-serif); -webkit-font-smoothing: antialiased; }
 
 /* ═══ Typography ═══ */
 .heading-display { font-size: clamp(3rem, 10vw, 7rem); line-height: 0.9; letter-spacing: -0.05em; font-weight: 700; text-wrap: balance; }
@@ -1033,7 +1033,7 @@ html[lang="en"] .lang-btn { color: var(--accent); }
    图标链接提到 44x44（Apple HIG）；文字链接只加纵向 padding，命中区从字高
    ~14px 提到 ~47px，不改变导航行的横向占位。预留空间已够：
    .slide-content.scroll-y 移动端 padding-top:5.5rem(88px) 与加粗后的头部高度相当。 */
-@media (pointer: coarse) { .footer-link, .icon-link { width: 44px; height: 44px; } .lang-btn, .header-link { padding: 1rem 0; } }
+@media (pointer: coarse) { .footer-link, .icon-link { width: var(--ds-touch-target); height: var(--ds-touch-target); } .lang-btn, .header-link { padding: var(--ds-space-4) 0; } }
 </style>
 
 <script>
