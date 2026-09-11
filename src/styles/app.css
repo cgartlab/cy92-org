@@ -282,6 +282,10 @@
 		color: var(--ds-color-fg);
 		background: var(--ds-color-bg);
 		transition: background 0.4s, color 0.4s;
+		/* 触屏：消除 300ms 点击延迟与点击高亮闪烁。
+		   index.astro 在自己的 body 上已有这两条，此处补齐 about/works/blog/BlogPost。 */
+		touch-action: manipulation;
+		-webkit-tap-highlight-color: transparent;
 	}
 
 	h1, h2, h3, h4, h5, h6 {
@@ -942,3 +946,18 @@ html.lang-en [data-l="zh"] { display: none; }
 /* 语言切换按钮（Header / 首页共用） */
 .ds-lang-toggle { font-size: 0.65rem; letter-spacing: 0.06em; color: var(--ds-color-fg-subtle); background: none; border: none; padding: 0; cursor: pointer; transition: color .2s; font-family: inherit; line-height: 1.6; }
 .ds-lang-toggle:hover, .ds-lang-toggle:focus-visible { color: var(--ds-color-fg-strong); }
+
+/* ===== 触屏命中区 =====
+   必须放在文件末尾：同特异性下 CSS 后写者胜，而 .ds-lang-toggle 的
+   padding:0 基础规则、以及 Tailwind 工具类 .w-8/.w-9/.h-8/.h-9 都在上方。
+
+   用 (pointer: coarse) 而非宽度断点，所以桌面端保持紧凑版式不变。
+   图标型控件（选择器特异性高于工具类，顺序无关）：44x44，Apple HIG。
+   文字型控件 .ds-lang-toggle 原 padding:0，命中区只有字高 ~17px；
+   只加纵向 padding，避免把导航行的横向占位撑开。 */
+@media (pointer: coarse) {
+	.ds-mnav-social .social-link,
+	footer .social-link,
+	#theme-toggle { width: 44px; height: 44px; }
+	.ds-lang-toggle { padding: 1rem 0; }
+}

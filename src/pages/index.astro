@@ -538,9 +538,11 @@ html[lang="en"] .lang-btn { color: var(--accent); }
    116px). Put it back in flex flow, then shrink everything below 400px where
    it stops fitting. The dropdown caret is a hover-only affordance, so hide it
    on touch — tapping "Work" navigates and the menu never opens. */
-@media (max-width: 767px) { .header-email { display: none; } .header-sep { display: none; } .header-nav { position: static; transform: none; left: auto; margin-left: auto; gap: 0.75rem; } .header-right { margin-left: 0.75rem; } .header-link { font-size: 0.55rem; letter-spacing: 0.08em; } }
-@media (max-width: 400px) { .header { padding-left: 1rem; padding-right: 1rem; } .header-logo { letter-spacing: 0.12em; } .header-nav { gap: 0.5rem; } .header-link { font-size: 0.5rem; letter-spacing: 0.06em; } }
+@media (max-width: 767px) { .header-email { display: none; } .header-sep { display: none; } .header-nav { position: static; transform: none; left: auto; margin-left: auto; gap: 0.75rem; } .header-right { margin-left: 0.75rem; } .header-link { font-size: 0.6rem; letter-spacing: 0.08em; } }
+@media (max-width: 400px) { .header { padding-left: 1rem; padding-right: 1rem; } .header-logo { letter-spacing: 0.12em; } .header-nav { gap: 0.5rem; } .header-link { font-size: 0.55rem; letter-spacing: 0.06em; } }
 @media (hover: none) { .nav-hover .caret { display: none; } }
+/* 导航字号：原 0.55rem/0.5rem 比桌面 0.65rem 还小（小屏反而更小，反向）。
+   上提到 0.6rem/0.55rem，仍比桌面小但接近；实测 320px 视口下横向仍装得下。 */
 /* Work dropdown — hover expands to jump to each work section */
 .nav-hover { position: relative; display: inline-flex; }
 .caret { display: inline-block; margin-left: 0.35em; width: 0; height: 0; border-left: 3px solid transparent; border-right: 3px solid transparent; border-top: 4px solid currentColor; opacity: 0.6; transition: transform 0.25s ease; }
@@ -1025,6 +1027,13 @@ html[lang="en"] .lang-btn { color: var(--accent); }
 	.slide.is-active .anim { opacity: 1; transform: none; animation: none; }
 	.kb-img { animation: none; }
 }
+
+/* 触屏命中区。必须放在所有基础尺寸规则之后：同特异性下 CSS 后写者胜，
+   而 .icon-link/.footer-link 的 32px 基础规则在本文件下方。
+   图标链接提到 44x44（Apple HIG）；文字链接只加纵向 padding，命中区从字高
+   ~14px 提到 ~47px，不改变导航行的横向占位。预留空间已够：
+   .slide-content.scroll-y 移动端 padding-top:5.5rem(88px) 与加粗后的头部高度相当。 */
+@media (pointer: coarse) { .footer-link, .icon-link { width: 44px; height: 44px; } .lang-btn, .header-link { padding: 1rem 0; } }
 </style>
 
 <script>
