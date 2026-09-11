@@ -1,0 +1,37 @@
+name: PR Triage
+
+# WARNING: pull_request_target runs with a write-scoped GITHUB_TOKEN and
+# access to repo secrets. Do NOT add actions/checkout, build steps, or any
+# execution of code/files from the PR in this workflow.
+
+on:
+  pull_request_target:
+    types: [opened, reopened, synchronize]
+
+permissions: {}
+
+jobs:
+  label:
+    permissions:
+      contents: read
+      pull-requests: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/labeler@v7
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          sync-labels: true
+
+  # 指定开发者：自动把 PR 指派给作者（solo 场景即 cgartlab），机器人 PR 除外。
+  assign:
+    if: github.event.action == 'opened'
+    permissions:
+      pull-requests: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Assign author (skip bots)
+        if: github.event.pull_request.user.type != 'Bot'
+        uses: actions-ecosystem/action-add-assignees@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          assignees: ${{ github.event.pull_request.user.login }}
