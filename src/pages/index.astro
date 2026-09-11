@@ -1048,7 +1048,7 @@ try { (() => {
 	const c = document.getElementById('seaweed');
 	if (!c) return;
 	const ctx = c.getContext('2d');
-	if (!ctx) return;
+	if (!ctx) return;	if (matchMedia?.('(prefers-reduced-motion: reduce)').matches) return; // decorative canvas — skip under reduced motion
 	// Code rain paints onto the aurora canvas — a true page-2 background layer
 	// that sits under the stats text and scrolls away with the slide.
 	const rainC = document.getElementById('aurora');
@@ -1388,7 +1388,7 @@ try { (() => {
 	const c = document.getElementById('waves');
 	if (!c) return;
 	const ctx = c.getContext('2d');
-	if (!ctx) return;
+	if (!ctx) return;	if (matchMedia?.('(prefers-reduced-motion: reduce)').matches) return; // decorative canvas — skip under reduced motion
 	let w, h, cx, cy, maxR;
 	const PAL = ['202,205,196', '138,140,110', '214,219,210']; // silver / olive / bright-silver
 	const dots = [];
@@ -1466,7 +1466,7 @@ try { (() => {
 	const c = document.getElementById('grad');
 	if (!c) return;
 	const ctx = c.getContext('2d');
-	if (!ctx) return;
+	if (!ctx) return;	if (matchMedia?.('(prefers-reduced-motion: reduce)').matches) return; // decorative canvas — skip under reduced motion
 	const dpr = Math.min(window.devicePixelRatio || 1, 2);
 	let w, h, base;
 	let fade = 0;
