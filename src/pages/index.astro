@@ -641,11 +641,14 @@ html[lang="en"] .lang-btn { color: var(--accent); }
 .dark { background: var(--bg); }
 .slide-content { position: relative; z-index: 1; display: flex; align-items: center; width: 100%; min-height: 100dvh; padding: 5rem 1.5rem; }
 .slide-content.center { justify-content: center; }
-/* The About slide is an inner scroll trap inside the outer snap deck. Without
-   overscroll-behavior the momentum scroll bleeds out into the deck and the
-   bottom of the CV is unreachable on touch. On phones the grid is single-column
-   so reclaim vertical space by tightening the padding. */
-.slide-content.scroll-y { align-items: flex-start; overflow-y: auto; overscroll-behavior: contain; max-height: 100dvh; }
+/* The About slide is an inner scroll trap inside the outer snap deck.
+   overscroll-behavior-y: auto lets momentum at the inner edges chain out to
+   the deck: past the profile bottom it lands on Contact, past its top it
+   returns to Meditation (#52). While there is content to scroll the inner
+   scroller still captures wheel/touch, so the CV bottom stays reachable. On
+   phones the grid is single-column so reclaim vertical space by tightening
+   the padding. */
+.slide-content.scroll-y { align-items: flex-start; overflow-y: auto; overscroll-behavior-y: auto; max-height: 100dvh; }
 @media (max-width: 767px) { .slide-content.scroll-y { padding-top: 5.5rem; padding-bottom: 3.5rem; } }
 @media (min-width: 768px) { .slide-content { padding: 5rem 3rem; } }
 
@@ -1715,6 +1718,32 @@ document.addEventListener('keydown', (e) => {
     for (let i = stops.length - 1; i >= 0; i--) { if (stops[i].pos < s - eps) { target = stops[i].el; break; } }
   }
   if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+});
+
+// ═══ Wheel navigation — Meditation deck (slide 4): one gesture = one artwork ═══
+// Every .mdeck-item is a full-screen snap stop, but fast wheel/trackpad momentum
+// can cross several works in a single gesture. While the Meditation slide is
+// active, quantize wheel deltas to the same enumerated stops used by keyboard
+// navigation so each notch/fling step advances exactly one work (#52).
+document.addEventListener('wheel', (e) => {
+  if (e.ctrlKey || e.metaKey || e.altKey || e.shiftKey) return; // zoom / pan gestures
+  if (Math.abs(e.deltaY) < 1) return;
+  if (matchMedia?.('(prefers-reduced-motion: reduce)').matches) return;
+  const deck = document.getElementById('slideshow');
+  if (!deck || deck.dataset.active !== '4') return; // quantize only inside the Meditation deck
+  if (!(e.target instanceof Element) || !e.target.closest('#meditation')) return;
+  const deckTop = deck.getBoundingClientRect().top;
+  const stops = Array.from(deck.querySelectorAll('.slide, .mdeck-item'))
+    .map((el) => ({ el, pos: el.getBoundingClientRect().top - deckTop + deck.scrollTop }))
+    .sort((a, b) => a.pos - b.pos);
+  const s = deck.scrollTop, eps = 8;
+  let cur = 0;
+  for (let i = 0; i < stops.length; i++) { if (stops[i].pos <= s + eps) cur = i; }
+  const next = cur + (e.deltaY > 0 ? 1 : -1);
+  if (next < 0 || next >= stops.length) return; // deck boundary — native scroll
+  if (!stops[next].el.closest('#meditation')) return; // leaving Meditation — let snap take over
+  e.preventDefault();
+  stops[next].el.scrollIntoView({ behavior: 'smooth', block: 'start' });
 });
 
 </script>
