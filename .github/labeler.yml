@@ -1,0 +1,47 @@
+# Auto-labeling config for actions/labeler@v7 — see .github/workflows/pr-triage.yml.
+# sync-labels: true 会让 workflow 按本文件自动创建缺失的标签，保持命名一致。
+# 单个 PR 可命中多个 area（如 CSS + i18n），全站自动打标。
+
+🎨 area:frontend:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'src/pages/**/*'
+          - 'src/components/**/*'
+          - 'src/layouts/**/*'
+
+🎨 area:styles:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'src/styles/**/*'
+          - 'tailwind.config.js'
+
+🌐 area:i18n:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'src/i18n/**/*'
+          - 'src/components/LangScript.astro'
+          - 'scripts/i18n-verify.mjs'
+
+📄 area:content:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'public/**/*'
+          - 'src/content/**/*'
+          - 'src/content.config.ts'
+
+⚙️ area:infra:
+  - changed-files:
+      - any-glob-to-any-file:
+          - '.github/**/*'
+          - 'astro.config.mjs'
+          - 'wrangler.json'
+          - 'package.json'
+          - 'pnpm-lock.yaml'
+          - 'scripts/**/*'
+          - 'src/scripts/**/*'
+
+📝 area:docs:
+  - changed-files:
+      - any-glob-to-any-file:
+          - '*.md'
+          - 'docs/**/*'
