@@ -497,6 +497,7 @@ const tickerRows = [
 /* ═══ Skip Link ═══ */
 .skip-link { position: absolute; top: -100%; left: 1rem; z-index: 9999; padding: 0.75rem 1.5rem; background: var(--text); color: var(--bg); text-decoration: none; font-size: 0.875rem; font-weight: 500; transition: top 0.2s; }
 .skip-link:focus { top: 1rem; }
+.slideshow:focus { outline: none; }
 
 /* ═══ Body ═══ */
 body { background: var(--bg); color: var(--text); font-family: var(--ds-font-body, 'Outfit', 'Noto Sans SC', system-ui, sans-serif); -webkit-font-smoothing: antialiased; }
@@ -540,7 +541,7 @@ html[lang="en"] .lang-btn { color: var(--accent); }
    on touch — tapping "Work" navigates and the menu never opens. */
 @media (max-width: 767px) { .header-email { display: none; } .header-sep { display: none; } .header-nav { position: static; transform: none; left: auto; margin-left: auto; gap: 0.75rem; } .header-right { margin-left: 0.75rem; } .header-link { font-size: 0.6rem; letter-spacing: 0.08em; } }
 @media (max-width: 400px) { .header { padding-left: 1rem; padding-right: 1rem; } .header-logo { letter-spacing: 0.12em; } .header-nav { gap: 0.5rem; } .header-link { font-size: 0.55rem; letter-spacing: 0.06em; } }
-@media (hover: none) { .nav-hover .caret { display: none; } }
+@media (hover: none) { .nav-hover .caret { display: none; } .nav-hover .nav-menu { display: none; } }
 /* 导航字号：原 0.55rem/0.5rem 比桌面 0.65rem 还小（小屏反而更小，反向）。
    上提到 0.6rem/0.55rem，仍比桌面小但接近；实测 320px 视口下横向仍装得下。 */
 /* Work dropdown — hover expands to jump to each work section */
@@ -695,9 +696,9 @@ html[lang="en"] .lang-btn { color: var(--accent); }
 }
 .hero-role .rwd .inner {
 	display: inline-block;
-	transform: translateY(110%);
 	transition: transform 0.7s var(--spring);
 }
+html.ds-js .hero-role .rwd .inner { transform: translateY(110%); }
 .slide.is-active .hero-role .rwd .inner {
 	transform: translateY(0);
 	transition-delay: calc(0.4s + var(--ri, 0) * 0.08s);
@@ -707,11 +708,10 @@ html[lang="en"] .lang-btn { color: var(--accent); }
 	height: 1px;
 	background: var(--accent);
 	margin-bottom: 1.25rem;
-	opacity: 0;
-	transform: scaleX(0);
 	transform-origin: left;
 	transition: opacity 0.6s var(--spring) 0.3s, transform 0.6s var(--spring) 0.3s;
 }
+html.ds-js .hero-divider { opacity: 0; transform: scaleX(0); }
 .slide.is-active .hero-divider { opacity: 1; transform: scaleX(1); }
 .hero-tags {
 	display: flex;
@@ -969,13 +969,16 @@ html[lang="en"] .lang-btn { color: var(--accent); }
 
 /* ═══ Animations ═══ */
 /* Base state: hidden with directional transform */
-.anim { opacity: 0; }
-.anim.up { transform: translateY(32px); }
-.anim.left { transform: translateX(-40px); }
-.anim.right { transform: translateX(40px); }
-.anim.scale { transform: scale(0.92); }
-.anim.blur { filter: blur(8px); transform: translateY(16px); }
-.anim.mask { clip-path: inset(0 0 100% 0); }
+/* 隐藏一律挂在 html.ds-js 后面（BaseHead 检测到 JS 时才加）——无 JS 访客也能静态看到
+   内容。必须用 html.ds-js 而非 .ds-js：本组件样式经 Astro 作用域处理时，类选择器会附
+   加 data-astro-cid 属性导致永远匹配不上 <html>，而 html 元素被 Astro 豁免、可正常匹配。 */
+html.ds-js .anim { opacity: 0; }
+html.ds-js .anim.up { transform: translateY(32px); }
+html.ds-js .anim.left { transform: translateX(-40px); }
+html.ds-js .anim.right { transform: translateX(40px); }
+html.ds-js .anim.scale { transform: scale(0.92); }
+html.ds-js .anim.blur { filter: blur(8px); transform: translateY(16px); }
+html.ds-js .anim.mask { clip-path: inset(0 0 100% 0); }
 
 /* Animate when slide becomes active */
 .slide.is-active .anim.up { animation: fadeUp 0.7s var(--spring) forwards; }
@@ -1045,7 +1048,7 @@ try { (() => {
 	const c = document.getElementById('seaweed');
 	if (!c) return;
 	const ctx = c.getContext('2d');
-	if (!ctx) return;
+	if (!ctx) return;	if (matchMedia?.('(prefers-reduced-motion: reduce)').matches) return; // decorative canvas — skip under reduced motion
 	// Code rain paints onto the aurora canvas — a true page-2 background layer
 	// that sits under the stats text and scrolls away with the slide.
 	const rainC = document.getElementById('aurora');
@@ -1385,7 +1388,7 @@ try { (() => {
 	const c = document.getElementById('waves');
 	if (!c) return;
 	const ctx = c.getContext('2d');
-	if (!ctx) return;
+	if (!ctx) return;	if (matchMedia?.('(prefers-reduced-motion: reduce)').matches) return; // decorative canvas — skip under reduced motion
 	let w, h, cx, cy, maxR;
 	const PAL = ['202,205,196', '138,140,110', '214,219,210']; // silver / olive / bright-silver
 	const dots = [];
@@ -1463,7 +1466,7 @@ try { (() => {
 	const c = document.getElementById('grad');
 	if (!c) return;
 	const ctx = c.getContext('2d');
-	if (!ctx) return;
+	if (!ctx) return;	if (matchMedia?.('(prefers-reduced-motion: reduce)').matches) return; // decorative canvas — skip under reduced motion
 	const dpr = Math.min(window.devicePixelRatio || 1, 2);
 	let w, h, base;
 	let fade = 0;
@@ -1683,6 +1686,18 @@ try { (() => {
 	});
 })(); } catch(e) { console.warn("[4]", e.message); }
 
+// ═══ Work dropdown — keep aria-expanded in sync with the open state ═══
+try { (() => {
+	const hover = document.querySelector('.nav-hover');
+	const trigger = hover?.querySelector('.work-link');
+	if (!hover || !trigger) return;
+	const set = (open) => trigger.setAttribute('aria-expanded', String(open));
+	hover.addEventListener('mouseenter', () => set(true));
+	hover.addEventListener('mouseleave', () => set(false));
+	hover.addEventListener('focusin', () => set(true));
+	hover.addEventListener('focusout', () => set(false));
+})(); } catch(e) { console.warn('[worknav]', e.message); }
+
 // ═══ Smooth anchor ═══
 try { (() => {
 	document.querySelectorAll('a[href^="#"]').forEach(a => {
@@ -1690,7 +1705,15 @@ try { (() => {
 			e.preventDefault();
 			const href = a.getAttribute('href');
 			const t = document.querySelector(href);
-			if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+			if (t) {
+				t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+				// Skip link: move focus into the deck so keyboard users continue
+				// past the navigation — otherwise the next Tab re-enters the nav.
+				if (href === '#slideshow') {
+					t.setAttribute('tabindex', '-1');
+					t.focus({ preventScroll: true });
+				}
+			}
 		});
 	});
 })(); } catch(e) { console.warn('[anchor]', e.message); }
@@ -1700,7 +1723,7 @@ try { (() => {
 // inside the tall Meditation deck) instead of blind +viewport scrollBy, which
 // overshoots under smooth-scroll animation and misaligns the full-bleed artwork.
 document.addEventListener('keydown', (e) => {
-  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT' || e.target.tagName === 'BUTTON' || e.target.isContentEditable) return;
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT' || e.target.tagName === 'BUTTON' || e.target.tagName === 'A' || e.target.isContentEditable) return;
   const deck = document.getElementById('slideshow');
   if (!deck) return;
   const dir = e.key === 'ArrowDown' || e.key === ' ' ? 1 : e.key === 'ArrowUp' ? -1 : 0;
