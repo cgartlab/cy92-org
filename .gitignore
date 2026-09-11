@@ -108,3 +108,6 @@ package-lock.json
 # Local scratch
 .pi/
 .verify-dist/
+
+# Cloudflare Wrangler 本地产物
+.wrangler/
