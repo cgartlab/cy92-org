@@ -93,6 +93,59 @@ export function collectHtmlFiles(distDir) {
 	return files.sort();
 }
 
+function stripRange(html, start, end) {
+	return `${html.slice(0, start)}${html.slice(end)}`;
+}
+
+function stripHtmlComments(html) {
+	let cleaned = html;
+	let start = cleaned.indexOf('<!--');
+	while (start !== -1) {
+		const end = cleaned.indexOf('-->', start + 4);
+		if (end === -1) {
+			cleaned = stripRange(cleaned, start, cleaned.length);
+			break;
+		}
+		cleaned = stripRange(cleaned, start, end + 3);
+		start = cleaned.indexOf('<!--', start);
+	}
+	return cleaned;
+}
+
+function stripBlockTags(html, tagName) {
+	let cleaned = html;
+	let lowerHtml = cleaned.toLowerCase();
+	const openTag = `<${tagName}`;
+	let openStart = lowerHtml.indexOf(openTag);
+	while (openStart !== -1) {
+		const tagEnd = lowerHtml.indexOf('>', openStart);
+		if (tagEnd === -1) {
+			cleaned = stripRange(cleaned, openStart, cleaned.length);
+			break;
+		}
+
+		const closeTag = `</${tagName}`;
+		let searchFrom = tagEnd + 1;
+		let closeStart = lowerHtml.indexOf(closeTag, searchFrom);
+		let closeEnd = -1;
+		while (closeStart !== -1) {
+			closeEnd = lowerHtml.indexOf('>', closeStart);
+			if (closeEnd !== -1) break;
+			closeStart = lowerHtml.indexOf(closeTag, closeStart + closeTag.length);
+		}
+
+		if (closeEnd === -1) {
+			cleaned = stripRange(cleaned, openStart, cleaned.length);
+			break;
+		}
+
+		cleaned = stripRange(cleaned, openStart, closeEnd + 1);
+		lowerHtml = cleaned.toLowerCase();
+		openStart = lowerHtml.indexOf(openTag, openStart + openTag.length);
+	}
+	return cleaned;
+}
+
 /**
  * 提取 HTML 中所有 href / src 属性值。先剔除注释、<script>、<style> 内容，
  * 避免把内联 JS / CSS / JSON-LD 里的伪引用当链接。
@@ -100,10 +153,7 @@ export function collectHtmlFiles(distDir) {
  * @returns {string[]} 属性值列表（未 trim，原始引号内容）
  */
 export function extractReferences(html) {
-	const cleaned = html
-		.replace(/<!--[\s\S]*?-->/g, '')
-		.replace(/<script\b[^>]*>[\s\S]*?<\/script\s*>/gi, '')
-		.replace(/<style\b[^>]*>[\s\S]*?<\/style\s*>/gi, '');
+	const cleaned = stripBlockTags(stripBlockTags(stripHtmlComments(html), 'script'), 'style');
 	const refs = [];
 	const re = /\s(?:href|src)\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s>]+))/gi;
 	let match;
