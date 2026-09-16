@@ -33,6 +33,9 @@ export const I18N: Record<string, I18NEntry> = {
 	menuCloseAria: { zh: '关闭导航菜单', en: 'Close the navigation menu' },
 	themeAria: { zh: '切换主题', en: 'Toggle color theme' },
 	langAria: { zh: '切换语言', en: 'Switch language' },
+	printAria: { zh: '打印简历', en: 'Print resume' },
+	printNow: { zh: '打印 / 保存 PDF', en: 'Print / Save PDF' },
+	backHome: { zh: '返回首页', en: 'Back to Home' },
 	footerQuoteTools: {
 		zh: '工具是人类肢体的延伸，电脑是大脑的延伸，写作是思考本身。',
 		en: 'Tools extend our limbs, computers extend our minds, and writing is thinking itself.'

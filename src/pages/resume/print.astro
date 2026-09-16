@@ -1,0 +1,767 @@
+---
+import { STATS } from '../../consts';
+
+const STATS_LABELS_ZH = ['累计发表字数', '过去一年提交代码', '从事数字创作领域', '文章累计被阅读'];
+const STATS_LABELS_EN = ['Words Published', 'Code Commits (1Y)', 'Years in Digital Creation', 'Article Reads'];
+const STATS_VALUES_EN = STATS.map((s) =>
+  s.value.includes('万')
+    ? `${Math.round((parseFloat(s.value.replace('+', '')) * 10000) / 1000)}K+`
+    : s.value
+);
+title: "ChenYang · A4 Resume"
+description: "A4 printable resume"
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ChenYang · A4 Resume</title>
+    <meta name="description" content="A4 printable resume for ChenYang, designer, digital artist, front-end developer and writer." />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap"
+      rel="stylesheet"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link
+        href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap"
+        rel="stylesheet"
+      />
+    </noscript>
+    <script is:inline>
+      try {
+        const printLang = localStorage.getItem("lang") === "zh" ? "zh" : "en";
+        document.documentElement.lang = printLang === "zh" ? "zh-CN" : "en";
+        document.documentElement.classList.toggle("lang-en", printLang !== "zh");
+      } catch {
+        document.documentElement.classList.add("lang-en");
+      }
+    </script>
+  </head>
+  <body>
+    <main class="print-stage">
+      <div class="toolbar no-print">
+        <a href="/">
+          <span class="zh-only">返回首页</span>
+          <span class="en-only">Back to Home</span>
+        </a>
+        <div class="toolbar-actions">
+          <button type="button" class="lang-toggle" onclick="toggleLang()" aria-label="Switch resume language">中/EN</button>
+          <button type="button" onclick="window.print()">
+            <span class="zh-only">打印 / 保存 PDF</span>
+            <span class="en-only">Print / Save PDF</span>
+          </button>
+        </div>
+      </div>
+
+      <article class="a4-sheet">
+        <article class="resume zh-resume" lang="zh-CN">
+          <header class="masthead">
+            <div class="brand">
+              <h1>陈阳</h1>
+              <p class="role">动态视觉设计师，内容创作者，产品工程师</p>
+            </div>
+            <address class="contact">
+              <a href="mailto:hello@cgartlab.com">hello@cgartlab.com</a>
+              <span>云南昆明</span>
+              <a href="https://cgartlab.com">cgartlab.com</a>
+              <a href="https://github.com/cgartlab">github.com/cgartlab</a>
+            </address>
+          </header>
+
+          <section class="opening">
+            <p>设计师、数字艺术家、前端开发者与写作者。围绕数字动态视觉、前端产品、写作与个人纯艺术输出可验证作品，强调从概念、执行到交付的完整链路。</p>
+            <p class="quote">创作即认知。</p>
+          </section>
+
+          <dl class="stats">
+            {STATS.map((s, i) => (
+              <div><dt>{s.value}</dt><dd>{STATS_LABELS_ZH[i]}</dd></div>
+            ))}
+          </dl>
+
+          <div class="body">
+            <section class="col left">
+              <h2>教育经历</h2>
+              <ul class="education">
+                <li><strong>泰国东方大学</strong><span>2016 — 2019</span><em>应用艺术与视觉设计专业 / 硕士学位</em></li>
+                <li><strong>云南艺术学院</strong><span>2010 — 2014</span><em>动画专业 / 学士学位</em></li>
+              </ul>
+              <h2>常用工具清单</h2>
+              <dl class="tools">
+                <div><dt>专业软件</dt><dd>Cinema 4D<br>3ds Max<br>After Effects<br>Photoshop<br>WordPress</dd></div>
+                <div><dt>计算服务</dt><dd>本地 NAS<br>Docker<br>Syncthing<br>Miniflux<br>RSS</dd></div>
+                <div><dt>自研工具</dt><dd>Argus 代码审查智能体<br>Men 智能体团队</dd></div>
+              </dl>
+            </section>
+
+            <section class="col right">
+              <h2>工作经历</h2>
+              <div class="work-list">
+                <article class="work">
+                  <div class="top"><h3>AnimPoly.ltd</h3><span>2022 — 2025</span></div>
+                  <p class="role-line">创始人 / 导演</p>
+                </article>
+                <article class="work">
+                  <div class="top"><h3>云南壹世界策划传媒有限公司</h3><span>2020 — 2021</span></div>
+                  <p class="role-line">广告部 / 高级平面设计师</p>
+                </article>
+                <article class="work">
+                  <div class="top"><h3>云南壹度影秀文化传播有限公司</h3><span>2019 — 2020</span></div>
+                  <p class="role-line">设计部 / 项目经理</p>
+                </article>
+                <article class="work">
+                  <div class="top"><h3>湖南卫风传媒有限公司</h3><span>2014 — 2016</span></div>
+                  <p class="role-line">形象工作室 / 动态视觉设计师</p>
+                </article>
+              </div>
+              <h2>项目经历与奖项认证</h2>
+              <ul class="honors">
+                <li><span>2025</span><div><strong>《流浪地球 3（上）》</strong><em>UI 设计师</em></div></li>
+                <li><span>2024</span><div><strong>《中央人民广播电视台品牌强国工程》开幕式</strong><em>动效设计师</em></div></li>
+                <li><span>2023</span><div><strong>创立“CG 艺术实验室”</strong><em>个人创作平台</em></div></li>
+                <li><span>2021</span><div><strong>作品《COVID-19》</strong><em>入选 CCG EXPO 中国国际动漫游戏博览会</em></div></li>
+                <li><span>2020</span><div><strong>第十二届昆明海鸥文化节</strong><em>LED 创意总监</em></div></li>
+                <li><span>2020</span><div><strong>第九届澜湄六国文化艺术节</strong><em>舞美视觉艺术总监</em></div></li>
+                <li><span>2019</span><div><strong>入选中国电影美术学会</strong><em>会员</em></div></li>
+                <li><span>2019</span><div><strong>VR 数字艺术作品《Hello World 2.0》</strong><em>荣获泰国 2019 年度最佳艺术研究奖</em></div></li>
+                <li><span>2017</span><div><strong>数字艺术作品《E&S》</strong><em>参展泰国东方大学“Sea to See”创意新加坡年展</em></div></li>
+                <li><span>2016</span><div><strong>数字艺术作品《冥想系列》</strong><em>入选韩国 INDEF2016 艺术展</em></div></li>
+                <li><span>2015</span><div><strong>数字艺术作品《夕象》</strong><em>参展天下共生“用艺术为生命呐喊”公益行动</em></div></li>
+              </ul>
+            </section>
+          </div>
+
+          <footer class="footer-bar">
+            <p class="footer-tag">工具是人类肢体的延伸，电脑是大脑的延伸，写作是思考本身。</p>
+            <p class="footer-id">陈阳 · hello@cgartlab.com</p>
+          </footer>
+        </article>
+
+        <article class="resume en-resume" lang="en">
+          <header class="masthead">
+            <div class="brand">
+              <h1>ChenYang</h1>
+              <p class="role">Motion Visual Designer · Content Creator · Product Engineer</p>
+            </div>
+            <address class="contact">
+              <a href="mailto:hello@cgartlab.com">hello@cgartlab.com</a>
+              <span>Kunming, China</span>
+              <a href="https://cgartlab.com">cgartlab.com</a>
+              <a href="https://github.com/cgartlab">github.com/cgartlab</a>
+            </address>
+          </header>
+
+          <section class="opening">
+            <p>Designer, digital artist, front-end developer and writer. Work spans motion visuals, front-end products, writing and personal fine art, with emphasis on a complete path from concept to delivery.</p>
+            <p class="quote">Creation as cognition.</p>
+          </section>
+
+          <dl class="stats">
+            {STATS.map((s, i) => (
+              <div><dt>{STATS_VALUES_EN[i]}</dt><dd>{STATS_LABELS_EN[i]}</dd></div>
+            ))}
+          </dl>
+
+          <div class="body">
+            <section class="col left">
+              <h2>Education</h2>
+              <ul class="education">
+                <li><strong>Burapha University</strong><span>2016 — 2019</span><em>Fine Applied Arts Visual Design / Master’s Degree</em></li>
+                <li><strong>Yunnan Arts University</strong><span>2010 — 2014</span><em>Animation / Bachelor’s Degree</em></li>
+              </ul>
+              <h2>Tools</h2>
+              <dl class="tools">
+                <div><dt>Professional Software</dt><dd>Cinema 4D<br>3ds Max<br>After Effects<br>Photoshop<br>WordPress</dd></div>
+                <div><dt>Compute Services</dt><dd>Local NAS<br>Docker<br>Syncthing<br>Miniflux<br>RSS</dd></div>
+                <div><dt>Self-Built Tools</dt><dd>Argus Code Review Agent<br>Men Agent Team</dd></div>
+              </dl>
+            </section>
+
+            <section class="col right">
+              <h2>Work Experience</h2>
+              <div class="work-list">
+                <article class="work">
+                  <div class="top"><h3>AnimPoly.ltd</h3><span>2022 — 2025</span></div>
+                  <p class="role-line">Founder / Director</p>
+                </article>
+                <article class="work">
+                  <div class="top"><h3>Yunnan Yishijie Planning Media Co., Ltd.</h3><span>2020 — 2021</span></div>
+                  <p class="role-line">Advertising Department / Senior Graphic Designer</p>
+                </article>
+                <article class="work">
+                  <div class="top"><h3>Yunnan Yiduyingxiu Culture Media Co., Ltd.</h3><span>2019 — 2020</span></div>
+                  <p class="role-line">Design Department / Project Manager</p>
+                </article>
+                <article class="work">
+                  <div class="top"><h3>Hunan Weifeng Media Co., Ltd.</h3><span>2014 — 2016</span></div>
+                  <p class="role-line">Image Studio / Motion Visual Designer</p>
+                </article>
+              </div>
+              <h2>Projects, Honors & Certifications</h2>
+              <ul class="honors">
+                <li><span>2025</span><div><strong>The Wandering Earth 3 (Part 1)</strong><em>UI Designer</em></div></li>
+                <li><span>2024</span><div><strong>Opening Ceremony, CMG Brand-Strong-Nation Programme</strong><em>Motion Designer</em></div></li>
+                <li><span>2023</span><div><strong>Founded CG Art Lab</strong><em>Personal creative platform</em></div></li>
+                <li><span>2021</span><div><strong>COVID-19</strong><em>Selected for CCG EXPO, China International Animation &amp; Game Expo</em></div></li>
+                <li><span>2020</span><div><strong>12th Kunming Seagull Culture Festival</strong><em>LED Creative Director</em></div></li>
+                <li><span>2020</span><div><strong>9th Lancang–Mekong Six-Nation Arts Festival</strong><em>Director of Stage Visual Arts</em></div></li>
+                <li><span>2019</span><div><strong>China Film Art Association</strong><em>Member</em></div></li>
+                <li><span>2019</span><div><strong>VR Digital Artwork 'Hello World 2.0'</strong><em>Won Thailand 2019 Best Artistic Research Award</em></div></li>
+                <li><span>2017</span><div><strong>Digital Artwork 'E&amp;S'</strong><em>Exhibited at 'Sea to See' Creative Singapore Annual, Eastern Asia University</em></div></li>
+                <li><span>2016</span><div><strong>Digital Artwork 'Meditation Series'</strong><em>Selected for INDEF2016 Art Exhibition, South Korea</em></div></li>
+                <li><span>2015</span><div><strong>Digital Artwork 'Evening Elephant'</strong><em>Exhibited in 'Voices for Life Through Art'</em></div></li>
+              </ul>
+            </section>
+          </div>
+
+          <footer class="footer-bar">
+            <p class="footer-tag">Tools extend the body, computers extend the mind, writing is thinking itself.</p>
+            <p class="footer-id">ChenYang · hello@cgartlab.com</p>
+          </footer>
+        </article>
+      </article>
+    </main>
+
+    <script is:inline>
+      function toggleLang() {
+        const next = document.documentElement.classList.contains("lang-en") ? "zh" : "en";
+        try {
+          localStorage.setItem("lang", next);
+        } catch {}
+        document.documentElement.lang = next === "zh" ? "zh-CN" : "en";
+        document.documentElement.classList.toggle("lang-en", next !== "zh");
+      }
+    </script>
+  </body>
+</html>
+
+<style>
+  :root {
+    --paper: #ffffff;
+    --ink: #171512;
+    --sub: #5d574e;
+    --muted: #8b8478;
+    --line: #e5e5e0;
+    --accent: #6e7058;
+    --accent-soft: #f4f4ee;
+  }
+
+  @page {
+    size: A4;
+    margin: 0;
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+    background: #ffffff;
+    color: var(--ink);
+    color-scheme: light;
+  }
+
+  body {
+    font-family: "Outfit", "Noto Sans SC", "Microsoft YaHei", Arial, sans-serif;
+    font-size: 9.2pt;
+    line-height: 1.42;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .print-stage {
+    min-height: 100vh;
+  }
+
+  .toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 52px;
+    padding: 0 18px;
+    border-bottom: 1px solid var(--line);
+    background: #fff;
+  }
+
+  .toolbar a {
+    color: var(--sub);
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .toolbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .toolbar button {
+    border: 0;
+    border-radius: 999px;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 9px 14px;
+    font: 700 12px/1 inherit;
+    cursor: pointer;
+  }
+
+  .lang-toggle {
+    background: var(--accent-soft) !important;
+    color: var(--accent) !important;
+  }
+
+  html.lang-en .zh-only,
+  html:not(.lang-en) .en-only {
+    display: none !important;
+  }
+
+  html:not(.lang-en) .en-resume,
+  html.lang-en .zh-resume {
+    display: none !important;
+  }
+
+  .a4-sheet {
+    width: 210mm;
+    height: 297mm;
+    margin: 0 auto;
+    background: var(--paper);
+    overflow: hidden;
+  }
+
+  .resume {
+    width: 100%;
+    height: 100%;
+    padding: 9.2mm 11.2mm 8.2mm;
+    display: grid;
+    grid-template-rows: auto auto auto minmax(0, 1fr) auto;
+    row-gap: 3.7mm;
+  }
+
+  .masthead {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 64mm;
+    column-gap: 6mm;
+    align-items: end;
+    padding-bottom: 3.1mm;
+    border-bottom: 1.3pt solid var(--ink);
+  }
+
+  .brand h1 {
+    margin: 0;
+    font-family: "EB Garamond", "Noto Serif SC", "Noto Sans SC", Georgia, serif;
+    font-size: 23.4pt;
+    line-height: .95;
+    letter-spacing: -.035em;
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  .brand .role {
+    margin: 1.8mm 0 0;
+    font-size:  14px;
+    line-height: 1.24;
+    letter-spacing: .022em;
+    color: var(--ink);
+    font-weight: 700;
+  }
+
+  .contact {
+    margin: 0;
+    text-align: right;
+    font-style: normal;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.2mm 3mm;
+    align-content: end;
+    font-size: 12px;
+    line-height: 1.26;
+    letter-spacing: .028em;
+    color: var(--sub);
+  }
+
+  .opening {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 44mm;
+    column-gap: 7mm;
+    align-items: end;
+  }
+
+  .opening p {
+    margin: 0;
+    font-size: 12px;
+    line-height: 1.36;
+    letter-spacing: .026em;
+    color: #38342f;
+  }
+
+  .opening .quote {
+    font-family: "EB Garamond", "Noto Serif SC", "Noto Sans SC", Georgia, serif;
+    font-size: 12px;
+    line-height: 1.22;
+    color: var(--sub);
+    font-weight: 500;
+    letter-spacing: .08em;
+    text-align: right;
+    font-style: italic;
+  }
+
+  .stats {
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    column-gap: 4.2mm;
+    border-top: 1px solid var(--ink);
+  }
+
+  .stats > div {
+    padding: 2mm 0 0;
+  }
+
+  .stats dt {
+    margin: 0;
+    font-family: "EB Garamond", "Noto Serif SC", Georgia, serif;
+    font-size: 18px;
+    line-height: 1;
+    letter-spacing: 0;
+    color: var(--ink);
+    font-weight: 900;
+  }
+
+  .stats dd {
+    margin: .7mm 0 0;
+    font-size:  10px;
+    line-height: 1.22;
+    letter-spacing: .032em;
+    color: var(--muted);
+  }
+
+  .body {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    column-gap: 7mm;
+    margin-top: 7mm;
+    min-height: 0;
+  }
+
+  .col {
+    min-width: 0;
+    display: grid;
+    align-content: start;
+    row-gap: 4.6mm;
+  }
+
+  .work-list {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 3.4mm;
+  }
+
+  .tools {
+    margin: 0;
+    display: grid;
+    row-gap: 4.2mm;
+  }
+
+  .tools > div {
+    display: grid;
+    grid-template-columns: 17.5mm minmax(0, 1fr);
+    column-gap: 3mm;
+    align-items: baseline;
+    padding-bottom: 2.2mm;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .tools > div:last-child {
+    border-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .tools dt {
+    margin: 0;
+    font-size: 12px;
+    line-height: 1.28;
+    letter-spacing: .042em;
+    color: var(--muted);
+    font-weight:  700;
+  }
+
+  .tools dd {
+    margin: 0;
+    font-size: 12px;
+    line-height: 1.52;
+    letter-spacing: .032em;
+    color: #514b43;
+  }
+
+  h2 {
+    margin: 0;
+    padding-bottom: 1.35mm;
+    border-bottom: 1.25pt solid var(--ink);
+    color: var(--ink);
+    font-family: "EB Garamond", "Noto Serif SC", "Noto Sans SC", Georgia, serif;
+    font-size: 16px;
+    line-height: 1;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    font-weight: 900;
+  }
+
+  .work {
+    display: grid;
+    row-gap: .9mm;
+    padding-bottom: 2.4mm;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .work:last-of-type {
+    border-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .work .top {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: 3mm;
+    align-items: baseline;
+  }
+
+  .work h3 {
+    margin: 0;
+    font-family: "EB Garamond", "Noto Serif SC", "Noto Sans SC", Georgia, serif;
+    font-size:  14px;
+    line-height: 1.16;
+    letter-spacing: .032em;
+    color: var(--ink);
+    font-weight:  700;
+  }
+
+  .work .top span {
+    font-size: 12px;
+    line-height: 1.16;
+    letter-spacing: .042em;
+    color: var(--muted);
+    font-weight:  600;
+    white-space: nowrap;
+  }
+
+  .role-line {
+    margin: 0;
+    font-size: 12px;
+    line-height: 1.22;
+    letter-spacing: .032em;
+    color: var(--ink);
+    font-weight: 400;
+  }
+
+  .work p:not(.role-line) {
+    margin: .5mm 0 0;
+    font-size: 12px;
+    line-height: 1.24;
+    letter-spacing: .032em;
+    color: #4c4740;
+  }
+
+  .honors {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 1.4mm;
+  }
+
+  .honors li {
+    display: grid;
+    grid-template-columns: 12mm minmax(0, 1fr);
+    column-gap: 3mm;
+    align-items: start;
+    padding-bottom: 1.3mm;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .honors li:last-child {
+    border-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .honors li > span {
+    font-size: 12px;
+    line-height: 1.16;
+    letter-spacing: .042em;
+    color: var(--muted);
+    font-weight:  600;
+  }
+
+  .honors strong {
+    display: block;
+    font-family: "EB Garamond", "Noto Serif SC", "Noto Sans SC", Georgia, serif;
+    font-size:  14px;
+    line-height: 1.18;
+    letter-spacing: .032em;
+    color: var(--ink);
+    font-weight:  700;
+  }
+
+  .honors em {
+    display: block;
+    margin-top: .15mm;
+    font-style: normal;
+    font-size: 12px;
+    line-height: 1.2;
+    letter-spacing: .032em;
+    color: var(--sub);
+  }
+
+  .education {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    row-gap: 2.5mm;
+  }
+
+  .education li {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: 3mm;
+    align-items: baseline;
+    padding-bottom: 1.7mm;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .education li:last-child {
+    border-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .education strong {
+    font-family: "EB Garamond", "Noto Serif SC", "Noto Sans SC", Georgia, serif;
+    font-size:  14px;
+    line-height: 1.18;
+    letter-spacing: .032em;
+    color: var(--ink);
+    font-weight:  700;
+  }
+
+  .education span {
+    font-size: 12px;
+    line-height: 1.18;
+    letter-spacing: .042em;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  .education em {
+    grid-column: 1 / -1;
+    display: block;
+    margin-top: .25mm;
+    font-style: normal;
+    font-size: 12px;
+    line-height: 1.22;
+    letter-spacing: .032em;
+    color: var(--sub);
+  }
+
+  .tag-copy {
+    margin: 0;
+    font-size: 12px;
+    line-height: 1.22;
+    color: #514b43;
+  }
+
+  .footer-bar {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: 6mm;
+    align-items: center;
+    padding-top: 2mm;
+    border-top: 1px solid var(--ink);
+  }
+
+  .footer-tag {
+    margin: 0;
+    font-family: "EB Garamond", "Noto Serif SC", "Noto Sans SC", Georgia, serif;
+    font-size: 10px;
+    line-height: 1.3;
+    color: var(--sub);
+    font-style: italic;
+    font-weight: 500;
+  }
+
+  .footer-id {
+    margin: 0;
+    font-size: 10px;
+    line-height: 1.3;
+    color: var(--sub);
+    font-weight: 700;
+    letter-spacing: .04em;
+    white-space: nowrap;
+  }
+
+  @media screen {
+    .print-stage {
+      padding: 0;
+    }
+
+    .toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .a4-sheet {
+      margin: 0 auto;
+      box-shadow: none;
+    }
+  }
+
+  @media print {
+    html,
+    body {
+      width: 210mm;
+      height: 297mm;
+      background: var(--paper);
+      overflow: hidden;
+    }
+
+    .print-stage {
+      padding: 0;
+      min-height: 0;
+    }
+
+    .toolbar {
+      display: none !important;
+    }
+
+    .a4-sheet {
+      width: 210mm;
+      height: 297mm;
+      margin: 0;
+      box-shadow: none;
+      break-after: avoid;
+      page-break-after: avoid;
+    }
+
+    .resume {
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+  }
+</style>
