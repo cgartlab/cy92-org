@@ -2,71 +2,61 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ================================================================
-   Design System v2.0 — matthewencina.com inspired
-   Fonts: Inter (Latin) + Noto Sans SC (Chinese) via Google Fonts
-   Future: Replace with OPPO Sans when self-hosted files available
-   ================================================================ */
-
 @layer base {
 	:root {
-		/* ── Light Mode (default) ── */
-		--ds-color-bg: #FAF9F6;
-		--ds-color-surface: #FFFFFF;
-		--ds-color-surface-raised: #FFFFFF;
-		--ds-color-surface-overlay: #F3F2EE;
-		--ds-color-border-subtle: #E8E6E1;
-		--ds-color-border: #DDD9D2;
-		--ds-color-border-strong: #C5C0B7;
-		--ds-color-muted: #9E978C;
-		--ds-color-fg-subtle: #6B6560;
-		--ds-color-fg: #2D2926;
-		--ds-color-fg-strong: #111111;
-		--ds-color-fg-inverse: #FAF9F6;
-		--ds-color-white: #FFFFFF;
-		--ds-color-black: #111111;
+		/* === CGArtLab Design System v1.0 Tokens === */
 
-		/* Accent: Olive (muted, editorial) */
-		--ds-color-olive-50: #F0F0E8;
-		--ds-color-olive-100: #E0E0D0;
-		--ds-color-olive-200: #C8C8B0;
-		--ds-color-olive-300: #A8A888;
-		--ds-color-olive-400: #8A8C6E;
-		--ds-color-olive-500: #6E7058;
-		--ds-color-olive-600: #5C5E48;
-		--ds-color-olive-700: #4A4C3A;
-		--ds-color-olive-800: #383A2C;
-		--ds-color-olive-900: #262820;
+		/* Color: Neutral (OKLch) */
+		--ds-color-bg: oklch(97% 0.012 80);
+		--ds-color-surface: oklch(99% 0.005 80);
+		--ds-color-surface-raised: oklch(100% 0 0);
+		--ds-color-surface-overlay: oklch(97% 0.008 80);
+		--ds-color-border-subtle: oklch(92% 0.012 80);
+		--ds-color-border: oklch(89% 0.012 80);
+		--ds-color-border-strong: oklch(82% 0.015 75);
+		--ds-color-muted: oklch(48% 0.015 60);
+		--ds-color-fg-subtle: oklch(35% 0.018 60);
+		--ds-color-fg: oklch(20% 0.02 60);
+		--ds-color-fg-strong: oklch(14% 0.025 60);
+		--ds-color-fg-inverse: oklch(97% 0.005 80);
+		--ds-color-white: oklch(100% 0 0);
+		--ds-color-black: oklch(0% 0 0);
+
+
+		/* Color: Olive Accent Scale */
+		--ds-color-olive-50: oklch(90% 0.025 115);
+		--ds-color-olive-100: oklch(82% 0.035 115);
+		--ds-color-olive-200: oklch(72% 0.05 115);
+		--ds-color-olive-300: oklch(62% 0.065 115);
+		--ds-color-olive-400: oklch(52% 0.08 115);
+		--ds-color-olive-500: oklch(45% 0.085 115);
+		--ds-color-olive-600: oklch(38% 0.08 115);
+		--ds-color-olive-700: oklch(30% 0.07 115);
+		--ds-color-olive-800: oklch(22% 0.055 115);
+		--ds-color-olive-900: oklch(15% 0.04 115);
 
 		/* Accent aliases */
-		--ds-accent: #8A8C6E;
-		--ds-accent-hover: #6E7058;
-		--ds-accent-soft: #F0F0E8;
-		--ds-accent-muted: #F5F5EE;
-
-		/* Secondary accent: Terracotta (from matthewencina.com) */
-		--ds-terracotta: #E05D4E;
-		--ds-terracotta-hover: #C94A3C;
-
-		/* Tertiary accent: Gold */
-		--ds-gold: #E8AD0C;
-		--ds-gold-hover: #D49D0A;
+		--ds-accent: var(--ds-color-olive-500);
+		--ds-accent-hover: var(--ds-color-olive-600);
+		--ds-accent-soft: var(--ds-color-olive-100);
+		--ds-accent-muted: var(--ds-color-olive-50);
 
 		/* Semantic colors */
-		--ds-color-success: #4A8B5C;
-		--ds-color-success-bg: #EDF5EF;
-		--ds-color-warning: #B8860B;
-		--ds-color-warning-bg: #FDF6E3;
-		--ds-color-error: #C4493C;
-		--ds-color-error-bg: #FDF0EE;
-		--ds-color-info: #4A6B8A;
-		--ds-color-info-bg: #EDF2F7;
+		--ds-color-success: oklch(55% 0.1 145);
+		--ds-color-success-bg: oklch(93% 0.025 145);
+		--ds-color-warning: oklch(65% 0.1 85);
+		--ds-color-warning-bg: oklch(95% 0.025 85);
+		--ds-color-error: oklch(50% 0.14 30);
+		--ds-color-error-bg: oklch(93% 0.025 30);
+		--ds-color-info: oklch(55% 0.08 240);
+		--ds-color-info-bg: oklch(93% 0.02 240);
 
-		/* Typography — Inter + Noto Sans SC */
-		--ds-font-display: 'Inter', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-		--ds-font-body: 'Inter', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-		--ds-font-mono: 'JetBrains Mono', 'IBM Plex Mono', 'SF Mono', ui-monospace, monospace;
-		--ds-font-ui: 'Inter', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+
+		/* Typography */
+		--ds-font-display: "Iowan Old Style", "Charter", Georgia, "Noto Serif SC", "Source Han Serif SC", serif;
+		--ds-font-body: "Noto Sans SC", "Source Han Sans SC", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+		--ds-font-mono: "JetBrains Mono", "IBM Plex Mono", "Noto Sans Mono SC", ui-monospace, monospace;
+		--ds-font-ui: "Noto Sans SC", "Source Han Sans SC", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
 
 		/* Type Scale */
 		--ds-text-caption: 0.75rem;
@@ -80,10 +70,9 @@
 		--ds-text-h2: 2.25rem;
 		--ds-text-h1: 3rem;
 		--ds-text-display: 3.75rem;
-		--ds-text-hero: 5rem;
+		--ds-text-hero: 4.5rem;
 
 		/* Font weights */
-		--ds-weight-thin: 100;
 		--ds-weight-light: 300;
 		--ds-weight-regular: 400;
 		--ds-weight-medium: 500;
@@ -91,19 +80,21 @@
 		--ds-weight-bold: 700;
 
 		/* Line heights */
-		--ds-leading-tight: 1.05;
-		--ds-leading-snug: 1.2;
-		--ds-leading-body: 1.6;
-		--ds-leading-relaxed: 1.75;
+		--ds-leading-tight: 1.1;
+		--ds-leading-snug: 1.25;
+		--ds-leading-body: 1.55;
+		--ds-leading-relaxed: 1.7;
 		--ds-leading-loose: 2;
 
-		/* Letter spacing — tight, editorial (matthewencina.com uses -0.02 to -0.05) */
-		--ds-tracking-tight: -0.04em;
-		--ds-tracking-tighter: -0.05em;
-		--ds-tracking-normal: 0;
+
+		/* Letter spacing */
+		--ds-tracking-tight: -0.01em;
+		--ds-tracking-normal: 0.02em;
 		--ds-tracking-wide: 0.04em;
 		--ds-tracking-wider: 0.08em;
 		--ds-tracking-widest: 0.12em;
+		--ds-tracking-cjk-body: 0.03em;
+		--ds-tracking-cjk-heading: 0.06em;
 
 		/* Spacing (4px base) */
 		--ds-space-0: 0;
@@ -118,8 +109,6 @@
 		--ds-space-12: 3rem;
 		--ds-space-14: 3.5rem;
 		--ds-space-16: 4rem;
-		/* 触屏命中区最小值（Apple HIG），供 (pointer: coarse) 时放大控件用 */
-		--ds-touch-target: 44px;
 		--ds-space-20: 5rem;
 		--ds-space-24: 6rem;
 		--ds-space-32: 8rem;
@@ -133,31 +122,30 @@
 		--ds-radius-2xl: 16px;
 		--ds-radius-full: 9999px;
 
-		/* Shadows — subtle, refined */
-		--ds-shadow-xs: 0 1px 2px rgba(0,0,0,0.04);
-		--ds-shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
-		--ds-shadow-md: 0 4px 6px rgba(0,0,0,0.06), 0 2px 4px rgba(0,0,0,0.04);
-		--ds-shadow-lg: 0 10px 15px rgba(0,0,0,0.08), 0 4px 6px rgba(0,0,0,0.04);
-		--ds-shadow-xl: 0 20px 25px rgba(0,0,0,0.10), 0 8px 10px rgba(0,0,0,0.06);
 
-		/* Transitions (matthewencina.com uses cubic-bezier(.44,0,.56,1)) */
+		/* Shadows */
+		--ds-shadow-xs: 0 1px 2px oklch(0% 0 0 / 4%);
+		--ds-shadow-sm: 0 1px 3px oklch(0% 0 0 / 6%), 0 1px 2px oklch(0% 0 0 / 4%);
+		--ds-shadow-md: 0 4px 6px oklch(0% 0 0 / 6%), 0 2px 4px oklch(0% 0 0 / 4%);
+		--ds-shadow-lg: 0 10px 15px oklch(0% 0 0 / 8%), 0 4px 6px oklch(0% 0 0 / 4%);
+		--ds-shadow-xl: 0 20px 25px oklch(0% 0 0 / 10%), 0 8px 10px oklch(0% 0 0 / 6%);
+		--ds-shadow-2xl: 0 25px 50px oklch(0% 0 0 / 12%);
+
+		/* Transitions */
 		--ds-duration-100: 100ms;
 		--ds-duration-150: 150ms;
 		--ds-duration-200: 200ms;
 		--ds-duration-300: 300ms;
-		--ds-duration-400: 400ms;
 		--ds-duration-500: 500ms;
 		--ds-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 		--ds-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
 		--ds-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
-		--ds-ease-smooth: cubic-bezier(0.44, 0, 0.56, 1);
-		--ds-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 
 		/* Glass / Overlay */
-		--ds-glass-bg: rgba(250, 249, 246, 0.8);
-		--ds-glass-border: rgba(0, 0, 0, 0.06);
-		--ds-glass-shadow: 0 4px 24px rgba(0,0,0,0.06);
-		--ds-color-overlay: rgba(0, 0, 0, 0.4);
+		--ds-glass-bg: oklch(97% 0.012 80 / 0.55);
+		--ds-glass-border: oklch(89% 0.012 80 / 0.25);
+		--ds-glass-shadow: 0 4px 24px oklch(0% 0 0 / 0.06);
+		--ds-color-overlay: oklch(0% 0 0 / 0.4);
 		--ds-blur-md: 12px;
 		--ds-blur-lg: 24px;
 
@@ -167,94 +155,141 @@
 		--ds-z-modal: 400;
 		--ds-z-toast: 500;
 
-		/* Tailwind HSL compat */
+		/* Legacy Tailwind compat (HSL for Tailwind color classes) */
 		--background: 48 20% 95%;
-		--foreground: 30 8% 12%;
+		--foreground: 60 4% 8%;
 		--card: 48 25% 97%;
-		--card-foreground: 30 8% 12%;
-		--primary: 70 10% 45%;
+		--card-foreground: 60 4% 8%;
+		--primary: 115 30% 35%;
 		--primary-foreground: 48 25% 97%;
 		--secondary: 45 12% 90%;
-		--secondary-foreground: 30 8% 20%;
+		--secondary-foreground: 60 4% 15%;
 		--muted: 45 10% 88%;
-		--muted-foreground: 30 5% 50%;
-		--accent: 70 10% 45%;
-		--accent-foreground: 48 25% 97%;
-		--border: 40 12% 88%;
-		--input: 40 12% 88%;
-		--ring: 70 10% 45%;
+		--muted-foreground: 45 5% 40%;
+		--accent: 115 20% 85%;
+		--accent-foreground: 60 4% 15%;
+		--border: 45 12% 85%;
+		--input: 45 12% 85%;
+		--ring: 115 30% 35%;
 		--radius: 0.5rem;
 	}
 
 
-	/* === Dark Mode (matthewencina.com inspired) === */
-	[data-theme="dark"], .dark {
-		--ds-color-bg: #111111;
-		--ds-color-surface: #1A1A1A;
-		--ds-color-surface-raised: #222222;
-		--ds-color-surface-overlay: #1E1E1E;
-		--ds-color-border-subtle: #2A2A2A;
-		--ds-color-border: #333333;
-		--ds-color-border-strong: #444444;
-		--ds-color-muted: #888880;
-		--ds-color-fg-subtle: #A0A098;
-		--ds-color-fg: #D4D2CC;
-		--ds-color-fg-strong: #FAF9F6;
-		--ds-color-fg-inverse: #111111;
+	/* === Dark Mode === */
+	[data-theme="dark"] {
+		--ds-color-bg: oklch(15% 0.008 75);
+		--ds-color-surface: oklch(19% 0.008 75);
+		--ds-color-surface-raised: oklch(23% 0.01 75);
+		--ds-color-surface-overlay: oklch(21% 0.008 75);
+		--ds-color-border-subtle: oklch(27% 0.01 72);
+		--ds-color-border: oklch(31% 0.012 72);
+		--ds-color-border-strong: oklch(38% 0.015 72);
+		--ds-color-muted: oklch(60% 0.012 70);
+		--ds-color-fg-subtle: oklch(70% 0.01 70);
+		--ds-color-fg: oklch(84% 0.008 72);
+		--ds-color-fg-strong: oklch(92% 0.005 75);
+		--ds-color-fg-inverse: oklch(15% 0.008 75);
 
-		--ds-color-olive-50: #1E1E18;
-		--ds-color-olive-100: #282820;
-		--ds-color-olive-200: #383830;
-		--ds-color-olive-300: #585850;
-		--ds-color-olive-400: #8A8C6E;
-		--ds-color-olive-500: #A0A288;
-		--ds-color-olive-600: #B8BAA0;
-		--ds-color-olive-700: #D0D2B8;
-		--ds-color-olive-800: #E8E8D8;
-		--ds-color-olive-900: #F5F5EE;
+		--ds-color-olive-50: oklch(22% 0.02 115);
+		--ds-color-olive-100: oklch(27% 0.025 115);
+		--ds-color-olive-200: oklch(35% 0.035 115);
+		--ds-color-olive-300: oklch(45% 0.05 115);
+		--ds-color-olive-400: oklch(57% 0.065 115);
+		--ds-color-olive-500: oklch(64% 0.065 115);
+		--ds-color-olive-600: oklch(71% 0.06 115);
+		--ds-color-olive-700: oklch(79% 0.05 115);
+		--ds-color-olive-800: oklch(87% 0.035 115);
+		--ds-color-olive-900: oklch(94% 0.02 115);
 
-		--ds-accent: #A0A288;
-		--ds-accent-hover: #B8BAA0;
-		--ds-accent-soft: #282820;
-		--ds-accent-muted: #1E1E18;
+		--ds-color-success: oklch(60% 0.09 145);
+		--ds-color-success-bg: oklch(22% 0.03 145);
+		--ds-color-warning: oklch(72% 0.09 85);
+		--ds-color-warning-bg: oklch(24% 0.03 85);
+		--ds-color-error: oklch(55% 0.12 30);
+		--ds-color-error-bg: oklch(22% 0.03 30);
+		--ds-color-info: oklch(60% 0.07 240);
+		--ds-color-info-bg: oklch(22% 0.025 240);
 
-		--ds-terracotta: #E07060;
-		--ds-terracotta-hover: #E88878;
+		--ds-shadow-xs: 0 1px 2px oklch(0% 0 0 / 30%);
+		--ds-shadow-sm: 0 1px 3px oklch(0% 0 0 / 35%), 0 1px 2px oklch(0% 0 0 / 25%);
+		--ds-shadow-md: 0 4px 6px oklch(0% 0 0 / 35%), 0 2px 4px oklch(0% 0 0 / 25%);
+		--ds-shadow-lg: 0 10px 15px oklch(0% 0 0 / 40%), 0 4px 6px oklch(0% 0 0 / 25%);
+		--ds-shadow-xl: 0 20px 25px oklch(0% 0 0 / 40%), 0 8px 10px oklch(0% 0 0 / 25%);
+		--ds-shadow-2xl: 0 25px 50px oklch(0% 0 0 / 50%);
 
-		--ds-color-success: #6AAF7C;
-		--ds-color-success-bg: #1E2A20;
-		--ds-color-warning: #D4A020;
-		--ds-color-warning-bg: #2A2418;
-		--ds-color-error: #E07060;
-		--ds-color-error-bg: #2A1E1C;
-		--ds-color-info: #6A90B0;
-		--ds-color-info-bg: #1E2430;
+		--ds-glass-bg: oklch(15% 0.008 75 / 0.55);
+		--ds-glass-border: oklch(89% 0.012 80 / 0.08);
+		--ds-glass-shadow: 0 4px 24px oklch(0% 0 0 / 0.25);
 
-		--ds-shadow-xs: 0 1px 2px rgba(0,0,0,0.20);
-		--ds-shadow-sm: 0 1px 3px rgba(0,0,0,0.24), 0 1px 2px rgba(0,0,0,0.16);
-		--ds-shadow-md: 0 4px 6px rgba(0,0,0,0.28), 0 2px 4px rgba(0,0,0,0.16);
-		--ds-shadow-lg: 0 10px 15px rgba(0,0,0,0.32), 0 4px 6px rgba(0,0,0,0.16);
-		--ds-shadow-xl: 0 20px 25px rgba(0,0,0,0.36), 0 8px 10px rgba(0,0,0,0.20);
-
-		--ds-glass-bg: rgba(17, 17, 17, 0.8);
-		--ds-glass-border: rgba(255, 255, 255, 0.06);
-		--ds-glass-shadow: 0 4px 24px rgba(0,0,0,0.25);
-
-		--background: 0 0% 7%;
+		/* Tailwind HSL compat */
+		--background: 30 8% 10%;
 		--foreground: 40 10% 96%;
-		--card: 0 0% 10%;
+		--card: 30 5% 18%;
 		--card-foreground: 40 10% 96%;
-		--primary: 70 10% 55%;
-		--primary-foreground: 0 0% 7%;
-		--secondary: 0 0% 12%;
+		--primary: 115 25% 45%;
+		--primary-foreground: 40 10% 96%;
+		--secondary: 30 5% 14%;
 		--secondary-foreground: 40 8% 88%;
-		--muted: 0 0% 16%;
-		--muted-foreground: 40 5% 55%;
-		--accent: 70 10% 55%;
-		--accent-foreground: 0 0% 7%;
-		--border: 0 0% 18%;
-		--input: 0 0% 18%;
-		--ring: 70 10% 55%;
+		--muted: 30 5% 20%;
+		--muted-foreground: 30 5% 55%;
+		--accent: 115 15% 22%;
+		--accent-foreground: 40 8% 88%;
+		--border: 30 5% 20%;
+		--input: 30 5% 20%;
+		--ring: 115 25% 45%;
+	}
+
+
+	/* Also support .dark class for Tailwind compat */
+	.dark {
+		--ds-color-bg: oklch(15% 0.008 75);
+		--ds-color-surface: oklch(19% 0.008 75);
+		--ds-color-surface-raised: oklch(23% 0.01 75);
+		--ds-color-surface-overlay: oklch(21% 0.008 75);
+		--ds-color-border-subtle: oklch(27% 0.01 72);
+		--ds-color-border: oklch(31% 0.012 72);
+		--ds-color-border-strong: oklch(38% 0.015 72);
+		--ds-color-muted: oklch(60% 0.012 70);
+		--ds-color-fg-subtle: oklch(70% 0.01 70);
+		--ds-color-fg: oklch(84% 0.008 72);
+		--ds-color-fg-strong: oklch(92% 0.005 75);
+		--ds-color-fg-inverse: oklch(15% 0.008 75);
+
+		--ds-color-olive-50: oklch(22% 0.02 115);
+		--ds-color-olive-100: oklch(27% 0.025 115);
+		--ds-color-olive-200: oklch(35% 0.035 115);
+		--ds-color-olive-300: oklch(45% 0.05 115);
+		--ds-color-olive-400: oklch(57% 0.065 115);
+		--ds-color-olive-500: oklch(64% 0.065 115);
+		--ds-color-olive-600: oklch(71% 0.06 115);
+		--ds-color-olive-700: oklch(79% 0.05 115);
+		--ds-color-olive-800: oklch(87% 0.035 115);
+		--ds-color-olive-900: oklch(94% 0.02 115);
+
+		--ds-shadow-xs: 0 1px 2px oklch(0% 0 0 / 30%);
+		--ds-shadow-sm: 0 1px 3px oklch(0% 0 0 / 35%), 0 1px 2px oklch(0% 0 0 / 25%);
+		--ds-shadow-md: 0 4px 6px oklch(0% 0 0 / 35%), 0 2px 4px oklch(0% 0 0 / 25%);
+		--ds-shadow-lg: 0 10px 15px oklch(0% 0 0 / 40%), 0 4px 6px oklch(0% 0 0 / 25%);
+
+		--ds-glass-bg: oklch(15% 0.008 75 / 0.55);
+		--ds-glass-border: oklch(89% 0.012 80 / 0.08);
+		--ds-glass-shadow: 0 4px 24px oklch(0% 0 0 / 0.25);
+
+		--background: 30 8% 10%;
+		--foreground: 40 10% 96%;
+		--card: 30 5% 18%;
+		--card-foreground: 40 10% 96%;
+		--primary: 115 25% 45%;
+		--primary-foreground: 40 10% 96%;
+		--secondary: 30 5% 14%;
+		--secondary-foreground: 40 8% 88%;
+		--muted: 30 5% 20%;
+		--muted-foreground: 30 5% 55%;
+		--accent: 115 15% 22%;
+		--accent-foreground: 40 8% 88%;
+		--border: 30 5% 20%;
+		--input: 30 5% 20%;
+		--ring: 115 25% 45%;
 	}
 
 
@@ -272,7 +307,6 @@
 	html {
 		@apply scroll-smooth;
 		-webkit-font-smoothing: antialiased;
-		-moz-osx-font-smoothing: grayscale;
 		scroll-padding-top: 72px;
 	}
 
@@ -280,21 +314,18 @@
 		font-family: var(--ds-font-body);
 		font-size: var(--ds-text-body);
 		line-height: var(--ds-leading-body);
+		letter-spacing: var(--ds-tracking-cjk-body);
 		font-weight: var(--ds-weight-regular);
 		color: var(--ds-color-fg);
 		background: var(--ds-color-bg);
 		transition: background 0.4s, color 0.4s;
-		/* 触屏：消除 300ms 点击延迟与点击高亮闪烁。
-		   index.astro 在自己的 body 上已有这两条，此处补齐 about/works/blog/BlogPost。 */
-		touch-action: manipulation;
-		-webkit-tap-highlight-color: transparent;
 	}
 
 	h1, h2, h3, h4, h5, h6 {
 		font-family: var(--ds-font-display);
 		font-weight: var(--ds-weight-bold);
 		line-height: var(--ds-leading-tight);
-		letter-spacing: var(--ds-tracking-tight);
+		letter-spacing: var(--ds-tracking-cjk-heading);
 		color: var(--ds-color-fg-strong);
 	}
 
@@ -313,8 +344,7 @@
 	}
 
 	::selection {
-		background: rgba(138, 140, 110, 0.25);
-		background: color-mix(in srgb, var(--ds-accent) 25%, transparent);
+		background: oklch(52% 0.08 115 / 0.2);
 		color: var(--ds-color-fg-strong);
 	}
 
@@ -324,14 +354,18 @@
 	}
 
 	/* Scrollbar */
-	::-webkit-scrollbar { width: 6px; height: 6px; }
+	::-webkit-scrollbar { width: 8px; height: 8px; }
 	::-webkit-scrollbar-track { background: transparent; }
 	::-webkit-scrollbar-thumb {
 		background: var(--ds-color-border);
 		border-radius: var(--ds-radius-full);
+		border: 2px solid transparent;
+		background-clip: content-box;
 	}
 	::-webkit-scrollbar-thumb:hover {
 		background: var(--ds-color-border-strong);
+		border: 2px solid transparent;
+		background-clip: content-box;
 	}
 
 	/* Color scheme */
@@ -343,7 +377,7 @@
 @layer components {
 	/* === Layout === */
 	.container-custom {
-		max-width: 64rem;
+		max-width: 56rem;
 		margin-left: auto;
 		margin-right: auto;
 		padding-left: var(--ds-space-6);
@@ -358,11 +392,14 @@
 
 	/* === Section === */
 	.section {
-		padding-top: var(--ds-space-12);
-		padding-bottom: var(--ds-space-12);
+		padding-top: var(--ds-space-8);
+		padding-bottom: var(--ds-space-8);
+	}
+	@media (min-width: 640px) {
+		.section { padding-top: var(--ds-space-10); padding-bottom: var(--ds-space-10); }
 	}
 	@media (min-width: 768px) {
-		.section { padding-top: var(--ds-space-16); padding-bottom: var(--ds-space-16); }
+		.section { padding-top: var(--ds-space-12); padding-bottom: var(--ds-space-12); }
 	}
 
 	.section-header {
@@ -371,24 +408,25 @@
 
 	.section-title {
 		font-family: var(--ds-font-display);
-		font-size: var(--ds-text-caption);
-		font-weight: var(--ds-weight-medium);
-		color: var(--ds-color-muted);
-		text-transform: uppercase;
-		letter-spacing: var(--ds-tracking-widest);
+		font-size: var(--ds-text-h5);
+		font-weight: var(--ds-weight-semibold);
+		color: var(--ds-accent);
 		line-height: var(--ds-leading-snug);
+	}
+	@media (min-width: 768px) {
+		.section-title { font-size: var(--ds-text-h4); }
 	}
 
 	.section-line {
 		@apply flex-1 h-px;
-		background: var(--ds-color-border-subtle);
+		background: linear-gradient(to right, var(--ds-color-border), transparent);
 	}
 
 
 	/* === Card === */
 	.card {
 		background: var(--ds-color-surface-raised);
-		border: 1px solid var(--ds-color-border-subtle);
+		border: 1px solid var(--ds-color-border);
 		border-radius: var(--ds-radius-xl);
 		@apply text-card-foreground transition-all;
 		box-shadow: var(--ds-shadow-xs);
@@ -399,7 +437,7 @@
 	.card:hover {
 		box-shadow: var(--ds-shadow-md);
 		transform: translateY(-2px);
-		border-color: var(--ds-color-border);
+		border-color: var(--ds-color-border-strong);
 	}
 
 	/* === Stat Card === */
@@ -420,7 +458,7 @@
 	.stat-value {
 		font-family: var(--ds-font-display);
 		font-weight: var(--ds-weight-bold);
-		color: var(--ds-color-fg-strong);
+		color: var(--ds-accent);
 		font-size: clamp(1.5rem, 3vw, 2rem);
 		line-height: var(--ds-leading-tight);
 	}
@@ -457,79 +495,68 @@
 		@apply inline-flex items-center justify-center gap-2 font-medium transition-all;
 		font-family: var(--ds-font-ui);
 		font-size: var(--ds-text-body-sm);
-		font-weight: var(--ds-weight-medium);
+		font-weight: var(--ds-weight-semibold);
 		line-height: 1;
-		border-radius: var(--ds-radius-full);
+		border-radius: var(--ds-radius-md);
 		border: 1px solid transparent;
 		cursor: pointer;
 		transition: all var(--ds-duration-150);
-		padding: 0.625rem 1.25rem;
 	}
 
 	.btn-primary {
-		background: var(--ds-color-fg-strong);
-		color: var(--ds-color-bg);
-		border-color: var(--ds-color-fg-strong);
+		background: var(--ds-accent);
+		color: var(--ds-color-fg-inverse);
+		border-color: var(--ds-accent);
+		padding: 0.625rem 1.25rem;
+		border-radius: var(--ds-radius-md);
 	}
 	.btn-primary:hover {
-		background: var(--ds-color-fg);
-		border-color: var(--ds-color-fg);
+		background: var(--ds-accent-hover);
+		border-color: var(--ds-accent-hover);
 	}
 
 	.btn-secondary {
 		background: transparent;
 		color: var(--ds-color-fg);
 		border-color: var(--ds-color-border);
+		padding: 0.625rem 1.25rem;
+		border-radius: var(--ds-radius-md);
 	}
 	.btn-secondary:hover {
 		border-color: var(--ds-color-fg-subtle);
-		background: var(--ds-color-surface-overlay);
+		background: var(--ds-color-surface);
 	}
-
-	.btn-ghost {
-		background: transparent;
-		color: var(--ds-color-fg-subtle);
-		border-color: transparent;
-	}
-	.btn-ghost:hover {
-		color: var(--ds-color-fg);
-		background: var(--ds-color-surface-overlay);
-	}
-
 
 	/* === Tag / Chip === */
 	.tag {
 		@apply inline-flex items-center gap-1 font-medium transition-all;
-		background: var(--ds-color-surface-overlay);
-		color: var(--ds-color-fg-subtle);
-		padding: 4px 12px;
+		background: var(--ds-accent-muted);
+		color: var(--ds-accent);
+		padding: 4px 10px;
 		border-radius: var(--ds-radius-full);
 		font-size: var(--ds-text-caption);
-		font-weight: var(--ds-weight-medium);
+		font-weight: var(--ds-weight-semibold);
 		letter-spacing: var(--ds-tracking-normal);
 		transition: all var(--ds-duration-150);
-		border: 1px solid var(--ds-color-border-subtle);
 	}
 	.tag:hover {
 		background: var(--ds-accent-soft);
-		color: var(--ds-accent);
-		border-color: var(--ds-accent);
 	}
 
 
 	/* === Social Link === */
 	.social-link {
 		@apply flex items-center justify-center w-9 h-9 transition-all;
-		border-radius: var(--ds-radius-full);
+		border-radius: var(--ds-radius-lg);
 		border: 1px solid var(--ds-color-border);
-		background: var(--ds-color-surface);
+		background: var(--ds-color-surface-raised);
 		color: var(--ds-color-muted);
 		transition: all var(--ds-duration-150);
 	}
 	.social-link:hover {
-		border-color: var(--ds-color-fg-subtle);
-		background: var(--ds-color-surface-overlay);
-		color: var(--ds-color-fg);
+		border-color: var(--ds-accent);
+		background: var(--ds-accent-muted);
+		color: var(--ds-accent);
 	}
 	.social-link svg {
 		@apply w-4 h-4;
@@ -545,24 +572,27 @@
 		position: absolute;
 		left: 0;
 		top: 7px;
-		width: 6px;
-		height: 6px;
+		width: 8px;
+		height: 8px;
 		border-radius: 50%;
-		background: var(--ds-color-border);
+		background: var(--ds-color-surface-raised);
+		border: 2.5px solid var(--ds-accent);
+		box-shadow: 0 0 0 3px oklch(52% 0.08 115 / 0.12);
 		transition: all var(--ds-duration-300) var(--ds-ease-out);
 	}
 	.timeline-item:hover::before {
 		background: var(--ds-accent);
-		transform: scale(1.3);
+		box-shadow: 0 0 0 5px oklch(52% 0.08 115 / 0.18);
+		transform: scale(1.15);
 	}
 	.timeline-item::after {
 		content: '';
 		position: absolute;
-		left: 2.5px;
+		left: 3.5px;
 		top: 20px;
 		bottom: -4px;
-		width: 1px;
-		background: var(--ds-color-border-subtle);
+		width: 1.5px;
+		background: linear-gradient(to bottom, var(--ds-color-border-subtle), transparent);
 	}
 	.timeline-item:last-child::after {
 		display: none;
@@ -571,9 +601,11 @@
 
 	/* === Quote Block === */
 	.quote-block {
-		@apply relative py-3 my-4;
-		padding-left: var(--ds-space-5);
-		border-left: 2px solid var(--ds-color-border);
+		@apply relative pl-4 py-2 my-4;
+		border-left: 3px solid var(--ds-accent);
+		background: var(--ds-accent-muted);
+		border-radius: 0 var(--ds-radius-lg) var(--ds-radius-lg) 0;
+		padding: var(--ds-space-4) var(--ds-space-5);
 	}
 	.quote-block p {
 		font-family: var(--ds-font-display);
@@ -603,15 +635,14 @@
 @layer utilities {
 	.text-balance { text-wrap: balance; }
 
-	.font-display { font-family: var(--ds-font-display); }
-	.font-body { font-family: var(--ds-font-body); }
+	.font-serif { font-family: var(--ds-font-display); }
+	.font-sans { font-family: var(--ds-font-body); }
 	.font-mono { font-family: var(--ds-font-mono); }
 
-	/* Semantic text colors */
+	/* Semantic text colors using DS tokens */
 	.text-ink { color: var(--ds-accent); }
 	.text-olive { color: var(--ds-color-fg-subtle); }
 	.text-stone { color: var(--ds-color-muted); }
-	.text-foreground { color: var(--ds-color-fg); }
 
 	/* Semantic bg colors */
 	.bg-canvas { background-color: var(--ds-color-bg); }
@@ -674,11 +705,14 @@
 }
 
 
-/* ================================================================
-   Site Shell, Motion & Mobile Nav
-   ================================================================ */
 
-/* ===== Extra motion / layering tokens ===== */
+/* =========================================================================
+   CGArtLab Design System v1.1 — Site Shell, Motion & Mobile Nav
+   Appended plain-CSS layer (kept outside @layer so it is never purged).
+   Token-driven; mirrors the canonical design-system reference.
+   ========================================================================= */
+
+/* ===== Extra motion / layering tokens (v1.1) ===== */
 :root {
 	--ds-duration-700: 700ms;
 	--ds-duration-1000: 1000ms;
@@ -707,7 +741,7 @@
 	border-bottom-color: var(--ds-color-border);
 }
 .ds-navbar-inner {
-	max-width: 64rem;
+	max-width: 56rem;
 	margin: 0 auto;
 	padding: 0 var(--ds-space-6);
 	display: flex;
@@ -720,17 +754,17 @@
 
 .ds-navbar-brand {
 	font-family: var(--ds-font-display);
-	font-size: var(--ds-text-body);
+	font-size: var(--ds-text-h5);
 	font-weight: var(--ds-weight-bold);
 	color: var(--ds-color-fg-strong);
 	text-decoration: none;
-	letter-spacing: var(--ds-tracking-tight);
+	letter-spacing: var(--ds-tracking-wide);
 	display: flex;
 	align-items: center;
 	gap: var(--ds-space-2);
 	transition: color var(--ds-duration-200);
 }
-.ds-navbar-brand:hover { color: var(--ds-color-fg); }
+.ds-navbar-brand:hover { color: var(--ds-accent); }
 
 .ds-navbar-links { display: flex; align-items: center; gap: var(--ds-space-1); }
 .ds-navbar-link {
@@ -743,8 +777,8 @@
 	border-radius: var(--ds-radius-lg);
 	transition: color .2s, background .2s;
 }
-.ds-navbar-link:hover { color: var(--ds-color-fg); background: var(--ds-color-surface-overlay); }
-.ds-navbar-link--active { color: var(--ds-color-fg-strong); font-weight: var(--ds-weight-semibold); }
+.ds-navbar-link:hover { color: var(--ds-color-fg); background: var(--ds-accent-soft); }
+.ds-navbar-link--active { color: var(--ds-accent); font-weight: var(--ds-weight-semibold); }
 
 .ds-navbar-actions { display: flex; align-items: center; gap: var(--ds-space-1); }
 .ds-mnav-social { display: none; }
@@ -764,7 +798,7 @@
 	transition: background .2s, color .2s;
 	z-index: calc(var(--ds-z-modal) + 2);
 }
-.ds-mnav-trigger:hover { background: var(--ds-color-surface-overlay); color: var(--ds-color-fg); }
+.ds-mnav-trigger:hover { background: var(--ds-accent-soft); color: var(--ds-accent); }
 .ds-mnav-trigger:focus-visible { outline: 2px solid var(--ds-accent); outline-offset: 2px; }
 .ds-mnav-trigger-bar {
 	position: absolute;
@@ -790,7 +824,7 @@
 	position: fixed;
 	inset: 0;
 	z-index: var(--ds-z-modal);
-	background: rgba(0, 0, 0, 0.5);
+	background: oklch(0% 0 0 / .5);
 	-webkit-backdrop-filter: blur(3px);
 	backdrop-filter: blur(3px);
 	opacity: 0;
@@ -804,6 +838,7 @@
 	.ds-mnav-backdrop { display: block; pointer-events: none; }
 	.ds-mnav-backdrop.is-open { pointer-events: auto; }
 
+	/* Navbar becomes a solid, cohesive menu header when open (removes glass seam) */
 	.ds-navbar.is-menu-open {
 		background: var(--ds-color-surface-raised);
 		-webkit-backdrop-filter: none;
@@ -812,6 +847,7 @@
 		z-index: calc(var(--ds-z-modal) + 2);
 	}
 
+	/* Drawer shares navbar surface, so header + drawer read as one panel */
 	.ds-navbar-links {
 		position: fixed;
 		top: 0; right: 0; bottom: 0;
@@ -823,7 +859,7 @@
 		gap: var(--ds-space-1);
 		background: var(--ds-color-surface-raised);
 		padding: calc(60px + var(--ds-space-4)) var(--ds-space-5) var(--ds-space-8);
-		box-shadow: var(--ds-shadow-xl);
+		box-shadow: var(--ds-shadow-2xl);
 		transform: translateX(100%);
 		visibility: hidden;
 		transition: transform .32s var(--ds-ease-out), visibility 0s .32s;
@@ -846,9 +882,10 @@
 		border-radius: var(--ds-radius-lg);
 	}
 	.ds-navbar-link:hover,
-	.ds-navbar-link:active { background: var(--ds-color-surface-overlay); color: var(--ds-color-fg-strong); }
-	.ds-navbar-link--active { color: var(--ds-color-fg-strong); font-weight: var(--ds-weight-semibold); background: var(--ds-color-surface-overlay); }
+	.ds-navbar-link:active { background: var(--ds-accent-soft); color: var(--ds-accent); }
+	.ds-navbar-link--active { color: var(--ds-accent); font-weight: var(--ds-weight-semibold); background: var(--ds-accent-muted); }
 
+	/* Social row inside the drawer */
 	.ds-mnav-social {
 		display: flex;
 		gap: var(--ds-space-2);
@@ -878,7 +915,7 @@
 }
 
 
-/* ===== Scroll reveal ===== */
+/* ===== Scroll reveal (gated by .ds-js so content is never hidden without JS) ===== */
 .ds-reveal {
 	transition: opacity var(--ds-reveal-duration) var(--ds-reveal-ease),
 	            transform var(--ds-reveal-duration) var(--ds-reveal-ease);
@@ -893,7 +930,7 @@
 
 /* ===== Animated gradient text ===== */
 .ds-gradient-text {
-	background: linear-gradient(135deg, var(--ds-color-fg-strong), var(--ds-accent) 50%, var(--ds-color-fg-strong));
+	background: linear-gradient(110deg, var(--ds-color-olive-600), var(--ds-accent) 45%, var(--ds-color-olive-300));
 	background-size: 200% auto;
 	-webkit-background-clip: text;
 	background-clip: text;
@@ -909,7 +946,7 @@
 	font-size: var(--ds-text-caption);
 	text-transform: uppercase;
 	letter-spacing: var(--ds-tracking-widest);
-	font-weight: var(--ds-weight-medium);
+	font-weight: var(--ds-weight-semibold);
 	color: var(--ds-accent);
 }
 
@@ -926,40 +963,9 @@
 	50% { transform: translateY(-8px); }
 }
 
-/* ===== Reduced motion ===== */
+/* ===== Reduced motion: neutralise reveal + continuous motion ===== */
 @media (prefers-reduced-motion: reduce) {
 	.ds-js .ds-reveal { opacity: 1 !important; transform: none !important; }
 	.ds-gradient-text { animation: none; }
 	.ds-anim-float { animation: none; }
-}
-
-/* ===== Bilingual rendering（中英双语切换） ===== */
-/* 三档标记，可见性由 `html.lang-en` 决定（LangScript.astro 设置）:
-   .bl  — display:contents 中性包裹层，子元素保持父级 flex/grid/行内流，
-          供 SKILLS/HONORS 等数据驱动列表做双份渲染。
-   .blk — 块级容器，用于整段/整页双份渲染。
-   裸用  — <span data-l="…"> 本身即行内。
-   仅两条规则: 非英文态隐藏英文, 英文态隐藏中文。 */
-.bl { display: contents; }
-.blk { display: block; }
-html:not(.lang-en) [data-l="en"] { display: none; }
-html.lang-en [data-l="zh"] { display: none; }
-
-/* 语言切换按钮（Header / 首页共用） */
-.ds-lang-toggle { font-size: 0.65rem; letter-spacing: 0.06em; color: var(--ds-color-fg-subtle); background: none; border: none; padding: 0; cursor: pointer; transition: color .2s; font-family: inherit; line-height: 1.6; }
-.ds-lang-toggle:hover, .ds-lang-toggle:focus-visible { color: var(--ds-color-fg-strong); }
-
-/* ===== 触屏命中区 =====
-   必须放在文件末尾：同特异性下 CSS 后写者胜，而 .ds-lang-toggle 的
-   padding:0 基础规则、以及 Tailwind 工具类 .w-8/.w-9/.h-8/.h-9 都在上方。
-
-   用 (pointer: coarse) 而非宽度断点，所以桌面端保持紧凑版式不变。
-   图标型控件（选择器特异性高于工具类，顺序无关）：44x44，Apple HIG。
-   文字型控件 .ds-lang-toggle 原 padding:0，命中区只有字高 ~17px；
-   只加纵向 padding，避免把导航行的横向占位撑开。 */
-@media (pointer: coarse) {
-	.ds-mnav-social .social-link,
-	footer .social-link,
-	#theme-toggle { width: var(--ds-touch-target); height: var(--ds-touch-target); }
-	.ds-lang-toggle { padding: var(--ds-space-4) 0; }
 }
