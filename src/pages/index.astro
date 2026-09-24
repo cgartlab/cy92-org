@@ -5,14 +5,17 @@ import Icon from '../components/Icon.astro';
 import LangScript from '../components/LangScript.astro';
 import { SITE_TITLE, SITE_DESCRIPTION_EN, PERSONAL_INFO, SKILLS, SKILLS_EN, SOCIAL_LINKS, HONORS, HONORS_EN, WORK_EXPERIENCE, WORK_EXPERIENCE_EN, EDUCATION, EDUCATION_EN, STATS } from '../consts';
 
-// 累计字数：由 src/scripts/sync-word-count.mjs 从 cgartlab.github.io 统计后
-// 原子写回 consts.ts 的 STATS[0].value。此处去逗号后作为 data-target 与首帧文本，
-// 否则同步脚本改的数字永远不会出现在页面上（STATS 原本无人消费）。
+// 四项统计数据统一来自 consts.ts 的 STATS；各页面只消费这里派生出的值。
 const wordsPublished = STATS[0].value.replace(/,/g, '');
+const codeCommitsPastYear = STATS[1].value.replace(/,/g, '');
+const yearsActive = STATS[2].value;
+const articleReadsZh = STATS[3].value;
+const articleReadsEn = articleReadsZh.includes('万')
+  ? `${Math.round(parseFloat(articleReadsZh.replace('+', '')) * 10000 / 1000)}K+`
+  : articleReadsZh;
 
 const coverImage = '/images/冥想系列-cover.webp';
 const currentYear = new Date().getFullYear();
-const yearsActive = currentYear - 2014;
 const meditationImages = [
 	{ src: '/images/冥想系列-1754664750528.webp', title: '冥想系列 1', titleEn: 'Meditation 1', desc: '早期冥想探索，意识的初次解剖', descEn: 'Early meditation exploration — the first dissection of consciousness' },
 	{ src: '/images/冥想系列-1754664757458.webp', title: '冥想系列 2', titleEn: 'Meditation 2', desc: '内心对话，矛盾与冲突的视觉化', descEn: 'An inner dialogue; contradictions and conflict made visible' },
@@ -132,7 +135,10 @@ const tickerRows = [
 			<div class="header-right">
 				<button class="lang-btn" data-lang-toggle id="langToggle" type="button" data-t-aria="langAria" aria-label="Switch language">中/En</button>
 				<span class="header-sep" aria-hidden="true"></span>
-				<a href={`mailto:${PERSONAL_INFO.email}`} class="header-email">{PERSONAL_INFO.email}</a>
+				<a href="/resume/print" class="header-print" title="Print Resume" data-t-title="printAria" aria-label="Print resume" data-no-lang="true">
+					<span class="sr-only">Print resume</span>
+					<Icon name="print" size={16} class="header-print-icon" fill />
+				</a>
 			</div>
 		</header>
 
@@ -205,7 +211,7 @@ const tickerRows = [
 						<div class="stat anim up" data-d="1">
 							<span class="stat-kicker" data-t="statKicker2">Code Commits (Past Year)</span>
 							<div class="stat-line">
-								<span class="stat-value" data-target="5565">5565</span>
+								<span class="stat-value" data-target={codeCommitsPastYear}>{codeCommitsPastYear}</span>
 								<span class="stat-unit" data-t="statUnit2">commits</span>
 							</div>
 						</div>
@@ -223,8 +229,8 @@ const tickerRows = [
 							</span>
 							<div class="stat-line">
 								<!-- 同一数据点双单位：中文用「万+」，英文换算为 K+（89.5万 ≈ 895K） -->
-								<span class="stat-value" data-l="zh" data-target="89.5" data-dec="1" data-suffix="万+">89.5万+</span>
-								<span class="stat-value" data-l="en" data-target="895" data-suffix="K+">895K+</span>
+								<span class="stat-value" data-l="zh">{articleReadsZh}</span>
+								<span class="stat-value" data-l="en">{articleReadsEn}</span>
 							</div>
 						</div>
 					</div>
@@ -527,8 +533,9 @@ body { background: var(--bg); color: var(--text); font-family: var(--ds-font-bod
 .header-nav { position: absolute; left: 50%; transform: translateX(-50%); display: flex; gap: 1.5rem; }
 .header-link { font-size: 0.65rem; color: var(--text-4); text-decoration: none; text-transform: uppercase; letter-spacing: 0.12em; transition: color 0.3s; }
 .header-link:hover { color: var(--text); }
-.header-email { font-size: 0.65rem; color: var(--text-4); text-decoration: none; letter-spacing: 0.05em; transition: color 0.3s; }
-.header-email:hover { color: var(--text); }
+.header-print { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; color: var(--text-4); text-decoration: none; transition: color 0.3s; }
+.header-print:hover { color: var(--text); }
+.header-print-icon { width: 16px; height: 16px; }
 .header-right { display: flex; align-items: center; gap: 0; margin-left: auto; }
 .header-sep { width: 1px; height: 16px; background: rgba(255,255,255,0.18); margin: 0 clamp(6px,1.5vw,12px); display: inline-block; flex-shrink: 0; }
 .lang-btn { font-size: 0.65rem; letter-spacing: 0.1em; color: var(--text-4); background: none; border: none; padding: 0; cursor: pointer; transition: color 0.3s; line-height: 1.6; font-family: inherit; }
@@ -539,7 +546,7 @@ html[lang="en"] .lang-btn { color: var(--accent); }
    116px). Put it back in flex flow, then shrink everything below 400px where
    it stops fitting. The dropdown caret is a hover-only affordance, so hide it
    on touch — tapping "Work" navigates and the menu never opens. */
-@media (max-width: 767px) { .header-email { display: none; } .header-sep { display: none; } .header-nav { position: static; transform: none; left: auto; margin-left: auto; gap: 0.75rem; } .header-right { margin-left: 0.75rem; } .header-link { font-size: 0.6rem; letter-spacing: 0.08em; } }
+@media (max-width: 767px) { .header-sep { display: none; } .header-nav { position: static; transform: none; left: auto; margin-left: auto; gap: 0.75rem; } .header-right { margin-left: 0.75rem; } .header-link { font-size: 0.6rem; letter-spacing: 0.08em; } }
 @media (max-width: 400px) { .header { padding-left: 1rem; padding-right: 1rem; } .header-logo { letter-spacing: 0.12em; } .header-nav { gap: 0.5rem; } .header-link { font-size: 0.55rem; letter-spacing: 0.06em; } }
 @media (hover: none) { .nav-hover .caret { display: none; } .nav-hover .nav-menu { display: none; } }
 /* 导航字号：原 0.55rem/0.5rem 比桌面 0.65rem 还小（小屏反而更小，反向）。

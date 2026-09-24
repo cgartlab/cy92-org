@@ -224,11 +224,13 @@ export const PROJECTS = [
 	}
 ];
 
+const ACTIVE_SINCE = 2014;
 export const STATS = [
+	// STATS[0].label/unit 保持不动：sync-word-count.mjs 依赖此 key 写回累计字数
 	{ label: "累计字数", value: "191,662", unit: "字" },
-	{ label: "创作年限", value: "10+", unit: "年" },
-	{ label: "内容系列", value: "5+", unit: "个" },
-	{ label: "核心领域", value: "4", unit: "个" }
+	{ label: "过去一年提交代码", value: "5,565", unit: "次" },
+	{ label: "从事数字创作领域", value: `${new Date().getFullYear() - ACTIVE_SINCE}`, unit: "年" },
+	{ label: "文章累计被阅读", value: "89.5万+", unit: "次" }
 ];
 
 export const HONORS = [
