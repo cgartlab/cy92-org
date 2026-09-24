@@ -1,5 +1,7 @@
 export const SITE_TITLE = "ChenYang | Designer & Creator";
 export const SITE_DESCRIPTION = "CG艺术实验室 - 跨领域数字创作者，专注数字动态视觉设计、前端产品研发、写作与纯艺术创作。倡导数据主权，践行创作即认知。";
+export const SITE_DESCRIPTION_EN = "CG Art Lab — cross-domain digital creator working in motion visual design, front-end product engineering, writing and fine-art work. Advocate of data sovereignty; creation as cognition.";
+export const SITE_NAME_EN = "CG Art Lab";
 
 export const PERSONAL_INFO = {
 	name: "ChenYang",
@@ -14,12 +16,24 @@ export const PERSONAL_INFO = {
 	description: "跨领域数字创作者，横跨设计师、数字艺术家、前端开发者与写作者等多个专业领域。INFJ型人格，倡导数据主权，坚持创作即认知的理念。"
 };
 
+export const PERSONAL_INFO_EN = {
+	name: "ChenYang",
+	title: "Cross-domain digital creator",
+	siteName: SITE_NAME_EN,
+	email: PERSONAL_INFO.email,
+	location: "Kunming, Yunnan",
+	personality: PERSONAL_INFO.personality,
+	hobbies: ["Reading", "Writing", "Keeping fish", "Drawing", "Electronics"],
+	bio: "Painting rewards itself with painting; writing rewards itself with writing.",
+	description: "Cross-domain digital creator spanning designer, digital artist, front-end developer and writer. INFJ — advocate of data sovereignty, holding to creation as cognition."
+};
+
 export const SOCIAL_LINKS = [
-	{ name: "GitHub", url: "https://github.com/cgartlab", icon: "github" },
-	{ name: "Twitter/X", url: "https://x.com/cgartlab", icon: "twitter" },
-	{ name: "Bilibili", url: "https://space.bilibili.com/38043072", icon: "bilibili" },
-	{ name: "少数派", url: "https://sspai.com/u/cgartlab", icon: "open_in_new" },
-	{ name: "RSS", url: "/rss.xml", icon: "rss_feed" }
+	{ name: "GitHub", nameEn: "GitHub", i18n: "socialGithub", url: "https://github.com/cgartlab", icon: "github" },
+	{ name: "Twitter/X", nameEn: "Twitter/X", i18n: "socialTwitter", url: "https://x.com/cgartlab", icon: "twitter" },
+	{ name: "Bilibili", nameEn: "Bilibili", i18n: "socialBilibili", url: "https://space.bilibili.com/38043072", icon: "bilibili" },
+	{ name: "少数派", nameEn: "Sspai", i18n: "socialSspai", url: "https://sspai.com/u/cgartlab", icon: "sspai" },
+	{ name: "RSS", nameEn: "RSS", i18n: "socialRss", url: "https://cgartlab.com/rss.xml", icon: "rss_feed" }
 ];
 
 export const SKILLS = [
@@ -61,6 +75,45 @@ export const SKILLS = [
 	}
 ];
 
+export const SKILLS_EN = [
+	{
+		category: "Core Creative Fields",
+		items: [
+			"Motion Visual Design",
+			"Front-End Product Engineering",
+			"Writing & Content Creation",
+			"Personal Fine-Art Work"
+		]
+	},
+	{
+		category: "Design",
+		items: [
+			"UI/UX Design",
+			"Brand Visual Identity Systems",
+			"Motion Graphics",
+			"Interaction Design"
+		]
+	},
+	{
+		category: "Technology",
+		items: [
+			"Front-End Development",
+			"Website Build & Maintenance",
+			"NAS / Server Administration",
+			"Knowledge-Management Systems"
+		]
+	},
+	{
+		category: "Tools & Methods",
+		items: [
+			"Obsidian Knowledge Management",
+			"RSS Aggregation",
+			"Local-First Toolchains",
+			"Creator Workflow Optimization"
+		]
+	}
+];
+
 export const WORK_EXPERIENCE = [
 	{
 		period: "2022 - 2025",
@@ -86,6 +139,16 @@ export const WORK_EXPERIENCE = [
 	}
 ];
 
+export const WORK_EXPERIENCE_EN = [
+	{
+		period: "2022 — Present",
+		title: "AnimPoly Media · animpoly.com",
+		url: "https://animpoly.com",
+		role: "Motion Visual / Head of Design",
+		description: "Lead the creative and production of commercial motion visuals and brand digital content, owning the full pipeline from concept and art direction to delivery."
+	}
+];
+
 export const EDUCATION = [
 	{
 		period: "2016 - 2019",
@@ -98,6 +161,21 @@ export const EDUCATION = [
 		school: "云南艺术学院",
 		major: "动画专业",
 		degree: "学士学位"
+	}
+];
+
+export const EDUCATION_EN = [
+	{
+		period: "2016 - 2019",
+		school: "Burapha University",
+		major: "Fine Applied Arts Visual Design",
+		degree: "Master's Degree"
+	},
+	{
+		period: "2010 - 2014",
+		school: "Yunnan Arts University",
+		major: "Animation",
+		degree: "Bachelor's Degree"
 	}
 ];
 
@@ -189,6 +267,20 @@ export const HONORS = [
 		title: "数字艺术作品《冥想系列》入选韩国INDEF2016艺术展",
 		description: "早期数字艺术作品获得国际艺术展认可"
 	}
+];
+
+export const HONORS_EN = [
+	{ year: "2025", title: "The Wandering Earth 3 (Part 1)", role: "UI Designer" },
+	{ year: "2024", title: "Opening Ceremony, CMG Brand-Strong-Nation Programme", role: "Motion Designer" },
+	{ year: "2023", title: "Founded CG Art Lab", role: "Founder" },
+	{ year: "2021", title: "COVID-19", role: "Selected for CCG EXPO, China International Animation & Game Expo" },
+	{ year: "2020", title: "12th Kunming Seagull Culture Festival", role: "LED Creative Director" },
+	{ year: "2020", title: "9th Lancang–Mekong Six-Nation Arts Festival", role: "Director of Stage Visual Arts" },
+	{ year: "2019", title: "China Film Art Association", role: "Member" },
+	{ year: "2019", title: "VR Digital Artwork 'Hello World 2.0'", role: "Thailand 2019 Best Artistic Research Award" },
+	{ year: "2017", title: "Digital Artwork 'E&S'", role: "Exhibited at 'Sea to See' Creative Singapore Annual, Eastern Asia University, Thailand" },
+	{ year: "2016", title: "Digital Artwork 'Meditation Series'", role: "Selected for INDEF2016 Art Exhibition, South Korea" },
+	{ year: "2015", title: "Digital Artwork 'Evening Elephant'", role: "Exhibited in 'Voices for Life Through Art', a Tianta Gongsheng charity initiative" }
 ];
 
 
