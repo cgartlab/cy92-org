@@ -1,5 +1,7 @@
 export const SITE_TITLE = "ChenYang | Designer & Creator";
 export const SITE_DESCRIPTION = "CG艺术实验室 - 跨领域数字创作者，专注数字动态视觉设计、前端产品研发、写作与纯艺术创作。倡导数据主权，践行创作即认知。";
+export const SITE_DESCRIPTION_EN = "CG Art Lab — cross-domain digital creator working in motion visual design, front-end product engineering, writing and fine-art work. Advocate of data sovereignty; creation as cognition.";
+export const SITE_NAME_EN = "CG Art Lab";
 
 export const PERSONAL_INFO = {
 	name: "ChenYang",
@@ -14,18 +16,6 @@ export const PERSONAL_INFO = {
 	description: "跨领域数字创作者，横跨设计师、数字艺术家、前端开发者与写作者等多个专业领域。INFJ型人格，倡导数据主权，坚持创作即认知的理念。"
 };
 
-export const SOCIAL_LINKS = [
-	{ name: "GitHub", nameEn: "GitHub", i18n: "socialGithub", url: "https://github.com/cgartlab", icon: "github" },
-	{ name: "Twitter/X", nameEn: "Twitter/X", i18n: "socialTwitter", url: "https://x.com/cgartlab", icon: "twitter" },
-	{ name: "Bilibili", nameEn: "Bilibili", i18n: "socialBilibili", url: "https://space.bilibili.com/38043072", icon: "bilibili" },
-	{ name: "少数派", nameEn: "Sspai", i18n: "socialSspai", url: "https://sspai.com/u/cgartlab", icon: "sspai" },
-	{ name: "RSS", nameEn: "RSS", i18n: "socialRss", url: "https://cgartlab.com/rss.xml", icon: "rss_feed" }
-];
-
-// English counterpart of SITE_DESCRIPTION / PERSONAL_INFO.description —
-// rendered as <meta data-en> by BaseHead and swapped client-side.
-export const SITE_DESCRIPTION_EN = "CG Art Lab — cross-domain digital creator working in motion visual design, front-end product engineering, writing and fine-art work. Advocate of data sovereignty; creation as cognition.";
-export const SITE_NAME_EN = "CG Art Lab";
 export const PERSONAL_INFO_EN = {
 	name: "ChenYang",
 	title: "Cross-domain digital creator",
@@ -37,6 +27,14 @@ export const PERSONAL_INFO_EN = {
 	bio: "Painting rewards itself with painting; writing rewards itself with writing.",
 	description: "Cross-domain digital creator spanning designer, digital artist, front-end developer and writer. INFJ — advocate of data sovereignty, holding to creation as cognition."
 };
+
+export const SOCIAL_LINKS = [
+	{ name: "GitHub", nameEn: "GitHub", i18n: "socialGithub", url: "https://github.com/cgartlab", icon: "github" },
+	{ name: "Twitter/X", nameEn: "Twitter/X", i18n: "socialTwitter", url: "https://x.com/cgartlab", icon: "twitter" },
+	{ name: "Bilibili", nameEn: "Bilibili", i18n: "socialBilibili", url: "https://space.bilibili.com/38043072", icon: "bilibili" },
+	{ name: "少数派", nameEn: "Sspai", i18n: "socialSspai", url: "https://sspai.com/u/cgartlab", icon: "sspai" },
+	{ name: "RSS", nameEn: "RSS", i18n: "socialRss", url: "https://cgartlab.com/rss.xml", icon: "rss_feed" }
+];
 
 export const SKILLS = [
 	{
@@ -77,7 +75,6 @@ export const SKILLS = [
 	}
 ];
 
-// English mirror of SKILLS — same structure, switched via .bl/data-l.
 export const SKILLS_EN = [
 	{
 		category: "Core Creative Fields",
@@ -119,15 +116,29 @@ export const SKILLS_EN = [
 
 export const WORK_EXPERIENCE = [
 	{
-		period: "2022 — 至今",
-		title: "AnimPoly 传媒 · animpoly.com",
-		url: "https://animpoly.com",
-		role: "数字动态视觉 / 设计负责人",
-		description: "主导商业动态视觉与品牌数字内容的创意与制作，从概念、美术到交付全流程。"
+		period: "2022 - 2025",
+		title: "云南 Animpoly 传媒有限公司",
+		description: "从事数字动态视觉设计与动画制作工作"
+	},
+	{
+		period: "2020 - 2021",
+		title: "云南壹世界策划传媒有限公司",
+		description: "负责品牌视觉设计与项目策划工作"
+	},
+	{
+		period: "2019 - 2020",
+		title: "云南壹度影秀文化传播有限公司",
+		department: "设计部",
+		position: "项目经理",
+		description: "负责设计项目管理与视觉创意工作"
+	},
+	{
+		period: "2014 - 2016",
+		title: "湖南卫风传媒有限公司",
+		description: "从事视觉设计与传媒相关工作"
 	}
 ];
 
-// English mirror of WORK_EXPERIENCE — same shape, switched via .bl/data-l.
 export const WORK_EXPERIENCE_EN = [
 	{
 		period: "2022 — Present",
@@ -153,7 +164,6 @@ export const EDUCATION = [
 	}
 ];
 
-// English mirror of EDUCATION — same shape, switched via .bl/data-l.
 export const EDUCATION_EN = [
 	{
 		period: "2016 - 2019",
@@ -197,19 +207,19 @@ export const PROJECTS = [
 	{
 		title: "玄光周刊",
 		description: "持续更新的周刊系列，涵盖阅读心得、工具发现、技术观察等多个维度，为读者提供周期性的知识补给",
-		link: "https://weekly.cgartlab.com",
+		link: "https://cgartlab.com/weekly/",
 		tags: ["周刊", "知识分享"]
 	},
 	{
 		title: "LayerRenamer",
 		description: "Photoshop图层批量重命名工具，让繁琐的命名工作变简单，体现对创作者效率痛点的理解",
-		link: "https://cgartlab.com/blog/",
+		link: "https://cgartlab.com/posts/layerrenamer/",
 		tags: ["工具", "效率", "设计"]
 	},
 	{
 		title: "个人知识管理系统",
 		description: "基于Obsidian构建的本地优先知识管理系统，配合Memos实现碎片化思考记录，践行「第二大脑」理念",
-		link: "https://cgartlab.com/blog/obsidian-second-brain",
+		link: "https://cgartlab.com/posts/second-brain-for-designer/",
 		tags: ["知识管理", "Obsidian", "效率"]
 	}
 ];
@@ -222,22 +232,43 @@ export const STATS = [
 ];
 
 export const HONORS = [
-	{ year: "2025", title: "《流浪地球 3（上）》", role: "UI 设计师" },
-	{ year: "2024", title: "《中央人民广播电视台品牌强国工程》开幕式", role: "动效设计师" },
-	{ year: "2023", title: "创立 CG 艺术实验室", role: "主理人" },
-	{ year: "2021", title: "作品《COVID-19》", role: "入选 CCG EXPO 中国国际动漫游戏博览会" },
-	{ year: "2020", title: "第十二届昆明海鸥文化节", role: "LED 创意总监" },
-	{ year: "2020", title: "第九届澜湄六国文化艺术节", role: "舞美视觉艺术总监" },
-	{ year: "2019", title: "中国电影美术学会", role: "会员" },
-	{ year: "2019", title: "VR 数字艺术作品《Hello World 2.0》", role: "泰国 2019 年度最佳艺术研究奖" },
-	{ year: "2017", title: "数字艺术作品《E&S》", role: "参展泰国东方大学 “Sea to See” 创意新加坡年展" },
-	{ year: "2016", title: "数字艺术作品《冥想系列》", role: "入选韩国 INDEF2016 艺术展" },
-	{ year: "2015", title: "数字艺术作品《夕象》", role: "参展 天下共生 “用艺术为生命呐喊” 公益行动" }
+	{
+		year: "2024",
+		title: "参与制作《2025 CCTV品牌强国工程发布会》",
+		description: "担任开场片动效设计，为央视年度盛典打造视觉呈现"
+	},
+	{
+		year: "2021",
+		title: "作品《COVID-19》入选CCG EXPO",
+		description: "作品入选中国国际动漫游戏博览会，以艺术形式记录时代记忆"
+	},
+	{
+		year: "2020",
+		title: "第十二届昆明海鸥文化节美术指导",
+		description: "负责活动整体视觉设计与艺术指导工作"
+	},
+	{
+		year: "2020",
+		title: "第九届澜湄六国文化艺术节舞美LED视觉设计总监",
+		description: "负责国际文化艺术节舞台视觉设计与统筹"
+	},
+	{
+		year: "2019",
+		title: "VR数字艺术作品《Hello World 2.0》荣获泰国年度最佳艺术研究奖",
+		description: "探索VR技术在艺术创作中的应用，获得国际认可"
+	},
+	{
+		year: "2017",
+		title: "数字艺术作品《E&S》参展泰国东方大学「Sea to See」创意新加坡年展",
+		description: "作品在国际艺术展览中展出，展现数字艺术的跨文化表达"
+	},
+	{
+		year: "2016",
+		title: "数字艺术作品《冥想系列》入选韩国INDEF2016艺术展",
+		description: "早期数字艺术作品获得国际艺术展认可"
+	}
 ];
 
-
-
-// English mirror of HONORS — same shape, switched via .bl/data-l.
 export const HONORS_EN = [
 	{ year: "2025", title: "The Wandering Earth 3 (Part 1)", role: "UI Designer" },
 	{ year: "2024", title: "Opening Ceremony, CMG Brand-Strong-Nation Programme", role: "Motion Designer" },
@@ -251,3 +282,5 @@ export const HONORS_EN = [
 	{ year: "2016", title: "Digital Artwork 'Meditation Series'", role: "Selected for INDEF2016 Art Exhibition, South Korea" },
 	{ year: "2015", title: "Digital Artwork 'Evening Elephant'", role: "Exhibited in 'Voices for Life Through Art', a Tianta Gongsheng charity initiative" }
 ];
+
+
