@@ -25,7 +25,7 @@
 		"@tailwindcss/typography": "0.5.20",
 		"cross-env": "^10.1.0",
 		"vitest": "^5.0.1",
-		"wrangler": "4.132.0"
+		"wrangler": "4.136.3"
 	},
 	"private": true,
 	"packageManager": "pnpm@10.11.1",
