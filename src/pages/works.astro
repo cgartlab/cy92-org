@@ -3,43 +3,52 @@ import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Icon from '../components/Icon.astro';
-import { SITE_TITLE, PERSONAL_INFO } from '../consts';
+import LangScript from '../components/LangScript.astro';
+import { SITE_TITLE } from '../consts';
 
 const meditationImages = [
-	{ src: '/images/冥想系列-1754664750528.webp', title: '冥想系列 1' },
-	{ src: '/images/冥想系列-1754664757458.webp', title: '冥想系列 2' },
-	{ src: '/images/冥想系列-1754664764581.webp', title: '冥想系列 3' },
-	{ src: '/images/冥想系列-1754664772045.webp', title: '冥想系列 4' },
-	{ src: '/images/冥想系列-1754664780351.webp', title: '冥想系列 5' },
-	{ src: '/images/冥想系列-1754664786331.webp', title: '冥想系列 6' },
-	{ src: '/images/冥想系列-1754664798635.webp', title: '冥想系列 7' },
-	{ src: '/images/冥想系列-1754664814920.webp', title: '冥想系列 8' },
-	{ src: '/images/冥想系列-1754664822895.webp', title: '冥想系列 9' },
-	{ src: '/images/冥想系列-1754664829706.webp', title: '冥想系列 10' }
+	{ src: '/images/冥想系列-1754664750528.webp', titleZh: '冥想系列 1', titleEn: 'Meditation 1' },
+	{ src: '/images/冥想系列-1754664757458.webp', titleZh: '冥想系列 2', titleEn: 'Meditation 2' },
+	{ src: '/images/冥想系列-1754664764581.webp', titleZh: '冥想系列 3', titleEn: 'Meditation 3' },
+	{ src: '/images/冥想系列-1754664772045.webp', titleZh: '冥想系列 4', titleEn: 'Meditation 4' },
+	{ src: '/images/冥想系列-1754664780351.webp', titleZh: '冥想系列 5', titleEn: 'Meditation 5' },
+	{ src: '/images/冥想系列-1754664786331.webp', titleZh: '冥想系列 6', titleEn: 'Meditation 6' },
+	{ src: '/images/冥想系列-1754664798635.webp', titleZh: '冥想系列 7', titleEn: 'Meditation 7' },
+	{ src: '/images/冥想系列-1754664814920.webp', titleZh: '冥想系列 8', titleEn: 'Meditation 8' },
+	{ src: '/images/冥想系列-1754664822895.webp', titleZh: '冥想系列 9', titleEn: 'Meditation 9' },
+	{ src: '/images/冥想系列-1754664829706.webp', titleZh: '冥想系列 10', titleEn: 'Meditation 10' }
 ];
 
 const coverImage = '/images/冥想系列-cover.webp';
 
 const videoWorks = [
 	{
-		title: '本科动画毕业十年后的作品集 2020-2024',
-		description: '四年一度的作品集更新，涵盖三维动画、CG艺术作品集、手绘等多种创作形式。展示了从2016年毕业至今的创作历程与艺术探索。',
+		titleZh: '本科动画毕业十年后的作品集 2020-2024',
+		titleEn: 'Animation Portfolio After 10 Years — 2020-2024',
+		descZh: '四年一度的作品集更新，涵盖三维动画、CG艺术作品集、手绘等多种创作形式。展示了从2016年毕业至今的创作历程与艺术探索。',
+		descEn: 'A quadrennial portfolio update covering 3D animation, CG art, hand-drawn illustration and more — showcasing the creative journey from 2016 to present.',
 		bilibiliId: 'BV1yyyKYVEeZ',
 		year: '2024',
-		tags: ['三维动画', 'CG艺术', '作品集']
+		tagsZh: ['三维动画', 'CG艺术', '作品集'],
+		tagsEn: ['3D Animation', 'CG Art', 'Portfolio']
 	},
 	{
-		title: '个人CG艺术作品集 2016-2020',
-		description: '本科动画专业毕业后的首个四年作品集，记录了从学生到职业创作者的转变过程，包含商业项目与个人创作。',
+		titleZh: '个人CG艺术作品集 2016-2020',
+		titleEn: 'Personal CG Art Portfolio 2016-2020',
+		descZh: '本科动画专业毕业后的首个四年作品集，记录了从学生到职业创作者的转变过程，包含商业项目与个人创作。',
+		descEn: 'The first four-year portfolio after graduating with a BA in Animation, documenting the transition from student to professional creator — including commercial and personal work.',
 		bilibiliId: 'BV1UK4y1X7rM',
 		year: '2020',
-		tags: ['CG艺术', '作品集', '毕业作品']
+		tagsZh: ['CG艺术', '作品集', '毕业作品'],
+		tagsEn: ['CG Art', 'Portfolio', 'Graduation']
 	}
 ];
 
 const meditationSeries = {
-	title: '冥想系列',
-	description: '冥想是一种改变意识的形式，是解剖自己内心的过程，是让人无限接近实相的道路。第一次接触这个概念是在2013年，在随后的工作生活中它慢慢变成了我与自己交流的一种习惯。这种奇妙的体验很适合用数字绘画的形式表达出来。在接下来的几年里我用自己的业余时间创作了这个系列，每一幅作品都聊到了我经历的不同阶段，每个阶段我选择不同的主题与自己的内心交谈。从画面上也能感觉到人类底层的内心，绝谈不上美好但也没有那么不堪，繁重的压迫，对立的矛盾，复杂的冲突，都是真实的自己。',
+	titleZh: '冥想系列',
+	titleEn: 'Meditation Series',
+	descZh: '冥想是一种改变意识的形式，是解剖自己内心的过程，是让人无限接近实相的道路。第一次接触这个概念是在2013年，在随后的工作生活中它慢慢变成了我与自己交流的一种习惯。这种奇妙的体验很适合用数字绘画的形式表达出来。在接下来的几年里我用自己的业余时间创作了这个系列，每一幅作品都聊到了我经历的不同阶段，每个阶段我选择不同的主题与自己的内心交谈。从画面上也能感觉到人类底层的内心，绝谈不上美好但也没有那么不堪，繁重的压迫，对立的矛盾，复杂的冲突，都是真实的自己。',
+	descEn: 'Meditation is a form of altered consciousness, a process of examining one\'s inner self, and a path toward approaching reality. I first encountered the concept in 2013, and over subsequent years of work and life it slowly became a habit of communicating with myself. This wondrous experience lends itself naturally to digital painting. Over the following years I created this series in my spare time — each piece reflects a different stage of my life, each stage a different theme I chose to converse with my inner self. The paintings reveal the human condition beneath the surface — never quite beautiful, but never quite as bleak as they seem: crushing pressure, opposing contradictions, complex conflicts, all the real self.',
 	link: 'https://cgartlab.com/posts/meditation-series/'
 };
 ---
@@ -47,34 +56,41 @@ const meditationSeries = {
 <!doctype html>
 <html lang="zh-CN">
 	<head>
-		<BaseHead title={`作品展示 | ${SITE_TITLE}`} description="ChenYang的作品集展示 - 包含CG艺术作品集视频、冥想系列数字绘画等创作成果" />
+		<BaseHead
+			title={`作品展示 | ${SITE_TITLE}`}
+			titleEn={`Portfolio | ${SITE_TITLE}`}
+			description="ChenYang的作品集展示 - 包含CG艺术作品集视频、冥想系列数字绘画等创作成果"
+			descriptionEn="ChenYang's portfolio — CG art portfolio videos, Meditation Series digital paintings, and more creative works"
+		/>
 	</head>
 	<body class="min-h-screen" style="background: var(--ds-color-bg); color: var(--ds-color-fg);">
+		<LangScript />
 		<Header />
 		<main class="container-custom py-8 md:py-12">
 			<header class="mb-10 md:mb-12">
 				<span class="ds-eyebrow mb-3">Portfolio</span>
-				<h1 class="mb-3" style="font-family: var(--ds-font-display); color: var(--ds-color-fg-strong); font-size: 2rem; line-height: 1.15;">作品展示</h1>
+				<h1 class="mb-3" style="font-family: var(--ds-font-display); color: var(--ds-color-fg-strong); font-size: 2rem; line-height: 1.15;" data-t="worksTitle">Portfolio</h1>
 				<p class="text-base leading-relaxed max-w-2xl" style="color: var(--ds-color-fg-subtle);">
-					创作是内在探索的过程，每一件作品都是与自我对话的记录
+					<span data-l="zh">创作是内在探索的过程，每一件作品都是与自我对话的记录</span>
+					<span data-l="en">Creation is an inner exploration — every work is a record of dialogue with oneself</span>
 				</p>
 			</header>
 
 			<!-- CG Art Portfolio -->
 			<section class="section ds-reveal">
 				<div class="section-header">
-					<h2 class="section-title">CG艺术作品集</h2>
+					<h2 class="section-title" data-t="sectionVideoWorks">CG Art Portfolio</h2>
 					<div class="section-line"></div>
 				</div>
 
 				<div class="space-y-6">
-					{videoWorks.map((work, index) => (
+					{videoWorks.map((work) => (
 						<article class="card overflow-hidden">
 							<div class="grid md:grid-cols-2 gap-0">
 								<div class="relative aspect-video bg-black">
 									<iframe
 										src={`//player.bilibili.com/player.html?isOutside=true&aid=&bvid=${work.bilibiliId}&cid=&p=1&highQuality=1&danmaku=0&muted=1&controls=0&autoplay=1`}
-										title={work.title}
+										title={work.titleZh}
 										class="absolute inset-0 w-full h-full"
 										allowfullscreen="true"
 										allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -84,13 +100,18 @@ const meditationSeries = {
 									<div class="flex items-center gap-3 mb-3">
 										<span class="text-sm font-medium" style="font-family: var(--ds-font-display); color: var(--ds-accent);">{work.year}</span>
 										<div class="flex flex-wrap gap-2">
-											{work.tags.map(tag => (
-												<span class="tag text-xs">{tag}</span>
-											))}
+											<span class="tag text-xs" data-l="zh">{work.tagsZh.join('  ')}</span>
+											<span class="tag text-xs" data-l="en">{work.tagsEn.join('  ')}</span>
 										</div>
 									</div>
-									<h3 class="text-lg font-medium mb-3" style="font-family: var(--ds-font-display); color: var(--ds-color-fg);">{work.title}</h3>
-									<p class="text-sm leading-relaxed" style="color: var(--ds-color-fg-subtle);">{work.description}</p>
+									<h3 class="text-lg font-medium mb-3" style="font-family: var(--ds-font-display); color: var(--ds-color-fg);">
+										<span data-l="zh">{work.titleZh}</span>
+										<span data-l="en">{work.titleEn}</span>
+									</h3>
+									<p class="text-sm leading-relaxed" style="color: var(--ds-color-fg-subtle);">
+										<span data-l="zh">{work.descZh}</span>
+										<span data-l="en">{work.descEn}</span>
+									</p>
 								</div>
 							</div>
 						</article>
@@ -101,7 +122,7 @@ const meditationSeries = {
 			<!-- Meditation Series -->
 			<section class="section ds-reveal">
 				<div class="section-header">
-					<h2 class="section-title">冥想系列 · 数字绘画</h2>
+					<h2 class="section-title" data-t="sectionMeditation">Meditation Series · Digital Painting</h2>
 					<div class="section-line"></div>
 				</div>
 
@@ -111,36 +132,46 @@ const meditationSeries = {
 							<img
 								src={coverImage}
 								alt="冥想系列封面"
+								data-t-aria="meditationCoverAlt"
+								data-aria-zh="冥想系列封面"
+								data-aria-en="Meditation Series Cover"
 								class="w-full h-full object-cover"
 							/>
 							<div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
 							<div class="absolute bottom-4 left-4 right-4">
-								<h3 class="text-lg md:text-xl font-medium text-white mb-1" style="font-family: var(--ds-font-display);">{meditationSeries.title}</h3>
-								<p class="text-sm text-white/80">数字绘画系列 · 2013-2016</p>
+								<h3 class="text-lg md:text-xl font-medium text-white mb-1" style="font-family: var(--ds-font-display);">
+									<span data-l="zh">{meditationSeries.titleZh}</span>
+									<span data-l="en">{meditationSeries.titleEn}</span>
+								</h3>
+								<p class="text-sm text-white/80" data-t="meditationPeriod">Digital Painting Series · 2013-2016</p>
 							</div>
 						</div>
 						<p class="text-sm leading-relaxed" style="color: var(--ds-color-fg-subtle);">
-							{meditationSeries.description}
+							<span data-l="zh">{meditationSeries.descZh}</span>
+							<span data-l="en">{meditationSeries.descEn}</span>
 						</p>
 					</div>
 
 					<div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-4">
-						{meditationImages.map((artwork, index) => (
+						{meditationImages.map((artwork) => (
 							<a
 								href={meditationSeries.link}
 								target="_blank"
 								rel="noopener noreferrer"
 								class="group relative aspect-square overflow-hidden border transition-all duration-300 hover:-translate-y-1"
-							style="border-color: var(--ds-color-border-subtle); border-radius: var(--ds-radius-xl);"
+								style="border-color: var(--ds-color-border-subtle); border-radius: var(--ds-radius-xl);"
 							>
 								<img
 									src={artwork.src}
-									alt={artwork.title}
+									alt={artwork.titleZh}
+									data-aria-zh={artwork.titleZh}
+									data-aria-en={artwork.titleEn}
 									class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
 								/>
 								<div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
 									<div class="absolute bottom-2 left-2 right-2">
-										<span class="text-xs font-medium text-white">{artwork.title}</span>
+										<span class="text-xs font-medium text-white" data-l="zh">{artwork.titleZh}</span>
+										<span class="text-xs font-medium text-white" data-l="en">{artwork.titleEn}</span>
 									</div>
 								</div>
 							</a>
@@ -155,7 +186,7 @@ const meditationSeries = {
 							class="inline-flex items-center gap-2 text-sm font-medium transition-colors"
 							style="color: var(--ds-accent);"
 						>
-							<span>查看完整冥想系列作品</span>
+							<span data-t="viewFullMeditation">View full meditation series</span>
 							<Icon name="open_in_new" size={14} class="w-3.5 h-3.5" />
 						</a>
 					</div>
@@ -165,7 +196,7 @@ const meditationSeries = {
 			<!-- More Works -->
 			<section class="section ds-reveal">
 				<div class="section-header">
-					<h2 class="section-title">更多作品</h2>
+					<h2 class="section-title" data-t="sectionMoreWorks">More Works</h2>
 					<div class="section-line"></div>
 				</div>
 
@@ -182,8 +213,8 @@ const meditationSeries = {
 								<Icon name="bilibili" size={20} class="w-5 h-5" fill />
 							</div>
 							<div class="flex-1">
-								<h3 class="text-sm font-medium mb-1 transition-colors" style="color: var(--ds-color-fg);">Bilibili 主页</h3>
-								<p class="text-xs" style="color: var(--ds-color-fg-subtle);">查看更多动画、CG艺术相关视频作品</p>
+								<h3 class="text-sm font-medium mb-1 transition-colors" style="color: var(--ds-color-fg);" data-t="bilibiliTitle">Bilibili Channel</h3>
+								<p class="text-xs" style="color: var(--ds-color-fg-subtle);" data-t="bilibiliDesc">More animation and CG art videos</p>
 							</div>
 							<Icon name="arrow_forward" size={18} class="flex-shrink-0 transition-all" style="color: var(--ds-color-muted);" />
 						</a>
@@ -199,8 +230,8 @@ const meditationSeries = {
 								<Icon name="brush" size={20} class="w-5 h-5" />
 							</div>
 							<div class="flex-1">
-								<h3 class="text-sm font-medium mb-1 transition-colors" style="color: var(--ds-color-fg);">CG艺术实验室</h3>
-								<p class="text-xs" style="color: var(--ds-color-fg-subtle);">访问个人博客，了解更多创作与思考</p>
+								<h3 class="text-sm font-medium mb-1 transition-colors" style="color: var(--ds-color-fg);" data-t="cgartlabTitle">CG Art Lab</h3>
+								<p class="text-xs" style="color: var(--ds-color-fg-subtle);" data-t="cgartlabDesc">Visit my blog for more creative works and thoughts</p>
 							</div>
 							<Icon name="arrow_forward" size={18} class="flex-shrink-0 transition-all" style="color: var(--ds-color-muted);" />
 						</a>

@@ -113,5 +113,19 @@ export const I18N: Record<string, I18NEntry> = {
 	// ══ Blog list page ══
 	blogTitle: { zh: '博客文章', en: 'Blog' },
 	blogSubtitle: { zh: '思考、创作与探索的记录', en: 'Notes on thinking, making and exploring' },
-	blogEmpty: { zh: '暂无博客文章', en: 'No posts yet' }
+	blogEmpty: { zh: '暂无博客文章', en: 'No posts yet' },
+
+	// ══ Works page ══
+	worksTitle: { zh: '作品展示', en: 'Portfolio' },
+	worksSubtitle: { zh: '创作是内在探索的过程，每一件作品都是与自我对话的记录', en: 'Creation is an inner exploration — every work is a record of dialogue with oneself' },
+	sectionVideoWorks: { zh: 'CG艺术作品集', en: 'CG Art Portfolio' },
+	sectionMeditation: { zh: '冥想系列 · 数字绘画', en: 'Meditation Series · Digital Painting' },
+	meditationPeriod: { zh: '数字绘画系列 · 2013-2016', en: 'Digital Painting Series · 2013-2016' },
+	viewFullMeditation: { zh: '查看完整冥想系列作品', en: 'View full meditation series' },
+	sectionMoreWorks: { zh: '更多作品', en: 'More Works' },
+	bilibiliTitle: { zh: 'Bilibili 主页', en: 'Bilibili Channel' },
+	bilibiliDesc: { zh: '查看更多动画、CG艺术相关视频作品', en: 'More animation and CG art videos' },
+	cgartlabTitle: { zh: 'CG艺术实验室', en: 'CG Art Lab' },
+	cgartlabDesc: { zh: '访问个人博客，了解更多创作与思考', en: 'Visit my blog for more creative works and thoughts' },
+	meditationCoverAlt: { zh: '冥想系列封面', en: 'Meditation Series Cover' }
 };
