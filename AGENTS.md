@@ -4,7 +4,7 @@
 **Updated:** 2026-10-03
 
 个人在线简历。Astro 5.18.2 + TailwindCSS 3.4.19 + Cloudflare Workers 部署。
-`pnpm@10.11.1`（`packageManager` 强制），Wrangler 4.129.0，Node 22（CI 固定；本地见「PITFALLS」）。
+`pnpm@10.11.1`（`packageManager` 强制），Wrangler 4.132.0，Node 22（CI 固定；本地见「PITFALLS」）。
 
 ---
 
@@ -19,12 +19,11 @@ cy92-org/
 │   │   ├── Footer.astro / HeaderLink.astro / FormattedDate.astro
 │   │   ├── Icon.astro         # SVG path 硬编码注册表（新图标必须在此注册）
 │   │   ├── LangScript.astro   # 语言运行时（data-t/data-l 切换，全站共用）
-│   │   ├── ProjectCard.astro  # works 页卡片
-│   │   └── SkillBar.astro     # 技能条
 │   ├── layouts/BlogPost.astro
 │   ├── i18n/dict.ts    # 双语字典单一来源（全站共享，见「5. i18n」）
 │   ├── pages/         # index(1720 行，单文件承载 7 屏幻灯 + i18n + canvas 动效)
 │   │                   # about / works / blog/[...slug].astro / blog/index.astro / rss.xml.js
+│   │                   # resume/print.astro — A4 打印简历页
 │   ├── scripts/
 │   │   ├── sync-word-count.mjs            # 字数同步（ESM 零依赖）
 │   │   └── __tests__/sync-word-count.test.mjs   # vitest 8 用例
@@ -34,7 +33,9 @@ cy92-org/
 │   └── env.d.ts
 ├── scripts/
 │   ├── check-links.mjs  # 构建产物链接/锚点静态检查（ESM 零依赖）
-│   └── i18n-verify.mjs  # i18n 字典完整性校验（pnpm check:i18n）
+│   ├── i18n-verify.mjs  # i18n 字典完整性校验（pnpm check:i18n）
+│   ├── preview-dist.mjs # 构建产物本地预览（开发调试用）
+│   └── __tests__/check-links.test.mjs  # check-links 单元测试
 ├── public/
 │   ├── favicon.svg / default-cover.webp
 │   ├── images/          # 作品配图（冥想系列等）
@@ -45,6 +46,8 @@ cy92-org/
 ├── astro.config.mjs · wrangler.json · tailwind.config.js · tsconfig.json · .npmrc
 ├── DEVELOPMENT_GUIDE.md  # 1300+ 行架构/样式/颜色/暗色模式全解（改视觉前必读）
 ├── security-report.md    # 2026-05-11 快照，LOW 项已在 #50 落地修复（见「9」）
+├── docs/
+│   └── reports/web-quality-2026-06-11.md  # Web 质量审计报告（#60 附随）
 ├── chenyang_resume.md    # 简历源文（内容素材，非构建输入）
 └── README.md             # 项目主页（命令清单以 package.json 为准）
 ```
