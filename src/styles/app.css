@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ══ i18n language switching — show/hide data-l content by active language ══
+   html.lang-en is set by BaseHead.astro / LangScript.astro when English is active.
+   Default (no class) = Chinese mode. */
+html.lang-en [data-l="zh"] { display: none !important; }
+html:not(.lang-en) [data-l="en"] { display: none !important; }
+
 @layer base {
 	:root {
 		/* === CGArtLab Design System v1.0 Tokens === */
