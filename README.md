@@ -45,9 +45,7 @@ src/
 ├── pages/
 │   ├── index.astro     # 7 屏幻灯巨石（1720 行：HTML + style + canvas 动效）
 │   ├── about / works / blog / rss.xml.js
-├── styles/
-│   ├── app.css         # 设计系统核心（token + 深浅色），改样式一律在此
-│   └── global.css      # 遗留（620 行），不要修改
+├── styles/app.css      # 设计系统核心（token + 深浅色），仓库唯一样式文件
 ├── consts.ts           # 简历数据（改字来这里，253 行）
 ├── scripts/            # sync-word-count.mjs、i18n-verify.mjs（零第三方依赖）
 public/

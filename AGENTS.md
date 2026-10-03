@@ -1,7 +1,7 @@
 # AGENTS.md — cy92-org
 
 **分层**: 个人品牌 (Personal Brand) — 个人简历
-**Updated:** 2026-09-12
+**Updated:** 2026-10-03
 
 个人在线简历。Astro 5.18.2 + TailwindCSS 3.4.19 + Cloudflare Workers 部署。
 `pnpm@10.11.1`（`packageManager` 强制），Wrangler 4.129.0，Node 22（CI 固定；本地见「PITFALLS」）。
@@ -28,10 +28,7 @@ cy92-org/
 │   ├── scripts/
 │   │   ├── sync-word-count.mjs            # 字数同步（ESM 零依赖）
 │   │   └── __tests__/sync-word-count.test.mjs   # vitest 8 用例
-│   ├── styles/
-│   │   ├── app.css      # 设计系统核心（965 行，改样式一律在此）
-│   │   └── global.css   # 遗留（620 行，含唯一 @font-face；不要修改）
-│   ├── Assets/          # 演示视频素材（当前无页面引用，死素材）
+│   ├── styles/app.css   # 设计系统核心（965 行，改样式一律在此；仓库唯一样式文件）
 │   ├── consts.ts        # 全站数据（253 行，见「3. 数据层」）
 │   ├── content.config.ts  # blog 集合 schema（glob src/content/blog）
 │   └── env.d.ts
@@ -40,13 +37,11 @@ cy92-org/
 │   └── i18n-verify.mjs  # i18n 字典完整性校验（pnpm check:i18n）
 ├── public/
 │   ├── favicon.svg / default-cover.webp
-│   ├── fonts/           # atkinson-*.woff，仅被 global.css 引用（遗留）
 │   ├── images/          # 作品配图（冥想系列等）
 │   ├── video/Demo-lite.mp4  # 幻灯共用背景视频（#reel，25MB，preload=none）
 │   ├── _headers         # 安全响应头（CSP/HSTS/X-Frame-Options，见「9. CI / 安全」）
 │   ├── robots.txt       # 爬虫 + Sitemap 指向
 │   └── *.webp           # 文章封面，中文文件名（勿重命名，consts/文章已引用）
-├── .trae/specs/improve-dark-theme/   # 历史 spec 工作区（checklist/spec/tasks）
 ├── astro.config.mjs · wrangler.json · tailwind.config.js · tsconfig.json · .npmrc
 ├── DEVELOPMENT_GUIDE.md  # 1300+ 行架构/样式/颜色/暗色模式全解（改视觉前必读）
 ├── security-report.md    # 2026-05-11 快照，LOW 项已在 #50 落地修复（见「9」）
@@ -62,8 +57,7 @@ cy92-org/
 | 首页 7 屏幻灯文案 | `src/pages/index.astro` | 视觉文案在此；`data-t` key 译文在 `src/i18n/dict.ts` |
 | 双语字典 | `src/i18n/dict.ts` | 单一来源，新增文案先加 zh/en 条目，见「5. i18n」 |
 | 语言运行时 | `src/components/LangScript.astro` | 全站共用，切换 data-t 文本 / aria / data-l 双渲染 |
-| 主样式 | `src/styles/app.css` | 设计 token + 站点 shell；Tailwind 颜色映射到 CSS 变量 |
-| 遗留样式 | `src/styles/global.css` | **不要修改**，改样式一律在 app.css |
+| 主样式 | `src/styles/app.css` | 设计 token + 站点 shell；Tailwind 颜色映射到 CSS 变量；**仓库唯一样式文件** |
 | 主题（暗色） | `BaseHead.astro` 初始态 + `app.css` `[data-theme="dark"], .dark` 合并选择器 token | 见「4. 主题」 |
 | 图标 | `src/components/Icon.astro` | SVG path 硬编码，新图标必须在此注册 |
 | Cloudflare 配置 | `astro.config.mjs` + `wrangler.json` | `platformProxy.enabled: false`，`compatibility_date: 2025-10-08`，`nodejs_compat` |
@@ -114,10 +108,10 @@ cy92-org/
 - **不要启用 `platformProxy`** — 当前 `false`，与 animpoly-com 不同。
 - **不要引入 `pnpm-workspace.yaml`** — 已在 `.gitignore` 中，Cloudflare CI 见到该文件会报错。
 - **命令以 `package.json` 为准** — README.md 已重写为项目主页，但命令清单仍以 package.json 为唯一真相。
-- **不要生成/更新 `package-lock.json`** — `pnpm-lock.yaml` 是唯一锁文件；现有 package-lock.json（313KB）是模板残留，勿删勿改勿提交。
+- **不要生成/更新 `package-lock.json`** — `pnpm-lock.yaml` 是唯一锁文件；模板残留的 package-lock.json 已于 2026-10-03 删除，勿重建。
 - **不要向仓库添加 React/Vue/框架依赖** — 本仓刻意保持纯 Astro。
 - **不要加回大体积视频** — Cloudflare Workers 静态资源部署上限 25MB；`Demo-lite.mp4`（25MB）已是临界值（#48 曾因 demo.mp4 63MB 部署失败），新增视频资源会直接压爆构建产物。
-- **不要修改 `src/styles/global.css`**、不要重命名 `public/` 下的中文资产。
+- **不要重命名 `public/` 下的中文资产**；遗留的 `src/styles/global.css` 与 `public/fonts/` 已于 2026-10-03 删除（此前已零引用），**不要加回**。
 - **不要改动 `STATS[0]` 的 `label: "累计字数"` 与 `unit: "字"`** — `sync-word-count.mjs` 靠这个 key 定位并原子写入 value，改了就写不进去。
 - **不要用 `git add -A`** — 只 add 自己新建/修改的明确文件（`dev*.log`、`dist/`、`node_modules/`、`worker-configuration.d.ts` 均在忽略范围或为产物）。
 
@@ -161,13 +155,13 @@ node scripts/check-links.mjs [--root <仓库根>] [--verbose|--quiet]
 
 - `.npmrc`：`node-linker=hoisted` — D 盘 exFAT 不支持 symlink，pnpm 默认 symlinked 布局会安装失败；hoisted 保证本机与 CI 行为一致。
 - `package.json` 的 `pnpm.onlyBuiltDependencies: [esbuild, sharp, workerd]` — pnpm 10 默认禁止 postinstall，这三者必须显式白名单，勿删。
-- 字体：正文走 **Google Fonts CDN**（Outfit + Noto Sans SC，BaseHead.astro 预连接 + print→onload 懒加载）；`public/fonts/atkinson-*.woff` 仅被 global.css 的遗留 `@font-face` 引用，实际不参与渲染。
+- 字体：正文走 **Google Fonts CDN**（Outfit + Noto Sans SC，BaseHead.astro 预连接 + print→onload 懒加载）。仓库内**无本地字体文件**——遗留的 `public/fonts/atkinson-*.woff` 仅被已删除的 global.css 引用，已一并清除。
 - tsconfig 继承 `astro/tsconfigs/strict`，`strictNullChecks: true`，`include` 含 `.astro/types.d.ts`。
 - `src/consts.ts` 中 `EDUCATION`/`EXPERIENCE`/`PROJECTS`/`HONORS` 与 `WORK_EXPERIENCE`/`SKILLS` 部分语义重叠（简历改版遗留），展示时以页面实际引用为准，勿自行合并。
 - 首页 `index.astro` 1720 行是单文件巨石：7 屏幻灯 HTML（hero/stats/work/meditation/profile/contact）+ `<style>` + `<script>`（i18n、code rain、Seaweed 海藻 canvas、视频 mask）。动效改动需谨慎，`prefers-reduced-motion` 降级路径在 app.css 718/965 行与 Header 的 scroll-reveal 内。
 - 性能注意：`public/video/Demo-lite.mp4` 为幻灯共用背景视频，`autoplay muted loop playsinline preload="none"`；25MB 已贴近 Workers 部署上限，不要再加视频资源。
 - 移动端触屏（#51）：`--ds-touch-target` token（44px）+ `@media (pointer: coarse)` 命中区规则，位于 app.css 末尾触屏块（必须在基础尺寸规则之后，同特异性后者胜）。
 - 已知滚动问题（#52）：冥想系列（slide 4）嵌套 snap 滚动与前几屏不一致；profile 页 `.slide-content.scroll-y`（`overscroll-behavior: contain`）滚到底后无法继续链到 contact 页。
-- 历史 spec：`.trae/specs/improve-dark-theme/` 记录了暗色主题改造的 spec/checklist/tasks，改造前先读 `spec.md`。
-- 本地遗留：`dev*.log`（已 gitignore）、`chenyang_resume.md`、`worker-configuration.d.ts`（`pnpm cf-typegen` 产物，勿手改）。
-- 详细架构文档：`DEVELOPMENT_GUIDE.md`（章节 7/8/11/17 是样式、颜色、暗色模式、陷阱速查，改视觉前必读）。
+- 本地遗留：`dev*.log`（已 gitignore）、`chenyang_resume.md`（简历源文，非构建输入）、`worker-configuration.d.ts`（`pnpm cf-typegen` 产物，勿手改）。
+- 已清理（2026-10-03，勿加回）：`.trae/specs/improve-dark-theme/`（暗色主题改造历史 spec，成果已落地）、`src/Assets/demo-clips-260906.mp4`（61MB 零引用死素材）、`package-lock.json`（模板残留）、`src/styles/global.css` + `public/fonts/`（零引用遗留）。
+- 详细架构文档：`DEVELOPMENT_GUIDE.md`（章节 7/8/11/17 是样式、颜色、暗色模式、陷阱速查，改视觉前必读）；其中 3.2/17.2 等关于 `global.css` 的段落已失效（该文件已删除，样式只剩 app.css）。
