@@ -19,6 +19,24 @@ const { title, titleEn, description, descriptionEn, image = '/default-cover.webp
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta name="generator" content={Astro.generator} />
 
+<!-- OPPO Sans 4.0 (SIL OFL 1.1) — via jsDelivr CDN. Regular + Medium cover 400/500 weights. -->
+<style is:global>
+	@font-face {
+		font-family: 'OPPO Sans';
+		font-style: normal;
+		font-weight: 400;
+		font-display: swap;
+		src: url('https://cdn.jsdelivr.net/gh/cooingwu/OPPO-Sans@main/OPPOSans-R.ttf') format('truetype');
+	}
+	@font-face {
+		font-family: 'OPPO Sans';
+		font-style: normal;
+		font-weight: 500;
+		font-display: swap;
+		src: url('https://cdn.jsdelivr.net/gh/cooingwu/OPPO-Sans@main/OPPOSans-M.ttf') format('truetype');
+	}
+</style>
+
 <link rel="canonical" href={canonicalURL} />
 
 <!-- data-zh/data-en: swapped client-side by LangScript.astro. Because English is the
