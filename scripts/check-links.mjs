@@ -361,7 +361,7 @@ function main() {
 
 	try {
 		const root = args.root ? resolve(args.root) : DEFAULT_ROOT;
-		const distDir = join(root, 'dist');
+		const distDir = join(root, 'dist', 'client');
 
 		if (!existsSync(distDir)) {
 			throw new Error(
