@@ -99,6 +99,7 @@ __pycache__/
 *.p12
 *.pfx
 secrets.*
+.gh-token.txt
 
 # Generated — `pnpm cf-typegen` output / npm template residue. Still tracked
 # today; needs `git rm --cached` before these patterns take effect.
