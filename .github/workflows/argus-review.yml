@@ -21,10 +21,22 @@ jobs:
     # Hard cap. The action wraps each `opencode github run` with GNU `timeout`
     # (default 480s), but that is per model attempt: a pathological
     # fallback-queue loop would still eat the full 6 h GitHub default
-    # without this. 15 min covers primary (8 min) + one fallback (8 min)
-    # with buffer. Valid at job scope; the action's own steps cannot carry
+    # without this.
+    #
+    # Sizing: the queue is primary + every entry of `fallback_models`, tried
+    # sequentially, and the action declares no `timeout` input (so the 480s
+    # per-attempt default cannot be overridden from here). With the current
+    # config/free-models.yml queue of 2 fallbacks that is 3 attempts:
+    #     3 x 480s = 1440s = 24 min
+    # config/free-models.yml is auto-refreshed every 12 h, so the queue can
+    # grow; 35 min covers today's 24 min + ~5 min setup with room for one
+    # more queued model. A shorter cap (e.g. 15) would let the job-level
+    # timeout kill a review that is still legitimately working through its
+    # fallback queue.
+    #
+    # Valid at job scope; the action's own steps cannot carry
     # timeout-minutes (composite-action manifests reject it).
-    timeout-minutes: 15
+    timeout-minutes: 35
     steps:
       - uses: actions/checkout@v7
         with:
