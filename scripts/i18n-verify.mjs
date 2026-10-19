@@ -9,11 +9,17 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-const ROOT = process.argv[2] ? path.resolve(process.argv[2]) : 'dist';
+// Astro ≥ 6 将静态产物输出到 dist/client（`@astrojs/cloudflare` adapter），
+// 而旧版输出到 dist/ 根。默认按"存在优先"顺序解析，避免脚本与产物结构脱节。
+const DEFAULT_CANDIDATES = ['dist/client', 'dist'];
+const ROOT = process.argv[2]
+	? path.resolve(process.argv[2])
+	: DEFAULT_CANDIDATES.find((p) => fs.existsSync(p)) ?? 'dist';
 if (!fs.existsSync(ROOT)) {
 	console.error(`✗ 找不到构建产物目录 ${ROOT}，请先运行 pnpm build`);
 	process.exit(1);
 }
+console.log(`\n构建产物目录: ${path.resolve(ROOT)}`);
 const pages = ['index.html', 'about/index.html', 'works/index.html', 'blog/index.html'];
 const CJK = /[\u3000-\u303f\u3400-\u4dbf\u4e00-\u9fff\uff00-\uffef]/;
 

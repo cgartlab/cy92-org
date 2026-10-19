@@ -314,6 +314,10 @@ html:not(.lang-en) [data-l="en"] { display: none !important; }
 		@apply scroll-smooth;
 		-webkit-font-smoothing: antialiased;
 		scroll-padding-top: 72px;
+		/* See body { overflow-x: clip } below. The scrolling element is
+		   <html>, and the canvas overflow it reports is what lets the page
+		   pan sideways on narrow screens (375px viewport measured 673px). */
+		overflow-x: clip;
 	}
 
 	body {
@@ -325,6 +329,13 @@ html:not(.lang-en) [data-l="en"] { display: none !important; }
 		color: var(--ds-color-fg);
 		background: var(--ds-color-bg);
 		transition: background 0.4s, color 0.4s;
+		/* `clip` (not `hidden`) contains horizontal overflow without turning
+		   <body> into a scroll container, so vertical scrolling and
+		   `position: sticky` keep working. The mobile nav drawer is a fixed
+		   element parked off-screen at translateX(100%); without this the
+		   closed drawer stretches the page scroll width (375px viewport
+		   measured 673px, letting the page pan sideways). */
+		overflow-x: clip;
 	}
 
 	h1, h2, h3, h4, h5, h6 {
@@ -340,6 +351,18 @@ html:not(.lang-en) [data-l="en"] { display: none !important; }
 	h3 { font-size: var(--ds-text-h3); }
 	h4 { font-size: var(--ds-text-h4); }
 
+	/* === CJK typography ===
+	   R5 hanging punctuation: a closing mark at the end of a heading
+	   leaves a visible gap on the right. Browsers without support simply
+	   ignore the declaration, so this is a progressive enhancement.
+	   `line-break: strict` keeps small kana and leading punctuation from
+	   starting a line; `text-wrap: pretty` avoids orphaned last lines. */
+	h1, h2, h3, h4, h5, h6 {
+		hanging-punctuation: last allow-end first;
+		line-break: strict;
+		text-wrap: pretty;
+	}
+
 	a {
 		color: var(--ds-accent);
 		text-decoration: none;
@@ -347,6 +370,13 @@ html:not(.lang-en) [data-l="en"] { display: none !important; }
 	}
 	a:hover {
 		color: var(--ds-accent-hover);
+	}
+
+	/* R2 orphan control: long-form CJK paragraphs are the place where a
+	   single trailing character strands on its own line. `pretty` lets the
+	   browser rebalance the last lines; unsupported engines keep `wrap`. */
+	p {
+		text-wrap: pretty;
 	}
 
 	::selection {
