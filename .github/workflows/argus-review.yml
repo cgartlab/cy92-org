@@ -1,25 +1,38 @@
 name: Argus-Flash Review
+
 on:
   pull_request:
-    types: [opened, synchronize, ready_for_review]
+    types: [opened, synchronize, ready_for_review, reopened]
+
+# Least privilege: read contents; write pull requests and issues for the
+# review comment.
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
 jobs:
   review:
+    # Dependabot PRs do not receive repository secrets, so the
+    # create-github-app-token step always fails on them; and a pure
+    # dependency bump needs no frontend design review.
+    if: github.actor != 'dependabot[bot]'
     runs-on: ubuntu-latest
-    # GitHub 安全策略：Dependabot 等第三方 GitHub App（user.type == Bot）触发的 PR 不接收 secrets，
-    # 导致下方 create-github-app-token 缺 app-id 而必然失败；Argus 是设计审查，对纯依赖更新也无意义。
-    if: github.event.pull_request.user.type != 'Bot'
-    permissions:
-      contents: read
-      pull-requests: write
-      issues: write
+    # Hard cap. The action wraps each `opencode github run` with GNU `timeout`
+    # (default 480s), but that is per model attempt: a pathological
+    # fallback-queue loop would still eat the full 6 h GitHub default
+    # without this. 15 min covers primary (8 min) + one fallback (8 min)
+    # with buffer. Valid at job scope; the action's own steps cannot carry
+    # timeout-minutes (composite-action manifests reject it).
+    timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           persist-credentials: false
 
       - name: Generate argus-flash token
         id: app-token
-        uses: actions/create-github-app-token@v1
+        uses: actions/create-github-app-token@v3
         with:
           app-id: ${{ secrets.ARGUS_FLASH_APP_ID }}
           private-key: ${{ secrets.ARGUS_FLASH_PRIVATE_KEY }}
@@ -27,3 +40,4 @@ jobs:
       - uses: cgartlab/argus/.github/actions/argus-review@main
         with:
           github-token: ${{ steps.app-token.outputs.token }}
+          api-key: ${{ secrets.OPENCODE_API_KEY }}
