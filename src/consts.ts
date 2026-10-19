@@ -225,11 +225,16 @@ export const PROJECTS = [
 ];
 
 const ACTIVE_SINCE = 2014;
+// 「从事数字创作领域」的年限必须按当前年份动态计算，但**不能在模块顶层求值**：
+// Astro 预渲染时 consts.ts 的模块顶层运行在一个 Date 为零值（1970-01-01）的上下文里，
+// 顶层写死 `new Date()` 会把这个数字固化成 `1970 - ACTIVE_SINCE`（线上曾长期显示 -44 年）。
+// 改为 getter 后，Date 在每次读取时才求值，构建与运行时都拿到真实当前年份。
+const yearsActive = () => new Date().getFullYear() - ACTIVE_SINCE;
 export const STATS = [
 	// STATS[0].label/unit 保持不动：sync-word-count.mjs 依赖此 key 写回累计字数
 	{ label: "累计字数", value: "191,662", unit: "字" },
 	{ label: "过去一年提交代码", value: "5,565", unit: "次" },
-	{ label: "从事数字创作领域", value: `${new Date().getFullYear() - ACTIVE_SINCE}`, unit: "年" },
+	{ label: "从事数字创作领域", get value() { return `${yearsActive()}`; }, unit: "年" },
 	{ label: "文章累计被阅读", value: "89.5万+", unit: "次" }
 ];
 
