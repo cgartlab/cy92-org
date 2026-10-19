@@ -135,10 +135,10 @@ pnpm build              # astro build || exit 0
 pnpm check              # build(容错) && tsc && wrangler deploy --dry-run
 pnpm check:links        # node scripts/check-links.mjs  ← 必须先 pnpm build（读 dist/）
 pnpm check:i18n         # node scripts/i18n-verify.mjs（字典完整性校验）
-pnpm test               # vitest run（src/scripts/__tests__/sync-word-count.test.mjs，8 用例）
+pnpm test               # vitest run（sync-word-count 8 用例 + check-links 3 用例，共 11）
 pnpm cf-typegen         # wrangler types → worker-configuration.d.ts
 pnpm preview            # build(容错) && wrangler dev
-pnpm deploy             # wrangler deploy（⚠️ 生产发布，先确认）
+pnpm deploy             # wrangler deploy（⚠️ 生产发布；注意 main 合并也会被 Workers Builds 自动部署，见「9」）
 
 node src/scripts/sync-word-count.mjs [--repo <path>] [--verbose|--quiet]
 node scripts/check-links.mjs [--root <仓库根>] [--verbose|--quiet]
@@ -149,10 +149,10 @@ node scripts/check-links.mjs [--root <仓库根>] [--verbose|--quiet]
 - `.github/workflows/argus-review.yml` — PR opened/synchronize/ready_for_review 触发；`if: github.event.pull_request.user.type != 'Bot'` 显式跳过 Dependabot（第三方 GitHub App 不收 secrets，token 步骤必失败）。需仓库 secrets `ARGUS_FLASH_APP_ID` / `ARGUS_FLASH_PRIVATE_KEY`。
 - `.github/workflows/test.yml` — push/PR 到 main，pnpm 10.11.1 + Node 22 + `--frozen-lockfile` + `pnpm test`，10 分钟超时。
 - `.github/workflows/codeql.yml` — CodeQL javascript-typescript，`paths: src/**` 过滤，`permissions` 收敛到 `security-events: write`，30 分钟超时。
-- `.github/dependabot.yml` — npm weekly；**全部 patch/minor 合成 1 个 PR**，并用 `groups` + `ignore` 双保险**排除所有 major 升级**（与 Astro 5.x / Tailwind 3.4 版本约定一致）。
+- `.github/dependabot.yml` — npm weekly；**全部 patch/minor 合成 1 个 PR**，并用 `groups` + `ignore` 双保险**排除所有 major 升级**（与 Astro 7.x 已定的主版本 / Tailwind 3.4 版本约定一致）。
 - `.github/workflows/pr-triage.yml` — PR 自动打标签（`area:*`，按路径，见 `.github/labeler.yml`）+ 自动指派作者（solo 即 cgartlab）。`pull_request_target` 只跑打标/指派，**禁止**在该 workflow 加 checkout/执行 PR 代码。
+- **Cloudflare Workers Builds（仓库外，dashboard 配置）** — 每个 PR 与 main push 都会触发，且 PR 阶段即指向 `/production/builds/`（**生产部署**，非预览）。已实测：main 合并后生产域名 `cy92.org` 自动更新。本地 `pnpm deploy` 仍可手动发布。
 - `security-report.md` — 2026-05-11 快照，内容已过期：#50 已落地 `public/_headers`（CSP/HSTS/X-Frame-Options/COOP/Permissions-Policy）、`robots.txt`、Bilibili iframe `sandbox`、视频 `preload="none"`。改动安全相关配置后顺手更新该文件。
-- 无部署 CI —— 部署全靠本地 `pnpm deploy` 手动执行。
 
 ## 10. NOTES
 
