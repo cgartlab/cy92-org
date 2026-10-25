@@ -183,7 +183,7 @@ export const EXPERIENCE = [
 	{
 		period: "2021 - 至今",
 		title: "CG艺术实验室主理人",
-		description: "创建并运营个人网站「CG艺术实验室」，系统化输出设计心得、技术教程、工具评测与创作思考，累计产出超过13万字，构建完整的创作者工作流体系。"
+		description: "创建并运营个人网站「CG艺术实验室」，系统化输出设计心得、技术教程、工具评测与创作思考，累计产出超过20万字，构建完整的创作者工作流体系。"
 	},
 	{
 		period: "持续进行",
@@ -232,8 +232,8 @@ const ACTIVE_SINCE = 2014;
 const yearsActive = () => new Date().getFullYear() - ACTIVE_SINCE;
 export const STATS = [
 	// STATS[0].label/unit 保持不动：sync-word-count.mjs 依赖此 key 写回累计字数
-	{ label: "累计字数", value: "191,662", unit: "字" },
-	{ label: "过去一年提交代码", value: "5,565", unit: "次" },
+	{ label: "累计字数", value: "204,097", unit: "字" },
+	{ label: "过去一年提交代码", value: "8,503", unit: "次" },
 	{ label: "从事数字创作领域", get value() { return `${yearsActive()}`; }, unit: "年" },
 	{ label: "文章累计被阅读", value: "89.5万+", unit: "次" }
 ];
